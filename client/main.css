@@ -1,0 +1,25 @@
+/* CSS declarations go here */
+@import 'https://fonts.googleapis.com/css?family=Roboto';
+.leaflet-container {
+    height: 100vh;
+    width: 100%;
+}
+
+.eleven.wide.column.animated.fadeIn{
+    position: absolute;
+    padding: 0px;
+}
+
+.five.wide.column{
+  padding:0px !important;
+  background-color: #FAFAFA
+}
+
+
+.heads{
+    max-height: 20vh;
+}
+
+.hidden {
+  display:none !important
+}
