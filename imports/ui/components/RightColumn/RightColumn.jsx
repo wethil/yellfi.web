@@ -6,6 +6,7 @@ export default class RightColumn extends Component {
 		return (
 			<div>
 				<RightDrawer />
+
 			</div>
 		);
 	}

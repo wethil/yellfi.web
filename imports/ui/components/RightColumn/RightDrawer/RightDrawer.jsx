@@ -25,8 +25,8 @@ export default class RightDrawer extends Component {
 			 		openSecondary={true} 
 			 		open={this.state.open} >
 			        
-			        <AppBar 
-			        		title={'app bar'}
+			        <AppBar //titleStyle={styles.plansTitle}
+			        		title={'Create a plan'}
 			                iconElementLeft={appBarCloseIcon}/>
 			        <YellForm />        
 			      
@@ -41,6 +41,9 @@ export default class RightDrawer extends Component {
  const styles = {
       drawer: {
         zIndex: 2
+        },
+        plansTitle:{
+        	fontSize:18
         },
       content: {
         fontSize: 11

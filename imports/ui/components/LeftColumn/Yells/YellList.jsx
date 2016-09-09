@@ -6,11 +6,14 @@ import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bu
 import { grey400, grey700, darkBlack, lightBlack } from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
 import emitter from '../../emitter.js'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 export default class YellList extends Component {
 	render() {
 		return (
-			 <List>
+			 <div className="className">
+			 	<List>
 			  
 			  	<ListItem //onTouchTap={this.handleInputOpen}
 			            children ={<TextField disabled={true} style={{height: 30}}
@@ -33,11 +36,20 @@ export default class YellList extends Component {
                   }
                   secondaryTextLines={1}
               />
-			       
+			      
 			      </List>
+			    
+			 </div>	
+
 		);
 	}
 }
+
+
+/*
+   <FloatingActionButton style={styles.fab} onClick={()=> console.log('asd')} >
+				      <ContentAdd />
+				    </FloatingActionButton>*/
 
  const styles = {
       drawer: {
@@ -45,5 +57,9 @@ export default class YellList extends Component {
         },
       content: {
         fontSize: 11
+        },
+        fab:{
+        	marginLeft:'80%',
+        	marginTop:'65%'
         }
     }

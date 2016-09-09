@@ -35,30 +35,32 @@ export default class ExtraFormElements extends Component {
 			
 
 			});
+	$("#places").attr("placeholder", "Write a Place to occur on map").val("").focus().blur();
 
 }
 	render() {
 		return (
 			<div>
 				<TextField //location autocomplete
-							multiLine={true}
-							rowsMax={3}
+						inputStyle={{fontSize:13}}
+
 			                onChange={this.handlePlaceChange}
 			                id="places"
 			                  />
-			     <p style={styles.labelStyle}> *Selected place will occur on map </p>             
+
+			         
 				<div  style={styles.dateTime} className="ui two column grid ">
 	                <div className="column">
 	                   <DatePicker
 	                   onChange={ (e,date)=> emitter.emit('changeDate',date) } // to YellForm.jsx
-	                   textFieldStyle={{width :115}}
+	                   textFieldStyle={styles.dateTimeForm}
 	                   minDate = { new Date()}
 	                   hintText="Date" />
 	                </div>
 	                <div className="column">
 	                      <TimePicker
 	                         onChange={ (e,time)=> emitter.emit('changeTime',time) } // to YellForm.jsx
-	                       textFieldStyle={	{width:115}}
+	                       textFieldStyle={styles.dateTimeForm}
 	                        format="24hr"
 	                        hintText="Time"
 	                      />
@@ -77,5 +79,9 @@ const styles = {
 		      },
 		      dateTime : {
 		      	width:260
+		      },
+		      dateTimeForm:{
+		      	width :115,
+		      	fontSize:16
 		      }
 		};
