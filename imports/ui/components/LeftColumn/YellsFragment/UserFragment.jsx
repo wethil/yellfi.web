@@ -3,8 +3,10 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import UserYells from '../Yells/UserYells.jsx'
 import OthersYells from '../Yells/OthersYells.jsx'
 import ApprovedYells from '../Yells/ApprovedYells.jsx'
-export default class YellTabs extends Component {
-	constructor(props) {
+import emitter from '../../emitter.js'
+
+ class UserFragment extends Component {
+ 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
@@ -13,17 +15,18 @@ export default class YellTabs extends Component {
 	  };
 	}
 
-
 	changeTab(value){
 		this.setState({activeTab:value})
 	}
-	render() {
-	const tab_style = {
-       //backgroundColor: '#3f51b5'
-      };
 
-     
-	
+	handleLogout(e) {
+		e.preventDefault()
+		Meteor.logout();
+		emitter.emit('userLogout')
+		console.log('click logout')
+	}
+
+	render() {
 		return (
 			 <div className="heads">
 		        
@@ -33,22 +36,12 @@ export default class YellTabs extends Component {
 		            <Tab style={tab_style}
 		            	 value={0}		  
 		                 label="MY PLANS">
-
-		                 {this.state.user!=0 ? 
-		                 	<div className="className">
-			                 	<UserYells /> 
-			                 	<button 
-			                 		className="ui button"
-			                 		onClick={()=>this.setState({user:0})}>
-			                 		logout
-			                 		</button>
-		                 	</div>
-		                 	: <button 
+								 <button 
 		                 		className="ui button"
-		                 		onClick={()=>this.setState({user:1})}>
-		                 		login
+		                 		onClick={(e)=>{this.handleLogout(e)}}>
+		                 		logout
 		                 		</button>  
-		                 	}
+		                 	
 		            
 		            </Tab>
 
@@ -73,5 +66,8 @@ export default class YellTabs extends Component {
 		);
 	}
 }
+export default UserFragment;
 
-
+const tab_style = {
+       //backgroundColor: '#3f51b5'
+      };

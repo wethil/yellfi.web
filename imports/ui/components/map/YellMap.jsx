@@ -26,8 +26,12 @@ export default class YellMap extends Component {
 
 const styles = {
 	mapStyle:{
-		zIndex:-1,
-		position:'absolute'
+		zIndex:1,
+		position:'absolute',		
+		top:0,
+		left:0,
+		top:0,
+		bottom:0
 	}
 };
 

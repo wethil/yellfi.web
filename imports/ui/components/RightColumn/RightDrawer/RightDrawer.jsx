@@ -40,7 +40,8 @@ export default class RightDrawer extends Component {
 
  const styles = {
       drawer: {
-        zIndex: 2
+        zIndex: 2,
+        overflowX: 'hidden'
         },
         plansTitle:{
         	fontSize:18

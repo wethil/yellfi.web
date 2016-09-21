@@ -23,6 +23,7 @@ import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
+import { Meteor } from 'meteor/meteor';
 
 
 const dataSource1 = ['hiphop', 'rap', 'jazz']
@@ -36,27 +37,38 @@ export default class YellForm extends Component {
 			forms: false, //value presents hidden step
 			publicity: 0,
 			date: 0,
-			time: 0
+			time: 0,
+			publicGeoLoc:{},
+			ipLoc:{},
+			customPlan:"",
+			keyword:""	
 		};
 	}
 
 	componentDidMount() {
-
-		emitter.addListener('changeDate', (date) => this.changeDate(date));
-		emitter.addListener('changeTime', (time) => this.changeTime(time));
-		emitter.addListener('changePublicOpt', (publicOpt) => this.changePublicOpt(publicOpt));
-
-
-
+		//from EtraFormElements
+		emitter.addListener('changeipLoc',(ipLoc)=> this.setState({ipLoc}) );
+		emitter.addListener('changeDate', (date) => {this.setState({date}); console.log(date) }  );
+		emitter.addListener('changeTime', (time) => {this.setState({time}); console.log(time)  } );
+		emitter.addListener('changepublicGeoLoc', (publicGeoLoc) => this.changepublicGeoLoc(publicGeoLoc));
 	}
-	changeDate(date) {
-		console.log(date)
+
+	closeFormDrawer () {
+		this.setState({ 
+				forms: false,
+				activePlan: 9,
+				forms: false, //value presents hidden step
+				publicity: 0,
+				date: 0,
+				time: 0,
+				customPlan:""
+				
+			 }) 
 	}
-	changeTime(time) {
-		console.log(time)
-	}
-	changePublicOpt(publicOpt) {
-		console.log(publicOpt)
+	
+	changepublicGeoLoc(publicGeoLoc) {
+		console.log(publicGeoLoc)
+		this.setState({publicGeoLoc})
 	}
 
 	handleSelectChange() {
@@ -67,20 +79,65 @@ export default class YellForm extends Component {
 		})
 	}
 
+	autocompleteUpdate(e) {
+		this.setState({keyword:e})
+	}
+
 	changePublicity(e) {
-		console.log(value)
+		this.setState({publicity})
+	}
+
+	handleSubmit() {
+	let	activePlan = this.state.activePlan
+	let	publicity = this.state.publicity
+	let	date = this.state.date==0 ? new Date : this.state.date
+	let	time = this.state.time==0 ? new Date : this.state.time
+	let	publicGeoLoc = this.state.publicGeoLoc
+	let	ipLoc = this.state.ipLoc
+	let coordinates = !this.state.publicGeoLoc.coordinates ? [ipLoc.coordinates] : [ipLoc.coordinates,publicGeoLoc.coordinates]
+	let loc = {type:"MultiPoint",coordinates:coordinates}
+ 	let plan = this.state.activePlan==10 ? document.getElementById("customPlan").value : plans[this.state.activePlan].content
+	let keyword = this.state.keyword
+	let ownerId = Meteor.userId();
+	console.log(keyword)
+
+
+		Meteor.call('addYell',loc,plan,keyword,time,publicity,ownerId,function (error, result){
+			if (error) {
+				console.log(error)
+			} else {
+				console.log('okay')
+			}
+		});	
+
+
+
+
+
 	}
 
 	render() {
-		formAppBarIcon = <IconButton onMouseDown={() => this.setState({ forms: false }) }> <NavigationArrowBack /></IconButton>
+	ipLoc = this.state.ipLoc
+	coord = ipLoc.coordinates ? ipLoc.coordinates[0] + ' ' + ipLoc.coordinates[1] : "there is no coordinate"
+	formAppBarIcon = <IconButton onMouseDown={this.closeFormDrawer.bind(this)}> <NavigationArrowBack /></IconButton>
+	customPlan = this.state.activePlan == 10 ? <TextField id="customPlan" hintText="Enter a plan."/> : <div className="className"></div>
 
 		return (
 
 			<div>
+				<Menu
+						onItemTouchTap={
+							(event, menuItem) => { 
+								this.setState({ 
+								forms: true,
+								activePlan: menuItem.props.value //look at plans array on the bottom
+								});
+								if (menuItem.props.value==7) { //if hangout with someone, select everyone can join
+									this.setState({publicity:1})
+								}
 
-			             <Menu
-					onItemTouchTap={(event, menuItem) => { this.setState({ forms: true, activePlan: menuItem.props.value }); console.log(menuItem.props.value) } }
-					listStyle={{ cursor: 'pointer' }}>
+							}}
+						listStyle={{ cursor: 'pointer' }}>
 
 					{plans.map((plan) => {
 						return <MenuItem
@@ -91,24 +148,30 @@ export default class YellForm extends Component {
 							primaryText={plan.content} />;
 					}) }
 				</Menu>
-
+				{coord}
 
 				<Drawer width={280} openSecondary={true} open={this.state.forms} >
 					<AppBar
 						titleStyle={styles.formTitle}
-						iconElementLeft={formAppBarIcon}
-						title={plans[this.state.activePlan].content}
+						iconElementLeft={formAppBarIcon} // form drawer title icon
+						title={plans[this.state.activePlan].content}  
 						/>
 
 					<div style={styles.drwPadd} >
 
+					{customPlan} {/*custom plan textfield*/}
 
 
-						<RadioButtonGroup name="privacy"  style={{ marginTop: 16 }} onChange={(event, value) => this.setState({ publicity: value }) } defaultSelected={0}>
+						<RadioButtonGroup 
+									name="privacy"  
+								 	style={{ marginTop: 16 }}
+								 	onChange={(event, value) => this.setState({ publicity: value }) } 
+								 	defaultSelected={0}
+								 	valueSelected={this.state.publicity}>
 							<RadioButton
 								value={0}
 								label="Just me"
-								disabled={this.state.activePlan == 6 ? true : false}
+								disabled={this.state.activePlan == 7 ? true : false} //disabled if user choose hangout with someone
 								style={styles.radioButton}
 								/>
 							<RadioButton
@@ -125,6 +188,9 @@ export default class YellForm extends Component {
 								/>
 						</RadioButtonGroup>
 						<AutoComplete
+							onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
+							onNewRequest={ (chosenRequest)=> this.autocompleteUpdate(chosenRequest)}
+
 							floatingLabelText="Choose keyword for your plan.(optional)"
 							hintText="Click and choose"
 							filter={AutoComplete.noFilter}
@@ -140,7 +206,12 @@ export default class YellForm extends Component {
 							:
 							<ExtraFormElements />
 						}
-						<RaisedButton style={{ width: 256 }}  label="Get Suggestions!" primary={true} />
+
+						<RaisedButton
+							onClick={this.handleSubmit.bind(this)}
+							style={{ width: 256 }}
+							label="Get Suggestions!"
+							primary={true} />
 					</div>
 
 				</Drawer>

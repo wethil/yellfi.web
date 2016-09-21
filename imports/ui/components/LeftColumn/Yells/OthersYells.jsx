@@ -5,54 +5,15 @@ import Avatar from 'material-ui/Avatar';
 import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import { grey400, grey700, darkBlack, lightBlack } from 'material-ui/styles/colors';
 import Divider from 'material-ui/Divider';
-import emitter from '../../emitter.js'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import {geolocated} from 'react-geolocated';
 
 
-export default class YellList extends Component {
-	componentDidMount() {
-		   $.getJSON('http://ipinfo.io', function(data){
-              console.log(data)
-              preLoc=data.loc.split(",")
-              lat=  parseFloat(preLoc[0])
-              lng = parseFloat(preLoc[1])
-              exactLoc=[lat,lng]
-              ipLoc={
-              	coordinates:[lng,lat],
-              	ipLocAdress:`${data.city} ${data.region} ${data.country}  `
-              }
-              emitter.emit('changeipLoc',ipLoc) // to YellForm
-               
+ class OthersYells extends Component {
+ 	
 
-            })
-/*
 
-		   !this.props.isGeolocationAvailable
-      ? console.log('Your browser does not support Geolocation')
-      : !this.props.isGeolocationEnabled
-        ? console.log('Geolocation is not enabled')
-        : this.props.coords
-          ? console.log(this.props.latitute)
-          : console.log('Getting the location data')*/
-
-         
-	
-	}
 	render() {
-
-		 if(this.props.coords) {
-         var lat =this.props.coords.latitude
-         var lng =this.props.coords.longitude
-         ipLoc={
-         	coordinates:[lng,lat],
-         	ipLocAdress:""
-         }
-          emitter.emit('changeipLoc',ipLoc)
-          } else {
-          	var lat="no lat"
-          }
 
 		return (
 			 <div className="className">
@@ -75,7 +36,7 @@ export default class YellList extends Component {
                   secondaryText={
 
                   <p>  <span style={{color: grey700}}>fati</span> --
-                  <span style={styles.content}>{lat}</span> </p>
+                  <span style={styles.content}>OthersYellssssss</span> </p>
                   }
                   secondaryTextLines={1}
               />
@@ -87,12 +48,8 @@ export default class YellList extends Component {
 		);
 	}
 }
+export default OthersYells;
 
-
-/*
-   <FloatingActionButton style={styles.fab} onClick={()=> console.log('asd')} >
-				      <ContentAdd />
-				    </FloatingActionButton>*/
 
  const styles = {
       drawer: {
@@ -107,9 +64,3 @@ export default class YellList extends Component {
         }
     }
 
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: false,
-  },
-  userDecisionTimeout: 5000
-})(YellList);

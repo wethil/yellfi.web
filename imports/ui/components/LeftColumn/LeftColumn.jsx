@@ -1,16 +1,27 @@
 import React, { Component } from 'react';
 import LeftNavHead from './LeftNavHead/LeftNavHead.jsx'
-import YellTabs from './YellTabs/YellTabs.jsx'
-import YellList from './Yells/YellList.jsx'
+import MainFragment from './YellsFragment/MainFragment'
+
+
 
 
 export  default class LeftColumn extends Component {
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
+	  	
+	  };
+	}
 	render() {
 		return (
 			<div>
 				<LeftNavHead />
-				<YellTabs />
-				<YellList />
+				<MainFragment userID={Meteor.userId()} />
+				
+				
+				
+
 			</div>
 		);
 	}

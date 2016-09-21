@@ -20,31 +20,27 @@ Yells = new Mongo.Collection('yells' ,{
 
 Yells.attachSchema(
     new SimpleSchema({
-    loc: {
+    loc: { //MultiPoint Loc incllude ipLoc and GeoLoc. use coordinates[1] for
       type: LocationSchema,
-     optional: true
+      optional:true
     },
     plan: {
       type: String,
       defaultValue : "I am boored"
     },
-    desc :{
+    keyword :{
       type : String,
       optional : true
     },
-    place : {
-      type:String,
-      optional:true
-    },
     time : {
-      type : String,
+      type : Date,
       optional:true
     },
     created_at: {
       type: Date,
       denyUpdate: true
     },
-    planType: {
+    publicity: {
       type:Number,
       defaultValue:0 // 0 is just for owner, 1 is public 2 is private
     },

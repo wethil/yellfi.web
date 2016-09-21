@@ -3,6 +3,15 @@ import '../yells.js'
 
 
 
-Meteor.publish('yells',function() {
-	return Yells.find()
+Meteor.publishComposite('latestYells',{
+	find : function () {
+		return Yells.find()
+	},
+	children : [
+		{
+			find: function (yell) {
+				return Meteor.users.find({_id:yell.ownerId})
+			}
+		}
+	]
 })

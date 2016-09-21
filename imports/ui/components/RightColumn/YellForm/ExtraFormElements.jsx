@@ -9,7 +9,7 @@ export default class ExtraFormElements extends Component {
 	  super(props);
 	
 	  this.state = {
-	  	publicOpt:{}
+	  	publicGeoLoc:{}
 
 	  };
 	}
@@ -18,20 +18,20 @@ export default class ExtraFormElements extends Component {
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addListener(autocomplete, 'place_changed', ()=> {
 			var place = autocomplete.getPlace();
+			console.log(place)
 			myLatLng = place.geometry.location
 			var lat = myLatLng.lat();
 			var lng = myLatLng.lng();
 			this.setState({
-			publicOpt:{
-					lat:lat,
-					lng:lng,
+			publicGeoLoc:{
+					coordinates:[lng,lat],
 					place:place.place_id,
-					placeAdress:place.formatted_address
+					geoLocAdress:place.formatted_address
 				}
 			})
 
 			
-			emitter.emit('changePublicOpt',this.state.publicOpt) // to YellForm.jsx
+			emitter.emit('changepublicGeoLoc',this.state.publicGeoLoc) // to YellForm.jsx
 			
 
 			});
@@ -42,30 +42,28 @@ export default class ExtraFormElements extends Component {
 		return (
 			<div>
 				<TextField //location autocomplete
-						inputStyle={{fontSize:13}}
+					inputStyle={{ fontSize: 13 }}
+					id="places"
+					/>
 
-			                onChange={this.handlePlaceChange}
-			                id="places"
-			                  />
 
-			         
 				<div  style={styles.dateTime} className="ui two column grid ">
-	                <div className="column">
-	                   <DatePicker
-	                   onChange={ (e,date)=> emitter.emit('changeDate',date) } // to YellForm.jsx
-	                   textFieldStyle={styles.dateTimeForm}
-	                   minDate = { new Date()}
-	                   hintText="Date" />
-	                </div>
-	                <div className="column">
-	                      <TimePicker
-	                         onChange={ (e,time)=> emitter.emit('changeTime',time) } // to YellForm.jsx
-	                       textFieldStyle={styles.dateTimeForm}
-	                        format="24hr"
-	                        hintText="Time"
-	                      />
-	                </div>
-	              </div>		                  
+					<div className="column">
+						<DatePicker
+							onChange={ (e, date) => emitter.emit('changeDate', date) } // to YellForm.jsx
+							textFieldStyle={styles.dateTimeForm}
+							minDate = { new Date() }
+							hintText="Date" />
+					</div>
+					<div className="column">
+						<TimePicker
+							onChange={ (e, time) => emitter.emit('changeTime', time) } // to YellForm.jsx
+							textFieldStyle={styles.dateTimeForm}
+							format="24hr"
+							hintText="Time"
+							/>
+					</div>
+				</div>
 			</div>
 		);
 	}
@@ -85,3 +83,6 @@ const styles = {
 		      	fontSize:16
 		      }
 		};
+
+
+		
