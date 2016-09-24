@@ -5,11 +5,42 @@ import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
 import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/styles/colors';
+import CustomScroll from 'react-custom-scroll';
 
 
 
  class RawYellList extends Component {
 	render() {
+
+    
+listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
+
+
+
+
+     const styles = {
+        list:{
+          height: listHeight,
+          backgroundColor:'white'
+        },
+      username: {
+        color: lightBlue900
+        },
+      plan: {
+        color: grey800
+        },
+      timeDate: {
+        color: grey800
+        },  
+       keywords:{
+        fontSize:12
+        },
+
+    }
+
+
+
+
 	if (this.props.yells && this.props.yells.length > 0) {
       var yells = []
       this.props.yells.forEach((yell) => {
@@ -48,10 +79,10 @@ if (yell.publicity == 0) {
                   primaryText={ <div style={styles.username}>{yell.owner.username}</div>}
                   secondaryText={
                       	<p>   
-		                  <span style={styles.plan}>{yell.plan}</span> 
-		                  {ExtraFields}          
-								   <br />
-						  <span style={styles.keywords}> {yell.keyword} </span>
+                        <span style={styles.plan}>{yell.plan}</span> 
+                          {ExtraFields}          
+                         <br />
+                        <span style={styles.keywords}> {yell.keyword} </span>
                   		</p>
                   }
                   secondaryTextLines={2}
@@ -67,26 +98,13 @@ if (yell.publicity == 0) {
 
 
 		return (
-			<List>	
+     <CustomScroll> 
+			<List style={styles.list} >	
 				{yells}
 			</List>	
+     </CustomScroll> 
 		);
 	}
 }
 export default RawYellList;
 
- const styles = {
-      username: {
-        color: lightBlue900
-        },
-      plan: {
-        color: grey800
-        },
-      timeDate: {
-        color: grey800
-        },  
-       keywords:{
-        fontSize:12
-        },
-
-    }

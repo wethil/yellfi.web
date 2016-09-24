@@ -10,7 +10,7 @@ export const App = ({children}) => (
   <MuiThemeProvider muiTheme={getMuiTheme()}>
     <div>
       
-        <div className="ui grid">
+        <div className="ui grid" style={{height: '100vh'}} >
         	
       	  {children}
        </div> 

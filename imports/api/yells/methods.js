@@ -14,8 +14,6 @@ Meteor.methods({
             ownerId:ownerId
 
         })
-
     }
-
 });
 

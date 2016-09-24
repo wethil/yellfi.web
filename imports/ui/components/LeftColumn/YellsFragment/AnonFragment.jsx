@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Login from '../Accounts/Login.jsx'
 import Register from '../Accounts/Register.jsx'
-import LatestYells from '../Yells/Anon/LatestYells.jsx'
-import NearestYells from '../Yells/Anon/NearestYells.jsx'
+import LatestYells from '../Yells/OthersYells/LatestYells.jsx'
+import NearestYells from '../Yells/OthersYells/NearestYells.jsx'
 
  class AnonFragment extends Component {
  	constructor(props) {
@@ -21,6 +21,14 @@ import NearestYells from '../Yells/Anon/NearestYells.jsx'
 
 	render() {
 		console.log(this.state.activeTab)
+		if (this.props.ipLoc.coordinates){
+			nearest = <NearestYells
+		              	  	ipLoc={this.props.ipLoc} 
+		              	 //ipLoc from MainFragment
+		              	 />
+		} else {
+			nearest =" Please wait"
+		}
 		return (
 			 <div className="heads">
 		        
@@ -48,7 +56,7 @@ import NearestYells from '../Yells/Anon/NearestYells.jsx'
 		            	 value={2}	
 		                 label="NEAREST"> 
 
-		              	<NearestYells />
+		              	{nearest}
 		                 
 		            </Tab>
 		          </Tabs>

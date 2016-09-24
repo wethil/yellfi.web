@@ -1,8 +1,10 @@
+/*
 import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import UserYells from '../Yells/UserYells.jsx'
 import OthersYells from '../Yells/OthersYells.jsx'
 import ApprovedYells from '../Yells/ApprovedYells.jsx'
+import emitter from '../../emitter.js'
 export default class YellTabs extends Component {
 	constructor(props) {
 	  super(props);
@@ -13,9 +15,13 @@ export default class YellTabs extends Component {
 	  };
 	}
 
-
+	
 	changeTab(value){
 		this.setState({activeTab:value})
+		if (this.state.activeTab==1){
+			console.log('toogletab')
+			
+		}
 	}
 	render() {
 	const tab_style = {
@@ -54,6 +60,7 @@ export default class YellTabs extends Component {
 
 		            <Tab style={tab_style}
 		            	 value={1}	
+		            	
 		                  label="OTHERS"> 
 
 		                  <OthersYells />
@@ -75,3 +82,5 @@ export default class YellTabs extends Component {
 }
 
 
+
+*/

@@ -15,9 +15,15 @@ export default class RightDrawer extends Component {
 	  };
 	}
 
+	toogleDrawer() {
+		console.log('toogled')
+		drawerState = this.state.open ? false : true 
+		this.setState({open:drawerState})
+	}
+
 	render() {
 			appBarCloseIcon = <IconButton onMouseDown={()=>this.setState({open:false})}> <NavigationClose /></IconButton>
-		 emitter.addListener('openDrawer', ()=>this.setState({open:true}) );
+		 emitter.addListener('toogleDrawer', this.toogleDrawer.bind(this));
 		return (
 			 <Drawer  
 			 		containerStyle={styles.drawer} 

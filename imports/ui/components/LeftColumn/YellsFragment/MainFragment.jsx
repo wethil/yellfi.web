@@ -10,7 +10,8 @@ import {geolocated} from 'react-geolocated';
  	  super(props);
  
  	  this.state = {
- 	  	userId:Meteor.userId()
+ 	  	userId:Meteor.userId(),
+      ipLoc:{}
  	  }
 
  	}
@@ -19,26 +20,28 @@ import {geolocated} from 'react-geolocated';
  		emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}) );
  		emitter.addListener('userLogout',()=> this.setState({userId:null}) );
 
- 		 $.getJSON('http://ipinfo.io', (data) =>{
+      $.getJSON('http://ipinfo.io', (data) =>{
               console.log(data)
               preLoc=data.loc.split(",")
               lat=  parseFloat(preLoc[0])
               lng = parseFloat(preLoc[1])
-              exactLoc=[lat,lng]
+           
               ipLoc={
-                coordinates:[lng,lat],
+                coordinates:[lng,lat],//always stay lng lat
                 ipLocAdress:`${data.city} ${data.region} ${data.country}  `
               }
               this.setState({ipLoc})
               emitter.emit('changeipLoc',ipLoc) // to YellForm
             })
 
+     
 
 
  	}
 
 	render() {
 
+if (this.state.userId!=null) {
 
     if(this.props.coords) {
          var lat =this.props.coords.latitude
@@ -53,14 +56,14 @@ import {geolocated} from 'react-geolocated';
           } else {
             var lat="no lat"
           }
-    
-		
+  
+}
 
 
 		return (
 			 <div className="className">
 
-			 	{this.state.userId==null ? <AnonFragment /> : <UserFragment />} 
+			 	{this.state.userId==null ? <AnonFragment ipLoc={this.state.ipLoc} /> : <UserFragment ipLoc={this.state.ipLoc} />} 
 			 	
 			 </div>
 		);

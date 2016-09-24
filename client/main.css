@@ -8,16 +8,18 @@
 .eleven.wide.column.animated.fadeIn{
     position: absolute;
     padding: 0px;
+
 }
 
 .five.wide.column{
   padding:0px !important;
-  background-color: #FAFAFA
+  background-color: #FAFAFA;
+  height:100vh;
 }
 
 
 .heads{
-    max-height: 20vh;
+    
 }
 
 .hidden {

@@ -3,7 +3,11 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import UserYells from '../Yells/UserYells.jsx'
 import OthersYells from '../Yells/OthersYells.jsx'
 import ApprovedYells from '../Yells/ApprovedYells.jsx'
+import SwipeableViews from 'react-swipeable-views';
 import emitter from '../../emitter.js'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 
  class UserFragment extends Component {
  	constructor(props) {
@@ -15,9 +19,22 @@ import emitter from '../../emitter.js'
 	  };
 	}
 
+	componentDidMount() {
+		emitter.addListener('noUserYellAnim', ()=> { $('.fab').addClass('animated infinite tada') } );
+	}
+
 	changeTab(value){
 		this.setState({activeTab:value})
+		$('.fab').addClass('animated zoomIn');
+		$('.fab').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ()=>$('.fab').removeClass('animated zoomIn'));
+
 	}
+
+	toogleDrawer () {
+		
+		emitter.emit('toogleDrawer')
+	}
+
 
 	handleLogout(e) {
 		e.preventDefault()
@@ -26,48 +43,77 @@ import emitter from '../../emitter.js'
 		console.log('click logout')
 	}
 
+	noUserYellAnima() { //active if no user yell. Toogled From NoUserYell component
+		console.log('nu user yell')
+			$('.fab').addClass('animated infinite tada')
+	}
+
 	render() {
+		ipLoc=this.props.ipLoc
+		
 		return (
-			 <div className="heads">
-		        
+			
+		        <div className="className">
 		          <Tabs value={this.state.activeTab}
 		          		onChange={this.changeTab.bind(this)}
 		          		>
-		            <Tab style={tab_style}
+		            <Tab style={styles.tab_style}
 		            	 value={0}		  
-		                 label="MY PLANS">
-								 <button 
-		                 		className="ui button"
-		                 		onClick={(e)=>{this.handleLogout(e)}}>
-		                 		logout
-		                 		</button>  
-		                 	
-		            
-		            </Tab>
+		                 label="MY PLANS" />
 
-		            <Tab style={tab_style}
+								
+
+		            <Tab style={styles.tab_style}
 		            	 value={1}	
-		                  label="OTHERS"> 
+		            	 //onActive={this.toogleAnim.bind(this)}
+		                  label="OTHERS" /> 
 
-		                  <OthersYells />
+		                  
 
-		            </Tab>
+		           
 
 
-		            <Tab style={tab_style}
+		            <Tab style={styles.tab_style}
 		            	 value={2}	
-		                 label="APPROVED"> 
+		                 label="APPROVED" /> 
 
-		              	 <ApprovedYells/>
-		                 
-		            </Tab>
+		              	 
 		          </Tabs>
+		          	 <SwipeableViews
+		          	 	style={{ position:'absolute'}}	
+				          index={this.state.activeTab}
+				          onChange={this.changeTab.bind(this)}
+				        >
+							<div> <UserYells /> </div>
+							<div><OthersYells  ipLoc={ipLoc} /></div>
+							<div><ApprovedYells/></div>
+		               </SwipeableViews>
+		                
+		                 <FloatingActionButton onClick={this.toogleDrawer.bind(this)} className="fab" style={styles.fab} >
+						      <ContentAdd />
+						 </FloatingActionButton>
+		                
 		      </div>
 		);
 	}
 }
 export default UserFragment;
 
-const tab_style = {
-       //backgroundColor: '#3f51b5'
-      };
+
+     const styles = {
+        fab:{
+          bottom: '5%',
+          right:'4%',
+          position:'absolute'
+        },
+        tab_style:{}
+
+
+    }
+
+/* <UserYells />
+  <button 
+		                 		className="ui button"
+		                 		onClick={(e)=>{this.handleLogout(e)}}>
+		                 		logout
+		                 		</button>  */
