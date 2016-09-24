@@ -15,7 +15,8 @@ const composer = ( props, onData ) => {
   if ( subscription.ready() ) {
     const yells = Yells.find({ approved:{$in:[userId]}}).fetch()
    console.log(yells)
-    onData( null, { yells } );
+   component = 2
+    onData( null, { yells,component } );
   }
 };
 

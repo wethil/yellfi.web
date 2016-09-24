@@ -15,15 +15,25 @@ import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 	
 	  this.state = {
 	  	activeTab:0,
-	  	user:0
+	  	user:0,
+	  	userHasYell:1
 	  };
 	}
 
 	componentDidMount() {
-		emitter.addListener('noUserYellAnim', ()=> { $('.fab').addClass('animated infinite tada') } );
+		emitter.addListener('noUserYellAnim', ()=> {
+		
+			 $('.fab').toggleClass('animated infinite tada'); 
+			
+		} );
 	}
 
 	changeTab(value){
+		if (value!=0){
+			 $('.fab').removeClass('animated infinite tada'); 
+		} 
+
+		
 		this.setState({activeTab:value})
 		$('.fab').addClass('animated zoomIn');
 		$('.fab').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ()=>$('.fab').removeClass('animated zoomIn'));
@@ -80,7 +90,7 @@ import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 		              	 
 		          </Tabs>
 		          	 <SwipeableViews
-		          	 	style={{ position:'absolute'}}	
+		          	 	//style={{ position:'absolute'}}	
 				          index={this.state.activeTab}
 				          onChange={this.changeTab.bind(this)}
 				        >

@@ -6,7 +6,10 @@ import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
 import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/styles/colors';
 import CustomScroll from 'react-custom-scroll';
+import NoUserYell from './YellsComponents/NoUserYell.jsx'
+import NoApprovedYell from './YellsComponents/NoApprovedYell.jsx'
 
+import emitter from '../../emitter.js'
 
 
  class RawYellList extends Component {
@@ -93,7 +96,23 @@ if (yell.publicity == 0) {
 
       });
     } else {
-       yells = "No yell"
+          
+
+        switch(this.props.component) {
+    case 0:
+        emitter.emit('noUserYellAnim')
+        yells = <NoUserYell />
+        break;
+    case 1:
+        yells = "no yell"
+        break;
+      case 2:
+        yells = <NoApprovedYell />
+        break;
+    default:
+         yells="error"
+}
+
     }
 
 
