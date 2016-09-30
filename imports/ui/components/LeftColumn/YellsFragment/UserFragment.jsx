@@ -42,7 +42,7 @@ import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 
 	toogleDrawer () {
 		
-		emitter.emit('toogleDrawer')
+		emitter.emit('toogleDrawerForForm') //make left drawer form state 
 	}
 
 
@@ -63,47 +63,24 @@ import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 		
 		return (
 			
-		        <div className="className">
-		          <Tabs value={this.state.activeTab}
-		          		onChange={this.changeTab.bind(this)}
-		          		>
-		            <Tab style={styles.tab_style}
-		            	 value={0}		  
-		                 label="MY PLANS" />
+	<div className="className">
+		<Tabs value={this.state.activeTab} onChange={this.changeTab.bind(this)}>
+			<Tab style={styles.tab_style} value={0}  label="MY PLANS" />
+			<Tab style={styles.tab_style} value={1} label="OTHERS" /> 
+			<Tab style={styles.tab_style} value={2}	 label="APPROVED" />      	 
+		</Tabs>
 
-								
+		<SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
+			<div> <UserYells /> </div>
+			<div><OthersYells  ipLoc={ipLoc} /></div>
+			<div><ApprovedYells/></div>
+		</SwipeableViews>
 
-		            <Tab style={styles.tab_style}
-		            	 value={1}	
-		            	 //onActive={this.toogleAnim.bind(this)}
-		                  label="OTHERS" /> 
+		<FloatingActionButton onClick={this.toogleDrawer.bind(this)} className="fab" style={styles.fab} >
+			<ContentAdd />
+		</FloatingActionButton>
 
-		                  
-
-		           
-
-
-		            <Tab style={styles.tab_style}
-		            	 value={2}	
-		                 label="APPROVED" /> 
-
-		              	 
-		          </Tabs>
-		          	 <SwipeableViews
-		          	 	//style={{ position:'absolute'}}	
-				          index={this.state.activeTab}
-				          onChange={this.changeTab.bind(this)}
-				        >
-							<div> <UserYells /> </div>
-							<div><OthersYells  ipLoc={ipLoc} /></div>
-							<div><ApprovedYells/></div>
-		               </SwipeableViews>
-		                
-		                 <FloatingActionButton onClick={this.toogleDrawer.bind(this)} className="fab" style={styles.fab} >
-						      <ContentAdd />
-						 </FloatingActionButton>
-		                
-		      </div>
+	</div>
 		);
 	}
 }

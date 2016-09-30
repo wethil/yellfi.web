@@ -6,13 +6,17 @@ import IconButton from 'material-ui/IconButton';
 import emitter from '../../emitter.js'
 import YellForm from '../YellForm/YellForm.jsx'
 
-export default class RightDrawer extends Component {
+export default class RightColumn extends Component {
 	constructor(props) {
 	  super(props);
 	
 	  this.state = {
 	  	open:true
 	  };
+	}
+
+	componentDidMount () {
+		 emitter.addListener('toogleDrawer', this.toogleDrawer.bind(this));
 	}
 
 	toogleDrawer() {
@@ -23,7 +27,7 @@ export default class RightDrawer extends Component {
 
 	render() {
 			appBarCloseIcon = <IconButton onMouseDown={()=>this.setState({open:false})}> <NavigationClose /></IconButton>
-		 emitter.addListener('toogleDrawer', this.toogleDrawer.bind(this));
+		
 		return (
 			 <Drawer  
 			 		containerStyle={styles.drawer} 

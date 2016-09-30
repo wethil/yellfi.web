@@ -1,6 +1,5 @@
-import LocationSchema from '../Schemas/LocationSchema.js'
 
-Yells = new Mongo.Collection('yells' ,{
+Comments = new Mongo.Collection('comments' ,{
                 transform : function(doc) {
                   doc.owner = Meteor.users.findOne({
                     _id:doc.ownerId
@@ -13,72 +12,37 @@ Yells = new Mongo.Collection('yells' ,{
                 }
               });
 
-
-
-
-
-
-Yells.attachSchema(
+Comments.attachSchema(
     new SimpleSchema({
-    loc: { //MultiPoint Loc incllude ipLoc and GeoLoc. use coordinates[1] for
-      type: LocationSchema,
-      optional:true
-    },
-    plan: {
+    content: {
       type: String,
-      defaultValue : "I am boored"
+      defaultValue : "I am boored" //max will be 218
     },
-    keyword :{
-      type : String,
-      optional : true
-    },
-    time : {
-      type : Date,
-      optional:true
+    yellId:{
+      type:String
     },
     created_at: {
       type: Date,
       denyUpdate: true
     },
-    publicity: {
-      type:Number,
-      defaultValue:0 // 0 is just for owner, 1 is public 2 is private
-    },
     rating : {
         type : Number,
-        defaultValue : 0
-    },
-    comment_quantity : {
-       type : Number,
         defaultValue : 0
     },
     ownerId : {
          type : String,
          defaultValue : "yellfi"
     },
-    requested : {
-      type: [String],
-      defaultValue:[]
-    },
-    approved : {
-      type:[String],
-      defaultValue:[]
-    },
     visible :{
       type:Number,
       defaultValue:1
-    },
-    blocked_users:{
-      type:[String],
-      optional:true
     }
-
   })
 );
 
 
 
-Yells.allow({
+Comments.allow({
     insert: function() {
         return true;
     },
@@ -90,4 +54,4 @@ Yells.allow({
     }
 });
 
-export default Yells;
+export default Comments;

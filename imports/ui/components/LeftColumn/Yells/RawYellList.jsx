@@ -9,11 +9,23 @@ import CustomScroll from 'react-custom-scroll';
 import NoUserYell from './YellsComponents/NoUserYell.jsx'
 import NoApprovedYell from './YellsComponents/NoApprovedYell.jsx'
 
+import { Session } from 'meteor/session'
 import emitter from '../../emitter.js'
 
 
  class RawYellList extends Component {
+
+
+
+toogleYellCard(yell) {
+  console.log('toogle yell card')
+ emitter.emit('toogleDrawerForCard',yell) //make left drawer yell card state
+}
+
+
 	render() {
+
+
 
     
 listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
@@ -38,6 +50,10 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
        keywords:{
         fontSize:12
         },
+        subhead:{
+          fontSize:11,
+          color:'#9E9E9E'
+        }
 
     }
 
@@ -48,7 +64,7 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
       var yells = []
       this.props.yells.forEach((yell) => {
 
-        let time = ` ${moment(yell.date).calendar()} `
+        let time = ` ${moment(yell.time).calendar()} `
 
 
 
@@ -65,25 +81,28 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
 		}
     
 if (yell.publicity == 0) {
-  ExtraFields = ""
+  publicityLabel = ""
+  timeLabel =""
 } else {
-  ExtraFields = <span style={styles.timeDate}> -- 
-                        <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>
-                          <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> 
-                      </span>       
+  publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>  </span>  
+  timeLabel = <span style={styles.timeDate}> -- <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
+                        
+   
+                          
+                         
 }
 
 
 		 yells.push(
           <div key={yell._id}>
             <ListItem
-                  onTouchTap={()=>console.log('click yell')}
+                  onTouchTap={()=>this.toogleYellCard(yell)}
                   leftAvatar={<Avatar src={yell.owner.profile.avatar} />}
-                  primaryText={ <div style={styles.username}>{yell.owner.username}</div>}
+                  primaryText={ <div style={styles.username}>{yell.owner.username} <span style={styles.subhead}> planned </span> {publicityLabel} </div>}
                   secondaryText={
                       	<p>   
                         <span style={styles.plan}>{yell.plan}</span> 
-                          {ExtraFields}          
+                          {timeLabel}          
                          <br />
                         <span style={styles.keywords}> {yell.keyword} </span>
                   		</p>
@@ -117,11 +136,16 @@ if (yell.publicity == 0) {
 
 
 		return (
-     <CustomScroll> 
-			<List style={styles.list} >	
-				{yells}
-			</List>	
-     </CustomScroll> 
+  <div className="className">
+       <CustomScroll> 
+      <List style={styles.list} > 
+        {yells}
+      </List> 
+     </CustomScroll>
+     
+
+{/* if add drawer here, it will rendered on left column itself */}
+  </div>  
 		);
 	}
 }

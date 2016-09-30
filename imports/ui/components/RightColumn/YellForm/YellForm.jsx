@@ -24,7 +24,8 @@ import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
 import { Meteor } from 'meteor/meteor';
-
+import _ from 'lodash'
+import {musicGenres,filmGenres} from './Constant.js'
 
 const dataSource1 = ['hiphop', 'rap', 'jazz']
 
@@ -79,8 +80,8 @@ export default class YellForm extends Component {
 		})
 	}
 
-	autocompleteUpdate(e) {
-		this.setState({keyword:e})
+	autocompleteUpdate(chosenRequest,index) {
+		this.setState({keyword:index})
 	}
 
 	changePublicity(e) {
@@ -97,18 +98,19 @@ export default class YellForm extends Component {
 	let coordinates = !this.state.publicGeoLoc.coordinates ? [ipLoc.coordinates] : [ipLoc.coordinates,publicGeoLoc.coordinates]
 	let loc = {type:"MultiPoint",coordinates:coordinates}
  	let plan = this.state.activePlan==10 ? document.getElementById("customPlan").value : plans[this.state.activePlan].content
-	let keyword = this.state.keyword
+	let keyword = $('#keywordInput').val()
 	let ownerId = Meteor.userId();
 	console.log(keyword)
+	console.log(this.state.keyword)
 
-
+	/*
 		Meteor.call('addYell',loc,plan,keyword,time,publicity,ownerId,function (error, result){
 			if (error) {
 				console.log(error)
 			} else {
 				console.log('okay')
 			}
-		});	
+		});	*/
 
 
 
@@ -121,6 +123,28 @@ export default class YellForm extends Component {
 	coord = ipLoc.coordinates ? ipLoc.coordinates[0] + ' ' + ipLoc.coordinates[1] : "there is no coordinate"
 	formAppBarIcon = <IconButton onMouseDown={this.closeFormDrawer.bind(this)}> <NavigationArrowBack /></IconButton>
 	customPlan = this.state.activePlan == 10 ? <TextField id="customPlan" hintText="Enter a plan."/> : <div className="className"></div>
+  if (_.includes([0,1,5,6], this.state.activePlan ) ) {
+  	hintForKeywords = "Choose or write something for your plan." 
+  } else {
+  	hintForKeywords = "Write something for your plan. (optional)" 
+  }
+
+  switch(this.state.activePlan) {
+    case 0:
+        dataSource = musicGenres;
+        break;
+    case 1:
+        dataSource = filmGenres;
+        break;
+    default:
+        dataSource = [];
+
+       dataSourceConfig = {
+       	text :'title', 
+       	value : 'id'
+       } 
+}
+
 
 		return (
 
@@ -160,8 +184,6 @@ export default class YellForm extends Component {
 					<div style={styles.drwPadd} >
 
 					{customPlan} {/*custom plan textfield*/}
-
-
 						<RadioButtonGroup 
 									name="privacy"  
 								 	style={{ marginTop: 16 }}
@@ -188,15 +210,17 @@ export default class YellForm extends Component {
 								/>
 						</RadioButtonGroup>
 						<AutoComplete
-							onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
-							onNewRequest={ (chosenRequest)=> this.autocompleteUpdate(chosenRequest)}
-
-							floatingLabelText="Choose keyword for your plan.(optional)"
+							//onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
+							onNewRequest={ (chosenRequest,index)=> this.autocompleteUpdate(chosenRequest,index)}
+							floatingLabelText={hintForKeywords}
 							hintText="Click and choose"
-							filter={AutoComplete.noFilter}
+							filter={AutoComplete.fuzzyFilter}
 							textFieldStyle={{ fontSize: 13 }}
-							openOnFocus={true}
-							dataSource={dataSource1}
+							dataSource={dataSource}
+      						dataSourceConfig={dataSourceConfig}
+      						 maxSearchResults={5}
+      						//searchText = {this.state.keyword}
+      						id="keywordInput"
 							/><br />
 
 
@@ -213,11 +237,7 @@ export default class YellForm extends Component {
 							label="Get Suggestions!"
 							primary={true} />
 					</div>
-
 				</Drawer>
-
-
-
 			</div>
 
 		);

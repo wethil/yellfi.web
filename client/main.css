@@ -29,3 +29,9 @@
 .ui.mini.circular.label {
 	font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
+
+@media only screen and (max-width:40em){
+	.dialogContent {
+		width : 100%;
+	} 
+}
