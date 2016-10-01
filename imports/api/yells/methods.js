@@ -14,6 +14,12 @@ Meteor.methods({
             ownerId:ownerId
 
         })
+    },
+    blockUser:function(userId,yell) {
+        Yells.update({_id:yell}, {$push : {blocked_users : userId }})
+    },
+    unblockUser:function(userId,yell) {
+        Yells.update({_id:yell}, {$pull : {blocked_users : userId }})
     }
 });
 

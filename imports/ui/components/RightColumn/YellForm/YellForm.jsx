@@ -103,14 +103,14 @@ export default class YellForm extends Component {
 	console.log(keyword)
 	console.log(this.state.keyword)
 
-	/*
+	
 		Meteor.call('addYell',loc,plan,keyword,time,publicity,ownerId,function (error, result){
 			if (error) {
 				console.log(error)
 			} else {
 				console.log('okay')
 			}
-		});	*/
+		});	
 
 
 

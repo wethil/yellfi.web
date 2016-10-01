@@ -25,7 +25,8 @@ import FontIcon from 'material-ui/FontIcon';
 
  const styles = {
       searchIcon:{
-          color:'#B71C1C'
+          color:'#B71C1C',
+          fontSize:'0.7em'
         }
     }
 

@@ -5,6 +5,7 @@ import Dialog from 'material-ui/Dialog';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import CommentComposer from '../Comments/CommentComposer.jsx'
 import TextField from 'material-ui/TextField';
+import Linkify from 'linkifyjs/react';
  class YellCard extends Component {
  	constructor(props) {
  	  super(props);
@@ -16,14 +17,16 @@ import TextField from 'material-ui/TextField';
  	{
  		let comCont = $('#suggestionInput').val()
  		let yellId = this.props.yell._id
+ 		let yellOwnerId = this.props.yell.ownerId
  		let ownerId = Meteor.userId();
 
  			
-		Meteor.call('addComment',comCont,yellId,ownerId,function (error, result){
+		Meteor.call('addComment',comCont,yellId,yellOwnerId,ownerId,function (error, result){
 			if (error) {
 				console.log(error)
 			} else {
 				console.log('okay')
+				
 			}
 		});	
  	}
@@ -92,7 +95,7 @@ const radios = [];
 
 			      <CardTitle title={yell.plan} subtitle={moment(yell.time).calendar()}/>
 			        <CardText>
-			         {yell.keyword}
+			         <Linkify>   {yell.keyword}   </Linkify> 
 			        </CardText>
 			        <CardActions>
 			         <FlatButton label="join"    />

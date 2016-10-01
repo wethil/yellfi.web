@@ -21,6 +21,13 @@ Comments.attachSchema(
     yellId:{
       type:String
     },
+    yellOwnerId:{
+      type:String
+    },
+    likes:{
+      type:[String],
+      optional:true
+    },
     created_at: {
       type: Date,
       denyUpdate: true
