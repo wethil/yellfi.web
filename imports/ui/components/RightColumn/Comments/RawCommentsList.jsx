@@ -14,12 +14,31 @@ import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
+import _ from 'lodash'
 
 
  class RawCommentsList extends Component {
 
+   like(comment) {
+      Meteor.call('likeComment', Meteor.userId(), comment,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+          console.log('liked')
+        }
+      });
+   }
 
 
+   unlike(comment) {
+      Meteor.call('unlikeComment', Meteor.userId(), comment,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+          console.log('liked')
+        }
+      });
+   }
 
 	render() {
 const iconButtonElement = (
@@ -49,7 +68,13 @@ switch(Meteor.userId()) {
     case comment.ownerId:
            rightIconMenu = (
       <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem>Like</MenuItem>
+        { 
+         _.includes(comment.likes, Meteor.userId()) 
+            ? //like button. look state and change
+            <MenuItem onTouchTap={ ()=> this.unlike(comment._id)} >Unlike</MenuItem>
+            :
+            <MenuItem onTouchTap={()=> this.like(comment._id)} >Like</MenuItem>
+        }
         <MenuItem>Delete</MenuItem>
       </IconMenu>
     );

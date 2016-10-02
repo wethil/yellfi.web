@@ -11,5 +11,11 @@ Meteor.methods({
 			ownerId :ownerId
 		})
 		
-	}
+	},
+	 likeComment:function(userId,commentId) {
+        Comments.update({_id:commentId}, {$push : {likes : userId }})
+    },
+    unlikeComment:function(userId,commentId) {
+        Comments.update({_id:commentId}, {$pull : {likes : userId }})
+    }
 })
