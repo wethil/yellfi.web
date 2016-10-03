@@ -7,7 +7,8 @@ import LoadingCircle from './CommentsComponents/LoadingCircle.jsx'
 
 const composer = ( props, onData ) => {
 yellId = props.yellId
-
+blockedUsers=props.blockedUsers
+console.log(yellId)
 
   const subscription = CommentSub.subscribe( 'thisYellComments',yellId );
 
@@ -17,7 +18,7 @@ yellId = props.yellId
     const comments = Comments.find({yellId:yellId}).fetch()
 
    
-    onData( null, { comments } );
+    onData( null, { comments,blockedUsers } );
   }
 };
 

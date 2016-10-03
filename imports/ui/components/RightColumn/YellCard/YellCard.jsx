@@ -6,11 +6,15 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import CommentComposer from '../Comments/CommentComposer.jsx'
 import TextField from 'material-ui/TextField';
 import Linkify from 'linkifyjs/react';
+import emitter from '../../emitter.js'
+import Snackbar from 'material-ui/Snackbar';
+import _ from 'lodash'	
+
  class YellCard extends Component {
  	constructor(props) {
  	  super(props);
  	
- 	  this.state = {dialogOpen:false};
+ 	  this.state = {dialogOpen:false,sBar:false};
  	}
 
  	makeSuggestion()
@@ -33,11 +37,15 @@ import Linkify from 'linkifyjs/react';
 
 
 	render() {
-
+				if(this.props.yell) {
 
 const radios = [];
 
 		yell = this.props.yell
+
+		if(_.includes(yell.blocked_users, Meteor.userId()) ) {
+			this.setState({dialogOpen:false})
+		}
 
 		switch(yell.publicity) {
 	        case 0 : 
@@ -104,7 +112,7 @@ const radios = [];
 			      </Card>
 
 
-			       <Dialog
+	 <Dialog
 			          //title="Scrollable Dialog"
 			          contentClassName="dialogContent"
 			          className="justclass"
@@ -114,7 +122,7 @@ const radios = [];
 			          onRequestClose={()=>this.setState({dialogOpen:false})}
 			          autoScrollBodyContent={true}
 			        >
-         <CommentComposer yellId={yell._id} />
+         <CommentComposer yellId={yell._id}  />
        
         </Dialog>
 
@@ -122,6 +130,18 @@ const radios = [];
 
 			</div>
 		);
+	} else {
+		emitter.emit('closeDrawerForBeBlocked') //to RightColumn.jsx
+	
+
+		return (
+			<div className="className">
+				<h1 className="className">You do not have permission to see this plan anymore </h1>
+			
+			</div>
+			)
+	}
+
 	}
 }
 export default YellCard;

@@ -18,6 +18,13 @@ import _ from 'lodash'
 
 
  class RawCommentsList extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      count:0
+    };
+  }
 
    like(comment) {
       Meteor.call('likeComment', Meteor.userId(), comment,  (error) => {
@@ -35,12 +42,27 @@ import _ from 'lodash'
         if (error) {
           console.log(error)
         }else {
-          console.log('liked')
+          console.log('unliked')
         }
       });
    }
 
+   blockUserFromComment(commentId,commentOwner,yellId){
+        Meteor.call('blockUserFromComment',commentId, commentOwner, yellId,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+         console.log(('blocked'))
+        }
+      });
+     
+   }
+
+ 
+
+
 	render() {
+    console.log(this.props.blockedUsers)
 const iconButtonElement = (
   <IconButton
     touch={true}
@@ -84,7 +106,7 @@ switch(Meteor.userId()) {
             <IconMenu iconButtonElement={iconButtonElement}>
               <MenuItem>Like</MenuItem>
               <MenuItem>Delete</MenuItem>
-              <MenuItem>Block</MenuItem>
+             <MenuItem onTouchTap={()=> this.blockUserFromComment(comment._id,comment.ownerId,comment.yellId)} >Block</MenuItem>
             </IconMenu>
        );
 

@@ -10,13 +10,13 @@ const UserYellsSub = new SubsManager()
 const composer = ( props, onData ) => {
   userId = Meteor.userId();
 
-
+  const fieldsOpt =	{fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0}}
   const subscription = UserYellsSub.subscribe( 'thisUserYell',userId );
 
 
 
   if ( subscription.ready() ) {
-    const yells = Yells.find({ownerId:userId}).fetch()
+    const yells = Yells.find({ownerId:userId},fieldsOpt).fetch()
   
     component=0 //0 is User Yell Tab Value
    

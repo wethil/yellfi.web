@@ -5,7 +5,8 @@ import NavigationClose from 'material-ui/svg-icons/navigation/close';
 import IconButton from 'material-ui/IconButton';
 import emitter from '../emitter.js'
 import YellForm from './YellForm/YellForm.jsx'
-import YellCard from './YellCard/YellCard.jsx'
+import YellCardComposer from './YellCard/YellCardComposer.jsx'
+import Snackbar from 'material-ui/Snackbar';
 
 export default class RightColumn extends Component {
 	constructor(props) {
@@ -14,14 +15,17 @@ export default class RightColumn extends Component {
 	  this.state = {
 	  	open:true,
 	  	drwContent:0,
-	  	yell:{},
-	  	drawerTitle:"Create a Plan"
+	  	yellId:"",
+	  	drawerTitle:"Create a Plan",
+	  	sBar:false,
+	  	sBarMessage:""
 	  };
 	}
 
 	componentDidMount () {
 		 emitter.addListener('toogleDrawerForForm', this.toogleDrawerForForm.bind(this));
-		 emitter.addListener('toogleDrawerForCard', (yell)=> this.toogleDrawerForCard(yell));
+		 emitter.addListener('toogleDrawerForCard', (yellId)=> this.toogleDrawerForCard(yellId));
+		  emitter.addListener('closeDrawerForBeBlocked', this.handleBlockUser.bind(this))
 	}
 
 	toogleDrawerForForm() {
@@ -37,10 +41,10 @@ export default class RightColumn extends Component {
 		
 	}
 
-	toogleDrawerForCard(yell) {
+	toogleDrawerForCard(yellId) {
 		console.log('toogledForCard')
-		this.setState({drwContent:1, yell:yell, drawerTitle:"Plan" })//make drawer content form
-		if(this.state.open==true && this.state.yell._id &&this.state.yell._id==yell._id) //if  user click same yell, close drawer
+		this.setState({drwContent:1, yellId:yellId, drawerTitle:"Plan" })//make drawer content form. yellId came from RawYellList.js
+		if(this.state.open==true && this.state.yellId &&this.state.yellId==yellId) //if  user click same yell, close drawer
 		{
 			this.setState({open:false})
 		}else {
@@ -49,10 +53,20 @@ export default class RightColumn extends Component {
 		
 	}
 
+	handleBlockUser (){
+		 this.setState({open:false})
+		 this.setState({
+		 	sBar:true,
+		 	sBarMessage:"You do not have permission to see this plan anymore"
+		 })
+	}
+
 	render() {
 			appBarCloseIcon = <IconButton onMouseDown={()=>this.setState({open:false})}> <NavigationClose /></IconButton>
 		
 		return (
+			<div className="className">
+
 			 <Drawer  
 			 		containerStyle={styles.drawer} 
 			 		width={280} 
@@ -62,9 +76,19 @@ export default class RightColumn extends Component {
 			        <AppBar //titleStyle={styles.plansTitle}
 			        		title={this.state.drawerTitle}
 			                iconElementLeft={appBarCloseIcon}/>
-			        {this.state.drwContent==0 ? <YellForm /> : <YellCard yell={this.state.yell} /> }     
+			        {this.state.drwContent==0 ? <YellForm /> : <YellCardComposer yellId={this.state.yellId} /> }     
 			      
 			  </Drawer>
+
+			   <Snackbar
+                  open={this.state.sBar}
+                  message={this.state.sBarMessage}
+                  autoHideDuration={4000}
+                  action="ok"
+                  onActionTouchTap={()=>this.setState({sBar:false})}
+          		  onRequestClose={()=>this.setState({sBar:false})}
+            />
+			</div>	
 		);
 	}
 }

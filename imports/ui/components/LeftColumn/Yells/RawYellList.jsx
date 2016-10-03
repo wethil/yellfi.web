@@ -17,9 +17,9 @@ import emitter from '../../emitter.js'
 
 
 
-toogleYellCard(yell) {
+toogleYellCard(yellId) {
   console.log('toogle yell card')
- emitter.emit('toogleDrawerForCard',yell) //make left drawer yell card state
+ emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }
 
 
@@ -96,7 +96,7 @@ if (yell.publicity == 0) {
 		 yells.push(
           <div key={yell._id}>
             <ListItem
-                  onTouchTap={()=>this.toogleYellCard(yell)}
+                  onTouchTap={()=>this.toogleYellCard(yell._id)}
                   leftAvatar={<Avatar src={yell.owner.profile.avatar} />}
                   primaryText={ <div style={styles.username}>{yell.owner.username} <span style={styles.subhead}> planned </span> {publicityLabel} </div>}
                   secondaryText={

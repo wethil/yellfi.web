@@ -35,6 +35,7 @@ export default class Index extends Component {
                   <button style={styles.button} className="ui button"> button</button>
               </div>
                 <RightColumn />
+                
       </div>
 		);
 	}

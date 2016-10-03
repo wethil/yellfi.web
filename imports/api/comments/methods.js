@@ -17,5 +17,8 @@ Meteor.methods({
     },
     unlikeComment:function(userId,commentId) {
         Comments.update({_id:commentId}, {$pull : {likes : userId }})
-    }
+    },
+     unVisibleComment:function(commentId) {
+        Comments.update({_id:commentId}, {$set : {visible : 0 }})
+    },
 })

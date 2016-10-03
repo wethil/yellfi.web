@@ -7,7 +7,7 @@ Meteor.publishComposite('thisYellComments', function(yellId) { //always [longitu
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-          return Comments.find({yellId:yellId});
+          return Comments.find({yellId:yellId,visible:1});
         },
         children: [
             {
