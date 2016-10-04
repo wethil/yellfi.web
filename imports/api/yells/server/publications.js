@@ -28,7 +28,7 @@ Meteor.publishComposite('thisYellForLoggedIns', function(yellId,userId) { //alwa
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-            return Yells.find({"_id":yellId,"blocked_users":{$nin:[userId]}})
+            return Yells.find({"_id":yellId})
         },
         children: [
             {

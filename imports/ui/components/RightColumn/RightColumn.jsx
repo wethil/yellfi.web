@@ -25,7 +25,7 @@ export default class RightColumn extends Component {
 	componentDidMount () {
 		 emitter.addListener('toogleDrawerForForm', this.toogleDrawerForForm.bind(this));
 		 emitter.addListener('toogleDrawerForCard', (yellId)=> this.toogleDrawerForCard(yellId));
-		  emitter.addListener('closeDrawerForBeBlocked', this.handleBlockUser.bind(this))
+		 emitter.addListener('closeDrawerForBeBlocked', this.handleBlockUser.bind(this))
 	}
 
 	toogleDrawerForForm() {
@@ -43,7 +43,7 @@ export default class RightColumn extends Component {
 
 	toogleDrawerForCard(yellId) {
 		console.log('toogledForCard')
-		this.setState({drwContent:1, yellId:yellId, drawerTitle:"Plan" })//make drawer content form. yellId came from RawYellList.js
+		this.setState({drwContent:1, yellId:yellId, drawerTitle:"Plan",blockingHappened:1 })//make drawer content form. yellId came from RawYellList.js
 		if(this.state.open==true && this.state.yellId &&this.state.yellId==yellId) //if  user click same yell, close drawer
 		{
 			this.setState({open:false})
@@ -61,6 +61,13 @@ export default class RightColumn extends Component {
 		 })
 	}
 
+	componentWillUnmount (){
+		this.setState({
+			sBar:false,
+			sBarMessage:""
+		})
+	}
+
 	render() {
 			appBarCloseIcon = <IconButton onMouseDown={()=>this.setState({open:false})}> <NavigationClose /></IconButton>
 		
@@ -76,7 +83,12 @@ export default class RightColumn extends Component {
 			        <AppBar //titleStyle={styles.plansTitle}
 			        		title={this.state.drawerTitle}
 			                iconElementLeft={appBarCloseIcon}/>
-			        {this.state.drwContent==0 ? <YellForm /> : <YellCardComposer yellId={this.state.yellId} /> }     
+			        {this.state.drwContent==0 
+			        	?
+			        	 <YellForm />
+			       	  :
+			        <YellCardComposer  yellId={this.state.yellId} />
+			       }     
 			      
 			  </Drawer>
 
@@ -87,7 +99,7 @@ export default class RightColumn extends Component {
                   action="ok"
                   onActionTouchTap={()=>this.setState({sBar:false})}
           		  onRequestClose={()=>this.setState({sBar:false})}
-            />
+          		 />
 			</div>	
 		);
 	}

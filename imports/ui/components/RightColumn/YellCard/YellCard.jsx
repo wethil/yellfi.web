@@ -7,14 +7,17 @@ import CommentComposer from '../Comments/CommentComposer.jsx'
 import TextField from 'material-ui/TextField';
 import Linkify from 'linkifyjs/react';
 import emitter from '../../emitter.js'
-import Snackbar from 'material-ui/Snackbar';
 import _ from 'lodash'	
 
  class YellCard extends Component {
  	constructor(props) {
  	  super(props);
  	
- 	  this.state = {dialogOpen:false,sBar:false};
+ 	  this.state = {
+ 	  	dialogOpen:false
+ 	  };
+
+
  	}
 
  	makeSuggestion()
@@ -35,18 +38,19 @@ import _ from 'lodash'
 		});	
  	}
 
+ 	componentWillUnmount(){
+ 		this.setState({dialogOpen:false})
+ 	}
+
 
 	render() {
-				if(this.props.yell) {
+				if(this.props.yell && this.props.yell.length!=0) {
 
-const radios = [];
+
 
 		yell = this.props.yell
 
-		if(_.includes(yell.blocked_users, Meteor.userId()) ) {
-			this.setState({dialogOpen:false})
-		}
-
+	
 		switch(yell.publicity) {
 	        case 0 : 
 	           publicity = "Alone"
@@ -116,6 +120,7 @@ const radios = [];
 			          //title="Scrollable Dialog"
 			          contentClassName="dialogContent"
 			          className="justclass"
+			          contentStyle={styles.contentStyle}
 			          actions={actions}
 			          modal={false}
 			          open={this.state.dialogOpen}
@@ -137,7 +142,6 @@ const radios = [];
 		return (
 			<div className="className">
 				<h1 className="className">You do not have permission to see this plan anymore </h1>
-			
 			</div>
 			)
 	}
@@ -153,6 +157,11 @@ export default YellCard;
         },
         commentInput: {
         	width:'74%'
-        	        }
+          },
+         contentStyle:{
+         	marginTop:'-19%',
+         	marginLeft:'23%',
+         	position:'fixed'
+         } 	
 
     }
