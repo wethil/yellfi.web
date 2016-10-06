@@ -119,6 +119,7 @@ export default class YellForm extends Component {
 	}
 
 	render() {
+
 	ipLoc = this.state.ipLoc
 	coord = ipLoc.coordinates ? ipLoc.coordinates[0] + ' ' + ipLoc.coordinates[1] : "there is no coordinate"
 	formAppBarIcon = <IconButton onMouseDown={this.closeFormDrawer.bind(this)}> <NavigationArrowBack /></IconButton>
@@ -172,7 +173,7 @@ export default class YellForm extends Component {
 							primaryText={plan.content} />;
 					}) }
 				</Menu>
-				{coord}
+				{coord} 
 
 				<Drawer width={280} openSecondary={true} open={this.state.forms} >
 					<AppBar

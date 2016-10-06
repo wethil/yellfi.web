@@ -21,26 +21,9 @@ Meteor.publishComposite('thisYell', function(yellId) { //always [longitude, lati
 
 
 
-
-
-Meteor.publishComposite('thisYellForLoggedIns', function(yellId,userId) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-            return Yells.find({"_id":yellId})
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
-        }
-            }
-        ]
-    }
-});
-
-
+Meteor.publish('thisUser', function (userId) {
+  return Meteor.users.find({_id:userId})
+})
 
 
 Meteor.publishComposite('latestYells',{
@@ -55,25 +38,6 @@ Meteor.publishComposite('latestYells',{
 		}
 	]
 })
-
-
-// Server
-Meteor.publishComposite('latestYellsForLoggedIns', function(userId) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-            return Yells.find({"blocked_users":{$nin:[userId]}}, {sort: {created_at: -1}})
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
-        }
-            }
-        ]
-    }
-});
 
 
 
@@ -116,37 +80,6 @@ Meteor.publishComposite('nearestYells', function(loc) { //always [longitude, lat
 
 
 
-// Server
-Meteor.publishComposite('nearestYellsForLoggedIns', function(loc,userId) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-          return Yells.find({
-                "loc":
-                      {
-                        $near: {
-                          $geometry:
-                            {
-                              type: "Point",
-                              coordinates: loc
-                            },
-                        }
-                      },
-                "blocked_users":{$nin:[userId]}   
-
-              }
-            )
-        },
-        children: [
-            {
-            	find: function (yell) {
-					return Meteor.users.find({_id:yell.ownerId})
-				}
-            }
-        ]
-    }
-});
 
 
 // Server

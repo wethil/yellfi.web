@@ -2,22 +2,22 @@
 import FontIcon from 'material-ui/FontIcon';
 
 
- const NoYellComment = () => (
+ const BlockedUser = () => (
 	<div 
 		className="ui  center aligned basic segment" 
-		style={{height:'51.6vh',marginRight:0,backgroundColor:'#ffffff'}}> 
+		style={{height:'54.6vh',marginRight:0,backgroundColor:'#ffffff'}}> 
  <div style={{marginTop:'12%'}}>
 			<h2 className="ui center aligned icon header">
-			  <FontIcon  style={styles.icon} className="material-icons">insert_comment</FontIcon> <br />
-			  <span style={styles.subhead}> No Suggestion Yet </span>
+			  <FontIcon  style={styles.icon} className="material-icons">face</FontIcon> <br />
+			  <span style={styles.subhead}> Sorry, but... </span>
 			</h2>
-			<div style={styles.content}> Make first suggestion for this plan!  </div>
+			<div style={styles.content}>  It seems yor suggestions are blocked for this plan. Time to try for others </div>
 		</div>
 	</div>
 
 						 	 );
 
- export default NoYellComment
+ export default BlockedUser
 
 
  const styles = {

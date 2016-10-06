@@ -10,14 +10,11 @@ const composer = ( props, onData ) => {
   heightforBottomNav=props.height
   const fieldsOpt =	{fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0}}
 
- const subscription = Meteor.userId() ? 
-    YellSubs.subscribe( 'nearestYellsForLoggedIns',coordinates, Meteor.userId() )
-   	:
-   	 YellSubs.subscribe( 'nearestYells',coordinates )
+ const subscription = YellSubs.subscribe( 'nearestYells',coordinates )
 
 
   if ( subscription.ready() ) {
-    const yells = Meteor.userId() ? Yells.find({"blocked_users":{$nin:[Meteor.userId()]}},fieldsOpt).fetch() : Yells.find(fieldsOpt).fetch() 
+    const yells =  Yells.find({},fieldsOpt).fetch() 
     console.log(yells)
     onData( null, { yells,heightforBottomNav } );
   }

@@ -31,7 +31,43 @@
 }
 
 @media only screen and (max-width:40em){
+  .justclass{
+    padding-top: 0px !important;
+  }
 	.dialogContent {
-		width : 100%;
+		width : 100% !important;
+    transform : inherit !important;
+    margin : 0px 0px 0px 0px !important;
 	} 
+
+  .dialogBody{
+    max-height: 90vh !important;
+    padding:0px 0px 0px 0px !important;
+  }
+
+  .actionsContainer {
+    max-height: 11vh !important;
+  }
+
+  .suggestInput {
+    font-size: 14px !important;
+    width: 100% !important;
+
+  }
+
+  .hiddenOnMobile {
+    display:none !important
+  }
+
+  .comments {
+    height:84vh !important
+  }
+
+
+
 }
+
+.suggestInput {
+    width: 100% !important;
+  }
+

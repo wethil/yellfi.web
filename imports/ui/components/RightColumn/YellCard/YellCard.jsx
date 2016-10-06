@@ -6,8 +6,13 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import CommentComposer from '../Comments/CommentComposer.jsx'
 import TextField from 'material-ui/TextField';
 import Linkify from 'linkifyjs/react';
-import emitter from '../../emitter.js'
-import _ from 'lodash'	
+import emitter from '../../emitter.js';
+import BlockedUser from '../Comments/CommentsComponents/BlockedUser.jsx'
+import FontIcon from 'material-ui/FontIcon';
+import List from 'material-ui/List/List';
+import ListItem from 'material-ui/List/ListItem';
+import Avatar from 'material-ui/Avatar';
+
 
  class YellCard extends Component {
  	constructor(props) {
@@ -44,7 +49,17 @@ import _ from 'lodash'
 
 
 	render() {
-				if(this.props.yell && this.props.yell.length!=0) {
+		
+		userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
+		console.log(this.props.user)
+
+	dialogTitleButton=   <FlatButton
+					      label="Suggestions"
+					      icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
+					      onTouchTap={()=> this.setState({dialogOpen:false})}
+					    />
+			
+
 
 
 
@@ -75,24 +90,37 @@ import _ from 'lodash'
 					</div>
 
 
-  const actions = [
-  <TextField
-      id="suggestionInput"	
-      hintText="Make a suggestion or paste a link!  "
-      style={styles.commentInput}
-    />,
-      <FlatButton
-        label="Submit"
-        primary={true}
-        keyboardFocused={true}
-        onTouchTap={this.makeSuggestion.bind(this)}
-      />,
-      <FlatButton
-        label="Submit"
+  const actions = this.props.userBlocked
+   ? 
+  
+  <FlatButton
+        label="CLOSE"
         primary={true}
         onTouchTap={()=> this.setState({dialogOpen:false})}
-      />,
-    ];
+      />
+  
+   : 
+
+   <List >
+    <ListItem
+    	style={{padding:"5px 16px 20px 72px "}}
+      disabled={true}
+      leftAvatar={userAvatar}
+    >
+     <TextField
+	      className="suggestInput"
+	      multiLine={true}
+	      rows={1}
+	      rowsMax={2}
+	      id="suggestionInput"	
+	      hintText="Make a suggestion or paste a link!  "
+	      style={styles.commentInput}
+	      textareaStyle={styles.textareaStyle}
+	    />
+    </ListItem>
+   </List> 
+  
+    
 
 
 		return (
@@ -118,33 +146,33 @@ import _ from 'lodash'
 
 	 <Dialog
 			          //title="Scrollable Dialog"
-			          contentClassName="dialogContent"
 			          className="justclass"
+			          bodyClassName="dialogBody"
+			          contentClassName="dialogContent"
+			          overlayClassName="overlay"
+			          actionsContainerClassName="actionsContainer"
 			          contentStyle={styles.contentStyle}
 			          actions={actions}
 			          modal={false}
 			          open={this.state.dialogOpen}
 			          onRequestClose={()=>this.setState({dialogOpen:false})}
+			          title={dialogTitleButton}
+			          titleClassName="titleClass"
+			          titleStyle={styles.titleStyle}
 			          autoScrollBodyContent={true}
+			          
 			        >
-         <CommentComposer yellId={yell._id}  />
+     {this.props.userBlocked
+      ? 
+     <BlockedUser />
+      : 
+      <CommentComposer  yellId={yell._id}  />
+        }    
        
         </Dialog>
-
-
-
-			</div>
+</div>
 		);
-	} else {
-		emitter.emit('closeDrawerForBeBlocked') //to RightColumn.jsx
 	
-
-		return (
-			<div className="className">
-				<h1 className="className">You do not have permission to see this plan anymore </h1>
-			</div>
-			)
-	}
 
 	}
 }
@@ -162,6 +190,20 @@ export default YellCard;
          	marginTop:'-19%',
          	marginLeft:'23%',
          	position:'fixed'
-         } 	
+         },
+         titleStyle:{
+         	padding:'0px 0px 0px 0px',
+         	borderBottomStyle:'none'
+         },
+         textareaStyle:{
+         	marginTop:0
+         }	
 
     }
+/*
+hint
+ bottom 23
+ 	
+*/	
+
+

@@ -15,7 +15,7 @@ import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import _ from 'lodash'
-
+import CustomScroll from 'react-custom-scroll';
 
  class RawCommentsList extends Component {
   constructor(props) {
@@ -137,8 +137,8 @@ switch(Meteor.userId()) {
                   leftAvatar={<Avatar src={comment.owner.profile.avatar} />}
                   primaryText={
                    <div style={styles.username}>{comment.owner.username}
-                       <span style={styles.subhead}> suggested </span> 
-                       <span style={styles.searchRow}>  <span style={styles.subhead}> search this with</span>  {searchOnGoogle} | {searchOnYoutube} </span>
+                       <span style={styles.subhead} className="hiddenOnMobile" > suggested </span> 
+                       <span style={styles.searchRow}>  <span className="hiddenOnMobile" style={styles.subhead}>  search this with</span>  {searchOnGoogle} | {searchOnYoutube} </span>
                        </div>
                      }
                   secondaryText={
@@ -163,13 +163,19 @@ comments = <NoYellComment />
     }
 
 
-		return (
-  <div className="className">
 
+
+
+
+
+
+
+
+		return (
+  <div style={styles.listSegment} className="comments">
       <List style={styles.list} > 
         {comments}
-      </List> 
-
+      </List>  
 
 {/* if add drawer here, it will rendered on left column itself */}
   </div>  
@@ -177,7 +183,6 @@ comments = <NoYellComment />
 	}
 }
 export default RawCommentsList;
-
 
 
      const styles = {
@@ -205,7 +210,10 @@ export default RawCommentsList;
         },
         searchRow :{
           marginLeft:'53%'
+        },
+        listSegment:{
+          height:'54vh',
+          maxHeight:'84vh'
         }
-
 
     }

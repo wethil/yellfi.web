@@ -7,6 +7,7 @@ import emitter from '../emitter.js'
 import YellForm from './YellForm/YellForm.jsx'
 import YellCardComposer from './YellCard/YellCardComposer.jsx'
 import Snackbar from 'material-ui/Snackbar';
+import { Session } from 'meteor/session'
 
 export default class RightColumn extends Component {
 	constructor(props) {
@@ -18,14 +19,21 @@ export default class RightColumn extends Component {
 	  	yellId:"",
 	  	drawerTitle:"Create a Plan",
 	  	sBar:false,
-	  	sBarMessage:""
+	  	sBarMessage:"",
+	  	user:{}
 	  };
 	}
 
 	componentDidMount () {
+
 		 emitter.addListener('toogleDrawerForForm', this.toogleDrawerForForm.bind(this));
 		 emitter.addListener('toogleDrawerForCard', (yellId)=> this.toogleDrawerForCard(yellId));
 		 emitter.addListener('closeDrawerForBeBlocked', this.handleBlockUser.bind(this))
+		
+	}
+
+	componentWillMount(){
+		 emitter.addListener('userInf',(user)=> this.getUserInf(user) )
 	}
 
 	toogleDrawerForForm() {
@@ -61,6 +69,10 @@ export default class RightColumn extends Component {
 		 })
 	}
 
+	getUserInf (user) {
+		this.setState({user:user})
+	}
+
 	componentWillUnmount (){
 		this.setState({
 			sBar:false,
@@ -87,7 +99,7 @@ export default class RightColumn extends Component {
 			        	?
 			        	 <YellForm />
 			       	  :
-			        <YellCardComposer  yellId={this.state.yellId} />
+			        <YellCardComposer user={this.state.user}   yellId={this.state.yellId} />
 			       }     
 			      
 			  </Drawer>

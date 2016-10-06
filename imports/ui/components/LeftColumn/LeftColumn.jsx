@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import LeftNavHead from './LeftNavHead/LeftNavHead.jsx'
+import LeftNavHeadComposer from './LeftNavHead/LeftNavHeadComposer.jsx'
 import MainFragment from './YellsFragment/MainFragment'
 
 
@@ -16,7 +16,7 @@ export  default class LeftColumn extends Component {
 	render() {
 		return (
 			<div>
-				<LeftNavHead />
+				<LeftNavHeadComposer />
 				<MainFragment userID={Meteor.userId()} />
 				
 				
