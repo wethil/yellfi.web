@@ -24,17 +24,43 @@ export default class RightColumn extends Component {
 	  };
 	}
 
-	componentDidMount () {
 
+
+	componentDidMount () {
+	
+		//console.log(this.props.location.query.comment)
+		 //this.setState({drwContent:1, drawerTitle:"Plan",yellId:this.props.params.id,open:true})
+		
 		 emitter.addListener('toogleDrawerForForm', this.toogleDrawerForForm.bind(this));
 		 emitter.addListener('toogleDrawerForCard', (yellId)=> this.toogleDrawerForCard(yellId));
 		 emitter.addListener('closeDrawerForBeBlocked', this.handleBlockUser.bind(this))
 		
 	}
 
+	
+
 	componentWillMount(){
+		this.setState({drwContent:1, drawerTitle:"Plan",yellId:this.props.params.id,open:true})
 		 emitter.addListener('userInf',(user)=> this.getUserInf(user) )
 	}
+
+
+	componentWillReceiveProps (nextProps) {
+
+		yellId= nextProps.params.id
+	
+			 this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId})//make drawer content card. yellId came from RawYellList.js
+			 if(this.state.open==true && this.state.yellId && nextProps.params.id==this.state.yellId ) //if  user click same yell, close drawer
+			{
+				this.setState({open:false})
+			}else {
+				this.setState({open:true}) 
+			} 
+
+			
+	}
+
+
 
 	toogleDrawerForForm() {
 		console.log('toogled')
@@ -51,7 +77,7 @@ export default class RightColumn extends Component {
 
 	toogleDrawerForCard(yellId) {
 		console.log('toogledForCard')
-		this.setState({drwContent:1, yellId:yellId, drawerTitle:"Plan",blockingHappened:1 })//make drawer content form. yellId came from RawYellList.js
+		this.setState({drwContent:1, yellId:yellId, drawerTitle:"Plan" })//make drawer content card. yellId came from RawYellList.js
 		if(this.state.open==true && this.state.yellId &&this.state.yellId==yellId) //if  user click same yell, close drawer
 		{
 			this.setState({open:false})
@@ -81,6 +107,10 @@ export default class RightColumn extends Component {
 	}
 
 	render() {
+
+
+
+		
 			appBarCloseIcon = <IconButton onMouseDown={()=>this.setState({open:false})}> <NavigationClose /></IconButton>
 		
 		return (

@@ -15,7 +15,7 @@ const fieldsOpt =	{fields: {rating:0,comment_quantity:0,requested:0,approved:0,b
    heightforBottomNav=props.height
   if ( subscription.ready() ) {
   const yells =  Yells.find({},fieldsOpt).fetch() 
-    console.log(yells)
+  
     onData( null, { yells,heightforBottomNav } );
   }
 };

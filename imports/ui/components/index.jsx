@@ -22,35 +22,15 @@ export default class Index extends Component {
 
 
 		return (
-  <div className="ui stackable two column grid main_content fixed ">
-              <div className="five wide column ">
-                <LeftColumn ipLoc={this.state.ipLoc} />
-                
-              </div>
-              <div className="eleven wide column animated fadeIn fixed ">
-      
-                  <YellMap />
-
-                
-                  <button style={styles.button} className="ui button"> button</button>
-              </div>
+ 
                 <RightColumn />
                 
-      </div>
+     
 		);
 	}
 }
 
 
-const styles = {
-  button:{
-    zIndex:2,
-    position:'absolute'
-  }
-};
-
-
-  
 
 
 

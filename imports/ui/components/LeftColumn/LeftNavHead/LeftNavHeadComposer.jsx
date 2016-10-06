@@ -16,8 +16,8 @@ const composer = ( props, onData ) => {
 
   if ( subscription.ready() ) {
     const user = Meteor.users.findOne({_id:userId})
-    console.log(user)
-    emitter.emit('userInf', user);
+
+    emitter.emit('userInf', user); //send to rightcolumn
   
    
    

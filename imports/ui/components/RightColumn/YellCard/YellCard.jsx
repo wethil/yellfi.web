@@ -25,6 +25,10 @@ import Avatar from 'material-ui/Avatar';
 
  	}
 
+ 	componentDidMount(){
+ 		
+ 	}
+
  	makeSuggestion()
  	{
  		let comCont = $('#suggestionInput').val()
@@ -51,7 +55,7 @@ import Avatar from 'material-ui/Avatar';
 	render() {
 		
 		userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
-		console.log(this.props.user)
+
 
 	dialogTitleButton=   <FlatButton
 					      label="Suggestions"

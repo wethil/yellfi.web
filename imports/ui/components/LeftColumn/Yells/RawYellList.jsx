@@ -8,7 +8,7 @@ import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/
 import CustomScroll from 'react-custom-scroll';
 import NoUserYell from './YellsComponents/NoUserYell.jsx'
 import NoApprovedYell from './YellsComponents/NoApprovedYell.jsx'
-
+import { browserHistory } from 'react-router'
 import { Session } from 'meteor/session'
 import emitter from '../../emitter.js'
 
@@ -19,7 +19,8 @@ import emitter from '../../emitter.js'
 
 toogleYellCard(yellId) {
   console.log('toogle yell card')
- emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
+  browserHistory.push('/yell/'+yellId)
+// emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }
 
 

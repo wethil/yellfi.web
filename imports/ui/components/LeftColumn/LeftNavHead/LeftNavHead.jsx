@@ -11,7 +11,7 @@ const style = {
 };
 
 const LeftNavHead = (props) =>{ 
-console.log(props.user)
+
 
 
 return	(

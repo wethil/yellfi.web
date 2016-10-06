@@ -27,7 +27,7 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 		ipLoc=this.props.ipLoc
 		content = this.state.botNavIndex==0 ?  <LatestYells height={'73.6vh'} /> : <NearestYells height={'73.6vh'} ipLoc={ipLoc} />
 
-		console.log(this.state.botNavIndex)
+	
 		return (
 			 <div className="className">	
 			 {content}	  

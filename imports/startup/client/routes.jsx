@@ -3,6 +3,7 @@ import { render } from 'react-dom';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { App } from '../../ui/layouts/app.jsx';
 import Index from '../../ui/components/index.jsx';
+import RightColumn from '../../ui/components/RightColumn/RightColumn.jsx';
 
 //import  {Admin}  from '../../ui/components/admin/Admin.jsx';
 //import { NotFound } from '../../ui/components/NotFound.jsx';
@@ -12,9 +13,9 @@ Meteor.startup(()=> {
     render (
         <Router history={browserHistory} >
             <Route path="/" component={App} >
-                <IndexRoute component={ Index } />
+              {/**    <IndexRoute component={ Index } /> **/}
 
-               {/**  <Route path="admin" component = {Admin} /> **/}
+                <Route path="/yell/:id" component = {RightColumn} /> 
           
             </Route>
             {/**<Route path="*" component={NotFound} /> **/}
