@@ -40,8 +40,11 @@ export default class RightColumn extends Component {
 	
 
 	componentWillMount(){
-		this.setState({drwContent:1, drawerTitle:"Plan",yellId:this.props.params.id,open:true})
-		 emitter.addListener('userInf',(user)=> this.getUserInf(user) )
+
+			this.setState({drwContent:1, drawerTitle:"Plan",yellId:this.props.params.id,open:true})
+			 emitter.addListener('userInf',(user)=> this.getUserInf(user) )
+		
+
 	}
 
 
