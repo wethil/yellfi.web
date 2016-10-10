@@ -4,11 +4,7 @@ Yells = new Mongo.Collection('yells' ,{
                 transform : function(doc) {
                   doc.owner = Meteor.users.findOne({
                     _id:doc.ownerId
-                  },{fields: {
-                              'services':0 ,
-                              'createdAt':0 ,
-                               'emails' :0
-                         }});
+                  },{fields:{'services':0 ,'createdAt':0 ,'emails' :0 }});
                   return doc
                 }
               });
@@ -56,14 +52,20 @@ Yells.attachSchema(
          type : String,
          defaultValue : "yellfi"
     },
-    requested : {
-      type: [String],
-      defaultValue:[]
+    requests : {
+      type: Array,
+      optional:true
     },
-    approved : {
-      type:[String],
-      defaultValue:[]
+    'requests.$':{
+      type:Object,
     },
+    'requests.$.requererId':{
+      type:String
+    },
+    'requests.$.approved':{
+      type:Boolean
+    },
+
     visible :{
       type:Number,
       defaultValue:1

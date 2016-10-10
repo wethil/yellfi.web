@@ -8,13 +8,7 @@ import emitter from './emitter.js'
 
 
 export default class Index extends Component {
-  constructor(props) {
-    super(props);
   
-    this.state = {
-      ipLoc:{}
-    };
-  }
 
 
 	render() {

@@ -20,6 +20,9 @@ import {geolocated} from 'react-geolocated';
  		emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}) );
  		emitter.addListener('userLogout',()=> this.setState({userId:null}) );
 
+ 	}
+
+  componentWillMount () {
       $.getJSON('http://ipinfo.io', (data) =>{
               console.log(data)
               preLoc=data.loc.split(",")
@@ -31,17 +34,11 @@ import {geolocated} from 'react-geolocated';
                 ipLocAdress:`${data.city} ${data.region} ${data.country}  `
               }
               this.setState({ipLoc})
-              emitter.emit('changeipLoc',ipLoc) // to YellForm
+              //emitter.emit('changeipLoc',ipLoc) // to YellForm
             })
 
-     
 
-
- 	}
-
-	render() {
-
-if (this.state.userId!=null) {
+      if (this.state.userId!=null) {
 
     if(this.props.coords) {
          var lat =this.props.coords.latitude
@@ -52,12 +49,17 @@ if (this.state.userId!=null) {
             ipLocAdress:""
          }
          this.setState({ipLoc})
-            emitter.emit('changeipLoc',ipLoc)
+            //emitter.emit('changeipLoc',ipLoc)
           } else {
             var lat="no lat"
           }
   
 }
+
+  }
+
+	render() {
+
 
 
 		return (

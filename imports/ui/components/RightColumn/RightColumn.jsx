@@ -40,10 +40,14 @@ export default class RightColumn extends Component {
 	
 
 	componentWillMount(){
+		dialog = this.props.location.query.dialog
+
 
 			this.setState({drwContent:1, drawerTitle:"Plan",yellId:this.props.params.id,open:true})
 			 emitter.addListener('userInf',(user)=> this.getUserInf(user) )
-		
+
+			dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
+
 
 	}
 
@@ -59,6 +63,10 @@ export default class RightColumn extends Component {
 			}else {
 				this.setState({open:true}) 
 			} 
+
+		dialog = nextProps.location.query.dialog
+		
+		dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
 
 			
 	}
@@ -132,7 +140,7 @@ export default class RightColumn extends Component {
 			        	?
 			        	 <YellForm />
 			       	  :
-			        <YellCardComposer user={this.state.user}   yellId={this.state.yellId} />
+			        <YellCardComposer user={this.state.user}  dialog={this.state.dialog} yellId={this.state.yellId} />
 			       }     
 			      
 			  </Drawer>

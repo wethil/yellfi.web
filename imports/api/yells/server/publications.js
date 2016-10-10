@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
-import '../yells.js'
+import '../yells.js';
+
 
 
 Meteor.publishComposite('thisYell', function(yellId) { //always [longitude, latitude] order 
@@ -19,6 +20,12 @@ Meteor.publishComposite('thisYell', function(yellId) { //always [longitude, lati
     }
 });
 
+
+                  
+
+Meteor.publish('multipleUsers',function(usersArray){
+  return Meteor.users.find({_id: {$in:usersArray} })
+})
 
 
 Meteor.publish('thisUser', function (userId) {

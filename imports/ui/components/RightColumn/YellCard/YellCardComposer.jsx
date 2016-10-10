@@ -9,6 +9,7 @@ const ThisYellSub = new SubsManager()
 const composer = ( props, onData ) => {
  	yellId = props.yellId
  	user = props.user
+ 	dialog=props.dialog
  
 
    const subscription = ThisYellSub.subscribe( 'thisYell',yellId ) 
@@ -23,7 +24,7 @@ const composer = ( props, onData ) => {
   
     
    
-    onData( null, { yell,userBlocked,user } );
+    onData( null, { yell,userBlocked,user,dialog } );
   }
 };
 

@@ -12,6 +12,7 @@ import FontIcon from 'material-ui/FontIcon';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import Avatar from 'material-ui/Avatar';
+import { browserHistory } from 'react-router'
 
 
  class YellCard extends Component {
@@ -25,9 +26,40 @@ import Avatar from 'material-ui/Avatar';
 
  	}
 
- 	componentDidMount(){
- 		
+ 	componentWillMount(){
+ 		dialog = this.props.dialog
+ 		this.setDialogContent(dialog)
+
  	}
+
+ 		componentWillReceiveProps (nextProps) {
+		dialog = nextProps.dialog
+		this.setDialogContent(dialog)
+		
+
+	}
+
+	setDialogContent(dialog){
+		switch(dialog) {
+		    case 'comment':
+		        this.setState({dialogContent:'comment', dialogOpen:true})
+		       
+		        break;
+		    case 'joining':
+		       this.setState({dialogContent:'joining', dialogOpen:true})
+		       
+		        break;
+		    default:
+		        this.setState({dialogOpen:false})
+		}
+	}
+
+
+ 	toogleDialogFromLink(){
+ 		console.log('asd')
+ 		this.setState({dialogOpen:true})
+ 	}
+ 	
 
  	makeSuggestion()
  	{
@@ -47,12 +79,17 @@ import Avatar from 'material-ui/Avatar';
 		});	
  	}
 
+ 	handleCloseDialogViaUrl (){
+ 		browserHistory.push('/yell/'+yell._id)
+ 	}
+
  	componentWillUnmount(){
  		this.setState({dialogOpen:false})
  	}
 
 
 	render() {
+	
 		
 		userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
 
@@ -60,7 +97,7 @@ import Avatar from 'material-ui/Avatar';
 	dialogTitleButton=   <FlatButton
 					      label="Suggestions"
 					      icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
-					      onTouchTap={()=> this.setState({dialogOpen:false})}
+					      onTouchTap={this.handleCloseDialogViaUrl.bind(this)}
 					    />
 			
 
@@ -100,7 +137,7 @@ import Avatar from 'material-ui/Avatar';
   <FlatButton
         label="CLOSE"
         primary={true}
-        onTouchTap={()=> this.setState({dialogOpen:false})}
+        onTouchTap={ this.handleCloseDialogViaUrl.bind(this)}
       />
   
    : 
@@ -143,7 +180,7 @@ import Avatar from 'material-ui/Avatar';
 			        </CardText>
 			        <CardActions>
 			         <FlatButton label="join"    />
-			          <FlatButton label="suggest" onTouchTap={()=> this.setState({dialogOpen:true})}  />
+			          <FlatButton label="suggest" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  />
 			        </CardActions>
 			      </Card>
 
@@ -159,7 +196,7 @@ import Avatar from 'material-ui/Avatar';
 			          actions={actions}
 			          modal={false}
 			          open={this.state.dialogOpen}
-			          onRequestClose={()=>this.setState({dialogOpen:false})}
+			          onRequestClose={this.handleCloseDialogViaUrl.bind(this)}
 			          title={dialogTitleButton}
 			          titleClassName="titleClass"
 			          titleStyle={styles.titleStyle}
@@ -170,7 +207,8 @@ import Avatar from 'material-ui/Avatar';
       ? 
      <BlockedUser />
       : 
-      <CommentComposer  yellId={yell._id}  />
+      this.state.dialogContent
+     // <CommentComposer  yellId={yell._id}  />
         }    
        
         </Dialog>
