@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { List, ListItem } from 'material-ui/List';
-import SvgIconFace from 'material-ui/svg-icons/action/face';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
@@ -8,7 +7,6 @@ import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/
 import NoYellComment from './CommentsComponents/NoYellComment.jsx'
 import SearchButton from './CommentsComponents/SearchButton.jsx'
 import FontIcon from 'material-ui/FontIcon';
-import { Link } from 'react-router'
 import Linkify from 'linkifyjs/react';
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';

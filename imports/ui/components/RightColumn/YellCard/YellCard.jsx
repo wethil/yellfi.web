@@ -4,10 +4,11 @@ import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import CommentComposer from '../Comments/CommentComposer.jsx'
+import JoiningComposer from '../Joining/JoiningComposer.jsx'
 import TextField from 'material-ui/TextField';
 import Linkify from 'linkifyjs/react';
 import emitter from '../../emitter.js';
-import BlockedUser from '../Comments/CommentsComponents/BlockedUser.jsx'
+import BlockedUser from '../CommonComponents/BlockedUser.jsx'
 import FontIcon from 'material-ui/FontIcon';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
@@ -42,11 +43,19 @@ import { browserHistory } from 'react-router'
 	setDialogContent(dialog){
 		switch(dialog) {
 		    case 'comment':
-		        this.setState({dialogContent:'comment', dialogOpen:true})
+		        this.setState({dialogContent:<CommentComposer  yellId={this.props.yell._id}  />, dialogOpen:true})
 		       
 		        break;
 		    case 'joining':
-		       this.setState({dialogContent:'joining', dialogOpen:true})
+		    yell = this.props.yell
+		       this.setState({
+		       	dialogContent:<JoiningComposer
+		       						ownerId={yell.ownerId} 
+		       						requests={yell.requests}
+		       						approved={yell.approved}
+		       						 />, 
+				dialogOpen:true
+				})
 		       
 		        break;
 		    default:
@@ -179,7 +188,7 @@ import { browserHistory } from 'react-router'
 			         <Linkify>   {yell.keyword}   </Linkify> 
 			        </CardText>
 			        <CardActions>
-			         <FlatButton label="join"    />
+			         <FlatButton label="join" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')}    />
 			          <FlatButton label="suggest" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  />
 			        </CardActions>
 			      </Card>
@@ -208,7 +217,7 @@ import { browserHistory } from 'react-router'
      <BlockedUser />
       : 
       this.state.dialogContent
-     // <CommentComposer  yellId={yell._id}  />
+     // 
         }    
        
         </Dialog>

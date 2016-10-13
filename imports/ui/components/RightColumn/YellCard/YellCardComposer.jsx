@@ -1,7 +1,7 @@
 import { composeWithTracker } from 'react-komposer';
 import  Yells  from '../../../../api/yells/yells.js';
 import  YellCard  from './YellCard.jsx';
-import LoadingCircle from '../Comments/CommentsComponents/LoadingCircle.jsx'
+import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
 import _ from 'lodash'	
 
 const ThisYellSub = new SubsManager()

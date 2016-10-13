@@ -1,10 +1,9 @@
 import LocationSchema from '../Schemas/LocationSchema.js'
+const fields = {fields:{'services':0 ,'createdAt':0 ,'emails' :0 }}
 
 Yells = new Mongo.Collection('yells' ,{
                 transform : function(doc) {
-                  doc.owner = Meteor.users.findOne({
-                    _id:doc.ownerId
-                  },{fields:{'services':0 ,'createdAt':0 ,'emails' :0 }});
+                  doc.owner = Meteor.users.findOne({_id:doc.ownerId},fields);
                   return doc
                 }
               });
@@ -53,17 +52,12 @@ Yells.attachSchema(
          defaultValue : "yellfi"
     },
     requests : {
-      type: Array,
-      optional:true
+      type: [String],
+      defaultValue:[]
     },
-    'requests.$':{
-      type:Object,
-    },
-    'requests.$.requererId':{
-      type:String
-    },
-    'requests.$.approved':{
-      type:Boolean
+    approved:{
+      type:[String],
+     defaultValue:[]
     },
 
     visible :{

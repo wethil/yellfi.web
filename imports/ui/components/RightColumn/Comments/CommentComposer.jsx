@@ -1,10 +1,9 @@
 import { composeWithTracker } from 'react-komposer';
 import  Comments  from '../../../../api/comments/comments.js';
 import  RawCommentsList  from './RawCommentsList.jsx';
-import CommentSub from './CommentsComponents/subsManager.js'
-import LoadingCircle from './CommentsComponents/LoadingCircle.jsx'
+import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
 
-
+const CommentSub = new SubsManager()
 const composer = ( props, onData ) => {
 yellId = props.yellId
 

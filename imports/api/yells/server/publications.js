@@ -24,7 +24,7 @@ Meteor.publishComposite('thisYell', function(yellId) { //always [longitude, lati
                   
 
 Meteor.publish('multipleUsers',function(usersArray){
-  return Meteor.users.find({_id: {$in:usersArray} })
+  return Meteor.users.find({_id: {$in:usersArray}},{fields:{'username':1 ,'profile.avatar':1}})
 })
 
 
