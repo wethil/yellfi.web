@@ -15,7 +15,7 @@ import ListItem from 'material-ui/List/ListItem';
 import Avatar from 'material-ui/Avatar';
 import { browserHistory } from 'react-router'
 import DialogContent from './DialogContent.jsx'
-
+import _ from 'lodash'
 
  class YellCard extends Component {
  	constructor(props) {
@@ -60,9 +60,31 @@ import DialogContent from './DialogContent.jsx'
           });
 	}
 
+	approveAll(yell,requests,approved) {
+		diff = _.difference(requests, approved);
+		console.log(diff)
+		  Meteor.call('approveAll',diff,yell, error => { 
+              if (error) { 
+                  console.log('error', error); 
+              } else {
+              	console.log('approveAll')
+              }        
+          });
+	
+
+	}
+
  	toogleDialogFromLink(){
  		console.log('asd')
  		this.setState({dialogOpen:true})
+ 	}
+
+ 	handleCloseDialogViaUrl (){
+ 		browserHistory.push('/yell/'+yell._id)
+ 	}
+
+ 	componentWillUnmount(){
+ 		this.setState({dialogOpen:false})
  	}
  	
 
@@ -84,18 +106,27 @@ import DialogContent from './DialogContent.jsx'
 		});	
  	}
 
- 	handleCloseDialogViaUrl (){
- 		browserHistory.push('/yell/'+yell._id)
- 	}
-
- 	componentWillUnmount(){
- 		this.setState({dialogOpen:false})
- 	}
+ 	
 
 
 	render() {
 	yell = this.props.yell
 	console.log(yell)
+// action buttons label for participants
+actLblForPartic =_.includes(yell.approved, Meteor.userId()) ? "Approved" : "Waiting for approve"
+// action buttons for participants
+      if(yell.ownerId!=Meteor.userId()) {
+       actBtnForPartic =  _.includes(yell.requests, Meteor.userId()) 
+         ?
+        <FlatButton label={actLblForPartic} primary={true} disabled={true} />
+               :
+          <FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id)}  primary={true}  />
+
+      } else {
+      actBtnForPartic = <FlatButton label="Approve all" primary={true} onTouchTap={()=>this.approveAll(yell._id,yell.requests,yell.approved)} />
+         
+      }
+
 	
 	if (!this.props.userBlocked) {
 		switch(this.state.dialogContent) {
@@ -122,7 +153,7 @@ import DialogContent from './DialogContent.jsx'
 		        break;
 		    case 2:
 		  	dialogContent = <JoiningComposer yellId={yell._id} ownerId={yell.ownerId} requests={yell.requests} approved ={yell.approved} />
-		    dialogAction =  <FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id)}  primary={true}/> 
+		    dialogAction =  actBtnForPartic
 		    dialogTitleLabel ="participants"	
 		        break;
 		    default:
@@ -140,6 +171,7 @@ import DialogContent from './DialogContent.jsx'
 	dialogTitleButton=<span key={1} >
 						   <FlatButton
 						      label={dialogTitleLabel}
+						      primary={true}
 						      icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
 						      onTouchTap={this.handleCloseDialogViaUrl.bind(this)}
 						    />

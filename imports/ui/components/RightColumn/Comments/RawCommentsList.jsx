@@ -130,7 +130,7 @@ const iconButtonElement = (
          comments.push(
               <div key={comment._id}>
                 <ListItem
-                      //onTouchTap={()=>this.toogleYellCard(comments)}
+                      disabled={true}
                         rightIconButton={rightIconMenu}
                       disabled={true}
                       leftAvatar={<Avatar src={comment.owner.profile.avatar} />}

@@ -26,6 +26,7 @@ import IconButton from 'material-ui/IconButton';
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash'
 import {musicGenres,filmGenres} from './Constant.js'
+import Lockr from 'lockr'
 
 const dataSource1 = ['hiphop', 'rap', 'jazz']
 
@@ -121,6 +122,8 @@ export default class YellForm extends Component {
 	}
 
 	render() {
+		loc = Lockr.get('loc')
+		console.log(loc)
 
 	ipLoc = this.state.ipLoc
 	coord = ipLoc.coordinates ? ipLoc.coordinates[0] + ' ' + ipLoc.coordinates[1] : "there is no coordinate"

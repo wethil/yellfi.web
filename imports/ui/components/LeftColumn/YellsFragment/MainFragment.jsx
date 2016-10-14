@@ -33,8 +33,8 @@ import {geolocated} from 'react-geolocated';
                 coordinates:[lng,lat],//always stay lng lat
                 ipLocAdress:`${data.city} ${data.region} ${data.country}  `
               }
-              this.setState({ipLoc})
-              //emitter.emit('changeipLoc',ipLoc) // to YellForm
+             
+               localStorage.setItem("loc", ipLoc);
             })
 
 
@@ -48,8 +48,7 @@ import {geolocated} from 'react-geolocated';
             coordinates:[lng,lat],
             ipLocAdress:""
          }
-         this.setState({ipLoc})
-            //emitter.emit('changeipLoc',ipLoc)
+        localStorage.setItem("loc", ipLoc);
           } else {
             var lat="no lat"
           }

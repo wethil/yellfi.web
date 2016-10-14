@@ -31,6 +31,13 @@ Meteor.methods({
     },
     cancelApprove:function(userId,yell) {
         Yells.update({_id:yell}, {$pull : {approved : userId }})
+    },
+     cancelJoin: function(userId,yell) {//requerers will use this
+         Yells.update({_id:yell}, {$pull : {requests : userId }})
+    },
+      approveAll:function(userArray,yell) {
+        Yells.update({_id:yell}, {$push:{approved:{$each:userArray }}})
     }
 });
+
 

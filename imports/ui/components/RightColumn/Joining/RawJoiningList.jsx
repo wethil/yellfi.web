@@ -8,6 +8,7 @@ import IconButton from 'material-ui/IconButton';
 import _ from 'lodash'
 import Toggle from 'material-ui/Toggle';
 import Subheader from 'material-ui/Subheader';
+import NoParticipants from './JoiningComponents/NoParticipants.jsx'
 
 
  const handleToogle =(user,yell) => {
@@ -31,6 +32,16 @@ import Subheader from 'material-ui/Subheader';
 
  } 
 
+ const cancelJoin = (user,yell) => {
+   Meteor.call('cancelJoin',user,yell, error=> {
+      if (error) {
+        console.log(error)
+      }else {
+        console.log('cancelJoin')
+      }
+   });
+ }
+
 
  const getListItem = (requerer,approved,ownership,yellId)  =>{
 
@@ -44,13 +55,30 @@ if (ownership) {
                               onToggle={()=>handleToogle(requerer._id,yellId)}  
                                /> } 
                   />
-   
     } else {
+          if (Meteor.userId()&&requerer._id==Meteor.userId()) {
+          return <ListItem
+              disabled={true}
+                primaryText={ requerer.username }
+                leftAvatar={<Avatar src={requerer.profile.avatar} />}
+                rightIconButton={
+                   <IconButton
+                        iconClassName="material-icons"
+                        tooltip="Leave this plan"
+                        onTouchTap ={()=>cancelJoin(requerer._id,yellId)}
+                      >
+                        close
+                      </IconButton>
+                }
+            />
+          } else {
+                  return <ListItem
+                primaryText={ requerer.username }
+                leftAvatar={<Avatar src={requerer.profile.avatar} />}
+          
+            />
+          }
 
-    return <ListItem
-              primaryText={ requerer.username }
-              leftAvatar={<Avatar src={requerer.profile.avatar} />}
-          />
     }
 }
 
@@ -67,7 +95,7 @@ const renderIfData = (requerers,approved,ownership,yellId) => {
         ) ;
     });
   } else {
-    return ( <ListItem primaryText="no participants" />) ;
+    return ( <NoParticipants ownership={ownership} />) ;
   }
 };
 
