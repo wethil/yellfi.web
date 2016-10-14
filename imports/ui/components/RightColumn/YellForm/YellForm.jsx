@@ -96,7 +96,9 @@ export default class YellForm extends Component {
 	let	publicGeoLoc = this.state.publicGeoLoc
 	let	ipLoc = this.state.ipLoc
 	let coordinates = !this.state.publicGeoLoc.coordinates ? [ipLoc.coordinates] : [ipLoc.coordinates,publicGeoLoc.coordinates]
-	let loc = {type:"MultiPoint",coordinates:coordinates}
+
+	//let loc = {type:"MultiPoint",coordinates:coordinates}
+	let loc = {type:"MultiPoint",coordinates:[[60,60]]}
  	let plan = this.state.activePlan==10 ? document.getElementById("customPlan").value : plans[this.state.activePlan].content
 	let keyword = $('#keywordInput').val()
 	let ownerId = Meteor.userId();

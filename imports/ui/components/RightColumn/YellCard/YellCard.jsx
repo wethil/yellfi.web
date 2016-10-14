@@ -14,55 +14,51 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import Avatar from 'material-ui/Avatar';
 import { browserHistory } from 'react-router'
+import DialogContent from './DialogContent.jsx'
 
 
  class YellCard extends Component {
  	constructor(props) {
  	  super(props);
- 	
  	  this.state = {
  	  	dialogOpen:false
  	  };
-
-
  	}
 
  	componentWillMount(){
  		dialog = this.props.dialog
+ 		console.log(dialog)
  		this.setDialogContent(dialog)
-
  	}
 
- 		componentWillReceiveProps (nextProps) {
+ 	componentWillReceiveProps (nextProps) {
 		dialog = nextProps.dialog
+		console.log(dialog)
 		this.setDialogContent(dialog)
-		
-
 	}
 
 	setDialogContent(dialog){
 		switch(dialog) {
-		    case 'comment':
-		        this.setState({dialogContent:<CommentComposer  yellId={this.props.yell._id}  />, dialogOpen:true})
-		       
+		    case 'comment': //1 is comment, 2 is joinings
+		        this.setState({dialogContent:1, dialogOpen:true})
 		        break;
 		    case 'joining':
-		    yell = this.props.yell
-		       this.setState({
-		       	dialogContent:<JoiningComposer
-		       						ownerId={yell.ownerId} 
-		       						requests={yell.requests}
-		       						approved={yell.approved}
-		       						 />, 
-				dialogOpen:true
-				})
-		       
+		       this.setState({	dialogContent:2, dialogOpen:true})
 		        break;
 		    default:
 		        this.setState({dialogOpen:false})
 		}
 	}
 
+	reqJoin (yellId) {
+	  Meteor.call('reqJoin', Meteor.userId(),yellId, error => { 
+              if (error) { 
+                  console.log('error', error); 
+              } else {
+              	console.log('okey')
+              }        
+          });
+	}
 
  	toogleDialogFromLink(){
  		console.log('asd')
@@ -98,77 +94,79 @@ import { browserHistory } from 'react-router'
 
 
 	render() {
+	yell = this.props.yell
+	console.log(yell)
 	
-		
-		userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
-
-
-	dialogTitleButton=   <FlatButton
-					      label="Suggestions"
-					      icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
-					      onTouchTap={this.handleCloseDialogViaUrl.bind(this)}
-					    />
-			
-
-
-
-
-		yell = this.props.yell
-
-	
-		switch(yell.publicity) {
-	        case 0 : 
-	           publicity = "Alone"
+	if (!this.props.userBlocked) {
+		switch(this.state.dialogContent) {
 		    case 1:
-		        publicity = "With Everyone"
+		    dialogContent = <CommentComposer yellId={yell._id}  /> 
+		    dialogAction =  <List >
+							    <ListItem
+							      style={{padding:"5px 16px 20px 72px "}}
+							      disabled={true}
+							      leftAvatar={userAvatar}>
+							     <TextField
+								      className="suggestInput"
+								      multiLine={true}
+								      rows={1}
+								      rowsMax={2}
+								      id="suggestionInput"	
+								      hintText="Make a suggestion or paste a link!  "
+								      style={styles.commentInput}
+								      textareaStyle={styles.textareaStyle}
+								    />
+							    </ListItem>
+							   </List> 
+			dialogTitleLabel ="suggestions"				   
 		        break;
 		    case 2:
-		        publicity = "Elected ones"
-		        break;		   
+		  	dialogContent = <JoiningComposer yellId={yell._id} ownerId={yell.ownerId} requests={yell.requests} approved ={yell.approved} />
+		    dialogAction =  <FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id)}  primary={true}/> 
+		    dialogTitleLabel ="participants"	
+		        break;
+		    default:
+		    console.log('erroritto')
+		    dialogContent =  "please do not play with url.."
+		     dialogAction =  "no"
+		    dialogTitleLabel ="participants"	
 		}
 
-		if (yell.publicity!=0) {
-			publicityLabel = <span><a className="ui mini circular label"><i className="users icon"></i>{publicity}</a> </span>  
-		} else {
-			publicityLabel=""
-		}
+	}  else {
+		dialogContent = <BlockedUser />
+	}
+		
+	userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
+	dialogTitleButton=<span key={1} >
+						   <FlatButton
+						      label={dialogTitleLabel}
+						      icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
+						      onTouchTap={this.handleCloseDialogViaUrl.bind(this)}
+						    />
+						</span>
 
+switch(yell.publicity) {
+    case 0 : 
+       publicityLabel = null 
+    case 1:
+       publicityLabel = <span><a className="ui mini circular label"><i className="users icon"></i>With Everyone</a> </span>  
+        break;
+    case 2:
+       publicityLabel = <span><a className="ui mini circular label"><i className="users icon"></i>Elected ones</a> </span>  
+        break;		   
+}
+		
 		userHeader =  <div>
 						{yell.owner.username} 
-						<span style={styles.subhead}> planned {moment(yell.created_at).startOf('hour').fromNow()} </span>
-						
+						<span style={styles.subhead}> planned {moment(yell.created_at).startOf('hour').fromNow()} </span>			
 					</div>
 
 
-  const actions = this.props.userBlocked
-   ? 
-  
-  <FlatButton
-        label="CLOSE"
-        primary={true}
-        onTouchTap={ this.handleCloseDialogViaUrl.bind(this)}
-      />
-  
-   : 
-
-   <List >
-    <ListItem
-    	style={{padding:"5px 16px 20px 72px "}}
-      disabled={true}
-      leftAvatar={userAvatar}
-    >
-     <TextField
-	      className="suggestInput"
-	      multiLine={true}
-	      rows={1}
-	      rowsMax={2}
-	      id="suggestionInput"	
-	      hintText="Make a suggestion or paste a link!  "
-	      style={styles.commentInput}
-	      textareaStyle={styles.textareaStyle}
-	    />
-    </ListItem>
-   </List> 
+const actions = this.props.userBlocked
+				   ? 
+				 [<span key={1} ><FlatButton label="CLOSE" primary={true} onTouchTap={ this.handleCloseDialogViaUrl.bind(this)}/></span>]
+				   : 
+				[<span key={1}>{dialogAction}</span>]
   
     
 
@@ -182,13 +180,12 @@ import { browserHistory } from 'react-router'
 			          subtitle={publicityLabel}
 			          avatar={yell.owner.profile.avatar}
 			        />
-
 			      <CardTitle title={yell.plan} subtitle={moment(yell.time).calendar()}/>
 			        <CardText>
 			         <Linkify>   {yell.keyword}   </Linkify> 
 			        </CardText>
 			        <CardActions>
-			         <FlatButton label="join" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')}    />
+			         <FlatButton label="participants" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')}    />
 			          <FlatButton label="suggest" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  />
 			        </CardActions>
 			      </Card>
@@ -206,19 +203,13 @@ import { browserHistory } from 'react-router'
 			          modal={false}
 			          open={this.state.dialogOpen}
 			          onRequestClose={this.handleCloseDialogViaUrl.bind(this)}
-			          title={dialogTitleButton}
+			          title={[dialogTitleButton]}
 			          titleClassName="titleClass"
 			          titleStyle={styles.titleStyle}
 			          autoScrollBodyContent={true}
 			          
 			        >
-     {this.props.userBlocked
-      ? 
-     <BlockedUser />
-      : 
-      this.state.dialogContent
-     // 
-        }    
+   {dialogContent} 
        
         </Dialog>
 </div>

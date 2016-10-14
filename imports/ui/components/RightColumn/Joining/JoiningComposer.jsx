@@ -4,6 +4,7 @@ import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
 const JoiningSub = new SubsManager()
 
 const composer = ( props, onData ) => {
+yellId = props.yellId
 ownerId = props.ownerId
 requests = props.requests
 approved = props.approved
@@ -15,9 +16,9 @@ ownership = Meteor.userId() && Meteor.userId() == ownerId ? true : false
 
   if ( subscription.ready() ) {
     const requerers = Meteor.users.find({_id: {$in:requests}},fields).fetch() 
-    onData( null, { requerers,request,approved,ownership } );
+    onData( null, { requerers,approved,ownership,yellId } );
   }
 };
 
- const JoiningsComposer = composeWithTracker( composer,LoadingCircle )( RawJoiningList );
- export default JoiningsComposer
+ const JoiningComposer = composeWithTracker( composer,LoadingCircle )( RawJoiningList );
+ export default JoiningComposer

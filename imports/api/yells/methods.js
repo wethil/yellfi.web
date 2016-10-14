@@ -22,6 +22,15 @@ Meteor.methods({
     },
     unblockUser:function(userId,yell) {
         Yells.update({_id:yell}, {$pull : {blocked_users : userId }})
+    },
+    reqJoin:function(userId,yell) {
+        Yells.update({_id:yell}, {$push : {requests : userId }})
+    },
+    approveJoin:function(userId,yell) {
+        Yells.update({_id:yell}, {$push : {approved : userId }})
+    },
+    cancelApprove:function(userId,yell) {
+        Yells.update({_id:yell}, {$pull : {approved : userId }})
     }
 });
 
