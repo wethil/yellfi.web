@@ -26,7 +26,7 @@ import IconButton from 'material-ui/IconButton';
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash'
 import {musicGenres,filmGenres} from './Constant.js'
-import Lockr from 'lockr'
+
 
 const dataSource1 = ['hiphop', 'rap', 'jazz']
 
