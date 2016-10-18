@@ -23,6 +23,7 @@ import {geolocated} from 'react-geolocated';
  	}
 
   componentWillMount () {
+ 
       $.getJSON('http://ipinfo.io', (data) =>{
               console.log(data)
               preLoc=data.loc.split(",")
@@ -34,7 +35,7 @@ import {geolocated} from 'react-geolocated';
                 ipLocAdress:`${data.city} ${data.region} ${data.country}  `
               }
              
-               localStorage.setItem("loc", ipLoc);
+               this.setState({ipLoc:ipLoc})
             })
 
 
@@ -48,7 +49,7 @@ import {geolocated} from 'react-geolocated';
             coordinates:[lng,lat],
             ipLocAdress:""
          }
-        localStorage.setItem("loc", ipLoc);
+        this.setState({ipLoc:ipLoc})
           } else {
             var lat="no lat"
           }

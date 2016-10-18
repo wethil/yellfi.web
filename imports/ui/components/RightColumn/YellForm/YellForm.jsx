@@ -55,6 +55,17 @@ export default class YellForm extends Component {
 		emitter.addListener('changepublicGeoLoc', (publicGeoLoc) => this.changepublicGeoLoc(publicGeoLoc));
 	}
 
+	componentWillMount(){
+		coord=this.props.userCoordinates
+		this.setState({userCoordinates:coord})
+		if(Number.isNaN(coord[0]) || Number.isNaN(coord[1]) ) {
+		 $.getJSON("http://ip-api.com/json/?callback=?", (data)=> {
+		 		console.log('secret weapon fired!')
+	           this.setState({userCoordinates:[data.lon,data.lat]})
+	        });
+		}
+	}
+
 	closeFormDrawer () {
 		this.setState({ 
 				forms: false,
@@ -95,16 +106,14 @@ export default class YellForm extends Component {
 	let	date = this.state.date==0 ? new Date : this.state.date
 	let	time = this.state.time==0 ? new Date : this.state.time
 	let	publicGeoLoc = this.state.publicGeoLoc
-	let	ipLoc = this.state.ipLoc
-	let coordinates = !this.state.publicGeoLoc.coordinates ? [ipLoc.coordinates] : [ipLoc.coordinates,publicGeoLoc.coordinates]
-
-	//let loc = {type:"MultiPoint",coordinates:coordinates}
-	let loc = {type:"MultiPoint",coordinates:[[60,60]]}
+	let	userCoordinates = this.state.userCoordinates 
+	let coordinates = !this.state.publicGeoLoc.coordinates ? [userCoordinates] : [userCoordinates,publicGeoLoc.coordinates]//came from rightcolumn.jsx
+	let geoLocAdress = this.state.publicGeoLoc.geoLocAdress ? this.state.publicGeoLoc.geoLocAdress : ""
+	let loc = {type:"MultiPoint",coordinates:coordinates, geoLocAdress:geoLocAdress}
  	let plan = this.state.activePlan==10 ? document.getElementById("customPlan").value : plans[this.state.activePlan].content
 	let keyword = $('#keywordInput').val()
 	let ownerId = Meteor.userId();
-	console.log(keyword)
-	console.log(this.state.keyword)
+	console.log(loc)
 
 	
 		Meteor.call('addYell',loc,plan,keyword,time,publicity,ownerId,function (error, result){
@@ -122,8 +131,7 @@ export default class YellForm extends Component {
 	}
 
 	render() {
-		loc = Lockr.get('loc')
-		console.log(loc)
+		
 
 	ipLoc = this.state.ipLoc
 	coord = ipLoc.coordinates ? ipLoc.coordinates[0] + ' ' + ipLoc.coordinates[1] : "there is no coordinate"

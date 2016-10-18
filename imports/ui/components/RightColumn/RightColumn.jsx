@@ -20,19 +20,14 @@ export default class RightColumn extends Component {
 	  	drawerTitle:"Create a Plan",
 	  	sBar:false,
 	  	sBarMessage:"",
-	  	user:{}
+	  	user:{},
+	  	userCoordinates:{}
 	  };
 	}
 
 
 
-	componentDidMount () {
-	
-		//console.log(this.props.location.query.comment)
-		 //this.setState({drwContent:1, drawerTitle:"Plan",yellId:this.props.params.id,open:true})
-		
-		 emitter.addListener('toogleDrawerForForm', this.toogleDrawerForForm.bind(this));
-		 emitter.addListener('toogleDrawerForCard', (yellId)=> this.toogleDrawerForCard(yellId));
+	componentDidMount () {	
 		 emitter.addListener('closeDrawerForBeBlocked', this.handleBlockUser.bind(this))
 		
 	}
@@ -40,63 +35,57 @@ export default class RightColumn extends Component {
 	
 
 	componentWillMount(){
-		dialog = this.props.location.query.dialog
-
-
-			this.setState({drwContent:1, drawerTitle:"Plan",yellId:this.props.params.id,open:true})
-			 emitter.addListener('userInf',(user)=> this.getUserInf(user) )
-
-			dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
-
-
+			let yellId = this.props.params.id
+			let dialog = this.props.location.query.dialog
+			let lng = parseFloat(this.props.location.query.lng)
+			let lat = parseFloat(this.props.location.query.lat)
+		console.log('lat'+this.props.location.query.lat)
+			this.toogleDrawerWithContent(1,yellId,dialog,lng,lat)
+			emitter.addListener('userInf',(user)=> this.getUserInf(user) )
 	}
 
 
 	componentWillReceiveProps (nextProps) {
 
-		yellId= nextProps.params.id
-	
-			 this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId})//make drawer content card. yellId came from RawYellList.js
-			 if(this.state.open==true && this.state.yellId && nextProps.params.id==this.state.yellId ) //if  user click same yell, close drawer
-			{
-				this.setState({open:false})
-			}else {
-				this.setState({open:true}) 
-			} 
-
-		dialog = nextProps.location.query.dialog
-		
-		dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
+		let yellId= nextProps.params.id
+		let dialog = nextProps.location.query.dialog
+		let lng = parseFloat(nextProps.location.query.lng)
+		let lat = parseFloat(nextProps.location.query.lat)
+		console.log('lat'+nextProps.location.query.lat)
+		this.toogleDrawerWithContent(2,yellId,dialog,lng,lat)
 
 			
 	}
 
 
+//state is when this func is triggerred. 1 is willmount, is receive props 2 
+	toogleDrawerWithContent(state,yellId,dialog,lng,lat) {
+		
+		if (state == 1) {
+			if (yellId!='new'){
+				this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId,open:true})//make drawer content card. yellId came from RawYellList.js
+				dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
+			} else {
+				this.setState({userCoordinates:[lng,lat]})
 
-	toogleDrawerForForm() {
-		console.log('toogled')
-		if (this.state.drwContent==0) {
-			drawerState = this.state.open ? false : true
-			this.setState({open:drawerState})
+				this.setState({drwContent:0, drawerTitle:"New Plan",open:true })
+			} 
 		} else {
-			this.setState({drwContent:0,drawerTitle:"Create a Plan"}) //make drawer content form
-			this.setState({open:true})
-		} 
-		
-		
+			let drawerOpen = this.state.open
+			let old_yellId = this.state.yellId
+			let openState = (yellId==old_yellId && drawerOpen==true) ? false : true
+			if (yellId!='new'){
+				this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId,open:openState})//make drawer content card. yellId came from RawYellList.js
+				dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
+			} else {
+				this.setState({userCoordinates:[lng,lat]})
+				this.setState({drwContent:0, drawerTitle:"New Plan",yellId:yellId, open:openState})
+			} 
+		}
+
+			
 	}
 
-	toogleDrawerForCard(yellId) {
-		console.log('toogledForCard')
-		this.setState({drwContent:1, yellId:yellId, drawerTitle:"Plan" })//make drawer content card. yellId came from RawYellList.js
-		if(this.state.open==true && this.state.yellId &&this.state.yellId==yellId) //if  user click same yell, close drawer
-		{
-			this.setState({open:false})
-		}else {
-			this.setState({open:true}) 
-		}
-		
-	}
 
 	handleBlockUser (){
 		 this.setState({open:false})
@@ -138,7 +127,7 @@ export default class RightColumn extends Component {
 			                iconElementLeft={appBarCloseIcon}/>
 			        {this.state.drwContent==0 
 			        	?
-			        	 <YellForm />
+			        	 <YellForm userCoordinates={this.state.userCoordinates} />
 			       	  :
 			        <YellCardComposer user={this.state.user}  dialog={this.state.dialog} yellId={this.state.yellId} />
 			       }     

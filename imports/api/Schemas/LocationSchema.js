@@ -28,7 +28,7 @@ export default LocationSchema = new SimpleSchema({
         type: String,
         optional: true
     },
-    "GeoLocAdress": {
+    "geoLocAdress": {
         type: String,
         optional: true
     },

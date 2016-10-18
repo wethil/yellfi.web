@@ -8,6 +8,8 @@ import emitter from '../../emitter.js'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
+import { browserHistory } from 'react-router'
+
 
  class UserFragment extends Component {
  	constructor(props) {
@@ -41,8 +43,11 @@ import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 	}
 
 	toogleDrawer () {
-		
-		emitter.emit('toogleDrawerForForm') //make left drawer form state 
+		 // coordinates:[lng,lat], always stay lng lat
+		 lng = this.props.ipLoc.coordinates[0]
+		 lat = this.props.ipLoc.coordinates[1]
+		browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
+	
 	}
 
 

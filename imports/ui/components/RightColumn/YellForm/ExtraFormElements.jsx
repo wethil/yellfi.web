@@ -25,7 +25,6 @@ export default class ExtraFormElements extends Component {
 			this.setState({
 			publicGeoLoc:{
 					coordinates:[lng,lat],
-					place:place.place_id,
 					geoLocAdress:place.formatted_address
 				}
 			})
