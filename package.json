@@ -23,6 +23,7 @@
     "react-portal-tooltip": "^1.1.4",
     "react-router": "^2.7.0",
     "react-swipeable-views": "^0.7.6",
-    "react-tap-event-plugin": "^1.0.0"
+    "react-tap-event-plugin": "^1.0.0",
+    "semantic-ui-react": "^0.56.7"
   }
 }

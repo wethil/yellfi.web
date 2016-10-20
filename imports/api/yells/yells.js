@@ -61,8 +61,8 @@ Yells.attachSchema(
     },
 
     visible :{
-      type:Number,
-      defaultValue:1
+      type:Boolean,
+      defaultValue:true
     },
     blocked_users:{
       type:[String],

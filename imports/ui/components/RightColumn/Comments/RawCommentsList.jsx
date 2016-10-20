@@ -14,13 +14,16 @@ import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import _ from 'lodash'
 import CustomScroll from 'react-custom-scroll';
+import Snackbar from 'material-ui/Snackbar';
 
  class RawCommentsList extends Component {
   constructor(props) {
     super(props);
   
     this.state = {
-      count:0
+      count:0,
+      snackbarState:false,
+      snackbarData:""
     };
   }
 
@@ -45,6 +48,26 @@ import CustomScroll from 'react-custom-scroll';
       });
    }
 
+   deleteComment(comment) {
+    this.setState({snackbarData:comment})
+      Meteor.call('deleteComment', comment,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+          this.setState({snackbarState:true})
+        }
+      });
+   }
+
+  undoAction (comment){
+       Meteor.call('undoDeleteComment',  comment,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+          this.setState({snackbarState:false,snackbarData:""})
+        }
+      });
+  }
    blockUserFromComment(commentId,commentOwner,yellId){
         Meteor.call('blockUserFromComment',commentId, commentOwner, yellId,  (error) => {
         if (error) {
@@ -96,7 +119,7 @@ const iconButtonElement = (
                 :
                 <MenuItem onTouchTap={()=> this.like(comment._id)} >Like</MenuItem>
             }
-            <MenuItem>Delete</MenuItem>
+             <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>Delete</MenuItem>
           </IconMenu>
         );
             break;
@@ -104,7 +127,7 @@ const iconButtonElement = (
                rightIconMenu = (
                 <IconMenu iconButtonElement={iconButtonElement}>
                   <MenuItem>Like</MenuItem>
-                  <MenuItem>Delete</MenuItem>
+                  <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>Delete</MenuItem>
                  <MenuItem onTouchTap={()=> this.blockUserFromComment(comment._id,comment.ownerId,comment.yellId)} >Block</MenuItem>
                 </IconMenu>
            );
@@ -129,7 +152,7 @@ const iconButtonElement = (
 
          comments.push(
               <div key={comment._id}>
-                <ListItem
+                <ListItem key={comment._id}
                       disabled={true}
                         rightIconButton={rightIconMenu}
                       disabled={true}
@@ -177,6 +200,22 @@ comments = <NoYellComment />
       </List>  
 
 {/* if add drawer here, it will rendered on left column itself */}
+      <Snackbar
+          open={this.state.snackbarState}
+          message="You deleted a comment"
+          autoHideDuration={4000}
+          action="undo"
+          onActionTouchTap={ ()=>
+            this.undoAction(this.state.snackbarData)
+          }
+          onRequestClose={()=>
+            this.setState({
+              snackbarState:false,
+              snackbarData:""
+              })
+            }
+    
+        />
   </div>  
 		);
 	}

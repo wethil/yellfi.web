@@ -26,6 +26,7 @@ import IconButton from 'material-ui/IconButton';
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash'
 import {musicGenres,filmGenres} from './Constant.js'
+import { browserHistory } from 'react-router'
 
 
 const dataSource1 = ['hiphop', 'rap', 'jazz']
@@ -120,7 +121,7 @@ export default class YellForm extends Component {
 			if (error) {
 				console.log(error)
 			} else {
-				console.log('okay')
+				browserHistory.push('/yell/'+result)
 			}
 		});	
 

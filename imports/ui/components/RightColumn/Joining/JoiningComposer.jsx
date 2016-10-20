@@ -8,6 +8,7 @@ yellId = props.yellId
 ownerId = props.ownerId
 requests = props.requests
 approved = props.approved
+publicity = props.publicity
 ownership = Meteor.userId() && Meteor.userId() == ownerId ? true : false 
  fields = {fields:{'username':1 ,'profile.avatar':1}}
 
@@ -16,7 +17,7 @@ ownership = Meteor.userId() && Meteor.userId() == ownerId ? true : false
 
   if ( subscription.ready() ) {
     const requerers = Meteor.users.find({_id: {$in:requests}},fields).fetch() 
-    onData( null, { requerers,approved,ownership,yellId } );
+    onData( null, { requerers,approved,ownership,yellId,publicity } );
   }
 };
 

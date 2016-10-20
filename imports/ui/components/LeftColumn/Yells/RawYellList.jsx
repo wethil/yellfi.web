@@ -11,18 +11,62 @@ import NoApprovedYell from './YellsComponents/NoApprovedYell.jsx'
 import { browserHistory } from 'react-router'
 import { Session } from 'meteor/session'
 import emitter from '../../emitter.js'
+import Snackbar from 'material-ui/Snackbar';
 
 
  class RawYellList extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+       snackbarState:false,
+        snackbarMessage:"",
+        snackbarType:"",
+        snackbarData:""
+    };
+  }
+
+  componentDidMount() {
+      emitter.addListener('triggerSb', (sbState,sbMessage,sbType,snData)=> { 
+      this.setState({
+        snackbarState:sbState,
+        snackbarMessage:sbMessage,
+        snackbarType:sbType,
+        snackbarData:snData
+      })
+    });
+  }
 
 
 
 toogleYellCard(yellId) {
-  console.log('toogle yell card')
   browserHistory.push('/yell/'+yellId)
 // emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }
 
+undoAction(type,data) {
+    switch(type) {
+      case 'yell':
+          Meteor.call('undoDeleteYell',data,error=> {
+            if (error) {
+              console.log(error)
+            } else {
+              browserHistory.push('/yell/'+data)
+            }
+          });
+          break;
+      case 'comment':
+            Meteor.call('undoDeleteYell',data,error=> {
+            if (error) {
+              console.log(error)
+            } else {
+              console.log('ok')
+            }
+          });
+          break;
+      
+  }
+}
 
 	render() {
 
@@ -73,6 +117,7 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
         switch(yell.publicity) {
         case 0 : 
            publicity = "Alone"
+           break;
 		    case 1:
 		        publicity = "With Everyone"
 		        break;
@@ -82,33 +127,35 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
 		}
     
 if (yell.publicity == 0) {
-  publicityLabel = ""
+  publicityLabel =  <span>  <a className="ui mini circular label"><i className="user icon"></i> {publicity}</a>  </span>  
   timeLabel =""
 } else {
   publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>  </span>  
-  timeLabel = <span style={styles.timeDate}> -- <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
+  timeLabel = <span style={styles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
                         
    
                           
                          
 }
-
+if (yell.keyword) {
+  keyword = <span> -- <span style={styles.keywords}>  {yell.keyword} </span> </span>
+} else {
+  keyword =""
+}
 
 		 yells.push(
           <div key={yell._id}>
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(yell._id)}
                   leftAvatar={<Avatar src={yell.owner.profile.avatar} />}
-                  primaryText={ <div style={styles.username}>{yell.owner.username} <span style={styles.subhead}> planned </span> {publicityLabel} </div>}
+                  primaryText={ <div style={styles.username}>{yell.owner.username} <span style={styles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
                   secondaryText={
                       	<p>   
                         <span style={styles.plan}>{yell.plan}</span> 
-                          {timeLabel}          
-                         <br />
-                        <span style={styles.keywords}> {yell.keyword} </span>
+                        {keyword}
                   		</p>
                   }
-                  secondaryTextLines={2}
+                  secondaryTextLines={1}
               />
             <Divider  inset={true} />
           </div>
@@ -138,14 +185,31 @@ if (yell.publicity == 0) {
 
 		return (
   <div className="className">
-       <CustomScroll> 
+    <CustomScroll> 
       <List style={styles.list} > 
         {yells}
       </List> 
-     </CustomScroll>
-     
+    </CustomScroll>
+    <Snackbar
+      open={this.state.snackbarState}
+      message={this.state.snackbarMessage}
+      autoHideDuration={4000}
+      action="undo"
+      onActionTouchTap={ ()=>
+        this.undoAction(this.state.snackbarType,this.state.snackbarData)
+      }
+      onRequestClose={()=>
+        this.setState({
+        snackbarState:false,
+        snackbarMessage:"",
+        snackbarType:"",
+        snackbarData:""
+        })
+      }
+    />
 
-{/* if add drawer here, it will rendered on left column itself */}
+
+    {/* if add drawer here, it will rendered on left column itself */}
   </div>  
 		);
 	}

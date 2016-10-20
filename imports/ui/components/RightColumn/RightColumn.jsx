@@ -39,7 +39,7 @@ export default class RightColumn extends Component {
 			let dialog = this.props.location.query.dialog
 			let lng = parseFloat(this.props.location.query.lng)
 			let lat = parseFloat(this.props.location.query.lat)
-		console.log('lat'+this.props.location.query.lat)
+	
 			this.toogleDrawerWithContent(1,yellId,dialog,lng,lat)
 			emitter.addListener('userInf',(user)=> this.getUserInf(user) )
 	}
@@ -51,7 +51,7 @@ export default class RightColumn extends Component {
 		let dialog = nextProps.location.query.dialog
 		let lng = parseFloat(nextProps.location.query.lng)
 		let lat = parseFloat(nextProps.location.query.lat)
-		console.log('lat'+nextProps.location.query.lat)
+
 		this.toogleDrawerWithContent(2,yellId,dialog,lng,lat)
 
 			
@@ -99,12 +99,7 @@ export default class RightColumn extends Component {
 		this.setState({user:user})
 	}
 
-	componentWillUnmount (){
-		this.setState({
-			sBar:false,
-			sBarMessage:""
-		})
-	}
+	
 
 	render() {
 
@@ -134,14 +129,7 @@ export default class RightColumn extends Component {
 			      
 			  </Drawer>
 
-			   <Snackbar
-                  open={this.state.sBar}
-                  message={this.state.sBarMessage}
-                  autoHideDuration={4000}
-                  action="ok"
-                  onActionTouchTap={()=>this.setState({sBar:false})}
-          		  onRequestClose={()=>this.setState({sBar:false})}
-          		 />
+			  
 			</div>	
 		);
 	}

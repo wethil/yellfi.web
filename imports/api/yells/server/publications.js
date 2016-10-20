@@ -8,7 +8,7 @@ Meteor.publishComposite('thisYell', function(yellId) { //always [longitude, lati
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-            return Yells.find({"_id":yellId})
+            return Yells.find({"_id":yellId, visible:true})
         },
         children: [
             {
@@ -35,7 +35,7 @@ Meteor.publish('thisUser', function (userId) {
 
 Meteor.publishComposite('latestYells',{
 	find : function () {
-		return Yells.find({}, {sort: {created_at: -1}})
+		return Yells.find({visible:true}, {sort: {created_at: -1}})
 	},
 	children : [
 		{
@@ -69,7 +69,7 @@ Meteor.publishComposite('nearestYells', function(loc) { //always [longitude, lat
                               coordinates: loc
                             },
                         }
-                      }
+                      },visible:true
               }
             )
         },
@@ -95,7 +95,7 @@ Meteor.publishComposite('thisUserYell', function(userId) { //always [longitude, 
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-          return Yells.find({ownerId:userId});
+          return Yells.find({ownerId:userId,visible:true});
         },
         children: [
             {
@@ -114,7 +114,7 @@ Meteor.publishComposite('thisUserApproved', function(userId) { //always [longitu
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-          return Yells.find({ approved:{$in:[userId]}})
+          return Yells.find({visible:true, approved:{$in:[userId]}})
         },
         children: [
             {

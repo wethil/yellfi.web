@@ -41,8 +41,8 @@ Comments.attachSchema(
          defaultValue : "yellfi"
     },
     visible :{
-      type:Number,
-      defaultValue:1
+      type:Boolean,
+      defaultValue:true
     }
   })
 );

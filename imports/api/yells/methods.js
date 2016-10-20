@@ -4,7 +4,7 @@ import Comments from '../comments/comments.js'
 
 Meteor.methods({
    addYell: function(loc,plan,keyword,time,publicity,ownerId) {
-    Yells.insert({
+   return Yells.insert({
             loc:loc,
             plan : plan,
             keyword:keyword,
@@ -17,14 +17,18 @@ Meteor.methods({
     },
     blockUserFromComment:function(commentId,userId,yell) {
         Yells.update({_id:yell}, {$push : {blocked_users : userId }})
-        Comments.update({_id:commentId}, {$set : {visible : 0 }})
+        Comments.update({_id:commentId}, {$set : {visible : false }})
 
     },
     unblockUser:function(userId,yell) {
         Yells.update({_id:yell}, {$pull : {blocked_users : userId }})
     },
-    reqJoin:function(userId,yell) {
-        Yells.update({_id:yell}, {$push : {requests : userId }})
+    reqJoin:function(userId,yell,publicity) {
+        if (publicity==1) {
+            Yells.update({_id:yell}, {$push : {requests : userId , approved:userId }})
+        } else {
+            Yells.update({_id:yell}, {$push : {requests : userId }})
+        }
     },
     approveJoin:function(userId,yell) {
         Yells.update({_id:yell}, {$push : {approved : userId }})
@@ -37,6 +41,12 @@ Meteor.methods({
     },
       approveAll:function(userArray,yell) {
         Yells.update({_id:yell}, {$push:{approved:{$each:userArray }}})
+    },
+    deleteYell:function(yellId) {
+        Yells.update({_id:yellId}, {$set : {visible : false }})
+    },
+    undoDeleteYell:function(yellId) {
+        Yells.update({_id:yellId}, {$set : {visible : true }})
     }
 });
 

@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import Dialog from 'material-ui/Dialog';
-import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import CommentComposer from '../Comments/CommentComposer.jsx'
 import JoiningComposer from '../Joining/JoiningComposer.jsx'
-import TextField from 'material-ui/TextField';
 import Linkify from 'linkifyjs/react';
 import emitter from '../../emitter.js';
 import BlockedUser from '../CommonComponents/BlockedUser.jsx'
@@ -16,25 +14,37 @@ import Avatar from 'material-ui/Avatar';
 import { browserHistory } from 'react-router'
 import DialogContent from './DialogContent.jsx'
 import _ from 'lodash'
+import RaisedButton from 'material-ui/RaisedButton';
+import { Dropdown } from 'semantic-ui-react';
+import SuggestionTextField from './SuggestionTextField.jsx'
 
  class YellCard extends Component {
  	constructor(props) {
  	  super(props);
  	  this.state = {
- 	  	dialogOpen:false
+ 	  	dialogOpen:false,
+ 	  	comment:""
  	  };
  	}
 
  	componentWillMount(){
  		dialog = this.props.dialog
- 		console.log(dialog)
  		this.setDialogContent(dialog)
+ 		this.changeYell(this.props.yell)
+ 		
  	}
 
  	componentWillReceiveProps (nextProps) {
 		dialog = nextProps.dialog
 		console.log(dialog)
 		this.setDialogContent(dialog)
+		this.changeYell(nextProps.yell)
+	}
+
+	changeYell(yell){
+		this.setState({yell:yell})
+		$('.anim').addClass('animated fadeIn');
+		$('.anim').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ()=>$('.anim').removeClass('animated fadeIn'));
 	}
 
 	setDialogContent(dialog){
@@ -50,8 +60,8 @@ import _ from 'lodash'
 		}
 	}
 
-	reqJoin (yellId) {
-	  Meteor.call('reqJoin', Meteor.userId(),yellId, error => { 
+	reqJoin (yellId,publicity) {
+	  Meteor.call('reqJoin', Meteor.userId(),yellId,publicity, error => { 
               if (error) { 
                   console.log('error', error); 
               } else {
@@ -86,88 +96,70 @@ import _ from 'lodash'
  	componentWillUnmount(){
  		this.setState({dialogOpen:false})
  	}
- 	
 
- 	makeSuggestion()
- 	{
- 		let comCont = $('#suggestionInput').val()
- 		let yellId = this.props.yell._id
- 		let yellOwnerId = this.props.yell.ownerId
- 		let ownerId = Meteor.userId();
-
- 			
-		Meteor.call('addComment',comCont,yellId,yellOwnerId,ownerId,function (error, result){
-			if (error) {
-				console.log(error)
-			} else {
-				console.log('okay')
-				
-			}
-		});	
+ 	deleteYell(yellId){
+ 		 Meteor.call('deleteYell',yellId, error => { 
+              if (error) { 
+                  console.log('error', error); 
+              } else {
+              	console.log('delete')
+              }        
+          });
+ 		 emitter.emit('triggerSb',true,"You deleted a plan",'yell',yellId)
+ 		 browserHistory.push('/')
  	}
-
+ 	
  	
 
 
 	render() {
-	yell = this.props.yell
-	console.log(yell)
+		
+	yell = this.state.yell
 // action buttons label for participants
-actLblForPartic =_.includes(yell.approved, Meteor.userId()) ? "Approved" : "Waiting for approve"
+	actLblForPartic =_.includes(yell.approved, Meteor.userId()) ? "Approved" : "Waiting for approve"
 // action buttons for participants
-      if(yell.ownerId!=Meteor.userId()) {
-       actBtnForPartic =  _.includes(yell.requests, Meteor.userId()) 
-         ?
-        <FlatButton label={actLblForPartic} primary={true} disabled={true} />
-               :
-          <FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id)}  primary={true}  />
+	if(yell.ownerId!=Meteor.userId())
+	 {
+		actBtnForPartic =  _.includes(yell.requests, Meteor.userId()) 
+				?
+			<FlatButton label={actLblForPartic} primary={true} disabled={true} />
+				:
+			<FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id,yell.publicity)}  primary={true}  />
+		} else {
+			actBtnForPartic = <FlatButton label="Approve all" primary={true} onTouchTap={()=>this.approveAll(yell._id,yell.requests,yell.approved)} />
+	}
 
-      } else {
-      actBtnForPartic = <FlatButton label="Approve all" primary={true} onTouchTap={()=>this.approveAll(yell._id,yell.requests,yell.approved)} />
-         
-      }
-
-	
+	userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
 	if (!this.props.userBlocked) {
 		switch(this.state.dialogContent) {
 		    case 1:
 		    dialogContent = <CommentComposer yellId={yell._id}  /> 
-		    dialogAction =  <List >
-							    <ListItem
+		    dialogAction =  <List  key={1} >
+							    <ListItem key={2}
 							      style={{padding:"5px 16px 20px 72px "}}
 							      disabled={true}
 							      leftAvatar={userAvatar}>
-							     <TextField
-								      className="suggestInput"
-								      multiLine={true}
-								      rows={1}
-								      rowsMax={2}
-								      id="suggestionInput"	
-								      hintText="Make a suggestion or paste a link!  "
-								      style={styles.commentInput}
-								      textareaStyle={styles.textareaStyle}
-								    />
+							     <SuggestionTextField yellId={yell._id} yellOwnerId={yell.ownerId} />
 							    </ListItem>
 							   </List> 
-			dialogTitleLabel ="suggestions"				   
+			dialogTitleLabel =`${yell.owner.username} : ${yell.plan}` 			   
 		        break;
 		    case 2:
 		  	dialogContent = <JoiningComposer yellId={yell._id} ownerId={yell.ownerId} requests={yell.requests} approved ={yell.approved} />
 		    dialogAction =  actBtnForPartic
-		    dialogTitleLabel ="participants"	
+		    dialogTitleLabel = `${yell.owner.username} : ${yell.plan}` 	
 		        break;
 		    default:
-		    console.log('erroritto')
 		    dialogContent =  "please do not play with url.."
 		     dialogAction =  "no"
-		    dialogTitleLabel ="participants"	
+		    dialogTitleLabel =`${yell.owner.username} : ${yell.plan}` 
 		}
 
 	}  else {
 		dialogContent = <BlockedUser />
 	}
 		
-	userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
+	
 	dialogTitleButton=<span key={1} >
 						   <FlatButton
 						      label={dialogTitleLabel}
@@ -177,21 +169,29 @@ actLblForPartic =_.includes(yell.approved, Meteor.userId()) ? "Approved" : "Wait
 						    />
 						</span>
 
-switch(yell.publicity) {
+switch(yell.publicity) 
+{
     case 0 : 
-       publicityLabel = null 
+       publicityLabel = <span>  <a className="ui mini circular label"><i className="user icon"></i> Alone</a>  </span> 
+       participationsButton = null
+       break; 
     case 1:
        publicityLabel = <span><a className="ui mini circular label"><i className="users icon"></i>With Everyone</a> </span>  
+       participationsButton = <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')} 
+       								  className=" mini ui button teal">PARTICIPATION</button>
         break;
     case 2:
        publicityLabel = <span><a className="ui mini circular label"><i className="users icon"></i>Elected ones</a> </span>  
+       participationsButton = <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')} 
+       								  className=" mini ui button teal">PARTICIPATION</button>
         break;		   
 }
+
 		
-		userHeader =  <div>
+		userHeader =  <div className="anim">
 						{yell.owner.username} 
-						<span style={styles.subhead}> planned {moment(yell.created_at).startOf('hour').fromNow()} </span>			
-					</div>
+						<span   style={styles.subhead}> planned {moment(yell.created_at).startOf('hour').fromNow()} </span>			
+					  </div>
 
 
 const actions = this.props.userBlocked
@@ -199,6 +199,18 @@ const actions = this.props.userBlocked
 				 [<span key={1} ><FlatButton label="CLOSE" primary={true} onTouchTap={ this.handleCloseDialogViaUrl.bind(this)}/></span>]
 				   : 
 				[<span key={1}>{dialogAction}</span>]
+
+  if (Meteor.userId() && Meteor.userId()==yell.ownerId) {
+  	settingsBtn =  <Dropdown pointing={true} className="mini primary icon left bottom basic teal" button={true} icon="setting">
+					    <Dropdown.Menu>
+					      <Dropdown.Item icon="facebook" text='Share' />
+					      <Dropdown.Item icon="twitter" text='Share' />
+					      <Dropdown.Item icon="trash" text='Delete' onClick={()=> this.deleteYell(yell._id)} />
+					    </Dropdown.Menu>
+					  </Dropdown>
+  }	else {
+  	settingsBtn = null
+  }
   
     
 
@@ -209,16 +221,29 @@ const actions = this.props.userBlocked
 			        <CardHeader
 			          title={userHeader}
 			          style={styles.cardHeader}
-			          subtitle={publicityLabel}
+			          subtitle={ <span className="anim">{publicityLabel}</span>} 
 			          avatar={yell.owner.profile.avatar}
 			        />
-			      <CardTitle title={yell.plan} subtitle={moment(yell.time).calendar()}/>
+			      <CardTitle title={<span className="anim">{yell.plan}</span> } 
+			      		subtitle={moment(yell.time).calendar()}/>
 			        <CardText>
-			         <Linkify>   {yell.keyword}   </Linkify> 
+			        <span className="anim">  <Linkify>  {yell.keyword} </Linkify> </span>    
 			        </CardText>
 			        <CardActions>
-			         <FlatButton label="participants" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')}    />
-			          <FlatButton label="suggest" onTouchTap={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  />
+			        
+
+			        {settingsBtn}
+			        
+			         <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  className="mini ui primary button">
+							  SUGGESTION
+							</button>
+
+			         {participationsButton}
+			  
+
+
+							
+
 			        </CardActions>
 			      </Card>
 
@@ -254,7 +279,7 @@ export default YellCard;
 		
  const styles = {
         subhead:{
-          fontSize:11,
+          fontSize:9.5,
           color:'#9E9E9E'
         },
         commentInput: {
