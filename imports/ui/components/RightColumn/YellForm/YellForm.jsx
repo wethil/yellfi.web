@@ -83,8 +83,15 @@ export default class YellForm extends Component {
 		})
 	}
 
-	autocompleteUpdate(chosenRequest,index) {
-		this.setState({keyword:index})
+	autocompleteUpdate(searchText) {
+		console.log('update')
+		console.log(searchText)
+	}
+
+	autocompleteRequest(chosenRequest,index){
+		console.log('request')
+		console.log(chosenRequest)
+		console.log(index)
 	}
 
 	changePublicity(e) {
@@ -111,6 +118,7 @@ export default class YellForm extends Component {
 			if (error) {
 				console.log(error)
 			} else {
+				emitter.emit('getSuggestion')
 				browserHistory.push('/yell/'+result)
 			}
 		});	
@@ -215,8 +223,8 @@ export default class YellForm extends Component {
 								/>
 						</RadioButtonGroup>
 						<AutoComplete
-							//onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
-							onNewRequest={ (chosenRequest,index)=> this.autocompleteUpdate(chosenRequest,index)}
+							onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
+							onNewRequest={ (chosenRequest,index)=> this.autocompleteRequest(chosenRequest,index)}
 							floatingLabelText={hintForKeywords}
 							hintText="Click and choose"
 							filter={AutoComplete.fuzzyFilter}

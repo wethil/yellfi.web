@@ -106,7 +106,7 @@ export default class RightColumn extends Component {
 
 
 		
-			appBarCloseIcon = <IconButton onMouseDown={()=>this.setState({open:false})} style={{color:'white'}}> <NavigationClose /></IconButton>
+			appBarCloseIcon = <IconButton onMouseDown={()=>this.setState({open:false})} > <NavigationClose style={{color:'white'}} /></IconButton>
 		
 		return (
 			<div className="className">

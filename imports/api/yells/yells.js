@@ -59,7 +59,10 @@ Yells.attachSchema(
       type:[String],
      defaultValue:[]
     },
-
+    gotSuggestionByYellfi : {
+      type:Boolean,
+      defaultValue:false
+    },
     visible :{
       type:Boolean,
       defaultValue:true
