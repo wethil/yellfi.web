@@ -96,10 +96,19 @@ const iconButtonElement = (
 
 
 
+
+
 	if (this.props.comments && this.props.comments.length > 0) {
       var comments = []
    //loop started   
  this.props.comments.forEach((comment) => {
+ let likeButton= _.includes(comment.likes, Meteor.userId()) 
+                ? //like button. look state and change
+                <MenuItem onTouchTap={ ()=> this.unlike(comment._id)} >Unlike</MenuItem>
+                :
+                <MenuItem onTouchTap={()=> this.like(comment._id)} >Like</MenuItem>
+
+
             let STL = comment.content.length >113 ? 2 : 1
             let content = comment.content.replace(/ /g, "+")
 
@@ -112,13 +121,7 @@ const iconButtonElement = (
         case comment.ownerId:
                rightIconMenu = (
           <IconMenu iconButtonElement={iconButtonElement}>
-            { 
-             _.includes(comment.likes, Meteor.userId()) 
-                ? //like button. look state and change
-                <MenuItem onTouchTap={ ()=> this.unlike(comment._id)} >Unlike</MenuItem>
-                :
-                <MenuItem onTouchTap={()=> this.like(comment._id)} >Like</MenuItem>
-            }
+           {likeButton}
              <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>Delete</MenuItem>
           </IconMenu>
         );
@@ -126,7 +129,7 @@ const iconButtonElement = (
         case comment.yellOwnerId:
                rightIconMenu = (
                 <IconMenu iconButtonElement={iconButtonElement}>
-                  <MenuItem>Like</MenuItem>
+                 {likeButton}
                   <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>Delete</MenuItem>
                  <MenuItem onTouchTap={()=> this.blockUserFromComment(comment._id,comment.ownerId,comment.yellId)} >Block</MenuItem>
                 </IconMenu>
@@ -136,7 +139,7 @@ const iconButtonElement = (
         default:
             rightIconMenu = (
                 <IconMenu iconButtonElement={iconButtonElement}>
-                  <MenuItem>Like</MenuItem>
+                  {likeButton}
                 </IconMenu>
            );
     }

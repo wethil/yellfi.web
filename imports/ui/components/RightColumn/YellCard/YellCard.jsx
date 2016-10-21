@@ -102,10 +102,10 @@ import SuggestionTextField from './SuggestionTextField.jsx'
               if (error) { 
                   console.log('error', error); 
               } else {
-              	console.log('delete')
+              	 emitter.emit('triggerSb',true,"You deleted a plan",'yell',yellId)
               }        
           });
- 		 emitter.emit('triggerSb',true,"You deleted a plan",'yell',yellId)
+ 		
  		 browserHistory.push('/')
  	}
  	

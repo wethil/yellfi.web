@@ -44,6 +44,15 @@ toogleYellCard(yellId) {
 // emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }
 
+closeSb(){
+   this.setState({
+        snackbarState:false,
+        snackbarMessage:"",
+        snackbarType:"",
+        snackbarData:""
+        })
+}
+
 undoAction(type,data) {
     switch(type) {
       case 'yell':
@@ -51,6 +60,7 @@ undoAction(type,data) {
             if (error) {
               console.log(error)
             } else {
+              this.closeSb()
               browserHistory.push('/yell/'+data)
             }
           });
@@ -198,14 +208,7 @@ if (yell.keyword) {
       onActionTouchTap={ ()=>
         this.undoAction(this.state.snackbarType,this.state.snackbarData)
       }
-      onRequestClose={()=>
-        this.setState({
-        snackbarState:false,
-        snackbarMessage:"",
-        snackbarType:"",
-        snackbarData:""
-        })
-      }
+      onRequestClose={this.closeSb.bind(this)}
     />
 
 
