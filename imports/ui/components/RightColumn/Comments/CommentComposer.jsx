@@ -6,6 +6,7 @@ import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
 const CommentSub = new SubsManager()
 const composer = ( props, onData ) => {
 yellId = props.yellId
+yellContent=props.yellContent
 
 console.log(yellId)
 
@@ -17,7 +18,7 @@ console.log(yellId)
     const comments = Comments.find({yellId:yellId}).fetch()
 
    
-    onData( null, { comments } );
+    onData( null, { comments,yellContent } );
   }
 };
 

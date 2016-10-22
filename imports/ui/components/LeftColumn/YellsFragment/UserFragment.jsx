@@ -70,14 +70,14 @@ import { browserHistory } from 'react-router'
 			
 	<div className="className">
 		<Tabs value={this.state.activeTab} onChange={this.changeTab.bind(this)}>
-			<Tab style={styles.tab_style} value={0}  label="MY PLANS" />
-			<Tab style={styles.tab_style} value={1} label="OTHERS" /> 
+			<Tab style={styles.tab_style} value={0}  label="FEED" />
+			<Tab style={styles.tab_style} value={1} label="MY PLANS" /> 
 			<Tab style={styles.tab_style} value={2}	 label="APPROVED" />      	 
 		</Tabs>
 
 		<SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
-			<div> <UserYells /> </div>
 			<div><OthersYells  ipLoc={ipLoc} /></div>
+			<div> <UserYells /> </div>
 			<div><ApprovedYells/></div>
 		</SwipeableViews>
 

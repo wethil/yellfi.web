@@ -98,15 +98,17 @@ import SuggestionTextField from './SuggestionTextField.jsx'
  	}
 
  	deleteYell(yellId){
+ 		 emitter.emit('triggerSb',true,"You deleted a plan",'yell',yellId)
+
  		 Meteor.call('deleteYell',yellId, error => { 
               if (error) { 
                   console.log('error', error); 
               } else {
-              	 emitter.emit('triggerSb',true,"You deleted a plan",'yell',yellId)
+              	  browserHistory.push('/')
               }        
           });
  		
- 		 browserHistory.push('/')
+ 		
  	}
  	
  	
@@ -133,7 +135,7 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 	if (!this.props.userBlocked) {
 		switch(this.state.dialogContent) {
 		    case 1:
-		    dialogContent = <CommentComposer yellId={yell._id}  /> 
+		    dialogContent = <CommentComposer yellContent={yell.plan} yellId={yell._id}  /> 
 		    dialogAction =  <List  key={1} >
 							    <ListItem key={2}
 							      style={{padding:"5px 16px 20px 72px "}}

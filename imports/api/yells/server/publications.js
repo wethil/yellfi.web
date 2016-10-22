@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import '../yells.js';
+import Yells from '../yells.js';
 
 
 

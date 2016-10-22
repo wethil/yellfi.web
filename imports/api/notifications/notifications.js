@@ -3,7 +3,6 @@ const fields = {fields:{'services':0 ,'createdAt':0 ,'emails' :0 }}
 Notifications = new Mongo.Collection('notifications' ,{
                 transform : function(doc) {
                   doc.sender = Meteor.users.findOne({_id:doc.senderId},fields);
-                  doc.receiver = Meteor.users.findOne({_id:doc.receiverId},fields);
                   return doc
                 }
               });
@@ -31,9 +30,20 @@ Notifications.attachSchema(
       type: String,
       denyUpdate: true
     },
-    publicity: {
+    created_at: {
      type: Date,
      denyUpdate: true
+    },
+    about: {
+      type:String,
+      allowedValues:['yell','comment','suggestion','like']
+    },
+    yellId:{
+      type:String
+    },
+    yellContent:{
+      type:String,
+      optional:true
     }
   })
 );
