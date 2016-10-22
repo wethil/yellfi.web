@@ -1,7 +1,8 @@
 import '../both.js';
 import  '../../api/yells/server/publications.js';
 import  '../../api/comments/server/publications.js';
-//import '../../api/users/UserRest.js'
+
+
 
 
 import { Meteor } from 'meteor/meteor';

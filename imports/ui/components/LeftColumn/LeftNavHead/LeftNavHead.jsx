@@ -5,7 +5,7 @@ import IconMenu from 'material-ui/IconMenu';
 import NavigationMenu from 'material-ui/svg-icons/navigation/menu';
 import { Session } from 'meteor/session'
 import emitter from '../../emitter.js'
-
+var userNotifications = new ClientNotifications("user_notifications");
 const style = {
     backgroundColor: '#3f51b5'
 };
@@ -13,6 +13,11 @@ const style = {
 
  class LeftNavHead extends Component {
 	render() {
+		userNotifications.on("commentNotifications", function(message) {
+    console.log(message)
+});
+
+
 		return (
 			  <AppBar style={style}
 				    title="yellfi"

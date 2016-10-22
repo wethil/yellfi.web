@@ -11,6 +11,7 @@ Meteor.methods({
 			ownerId :ownerId
 		})
 		
+		
 	},
 	 likeComment:function(userId,commentId) {
         Comments.update({_id:commentId}, {$push : {likes : userId }})
