@@ -37,9 +37,22 @@ import Snackbar from 'material-ui/Snackbar';
 
 
 
-toogleYellCard(yellId) {
-  browserHistory.push('/yell/'+yellId)
-// emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
+toogleYellCard(yellId,about) {
+ 
+    switch(about) {
+      case 'yell':
+           browserHistory.push('/yell/'+yellId) 
+          break;
+      case 'comment':
+           browserHistory.push('/yell/'+yellId + '?dialog=comment')
+          break;
+      case 'like':
+           browserHistory.push('/yell/'+yellId + '?dialog=comment')
+          break;
+      case 'participation':
+           browserHistory.push('/yell/'+yellId + '?dialog=joining')
+          break;
+  }
 }
 
 closeSb(){
@@ -95,7 +108,8 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
         color: lightBlue900
         },
       plan: {
-        color: grey800
+        color: grey800,
+        fontSize:12
         },
       timeDate: {
         color: grey800
@@ -123,15 +137,13 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
 		 notifications.push(
           <div key={notification._id}>
             <ListItem
-                  onTouchTap={()=>this.toogleYellCard(notification._id)}
+                  onTouchTap={()=>this.toogleYellCard(notification.yellId,notification.about)}
                   leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
-                  primaryText={ <div style={styles.username}>{notification.sender.username} </div>}
-                  secondaryText={
-                      	<p>   
-                        <span style={styles.plan}>{notification.content}</span>
-                  		</p>
-                  }
-                  secondaryTextLines={1}
+                  primaryText={
+                   <div style={styles.username}>{notification.sender.username + ' '} 
+                     <span style={styles.subhead}>{notification.content + ' ' + notification.yell.plan}</span>
+                   </div>
+                }
               />
             <Divider  inset={true} />
           </div>
@@ -141,7 +153,7 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
     } else {
           
 
-    	yells = "no notif"
+    	notifications = "no notif"
 
     }
 
@@ -150,7 +162,7 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
   <div className="className">
     <CustomScroll> 
       <List style={styles.list} > 
-        {yells}
+        {notifications}
       </List> 
     </CustomScroll>
     <Snackbar

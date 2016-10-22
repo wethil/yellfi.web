@@ -12,8 +12,9 @@ import NoParticipants from './JoiningComponents/NoParticipants.jsx'
 
 
  const handleToogle =(user,yell) => {
+  yellOwnerId = Meteor.userId()
          if (_.includes(approved, user)==false) {
-          Meteor.call('approveJoin',user,yell, error => { 
+          Meteor.call('approveJoin',user,yell,yellOwnerId, error => { 
               if (error) { 
                   console.log('error', error); 
               } else {
@@ -21,7 +22,7 @@ import NoParticipants from './JoiningComponents/NoParticipants.jsx'
               }                 
           });
        } else {
-             Meteor.call('cancelApprove',user,yell, error => { 
+             Meteor.call('cancelApprove',user,yell,yellOwnerId, error => { 
               if (error) { 
                   console.log('error', error); 
               } else {

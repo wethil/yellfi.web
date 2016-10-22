@@ -1,9 +1,11 @@
-const fields = {fields:{'services':0 ,'createdAt':0 ,'emails' :0 }}
-
+const fields = {fields:{'username':1 ,'profile':1  }}
+import Yells from '../yells/yells.js'
 Notifications = new Mongo.Collection('notifications' ,{
                 transform : function(doc) {
                   doc.sender = Meteor.users.findOne({_id:doc.senderId},fields);
+                  doc.yell = Yells.findOne({_id:doc.yellId},{fields:{plan:1}})
                   return doc
+
                 }
               });
 
@@ -22,10 +24,6 @@ Notifications.attachSchema(
       type : String,
       optional : true
     },
-    title : {
-      type : String,
-      optional:true
-    },
     content: {
       type: String,
       denyUpdate: true
@@ -36,14 +34,14 @@ Notifications.attachSchema(
     },
     about: {
       type:String,
-      allowedValues:['yell','comment','suggestion','like']
+      allowedValues:['yell','comment','participation','like']
     },
     yellId:{
       type:String
     },
-    yellContent:{
-      type:String,
-      optional:true
+    received:{
+      type:Boolean,
+      defaultValue:false
     }
   })
 );

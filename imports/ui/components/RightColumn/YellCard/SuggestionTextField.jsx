@@ -29,6 +29,7 @@ import TextField from 'material-ui/TextField';
  		let yellId = this.props.yellId
  		let yellOwnerId = this.props.yellOwnerId
  		let ownerId = Meteor.userId();
+ 
 		Meteor.call('addComment',comCont,yellId,yellOwnerId,ownerId,error=>{
 			if (error) {
 				console.log(error)

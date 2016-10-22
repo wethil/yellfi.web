@@ -28,7 +28,9 @@ import Snackbar from 'material-ui/Snackbar';
   }
 
    like(comment) {
-      Meteor.call('likeComment', Meteor.userId(), comment,  (error) => {
+    yellOwnerId = this.props.yellOwnerId
+    yellId = this.props.yellId
+      Meteor.call('likeComment', Meteor.userId(), comment,yellOwnerId,yellId,  (error) => {
         if (error) {
           console.log(error)
         }else {

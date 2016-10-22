@@ -1,6 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import Yells from './yells.js'
 import Comments from '../comments/comments.js'
+import Notifications from '../notifications/notifications.js'
+
 
 Meteor.methods({
    addYell: function(loc,plan,keyword,time,publicity,ownerId) {
@@ -23,15 +25,35 @@ Meteor.methods({
     unblockUser:function(userId,yell) {
         Yells.update({_id:yell}, {$pull : {blocked_users : userId }})
     },
-    reqJoin:function(userId,yell,publicity) {
+    reqJoin:function(userId,yell,publicity,yellOwnerId) {
         if (publicity==1) {
             Yells.update({_id:yell}, {$push : {requests : userId , approved:userId }})
+
         } else {
             Yells.update({_id:yell}, {$push : {requests : userId }})
+             
+             Notifications.insert({
+                senderId:userId,
+                receiverId:yellOwnerId,
+                content:'wants to join you for',
+                created_at:Date(),
+                about:'participation',
+                yellId:yell
+             })
         }
     },
-    approveJoin:function(userId,yell) {
+    approveJoin:function(userId,yell,yellOwnerId) {
         Yells.update({_id:yell}, {$push : {approved : userId }})
+        
+         Notifications.insert({
+                senderId:yellOwnerId,
+                receiverId:userId,
+                content:'approve you to join for',
+                created_at:Date(),
+                about:'participation',
+                yellId:yell
+             })
+
     },
     cancelApprove:function(userId,yell) {
         Yells.update({_id:yell}, {$pull : {approved : userId }})

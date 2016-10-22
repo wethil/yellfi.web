@@ -60,8 +60,8 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 		}
 	}
 
-	reqJoin (yellId,publicity) {
-	  Meteor.call('reqJoin', Meteor.userId(),yellId,publicity, error => { 
+	reqJoin (yellId,publicity,yellOwnerId) {
+	  Meteor.call('reqJoin', Meteor.userId(),yellId,publicity,yellOwnerId, error => { 
               if (error) { 
                   console.log('error', error); 
               } else {
@@ -126,7 +126,7 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 				?
 			<FlatButton label={actLblForPartic} primary={true} disabled={true} />
 				:
-			<FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id,yell.publicity)}  primary={true}  />
+			<FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id,yell.publicity,yell.ownerId)}  primary={true}  />
 		} else {
 			actBtnForPartic = <FlatButton label="Approve all" primary={true} onTouchTap={()=>this.approveAll(yell._id,yell.requests,yell.approved)} />
 	}
@@ -135,13 +135,17 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 	if (!this.props.userBlocked) {
 		switch(this.state.dialogContent) {
 		    case 1:
-		    dialogContent = <CommentComposer yellContent={yell.plan} yellId={yell._id}  /> 
+		    dialogContent = <CommentComposer 
+		    					yellId={yell._id} 
+		    					yellOwnerId={yell.ownerId} /> 
 		    dialogAction =  <List  key={1} >
 							    <ListItem key={2}
 							      style={{padding:"5px 16px 20px 72px "}}
 							      disabled={true}
 							      leftAvatar={userAvatar}>
-							     <SuggestionTextField yellId={yell._id} yellOwnerId={yell.ownerId} />
+							     <SuggestionTextField 
+							     	yellId={yell._id} 
+							     	yellOwnerId={yell.ownerId} />
 							    </ListItem>
 							   </List> 
 			dialogTitleLabel =`${yell.owner.username} : ${yell.plan}` 			   

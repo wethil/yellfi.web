@@ -16,7 +16,7 @@ Comments.attachSchema(
     new SimpleSchema({
     content: {
       type: String,
-      defaultValue : "I am boored" //max will be 218
+      defaultValue : "Listen Neşet Ertaş" //max will be 218
     },
     yellId:{
       type:String
