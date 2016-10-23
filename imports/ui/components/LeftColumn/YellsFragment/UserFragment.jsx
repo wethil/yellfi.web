@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import UserYells from '../Yells/UserYells.jsx'
+import UserNotificationComposer from '../Notifications/UserNotificationComposer.jsx'
 import OthersYells from '../Yells/OthersYells.jsx'
 import ApprovedYells from '../Yells/ApprovedYells.jsx'
 import SwipeableViews from 'react-swipeable-views';
@@ -8,6 +9,7 @@ import emitter from '../../emitter.js'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
+import NtfLabel from '../YellTabs/NtfLabel.jsx'
 import { browserHistory } from 'react-router'
 
 
@@ -23,12 +25,14 @@ import { browserHistory } from 'react-router'
 	}
 
 	componentDidMount() {
+	
 		emitter.addListener('noUserYellAnim', ()=> {
 		
 			 $('.fab').toggleClass('animated infinite tada'); 
 			
 		} );
 	}
+
 
 	changeTab(value){
 		if (value!=0){
@@ -72,13 +76,13 @@ import { browserHistory } from 'react-router'
 		<Tabs value={this.state.activeTab} onChange={this.changeTab.bind(this)}>
 			<Tab style={styles.tab_style} value={0}  label="FEED" />
 			<Tab style={styles.tab_style} value={1} label="MY PLANS" /> 
-			<Tab style={styles.tab_style} value={2}	 label="APPROVED" />      	 
+			<Tab style={styles.tab_style} value={2}	 label={<NtfLabel />} />      	 
 		</Tabs>
 
 		<SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
 			<div><OthersYells  ipLoc={ipLoc} /></div>
 			<div> <UserYells /> </div>
-			<div><ApprovedYells/></div>
+			<div><UserNotificationComposer/></div>
 		</SwipeableViews>
 
 		<FloatingActionButton onClick={this.toogleDrawer.bind(this)} className="fab" style={styles.fab} >
@@ -98,7 +102,9 @@ export default UserFragment;
           right:'4%',
           position:'absolute'
         },
-        tab_style:{}
+        tab_style:{
+        	color:'white'
+        }
 
 
     }

@@ -8,8 +8,9 @@ import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/
 import CustomScroll from 'react-custom-scroll';
 import { browserHistory } from 'react-router'
 import { Session } from 'meteor/session'
-import emitter from '../../../emitter.js'
+import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
+import _ from 'lodash';
 
 
  class RawYellList extends Component {
@@ -35,6 +36,20 @@ import Snackbar from 'material-ui/Snackbar';
     });
   }
 
+  componentWillMount() {
+    this.sendNotificationsToTabTitle(this.props.notifications)
+  }
+
+  componentWillReceiveProps(nextProps){
+    this.sendNotificationsToTabTitle(nextProps.notifications)
+  }
+
+sendNotificationsToTabTitle(notifications){
+  unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received; }), '_id');
+  nots = notifications.length
+  emitter.emit('changeBadgeContent',nots)
+  
+}
 
 
 toogleYellCard(yellId,about) {
