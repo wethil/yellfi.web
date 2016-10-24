@@ -20,11 +20,18 @@ import { browserHistory } from 'react-router'
 	  this.state = {
 	  	activeTab:0,
 	  	user:0,
-	  	userHasYell:1
+	  	userHasYell:1,
+	  	ntfsReceived:false,
+	  	ntfLimit:10
 	  };
 	}
 
 	componentDidMount() {
+	 emitter.addListener('ntfInfinite', ()=> { 
+	      this.setState({
+	        ntfLimit:this.state.ntfLimit+5
+	      })
+    });
 	
 		emitter.addListener('noUserYellAnim', ()=> {
 		
@@ -38,6 +45,10 @@ import { browserHistory } from 'react-router'
 		if (value!=0){
 			 $('.fab').removeClass('animated infinite tada'); 
 		} 
+
+		if(value==2){
+			this.setState({ntfsReceived:true})
+		}
 
 		
 		this.setState({activeTab:value})
@@ -76,13 +87,13 @@ import { browserHistory } from 'react-router'
 		<Tabs value={this.state.activeTab} onChange={this.changeTab.bind(this)}>
 			<Tab style={styles.tab_style} value={0}  label="FEED" />
 			<Tab style={styles.tab_style} value={1} label="MY PLANS" /> 
-			<Tab style={styles.tab_style} value={2}	 label={<NtfLabel />} />      	 
+			<Tab style={styles.tab_style} value={2}	 label={<NtfLabel notificationsReceived={this.state.ntfsReceived} />} />      	 
 		</Tabs>
 
 		<SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
 			<div><OthersYells  ipLoc={ipLoc} /></div>
 			<div> <UserYells /> </div>
-			<div><UserNotificationComposer/></div>
+			<div><UserNotificationComposer ntfLimit={this.state.ntfLimit}/></div>
 		</SwipeableViews>
 
 		<FloatingActionButton onClick={this.toogleDrawer.bind(this)} className="fab" style={styles.fab} >

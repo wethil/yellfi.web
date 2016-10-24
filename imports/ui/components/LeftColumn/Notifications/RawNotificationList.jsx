@@ -11,6 +11,7 @@ import { Session } from 'meteor/session'
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
 import _ from 'lodash';
+import  verge from 'verge';
 
 
  class RawYellList extends Component {
@@ -18,14 +19,18 @@ import _ from 'lodash';
     super(props);
   
     this.state = {
+      notifications:[],
        snackbarState:false,
         snackbarMessage:"",
         snackbarType:"",
-        snackbarData:""
+        snackbarData:"",
+        propDuplicate:1,
+        firstCount:0
     };
   }
 
   componentDidMount() {
+   
       emitter.addListener('triggerSb', (sbState,sbMessage,sbType,snData)=> { 
       this.setState({
         snackbarState:sbState,
@@ -37,17 +42,23 @@ import _ from 'lodash';
   }
 
   componentWillMount() {
+      this.setState({
+        firstCount:this.props.notifications.length
+      })
+     this.makePropState(this.props.notifications)
     this.sendNotificationsToTabTitle(this.props.notifications)
   }
 
   componentWillReceiveProps(nextProps){
     this.sendNotificationsToTabTitle(nextProps.notifications)
+    this.makePropState(nextProps.notifications)
+    this.checkProps(nextProps.notifications,limit)
   }
 
 sendNotificationsToTabTitle(notifications){
   unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received; }), '_id');
-  nots = notifications.length
-  emitter.emit('changeBadgeContent',nots)
+  
+  emitter.emit('changeBadgeContent',unreceivedNtf)
   
 }
 
@@ -104,19 +115,48 @@ undoAction(type,data) {
   }
 }
 
+handleScroll(lastId){
+  var lastElement = document.getElementById(lastId);
+   if (verge.inViewport(lastElement)==true && this.state.propDuplicate<2) {
+    console.log(this.state.propDuplicate)
+    emitter.emit('ntfInfinite')
+  } else {
+
+    console.log('enough yani')
+  }
+}
+
+makePropState(data){
+  this.setState({notifications:data})
+}
+
+checkProps(newP,limit){
+
+
+  if(newP.length<limit) {
+        console.log('no new yell')
+         this.setState({propDuplicate:this.state.propDuplicate + 1})
+      } else {
+        this.setState({propDuplicate:0})
+        console.log('there is new yell')
+      }
+
+}
+
 	render() {
 
-
-
+last = _.last(this.state.notifications);
+ lastId= last._id
     
-listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
+//listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
 
 
 
 
      const styles = {
         list:{
-          height: listHeight,
+          height: '80.6vh'
+,
           backgroundColor:'white'
         },
       username: {
@@ -142,15 +182,15 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
 
 
 
-	if (this.props.notifications && this.props.notifications.length > 0) {
+	if (this.state.notifications && this.state.notifications.length > 0) {
       var notifications = []
-      this.props.notifications.forEach((notification) => {
+      this.state.notifications.forEach((notification) => {
 
         let time = ` ${moment(notification.time).calendar()} `
 
 
 		 notifications.push(
-          <div key={notification._id}>
+          <div id={notification._id} key={notification._id}>
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(notification.yellId,notification.about)}
                   leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
@@ -175,7 +215,9 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
 
 		return (
   <div className="className">
-    <CustomScroll> 
+    <CustomScroll
+     onScroll={this.handleScroll.bind(this,lastId)}
+      > 
       <List style={styles.list} > 
         {notifications}
       </List> 

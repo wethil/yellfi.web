@@ -8,13 +8,16 @@ const NotificationSubs = new SubsManager()
 
 const composer = ( props, onData ) => {
 userId=Meteor.userId()
-  const subscription =  NotificationSubs.subscribe( 'thisUserNotifications',userId ) 
+limit = props.ntfLimit
+console.log(limit)
+  const subscription =  NotificationSubs.subscribe( 'thisUserNotifications',userId,limit ) 
 
    
   if ( subscription.ready() ) {
-  const notifications =  Notifications.find({receiverId:userId}).fetch() 
+  const notifications =  Notifications.find({receiverId:userId},{sort: {created_at: -1} , limit:limit}).fetch() 
+
   
-    onData( null, { notifications } );
+    onData( null, { notifications,limit } );
   }
 };
 

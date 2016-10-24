@@ -16,21 +16,23 @@ import TextField from 'material-ui/TextField';
 	 	console.log(e.target.value) 
  	}
 
- 	handlePress(keycode){
+ handlePress(keycode){
  		if (keycode=='Enter') {
-  			this.makeSuggestion()
+ 		   comment = this.state.comment
+  			this.makeSuggestion(comment)
+
  		}
  	}
  	
 
- 	makeSuggestion()
+ 	makeSuggestion(comment)
  	{
- 		let comCont = this.state.comment
+ 		this.setState({comment:""})
  		let yellId = this.props.yellId
  		let yellOwnerId = this.props.yellOwnerId
  		let ownerId = Meteor.userId();
  
-		Meteor.call('addComment',comCont,yellId,yellOwnerId,ownerId,error=>{
+		Meteor.call('addComment',comment,yellId,yellOwnerId,ownerId,error=>{
 			if (error) {
 				console.log(error)
 			} else {
@@ -39,6 +41,7 @@ import TextField from 'material-ui/TextField';
 			}
 		});	
  	}
+
 
 	render() {
 		return (

@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor'
 //import Navigation  from '../components/navigation.jsx';
 import Paper from 'material-ui/Paper';
 import YellMap from '../components/map/YellMap.jsx'
+import ObservedNotificationsComposer from '../components/LeftColumn/Notifications/ObservedNotificationsComposer.jsx'
 import LeftColumn from '../components/LeftColumn/LeftColumn.jsx'
 import RightColumn from '../components/RightColumn/RightColumn.jsx'
 import emitter from '../components/emitter.js'
@@ -32,6 +33,7 @@ export const App = ({children}) => (
                   <button style={styles.button} className="ui button"> button</button>
               </div>
                 {children}
+                <ObservedNotificationsComposer />
                 
       </div>
        </div> 

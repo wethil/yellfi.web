@@ -12,12 +12,16 @@ import emitter from '../../emitter.js'
  	}
 
  	componentDidMount() {
- 		 emitter.addListener('changeBadgeContent',(unreceivedNtfCount) => { 
+ 		 emitter.addListener('changeBadgeContent',(unreceivedNtf) => { //RawNotificationList
+ 		 //	console.log(unreceivedNtf)
+	      ntfCount = unreceivedNtf.length
 	      this.setState({
-	        badgeContent:unreceivedNtfCount
+	        badgeContent:ntfCount
 	      })
   	  });
  	}
+
+
 
 	render() {
 		badgeContent = this.state.badgeContent
