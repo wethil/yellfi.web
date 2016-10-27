@@ -54,7 +54,7 @@ var sound =  new howler.Howl({
  		  plan = _.find(plans, { 'content': ntf.yell.plan });
 	    //console.log(ntf)
 	    path = window.location.pathname
-if (path=='/' || path !='/yell/'+ntf.yellId) {
+
 		 ReactMaterialUiNotifications.showNotification({
 	      title: ntf.sender.username,
 	      additionalText: ntf.content,
@@ -72,9 +72,14 @@ if (path=='/' || path !='/yell/'+ntf.yellId) {
 			count: ++this.state.count
     })		
 
-	 console.log('triggerred')
+	Meteor.call('receiveNotification', ntf._id, (error)=> {
+		if (error) {
+			console.log('error')
+		} else {
+			console.log('received')
+		}
+	});
  sound.play();
-}
  
 
 
@@ -88,6 +93,11 @@ if (path=='/' || path !='/yell/'+ntf.yellId) {
 		<span  onClick={()=>this.toogleYellCard(this.state.yellId,this.state.about)} >
 		<ReactMaterialUiNotifications
             desktop={true}
+            rootStyle={{
+            	zIndex:99999,
+            	bottom: 20,
+            	 right: 25
+            }}
             transitionName={{
               leave: 'dummy',
               leaveActive: 'fadeOut',

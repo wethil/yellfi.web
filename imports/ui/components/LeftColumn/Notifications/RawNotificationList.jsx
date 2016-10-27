@@ -63,13 +63,15 @@ import  verge from 'verge';
 
   checkNtfForTime(ntf){
 
-    ntfTime= moment(ntf.created_at).utc()
+   if(!ntf.alerted){
+     ntfTime= moment(ntf.created_at).utc()
     now=moment().utc()
     pastTime =  moment(now).subtract(3, 'seconds')
     if (moment(ntfTime).isAfter(pastTime)){
       emitter.emit('triggerNtf',ntf)
   
     } 
+   }
   
   }
 

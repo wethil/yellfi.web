@@ -42,6 +42,10 @@ Notifications.attachSchema(
     received:{
       type:Boolean,
       defaultValue:false
+    },
+    alerted:{
+      type:Boolean,
+      optional:true
     }
   })
 );

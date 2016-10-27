@@ -16,6 +16,13 @@ Meteor.methods({
 
         })
     },
+     receiveNotification:function(notification) {
+        Notifications.update(
+                  { _id: notification },
+                  {$set : {alerted : true }},
+                 
+            )
+    },
     receiveAll:function(notifications) {
         Notifications.update(
                   { _id: { $in: notifications } },
