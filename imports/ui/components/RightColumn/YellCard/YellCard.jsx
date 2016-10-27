@@ -90,7 +90,8 @@ import SuggestionTextField from './SuggestionTextField.jsx'
  	}
 
  	handleCloseDialogViaUrl (yellId){
- 		browserHistory.push('/yell/'+yellId)
+ 		this.setState({dialogOpen:false})
+ 		browserHistory.push('/yell/'+yellId + '?dialog=close')
  	}
 
  	componentWillUnmount(){
@@ -265,7 +266,7 @@ const actions = this.props.userBlocked
 			          actions={actions}
 			          modal={false}
 			          open={this.state.dialogOpen}
-			          onRequestClose={this.handleCloseDialogViaUrl.bind(this,yellId)}
+			          onRequestClose={this.handleCloseDialogViaUrl.bind(this,yell._id)}
 			          title={[dialogTitleButton]}
 			          titleClassName="titleClass"
 			          titleStyle={styles.titleStyle}

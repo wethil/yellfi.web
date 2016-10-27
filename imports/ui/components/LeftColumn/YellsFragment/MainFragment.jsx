@@ -17,6 +17,7 @@ import {geolocated} from 'react-geolocated';
  	}
 
  	componentDidMount(){
+
  		emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}) );
  		emitter.addListener('userLogout',()=> this.setState({userId:null}) );
 

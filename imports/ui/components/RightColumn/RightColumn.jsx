@@ -7,7 +7,7 @@ import emitter from '../emitter.js'
 import YellForm from './YellForm/YellForm.jsx'
 import YellCardComposer from './YellCard/YellCardComposer.jsx'
 import Snackbar from 'material-ui/Snackbar';
-import { Session } from 'meteor/session'
+import { browserHistory } from 'react-router'
 
 export default class RightColumn extends Component {
 	constructor(props) {
@@ -40,8 +40,9 @@ export default class RightColumn extends Component {
 			let lng = parseFloat(this.props.location.query.lng)
 			let lat = parseFloat(this.props.location.query.lat)
 	
-			this.toogleDrawerWithContent(1,yellId,dialog,lng,lat)
+			this.toogleDrawer(yellId,dialog,lng,lat)
 			emitter.addListener('userInf',(user)=> this.getUserInf(user) )
+
 	}
 
 
@@ -52,39 +53,37 @@ export default class RightColumn extends Component {
 		let lng = parseFloat(nextProps.location.query.lng)
 		let lat = parseFloat(nextProps.location.query.lat)
 
-		this.toogleDrawerWithContent(2,yellId,dialog,lng,lat)
+		this.toogleDrawerAfterStart(yellId,dialog,lng,lat)
 
-			
+}
+
+toogleDrawer(yellId,dialog,lng,lat) {
+switch(yellId) {
+    case 'new':
+	    this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:"New Plan",open:true })
+        break;
+    case 'main':
+        this.setState({open:false})
+        break;
+    default:
+        this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId,open:true})//make drawer content card. yellId came from RawYellList.js
+		dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
 	}
 
+}
 
-//state is when this func is triggerred. 1 is willmount, is receive props 2 
-	toogleDrawerWithContent(state,yellId,dialog,lng,lat) {
-		
-		if (state == 1) {
-			if (yellId!='new'){
-				this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId,open:true})//make drawer content card. yellId came from RawYellList.js
-				dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
-			} else {
-				this.setState({userCoordinates:[lng,lat]})
+toogleDrawerAfterStart(yellId,dialog,lng,lat){
+		let drawerOpen = this.state.open
+		let old_yellId = this.state.yellId
+		if (yellId==old_yellId && drawerOpen==true && !dialog){
+			browserHistory.push('/yell/main')
+		} 
+this.toogleDrawer(yellId,dialog,lng,lat)
+	
+}
 
-				this.setState({drwContent:0, drawerTitle:"New Plan",open:true })
-			} 
-		} else {
-			let drawerOpen = this.state.open
-			let old_yellId = this.state.yellId
-			let openState = (yellId==old_yellId && drawerOpen==true) ? false : true
-			if (yellId!='new'){
-				this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId,open:openState})//make drawer content card. yellId came from RawYellList.js
-				dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
-			} else {
-				this.setState({userCoordinates:[lng,lat]})
-				this.setState({drwContent:0, drawerTitle:"New Plan",yellId:yellId, open:openState})
-			} 
-		}
 
-			
-	}
+
 
 
 	handleBlockUser (){
@@ -114,6 +113,7 @@ export default class RightColumn extends Component {
 			 <Drawer  
 			 		containerStyle={styles.drawer} 
 			 		width={280} 
+			 		
 			 		openSecondary={true} 
 			 		open={this.state.open} >
 			        
