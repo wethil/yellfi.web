@@ -15,7 +15,7 @@ Meteor.methods({
 		Notifications.insert({
 			senderId:ownerId,
 			receiverId:yellOwnerId,
-			content:'made suggestion to you for',
+			content:'made suggestion to you',
 			created_at:Date(),
 			about:'comment',
 			yellId:yellId
@@ -28,7 +28,7 @@ Meteor.methods({
         Notifications.insert({
 			senderId:userId,
 			receiverId:yellOwnerId,
-			content:'liked your suggestion for',
+			content:'liked your suggestion',
 			created_at:Date(),
 			about:'like',
 			yellId:yellId

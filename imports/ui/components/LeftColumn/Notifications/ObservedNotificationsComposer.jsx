@@ -15,13 +15,8 @@ date = new Date()
    
   if ( subscription.ready() ) {
 
-  	Notifications.find({receiverId:userId}).observeChanges({
-      added: function (id, fields) {
-           // console.log(id)
-        onData( null, { id } );
-      }
-    });
-
+ id= 	Notifications.find({receiverId:userId}).fetch()
+onData( null, { id } );
   
     
   }

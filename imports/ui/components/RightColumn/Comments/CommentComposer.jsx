@@ -9,7 +9,7 @@ yellId = props.yellId
 yellOwnerId = props.yellOwnerId
 
 
-console.log(yellId)
+//console.log(yellId)
 
   const subscription = CommentSub.subscribe( 'thisYellComments',yellId );
 

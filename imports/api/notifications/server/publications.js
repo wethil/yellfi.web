@@ -27,14 +27,42 @@ Meteor.publishComposite('thisUserNotifications', function(receiverId,limit) { //
 });
 
 
-     
+     //5987
 Meteor.publishComposite('observingNotifications', function(receiverId) { //always [longitude, latitude] order 
     return {
         find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-            return Notifications.find({"receiverId":receiverId, senderId: { $ne: receiverId },received:false },{sort: {created_at: -1}})
-        },
+
+           minutesBefore = moment().subtract(1, 'minutes')
+           console.log(minutesBefore.toISOString() )
+
+           var self = this;
+
+  var subHandle = Notifications.find({
+                receiverId:receiverId,
+                 senderId: { $ne: receiverId },
+                 received:false,
+                 created_at:{$gte: moment(minutesBefore).toISOString() }
+
+             }).observe({
+    added: function (doc) {
+
+      self.added("Notifications", doc);
+    }
+  });
+
+  self.ready();
+
+  self.onStop(function () {
+    subHandle.stop();
+  });
+           
+
+
+
+
+
+
+            },
         children: [
             {
               find: function (notification) {

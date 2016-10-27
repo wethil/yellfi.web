@@ -48,6 +48,8 @@ import { browserHistory } from 'react-router'
 
 		if(value==2){
 			this.setState({ntfsReceived:true})
+		} else {
+			this.setState({ntfsReceived:false})
 		}
 
 		

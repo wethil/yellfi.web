@@ -50,9 +50,27 @@ import  verge from 'verge';
   }
 
   componentWillReceiveProps(nextProps){
+   
+   if (nextProps.notifications && nextProps.notifications.length!=0) {
+     head = _.head(nextProps.notifications)
+    this.checkNtfForTime(head)
+   }
+   
     this.sendNotificationsToTabTitle(nextProps.notifications)
     this.makePropState(nextProps.notifications)
-    this.checkProps(nextProps.notifications,limit)
+    this.checkProps(nextProps.notifications, nextProps.limit)
+  }
+
+  checkNtfForTime(ntf){
+
+    ntfTime= moment(ntf.created_at).utc()
+    now=moment().utc()
+    pastTime =  moment(now).subtract(3, 'seconds')
+    if (moment(ntfTime).isAfter(pastTime)){
+      emitter.emit('triggerNtf',ntf)
+  
+    } 
+  
   }
 
 sendNotificationsToTabTitle(notifications){
@@ -120,10 +138,7 @@ handleScroll(lastId){
    if (verge.inViewport(lastElement)==true && this.state.propDuplicate<2) {
     console.log(this.state.propDuplicate)
     emitter.emit('ntfInfinite')
-  } else {
-
-    console.log('enough yani')
-  }
+  } 
 }
 
 makePropState(data){
@@ -145,8 +160,12 @@ checkProps(newP,limit){
 
 	render() {
 
-last = _.last(this.state.notifications);
+if(this.state.notifications && this.state.notifications.length != 0) {
+  last = _.last(this.state.notifications);
  lastId= last._id
+} else {
+  lastId=""
+}
     
 //listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
 
@@ -196,7 +215,7 @@ last = _.last(this.state.notifications);
                   leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
                   primaryText={
                    <div style={styles.username}>{notification.sender.username + ' '} 
-                     <span style={styles.subhead}>{notification.content + ' ' + notification.yell.plan}</span>
+                     <span style={styles.subhead}>{notification.content + ' for ' + notification.yell.plan}</span>
                    </div>
                 }
               />
@@ -216,7 +235,7 @@ last = _.last(this.state.notifications);
 		return (
   <div className="className">
     <CustomScroll
-     onScroll={this.handleScroll.bind(this,lastId)}
+    onScroll={this.handleScroll.bind(this,lastId)}
       > 
       <List style={styles.list} > 
         {notifications}

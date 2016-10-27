@@ -89,8 +89,8 @@ import SuggestionTextField from './SuggestionTextField.jsx'
  		this.setState({dialogOpen:true})
  	}
 
- 	handleCloseDialogViaUrl (){
- 		browserHistory.push('/yell/'+yell._id)
+ 	handleCloseDialogViaUrl (yellId){
+ 		browserHistory.push('/yell/'+yellId)
  	}
 
  	componentWillUnmount(){
@@ -171,7 +171,7 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 						      label={dialogTitleLabel}
 						      primary={true}
 						      icon={<FontIcon className="material-icons">arrow_back</FontIcon>}
-						      onTouchTap={this.handleCloseDialogViaUrl.bind(this)}
+						      onTouchTap={this.handleCloseDialogViaUrl.bind(this,yell._id)}
 						    />
 						</span>
 
@@ -202,7 +202,7 @@ switch(yell.publicity)
 
 const actions = this.props.userBlocked
 				   ? 
-				 [<span key={1} ><FlatButton label="CLOSE" primary={true} onTouchTap={ this.handleCloseDialogViaUrl.bind(this)}/></span>]
+				 [<span key={1} ><FlatButton label="CLOSE" primary={true} onTouchTap={ this.handleCloseDialogViaUrl.bind(this,yell._id)}/></span>]
 				   : 
 				[<span key={1}>{dialogAction}</span>]
 
@@ -265,7 +265,7 @@ const actions = this.props.userBlocked
 			          actions={actions}
 			          modal={false}
 			          open={this.state.dialogOpen}
-			          onRequestClose={this.handleCloseDialogViaUrl.bind(this)}
+			          onRequestClose={this.handleCloseDialogViaUrl.bind(this,yellId)}
 			          title={[dialogTitleButton]}
 			          titleClassName="titleClass"
 			          titleStyle={styles.titleStyle}

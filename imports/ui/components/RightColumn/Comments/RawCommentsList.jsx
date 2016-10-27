@@ -85,7 +85,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 
 	render() {
-    console.log(this.props.blockedUsers)
+   
 const iconButtonElement = (
   <IconButton
     touch={true}
