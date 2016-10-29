@@ -7,7 +7,6 @@ import Chip from 'material-ui/Chip';
 import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/styles/colors';
 import CustomScroll from 'react-custom-scroll';
 import { browserHistory } from 'react-router'
-import { Session } from 'meteor/session'
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
 import _ from 'lodash';
@@ -24,8 +23,7 @@ import  verge from 'verge';
         snackbarMessage:"",
         snackbarType:"",
         snackbarData:"",
-        propDuplicate:1,
-        firstCount:0
+        propDuplicate:1
     };
   }
 
@@ -42,9 +40,6 @@ import  verge from 'verge';
   }
 
   componentWillMount() {
-      this.setState({
-        firstCount:this.props.notifications.length
-      })
      this.makePropState(this.props.notifications)
     this.sendNotificationsToTabTitle(this.props.notifications)
   }

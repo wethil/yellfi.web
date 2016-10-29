@@ -14,10 +14,31 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 
  class OthersYells extends Component {
  	constructor(props) {
+
  	  super(props);
  	
- 	  this.state = { botNavIndex: 0};
+ 	  this.state = { botNavIndex:0,latestLimit:10,nearestLimit:10 };
  	}
+
+  componentDidMount(){
+     emitter.addListener('incLimit', (compoent)=> { 
+        this.incLimit(component)
+    });
+
+  }
+
+  incLimit(component) {
+    switch(component) {
+    case 1:
+       this.setState({latestLimit:this.state.latestLimit+5})
+        break;
+    case 2:
+         this.setState({nearestLimit:this.state.nearestLimit+5})
+        break;
+    default:
+        this.setState({latestLimit:10,nearestLimit:10})
+}
+  }
  
   
  	
@@ -25,12 +46,15 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 
 	render() {
 		ipLoc=this.props.ipLoc
-		content = this.state.botNavIndex==0 ?  <LatestYells height={'73.6vh'} /> : <NearestYells height={'73.6vh'} ipLoc={ipLoc} />
+    const {latestLimit,nearestLimit} = this.state
+		content = this.state.botNavIndex==0 ?  <LatestYells limit={latestLimit} /> : <NearestYells limit={nearestLimit} ipLoc={ipLoc} />
 
 	
 		return (
 			 <div className="className">	
-			 {content}	  
+			 {
+        this.props.othersActive?content:"notActive"
+       }	  
 
 
 	 <div id="bottomNav" >

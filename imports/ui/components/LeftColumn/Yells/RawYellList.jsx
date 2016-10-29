@@ -9,7 +9,8 @@ import CustomScroll from 'react-custom-scroll';
 import NoUserYell from './YellsComponents/NoUserYell.jsx'
 import NoApprovedYell from './YellsComponents/NoApprovedYell.jsx'
 import { browserHistory } from 'react-router'
-import { Session } from 'meteor/session'
+import  verge from 'verge';
+import _ from 'lodash';
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
 
@@ -22,7 +23,9 @@ import Snackbar from 'material-ui/Snackbar';
        snackbarState:false,
         snackbarMessage:"",
         snackbarType:"",
-        snackbarData:""
+        snackbarData:"",
+        propDuplicate:1,
+        yells:[]
     };
   }
 
@@ -37,6 +40,54 @@ import Snackbar from 'material-ui/Snackbar';
     });
   }
 
+componentWillMount(){
+  this.makePropState(this.props.yells)
+}
+
+componentWillReceiveProps(nextProps){
+  this.makePropState(nextProps.yells)
+  this.checkProps(nextProps.yells, nextProps.limit)
+}
+
+
+
+makePropState(data){
+  this.setState({yells:data})
+}
+
+checkProps(newP,limit){
+  if(newP.length<limit) {
+        console.log('no new yell')
+         this.setState({propDuplicate:this.state.propDuplicate + 1})
+      } else {
+        this.setState({propDuplicate:0})
+        console.log('there is new yell')
+      }
+
+}
+
+
+handleScroll(lastId){
+  var lastElement = document.getElementById(lastId);
+   if (verge.inViewport(lastElement)==true  ) {
+    console.log(this.state.propDuplicate)
+    //component present yell type  0 is user yell
+        
+        if(this.props.component==0){
+          console.log('emit for 0')
+        emitter.emit('userYellInfinite') // will go UserFragment
+      } else {
+        console.log('emit')
+        console.log(this.props.component)
+         emitter.emit('incLimit',this.props.component)
+      }
+
+
+  } else {
+    console.log('nothing to shw')
+    console.log(this.props.component)
+  }
+}
 
 
 toogleYellCard(yellId) {
@@ -79,6 +130,12 @@ undoAction(type,data) {
 }
 
 	render() {
+if(this.state.yells && this.state.yells.length != 0) {
+  last = _.last(this.state.yells);
+ lastId= last._id
+} else {
+  lastId=""
+}
 
 
 
@@ -115,9 +172,9 @@ listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80
 
 
 
-	if (this.props.yells && this.props.yells.length > 0) {
+	if (this.state.yells && this.state.yells.length > 0) {
       var yells = []
-      this.props.yells.forEach((yell) => {
+      this.state.yells.forEach((yell) => {
 
         let time = ` ${moment(yell.time).calendar()} `
 
@@ -154,7 +211,7 @@ if (yell.keyword) {
 }
 
 		 yells.push(
-          <div key={yell._id}>
+          <div  id={yell._id} key={yell._id}>
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(yell._id)}
                   leftAvatar={<Avatar src={yell.owner.profile.avatar} />}
@@ -195,7 +252,9 @@ if (yell.keyword) {
 
 		return (
   <div className="className">
-    <CustomScroll> 
+    <CustomScroll
+      onScroll={this.handleScroll.bind(this,lastId)}
+    > 
       <List style={styles.list} > 
         {yells}
       </List> 

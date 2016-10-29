@@ -8,15 +8,20 @@ import LoadingCircle from '../YellsComponents/LoadingCircle.jsx'
 
 
 const composer = ( props, onData ) => {
-const fieldsOpt =	{fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0}}
-
-  const subscription =  YellSubs.subscribe( 'latestYells' ) 
-
-   heightforBottomNav=props.height
+	limit=props.limit
+ const fieldsOpt = {
+  	fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0},
+  	limit:limit,
+	sort: {created_at: -1}
+}
+component = 1
+  const subscription =  YellSubs.subscribe( 'latestYells',limit ) 
+  limit=props.limit
+   heightforBottomNav='73.6vh'
   if ( subscription.ready() ) {
   const yells =  Yells.find({},fieldsOpt).fetch() 
   
-    onData( null, { yells,heightforBottomNav } );
+    onData( null, { yells,heightforBottomNav,component,limit } );
   }
 };
 

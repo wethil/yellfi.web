@@ -12,8 +12,13 @@ const UserYellsSub = new SubsManager()
 
 const composer = ( props, onData ) => {
   userId = Meteor.userId();
-  const fieldsOpt = {fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0}}
-  const subscription = UserYellsSub.subscribe( 'thisUserYell',userId );
+  limit=props.userYellInfinite
+  const fieldsOpt = {
+  	fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0},
+  	limit:limit,
+	sort: {created_at: -1}
+}
+  const subscription = UserYellsSub.subscribe( 'thisUserYell',userId,limit );
 
 
 
@@ -22,7 +27,7 @@ const composer = ( props, onData ) => {
   
     component=0 //0 is User Yell Tab Value
    
-    onData( null, { yells,component } );
+    onData( null, { yells,component,limit } );
   }
 };
 

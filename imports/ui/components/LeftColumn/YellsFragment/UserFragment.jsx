@@ -22,36 +22,42 @@ import { browserHistory } from 'react-router'
 	  	user:0,
 	  	userHasYell:1,
 	  	ntfsReceived:false,
-	  	ntfLimit:10
+	  	ntfLimit:10,
+	  	userYellInfinite:10,
+	  	othersActive:true
 	  };
 	}
 
 	componentDidMount() {
 	 emitter.addListener('ntfInfinite', ()=> { 
-	      this.setState({
-	        ntfLimit:this.state.ntfLimit+5
-	      })
+	      this.setState({ntfLimit:this.state.ntfLimit+5})
+    });
+
+	  emitter.addListener('userYellInfinite', ()=> { 
+	      this.setState({userYellInfinite:this.state.userYellInfinite+5})
     });
 	
+	
 		emitter.addListener('noUserYellAnim', ()=> {
-		
-			 $('.fab').toggleClass('animated infinite tada'); 
-			
-		} );
+			$('.fab').toggleClass('animated infinite tada')
+		});
 	}
 
 
 	changeTab(value){
-		if (value!=0){
-			 $('.fab').removeClass('animated infinite tada'); 
-		} 
-
-		if(value==2){
-			this.setState({ntfsReceived:true})
-		} else {
-			this.setState({ntfsReceived:false})
-		}
-
+		switch(value) {
+    case 0:
+        this.setState({ntfsReceived:false,othersActive:true});     
+        break;
+    case 1:
+		this.setState({ntfsReceived:false,othersActive:false});
+        $('.fab').removeClass('animated infinite tada'); 
+        break;
+    case 2:
+        this.setState({ntfsReceived:true,othersActive:false});
+        $('.fab').removeClass('animated infinite tada'); 
+        break;
+}
 		
 		this.setState({activeTab:value})
 		$('.fab').addClass('animated zoomIn');
@@ -93,8 +99,8 @@ import { browserHistory } from 'react-router'
 		</Tabs>
 
 		<SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
-			<div><OthersYells  ipLoc={ipLoc} /></div>
-			<div> <UserYells /> </div>
+			<div><OthersYells othersActive={this.state.othersActive}  ipLoc={ipLoc} /></div>
+			<div> <UserYells  userYellInfinite={this.state.userYellInfinite} /> </div>
 			<div><UserNotificationComposer ntfLimit={this.state.ntfLimit}/></div>
 		</SwipeableViews>
 
@@ -107,6 +113,7 @@ import { browserHistory } from 'react-router'
 	}
 }
 export default UserFragment;
+
 
 
      const styles = {

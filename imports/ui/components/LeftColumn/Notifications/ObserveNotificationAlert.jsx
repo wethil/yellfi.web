@@ -58,7 +58,7 @@ var sound =  new howler.Howl({
 		 ReactMaterialUiNotifications.showNotification({
 	      title: ntf.sender.username,
 	      additionalText: ntf.content,
-	      autoHide:3000,
+	      autoHide:2600,
 	      icon:<FontIcon   className="material-icons ntf">{plan.icon}</FontIcon> ,
 	      iconBadgeColor: deepOrange500,
 	      overflowText: ntf.yell.plan,

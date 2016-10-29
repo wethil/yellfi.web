@@ -33,18 +33,24 @@ Meteor.publish('thisUser', function (userId) {
 })
 
 
-Meteor.publishComposite('latestYells',{
-	find : function () {
-		return Yells.find({visible:true}, {sort: {created_at: -1}})
-	},
-	children : [
-		{
-			find: function (yell) {
-				return Meteor.users.find({_id:yell.ownerId})
-			}
-		}
-	]
-})
+
+// Server
+Meteor.publishComposite('latestYells', function(limit) { //always [longitude, latitude] order 
+    return {
+        find: function() {
+            // Find posts made by user. Note arguments for callback function
+            // being used in query.
+          return Yells.find({visible:true},{sort: {created_at: -1},limit:limit});
+        },
+        children: [
+            {
+              find: function (yell) {
+          return Meteor.users.find({_id:yell.ownerId})
+        }
+            }
+        ]
+    }
+});
 
 
 
@@ -54,7 +60,7 @@ Meteor.publishComposite('latestYells',{
 
 
 // Server
-Meteor.publishComposite('nearestYells', function(loc) { //always [longitude, latitude] order 
+Meteor.publishComposite('nearestYells', function(loc,limit) { //always [longitude, latitude] order 
     return {
         find: function() {
             // Find posts made by user. Note arguments for callback function
@@ -70,7 +76,7 @@ Meteor.publishComposite('nearestYells', function(loc) { //always [longitude, lat
                             },
                         }
                       },visible:true
-              }
+              },{limit:limit}
             )
         },
         children: [
@@ -90,12 +96,12 @@ Meteor.publishComposite('nearestYells', function(loc) { //always [longitude, lat
 
 
 // Server
-Meteor.publishComposite('thisUserYell', function(userId) { //always [longitude, latitude] order 
+Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longitude, latitude] order 
     return {
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-          return Yells.find({ownerId:userId,visible:true});
+          return Yells.find({ownerId:userId,visible:true},{sort: {created_at: -1},limit:limit});
         },
         children: [
             {

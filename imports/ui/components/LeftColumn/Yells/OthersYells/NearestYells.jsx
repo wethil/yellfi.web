@@ -7,16 +7,21 @@ import LoadingCircle from '../YellsComponents/LoadingCircle.jsx'
 
 const composer = ( props, onData ) => {
   coordinates = props.ipLoc.coordinates
-  heightforBottomNav=props.height
-  const fieldsOpt =	{fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0}}
+  heightforBottomNav='73.6vh'
+  component=2
+  limit=props.limit
+  const fieldsOpt =	{
+  	fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0},
+  	limit:limit,
+  }
 
- const subscription = YellSubs.subscribe( 'nearestYells',coordinates )
+ const subscription = YellSubs.subscribe( 'nearestYells',coordinates,limit )
 
 
   if ( subscription.ready() ) {
     const yells =  Yells.find({},fieldsOpt).fetch() 
     console.log(yells)
-    onData( null, { yells,heightforBottomNav } );
+    onData( null, { yells,heightforBottomNav,component,limit } );
   }
 };
 
