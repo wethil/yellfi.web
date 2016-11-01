@@ -21,11 +21,29 @@ import Snackbar from 'material-ui/Snackbar';
     super(props);
   
     this.state = {
+      comments:1,
       count:0,
+      propDuplicate:1,
       snackbarState:false,
       snackbarData:""
     };
   }
+
+  componentWillMount(){
+    this.makePropState(this.props.comments)
+  }
+
+  componentWillReceiveProps(nextProps){
+  this.makePropState(nextProps.comments)
+
+}
+
+
+  makePropState(data){
+  this.setState({comments:data})
+}
+
+
 
    like(comment) {
     yellOwnerId = this.props.yellOwnerId
@@ -100,10 +118,10 @@ const iconButtonElement = (
 
 
 
-	if (this.props.comments && this.props.comments.length > 0) {
+	if (this.state.comments && this.state.comments.length > 0) {
       var comments = []
    //loop started   
- this.props.comments.forEach((comment) => {
+ this.state.comments.forEach((comment) => {
  let likeButton= _.includes(comment.likes, Meteor.userId()) 
                 ? //like button. look state and change
                 <MenuItem onTouchTap={ ()=> this.unlike(comment._id)} >Unlike</MenuItem>
@@ -260,3 +278,5 @@ export default RawCommentsList;
         }
 
     }
+
+

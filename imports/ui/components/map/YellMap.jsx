@@ -4,21 +4,37 @@ import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
 
 export default class YellMap extends Component {
+	constructor(props) {
+	  super(props);
+	
+	  this.state = {
+	  	zoom:2,
+	  	position : [23.07973, 11.60156]
+	  };
+	}
+
+	componentDidMount() {
+    	this.mapApi = this.refs.map.leafletElement; // <= this is the Leaflet Map object
+  }
+
+  	handleMove(){
+		console.log(`center:${this.mapApi.getCenter()}`)
+		console.log(this.mapApi.getBounds())
+	}
+
 	
 	render() {
-		position = [23.07973, 11.60156]
+		const {zoom,position} = this.state
 		return (
 		<Map center={position}
-		  		//onMoveend={this.handleMove}
-		  		ref="map"
-		  		style={styles.mapStyle}
-		  		 zoom={2} >
-		 		  <TileLayer
+			onMoveend={this.handleMove.bind(this)}
+			ref="map"
+			style={styles.mapStyle}
+			zoom={zoom} >
+		 <TileLayer
 		      url='http://{s}.tile.osm.org/{z}/{x}/{y}.png'
 		      attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 		    />
-					
-
       	</Map>
 		);
 	}

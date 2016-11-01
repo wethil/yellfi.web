@@ -1,5 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import Yells from '../yells.js';
+fieldsOpt = {fields:{'username':1 ,'profile.avatar':1}}
 
 
 
@@ -13,7 +14,7 @@ Meteor.publishComposite('thisYell', function(yellId) { //always [longitude, lati
         children: [
             {
               find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
+          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
         }
             }
         ]
@@ -24,7 +25,7 @@ Meteor.publishComposite('thisYell', function(yellId) { //always [longitude, lati
                   
 
 Meteor.publish('multipleUsers',function(usersArray){
-  return Meteor.users.find({_id: {$in:usersArray}},{fields:{'username':1 ,'profile.avatar':1}})
+  return Meteor.users.find({_id: {$in:usersArray}},fieldsOpt)
 })
 
 
@@ -45,7 +46,7 @@ Meteor.publishComposite('latestYells', function(limit) { //always [longitude, la
         children: [
             {
               find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
+          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
         }
             }
         ]

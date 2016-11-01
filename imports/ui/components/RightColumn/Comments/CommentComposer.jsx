@@ -16,7 +16,7 @@ yellOwnerId = props.yellOwnerId
 
 
   if ( subscription.ready() ) {
-    const comments = Comments.find({yellId:yellId}).fetch()
+    const comments = Comments.find({yellId:yellId},{sort: {'created_at': -1}}).fetch()
 
    
     onData( null, {comments,yellOwnerId,yellId} );
