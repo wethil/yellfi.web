@@ -17,6 +17,9 @@ const composer = ( props, onData ) => {
 console.log(markers)
   
     onData( null, { markers} );
+  } else {
+  	markers = [{_id:1,loc:{coordinates:[[-88.175429,39.480155]]}}]
+  	 onData( null, { markers });
   }
 };
 

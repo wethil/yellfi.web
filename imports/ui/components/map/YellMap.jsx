@@ -12,14 +12,19 @@ const MapBase = withGoogleMap(props => (
       enableRetinaIcons
       gridSize={60}
     >
-      {props.markers.map(marker => (
+      {props.markers.map((marker) => (
       
         <Marker
-          position={{ lat: marker.loc.coordinates[0][1], lng: marker.loc.coordinates[0][0], }}
+          position={{ lat: marker.loc.coordinates[0][1], lng: marker.loc.coordinates[0][0] }}
           key={marker._id}
         />
     
       ))}
+
+
+
+
+
     </MarkerClusterer>
   </GoogleMap>
 
@@ -29,7 +34,26 @@ const MapBase = withGoogleMap(props => (
 
 
  class YellMap extends Component {
+ 	constructor(props) {
+ 	  super(props);
+ 	
+ 	  this.state = {
+ 	  	markers:[{_id:1,loc:{coordinates:[[-88.175429,39.480155]]}}]
+ 	  };
+ 	}
+ componentDidMount(){
+ 	console.log(this.props.markers)
+	this.changeMapMarkers(this.props.markers)
+ 	}
 
+componentWillReceiveProps(nextProps){
+	this.changeMapMarkers(nextProps.markers)
+}
+
+
+changeMapMarkers(data){
+	this.setState({markers:data})
+}
 
 	render() {
 		return (
@@ -39,7 +63,7 @@ const MapBase = withGoogleMap(props => (
         mapElement={
            <div className="map-container" />
         }
-        markers={this.props.markers}
+        markers={this.state.markers}
       />
 		);
 	}
