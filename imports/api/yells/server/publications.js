@@ -83,7 +83,7 @@ Meteor.publishComposite('nearestYells', function(loc,limit) { //always [longitud
         children: [
             {
               find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
+          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
         }
             }
         ]
@@ -92,6 +92,10 @@ Meteor.publishComposite('nearestYells', function(loc,limit) { //always [longitud
 
 
 
+
+Meteor.publish('nearestYellsForMap', function () {
+  return Yells.find({visible:true},{fields:{'loc.coordinates':1}})
+})
 
 
 

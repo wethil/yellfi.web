@@ -1,9 +1,16 @@
 /* CSS declarations go here */
 @import 'https://fonts.googleapis.com/css?family=Roboto';
-.leaflet-container {
+.map-container {
     height: 100vh;
     width: 100%;
+    z-index:1;
+    position:absolute;    
+    top:0;
+    left:0;
+    top:0;
+    bottom:0;
 }
+
 
 .eleven.wide.column.animated.fadeIn{
     position: absolute;

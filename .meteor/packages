@@ -25,16 +25,13 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 aldeed:collection2
 meteortoys:allthings
 ultimatejs:tracker-react
-session
 nimble:restivus
 http
 reywood:publish-composite
 semantic:ui-css
 accounts-password
 natestrauser:animate-css
-dburles:collection-helpers
 fortawesome:fontawesome
 momentjs:moment
 bevanhunt:leaflet
 meteorhacks:subs-manager
-gunjansoni:notifications

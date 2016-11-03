@@ -2,7 +2,7 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor'
 //import Navigation  from '../components/navigation.jsx';
 import Paper from 'material-ui/Paper';
-import YellMap from '../components/map/YellMap.jsx'
+import MapComposer from '../components/map/MapComposer.jsx'
 import ObserveNotificationAlert from '../components/LeftColumn/Notifications/ObserveNotificationAlert.jsx'
 import LeftColumn from '../components/LeftColumn/LeftColumn.jsx'
 import RightColumn from '../components/RightColumn/RightColumn.jsx'
@@ -27,7 +27,9 @@ export const App = ({children}) => (
               </div>
               <div className="eleven wide column animated fadeIn fixed ">
       
-                  <YellMap />
+                
+                    <MapComposer />
+                
 
                 
                   <button style={styles.button} className="ui button"> button</button>

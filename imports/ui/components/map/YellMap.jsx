@@ -1,4 +1,54 @@
 import React, { Component } from 'react';
+import { withGoogleMap,GoogleMap,Marker } from "react-google-maps";
+import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer.js";
+
+const MapBase = withGoogleMap(props => (
+   <GoogleMap
+    defaultZoom={3}
+    defaultCenter={{ lat: 25.0391667, lng: 121.525 }}
+  >
+    <MarkerClusterer
+      averageCenter
+      enableRetinaIcons
+      gridSize={60}
+    >
+      {props.markers.map(marker => (
+      
+        <Marker
+          position={{ lat: marker.loc.coordinates[0][1], lng: marker.loc.coordinates[0][0], }}
+          key={marker._id}
+        />
+    
+      ))}
+    </MarkerClusterer>
+  </GoogleMap>
+
+
+
+));
+
+
+ class YellMap extends Component {
+
+
+	render() {
+		return (
+<MapBase  containerElement={
+            <div className="map-container" />
+        }
+        mapElement={
+           <div className="map-container" />
+        }
+        markers={this.props.markers}
+      />
+		);
+	}
+}
+export default YellMap;
+
+/*
+
+import React, { Component } from 'react';
 import { render } from 'react-dom';
 import { Map, Marker, Popup, TileLayer } from 'react-leaflet';
 
@@ -68,3 +118,4 @@ const styles = {
 											</Popup>
 										</Marker>;
 			          })}*/
+
