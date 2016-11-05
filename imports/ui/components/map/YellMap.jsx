@@ -22,7 +22,7 @@ const MapBase = withGoogleMap(props => (
       {props.markers.map((marker) => (
       
         <Marker
-          position={{ lat: marker.loc.coordinates[1][1], lng: marker.loc.coordinates[1][0] }}
+          position={{ lat: marker.publicPlanLoc.coordinates[1], lng: marker.publicPlanLoc.coordinates[0] }}
           key={marker._id}
         />
     
@@ -37,14 +37,8 @@ const MapBase = withGoogleMap(props => (
 
 
  class YellMap extends Component {
- 	constructor(props) {
- 	  super(props);
  	
- 	  this.state = {
- 	  	markers:[{_id:1,loc:{coordinates:[[],[-88.175429,39.480155]]}}]
- 	  };
- 	}
- componentDidMount(){
+ componentWillMount(){
  	console.log(this.props.markers)
 	this.changeMapMarkers(this.props.markers)
  	}
@@ -53,6 +47,9 @@ componentWillReceiveProps(nextProps){
 	this.changeMapMarkers(nextProps.markers)
 }
 
+onMapClick(){
+	console.log('mapClicked')
+}
 
 changeMapMarkers(data){
 	this.setState({markers:data})
@@ -89,6 +86,7 @@ changeMapMarkers(data){
          onCenterChanged={this.handleCenterChanged.bind(this)}
          onClusterClick={this.onClusterClick.bind(this)}
          onClusterMounted={this.handleClusterMounted.bind(this)}
+         onMapClick={this.onMapClick.bind(this)}
       />
 		);
 	}

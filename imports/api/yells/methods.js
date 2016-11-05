@@ -5,8 +5,22 @@ import Notifications from '../notifications/notifications.js'
 
 
 Meteor.methods({
-   addYell: function(loc,plan,keyword,time,publicity,ownerId) {
-   return Yells.insert({
+   addYell: function(loc,publicPlanLoc,plan,keyword,time,publicity,ownerId) {
+   
+    if(publicPlanLoc && publicPlanLoc.coordinates){
+        return Yells.insert({
+            loc:loc,
+            publicPlanLoc:publicPlanLoc,
+            plan : plan,
+            keyword:keyword,
+            time:time,
+            created_at : new Date(),
+            publicity:publicity,
+            ownerId:ownerId
+
+        })
+    } else {
+        return Yells.insert({
             loc:loc,
             plan : plan,
             keyword:keyword,
@@ -16,6 +30,10 @@ Meteor.methods({
             ownerId:ownerId
 
         })
+    }
+
+
+
     },
     blockUserFromComment:function(commentId,userId,yell) {
         Yells.update({_id:yell}, {$push : {blocked_users : userId }})

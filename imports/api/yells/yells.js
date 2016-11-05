@@ -31,7 +31,10 @@ Yells = new Mongo.Collection('yells' ,{
 
 Yells.attachSchema(
     new SimpleSchema({
-    loc: { //MultiPoint Loc incllude ipLoc and GeoLoc. use coordinates[1] for
+    loc: { 
+      type: LocationSchema
+    },
+    publicPlanLoc: {
       type: LocationSchema,
       optional:true
     },

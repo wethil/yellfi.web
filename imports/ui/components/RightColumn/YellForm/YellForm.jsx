@@ -103,18 +103,25 @@ export default class YellForm extends Component {
 	let	publicity = this.state.publicity
 	let	date = this.state.date==0 ? new Date : this.state.date
 	let	time = this.state.time==0 ? new Date : this.state.time
-	let	publicGeoLoc = this.state.publicGeoLoc
-	let	userCoordinates = this.state.userCoordinates 
-	let coordinates = !this.state.publicGeoLoc.coordinates ? [userCoordinates] : [userCoordinates,publicGeoLoc.coordinates]//came from rightcolumn.jsx
-	let geoLocAdress = this.state.publicGeoLoc.geoLocAdress ? this.state.publicGeoLoc.geoLocAdress : ""
-	let loc = {type:"MultiPoint",coordinates:coordinates, geoLocAdress:geoLocAdress}
+	let coordinates =  this.state.userCoordinates //came from rightcolumn.jsx
+	let loc = {type:"Point",coordinates:coordinates }
+	
+	if(this.state.publicGeoLoc.coordinates){
+		publicGeoLoc = this.state.publicGeoLoc
+		 publicPlanLoc = {type:"Point",coordinates:publicGeoLoc.coordinates, adress:publicGeoLoc.geoLocAdress}
+	}else {
+		publicPlanLoc = false
+	}	
+
+ 	
  	let plan = this.state.activePlan==10 ? document.getElementById("customPlan").value : this.state.activePlan
 	let keyword = $('#keywordInput').val()
 	let ownerId = Meteor.userId();
-	console.log(plan)
+
 
 	
-		Meteor.call('addYell',loc,plan,keyword,time,publicity,ownerId,function (error, result){
+	
+			Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,ownerId,function (error, result){
 			if (error) {
 				console.log(error)
 			} else {
@@ -123,6 +130,7 @@ export default class YellForm extends Component {
 			}
 		});	
 
+	
 
 
 

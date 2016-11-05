@@ -17,16 +17,23 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 
  	  super(props);
  	
- 	  this.state = { botNavIndex:0,latestLimit:10,nearestLimit:10 };
+ 	  this.state = { nearestLimit:10 };
  	}
 
   componentDidMount(){
-     emitter.addListener('incLimit', (compoent)=> { 
+     emitter.addListener('incLimit', ()=> { 
         this.incLimit(component)
     });
 
   }
 
+   incLimit() {
+
+    this.setState({nearestLimit:this.state.nearestLimit+5})
+  }
+ 
+
+ /*
   incLimit(component) {
     switch(component) {
     case 1:
@@ -38,16 +45,18 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
     default:
         this.setState({latestLimit:10,nearestLimit:10})
 }
-  }
+  } deactivated because of LatestYells deactivated
  
+ */
   
  	
 
 
 	render() {
 		ipLoc=this.props.ipLoc
-    const {latestLimit,nearestLimit} = this.state
-		content = this.state.botNavIndex==0 ?  <LatestYells limit={latestLimit} /> : <NearestYells limit={nearestLimit} ipLoc={ipLoc} />
+    const {nearestLimit} = this.state
+		//content = this.state.botNavIndex==0 ?  <LatestYells limit={latestLimit} /> : <NearestYells limit={nearestLimit} ipLoc={ipLoc} />
+    content = ipLoc.coordinates ?  <NearestYells limit={nearestLimit} ipLoc={ipLoc} /> : "wait......"
 
 	
 		return (
@@ -57,23 +66,7 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
        }	  
 
 
-	 <div id="bottomNav" >
-	 	<Paper zDepth={1}>
-        <BottomNavigation selectedIndex={this.state.botNavIndex}>
-          <BottomNavigationItem
-            label="Recents"
-            icon={recentsIcon}
-           onTouchTap={() => this.setState({botNavIndex: 0})}
-          />
-          <BottomNavigationItem
-            label="Nearby"
-            icon={locationIcon}
-            onTouchTap={() => this.setState({botNavIndex: 1})}
-          />
- 
-        </BottomNavigation>
-      </Paper>
-	 </div>
+
 			    
 			 </div>	
 
@@ -96,3 +89,23 @@ export default OthersYells;
         }
     }
 
+/* deactivated because of latestyells deactivated
+     <div id="bottomNav" >
+    <Paper zDepth={1}>
+        <BottomNavigation selectedIndex={this.state.botNavIndex}>
+          <BottomNavigationItem
+            label="Recents"
+            icon={recentsIcon}
+           onTouchTap={() => this.setState({botNavIndex: 0})}
+          />
+          <BottomNavigationItem
+            label="Nearby"
+            icon={locationIcon}
+            onTouchTap={() => this.setState({botNavIndex: 1})}
+          />
+ 
+        </BottomNavigation>
+      </Paper>
+   </div>
+
+*/

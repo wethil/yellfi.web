@@ -74,8 +74,8 @@ handleScroll(lastId){
         if(this.props.component==0){
         emitter.emit('userYellInfinite') // will go UserFragment
       } else {
-        console.log(this.props.component)
-         emitter.emit('incLimit',this.props.component)
+      
+         emitter.emit('incLimit') //will go OthersYells
       }
   } 
 }
@@ -132,14 +132,14 @@ if(this.state.yells && this.state.yells.length != 0) {
 
 
     
-listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
+//listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
 
 
 
 
      const styles = {
         list:{
-          height: listHeight,
+          height: '80.6vh',
           backgroundColor:'white'
         },
       username: {

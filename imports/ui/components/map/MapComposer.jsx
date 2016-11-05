@@ -5,7 +5,7 @@ import YellMap from './YellMap.jsx'
 
 const MarkerSub = new SubsManager()
 const composer = ( props, onData ) => {
-
+pantherHome =  [{_id:1,publicPlanLoc:{coordinates:[-88.175429,39.480155]}}]
 
 
   const subscription = MarkerSub.subscribe( 'nearestYellsForMap');
@@ -13,12 +13,12 @@ const composer = ( props, onData ) => {
 
 
   if ( subscription.ready() ) {
-    const markers = Yells.find({visible:true,publicity: { $ne: 0 }},{fields:{'loc.coordinates':1}}).fetch()
-console.log(markers)
-  
+    const preMarkers = Yells.find({visible:true,publicity: { $ne: 0 }},{fields:{'publicPlanLoc.coordinates':1}}).fetch()
+console.log(preMarkers)
+  markers = preMarkers.length >1 ? preMarkers : pantherHome
     onData( null, { markers} );
   } else {
-  	markers = [{_id:1,loc:{coordinates:[[],[-88.175429,39.480155]]}}]
+  	markers = pantherHome
   	 onData( null, { markers });
   }
 };

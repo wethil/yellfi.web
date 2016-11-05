@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor'
 //import Navigation  from '../components/navigation.jsx';
 import Paper from 'material-ui/Paper';
 import MapComposer from '../components/map/MapComposer.jsx'
+import ClusterAvatars from '../components/map/ClusterAvatars.jsx'
 import ObserveNotificationAlert from '../components/LeftColumn/Notifications/ObserveNotificationAlert.jsx'
 import LeftColumn from '../components/LeftColumn/LeftColumn.jsx'
 import RightColumn from '../components/RightColumn/RightColumn.jsx'
@@ -30,9 +31,10 @@ export const App = ({children}) => (
                 
                     <MapComposer />
                 
-
+          <div  className="two wide column">
+              <ClusterAvatars />
+          </div>
                 
-                  <button style={styles.button} className="ui button"> button</button>
               </div>
                <ObserveNotificationAlert />
                 {children}
@@ -48,13 +50,3 @@ export const App = ({children}) => (
 
 
 
-
-const styles = {
-  button:{
-    zIndex:2,
-    position:'absolute'
-  }
-};
-
-
-  

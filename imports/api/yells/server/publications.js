@@ -36,6 +36,71 @@ Meteor.publish('thisUser', function (userId) {
 
 
 
+
+
+
+// Server
+Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [longitude, latitude] order 
+    return {
+        find: function() {
+            // Find posts made by user. Note arguments for callback function
+            // being used in query.
+          return Yells.find(
+              {  
+                "loc":{  
+                  $near:{  
+                    $geometry:{  
+                      type:"Point",
+                      coordinates:coordinates
+                    },
+                  }
+                },
+                'visible':true
+              },
+              {  
+                'fields':yellsFieldsOpt,
+                'limit':limit,
+              })
+        },
+        children: [
+            {
+              find: function (yell) {
+          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
+        }
+            }
+        ]
+    }
+});
+
+
+
+
+Meteor.publish('nearestYellsForMap', function () {
+  return Yells.find({visible:true,publicity: { $ne: 0 }},{fields:{'publicPlanLoc.coordinates':1}})
+})
+
+
+
+
+// Server
+Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longitude, latitude] order 
+    return {
+        find: function() {
+            // Find posts made by user. Note arguments for callback function
+            // being used in query.
+          return Yells.find({ownerId:userId,visible:true},{fields: yellsFieldsOpt,sort: {created_at: -1},limit:limit});
+        },
+        children: [
+            {
+              find: function (yell) {
+          return Meteor.users.find({_id:yell.ownerId})
+        }
+            }
+        ]
+    }
+});
+
+/*
 // Server
 Meteor.publishComposite('latestYells', function(limit) { //always [longitude, latitude] order 
     return {
@@ -61,73 +126,4 @@ Meteor.publishComposite('latestYells', function(limit) { //always [longitude, la
 });
 
 
-
-
-
-
-
-
-// Server
-Meteor.publishComposite('nearestYells', function(loc,limit) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-          return Yells.find({
-                "loc":
-                      {
-                        $near: {
-                          $geometry:
-                            {
-                              type: "Point",
-                              coordinates: loc
-                            },
-                        }
-                      },
-                'visible':true
-              }, 
-
-              {
-              'fields': yellsFieldsOpt,
-              'limit':limit,
-              'sort': {created_at: -1}
-            })
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
-        }
-            }
-        ]
-    }
-});
-
-
-
-
-Meteor.publish('nearestYellsForMap', function () {
-  return Yells.find({visible:true,publicity: { $ne: 0 }},{fields:{'loc.coordinates':1}})
-})
-
-
-
-
-// Server
-Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-          return Yells.find({ownerId:userId,visible:true},{fields: yellsFieldsOpt,sort: {created_at: -1},limit:limit});
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
-        }
-            }
-        ]
-    }
-});
-
+*/

@@ -5,32 +5,24 @@ import TimePicker from 'material-ui/TimePicker';
 import emitter from '../../emitter.js'
 
 export default class ExtraFormElements extends Component {
-	constructor(props) {
-	  super(props);
-	
-	  this.state = {
-	  	publicGeoLoc:{}
 
-	  };
-	}
 	componentDidMount() {
 	var input = document.getElementById('places');
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addListener(autocomplete, 'place_changed', ()=> {
 			var place = autocomplete.getPlace();
-			console.log(place)
+			//console.log(place)
 			myLatLng = place.geometry.location
 			var lat = myLatLng.lat();
 			var lng = myLatLng.lng();
-			this.setState({
-			publicGeoLoc:{
+			publicGeoLoc={
 					coordinates:[lng,lat],
 					geoLocAdress:place.formatted_address
 				}
-			})
+		
 
 			
-			emitter.emit('changepublicGeoLoc',this.state.publicGeoLoc) // to YellForm.jsx
+			emitter.emit('changepublicGeoLoc',publicGeoLoc) // to YellForm.jsx
 			
 
 			});
