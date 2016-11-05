@@ -94,7 +94,7 @@ Meteor.publishComposite('nearestYells', function(loc,limit) { //always [longitud
 
 
 Meteor.publish('nearestYellsForMap', function () {
-  return Yells.find({visible:true},{fields:{'loc.coordinates':1}})
+  return Yells.find({visible:true,publicity: { $ne: 0 }},{fields:{'loc.coordinates':1}})
 })
 
 

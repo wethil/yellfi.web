@@ -13,6 +13,8 @@ import  verge from 'verge';
 import _ from 'lodash';
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
+import {plans} from '../../constants.js';
+
 
 
  class RawYellList extends Component {
@@ -61,7 +63,6 @@ checkProps(newP,limit){
          this.setState({propDuplicate:this.state.propDuplicate + 1})
       } else {
         this.setState({propDuplicate:0})
-        console.log('there is new yell')
       }
 
 }
@@ -69,24 +70,14 @@ checkProps(newP,limit){
 
 handleScroll(lastId){
   var lastElement = document.getElementById(lastId);
-   if (verge.inViewport(lastElement)==true  ) {
-    console.log(this.state.propDuplicate)
-    //component present yell type  0 is user yell
-        
+   if (verge.inViewport(lastElement)==true  ) {    
         if(this.props.component==0){
-          console.log('emit for 0')
         emitter.emit('userYellInfinite') // will go UserFragment
       } else {
-        console.log('emit')
         console.log(this.props.component)
          emitter.emit('incLimit',this.props.component)
       }
-
-
-  } else {
-    console.log('nothing to shw')
-    console.log(this.props.component)
-  }
+  } 
 }
 
 
@@ -130,6 +121,7 @@ undoAction(type,data) {
 }
 
 	render() {
+
 if(this.state.yells && this.state.yells.length != 0) {
   last = _.last(this.state.yells);
  lastId= last._id
@@ -209,6 +201,12 @@ if (yell.keyword) {
 } else {
   keyword =""
 }
+prePlan=Number(yell.plan)
+if ( prePlan<1 || prePlan>9  ||  isNaN(prePlan)  ) {
+  plan = yell.plan
+} else {
+  plan = plans[Number(prePlan)].content  
+}
 
 		 yells.push(
           <div  id={yell._id} key={yell._id}>
@@ -218,7 +216,7 @@ if (yell.keyword) {
                   primaryText={ <div style={styles.username}>{yell.owner.username} <span style={styles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
                   secondaryText={
                       	<p>   
-                        <span style={styles.plan}>{yell.plan}</span> 
+                        <span style={styles.plan}>{plan}</span> 
                         {keyword}
                   		</p>
                   }
@@ -256,7 +254,7 @@ if (yell.keyword) {
       onScroll={this.handleScroll.bind(this,lastId)}
     > 
       <List style={styles.list} > 
-        {yells}
+      {yells}
       </List> 
     </CustomScroll>
     <Snackbar
@@ -277,4 +275,3 @@ if (yell.keyword) {
 	}
 }
 export default RawYellList;
-

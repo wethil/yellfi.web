@@ -5,25 +5,28 @@ import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer.js";
 const MapBase = withGoogleMap(props => (
    <GoogleMap
     defaultZoom={3}
+    ref={props.onMapMounted}
     defaultCenter={{ lat: 25.0391667, lng: 121.525 }}
+    onCenterChanged={props.onCenterChanged}
   >
     <MarkerClusterer
       averageCenter
       enableRetinaIcons
       gridSize={60}
+      ref={props.onClusterMounted}
+      onClick={props.onClusterClick}
+       //maxZoom={5}
+      zoomOnClick={false}
     >
+ 
       {props.markers.map((marker) => (
       
         <Marker
-          position={{ lat: marker.loc.coordinates[0][1], lng: marker.loc.coordinates[0][0] }}
+          position={{ lat: marker.loc.coordinates[1][1], lng: marker.loc.coordinates[1][0] }}
           key={marker._id}
         />
     
       ))}
-
-
-
-
 
     </MarkerClusterer>
   </GoogleMap>
@@ -38,7 +41,7 @@ const MapBase = withGoogleMap(props => (
  	  super(props);
  	
  	  this.state = {
- 	  	markers:[{_id:1,loc:{coordinates:[[-88.175429,39.480155]]}}]
+ 	  	markers:[{_id:1,loc:{coordinates:[[],[-88.175429,39.480155]]}}]
  	  };
  	}
  componentDidMount(){
@@ -55,6 +58,24 @@ changeMapMarkers(data){
 	this.setState({markers:data})
 }
 
+  handleMapMounted(map) {
+    this._map = map;
+  }
+
+   handleClusterMounted(cluster) {
+    this._cluster = cluster;
+  }
+
+  handleCenterChanged(){
+  	nextLoc = this._map.getCenter()
+  	
+  }
+  onClusterClick(cluster){
+  	markers =cluster.getMarkers()
+  	console.log(markers)
+  	
+  }
+
 	render() {
 		return (
 <MapBase  containerElement={
@@ -64,6 +85,10 @@ changeMapMarkers(data){
            <div className="map-container" />
         }
         markers={this.state.markers}
+         onMapMounted={this.handleMapMounted.bind(this)}
+         onCenterChanged={this.handleCenterChanged.bind(this)}
+         onClusterClick={this.onClusterClick.bind(this)}
+         onClusterMounted={this.handleClusterMounted.bind(this)}
       />
 		);
 	}

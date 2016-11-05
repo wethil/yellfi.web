@@ -108,10 +108,10 @@ export default class YellForm extends Component {
 	let coordinates = !this.state.publicGeoLoc.coordinates ? [userCoordinates] : [userCoordinates,publicGeoLoc.coordinates]//came from rightcolumn.jsx
 	let geoLocAdress = this.state.publicGeoLoc.geoLocAdress ? this.state.publicGeoLoc.geoLocAdress : ""
 	let loc = {type:"MultiPoint",coordinates:coordinates, geoLocAdress:geoLocAdress}
- 	let plan = this.state.activePlan==10 ? document.getElementById("customPlan").value : plans[this.state.activePlan].content
+ 	let plan = this.state.activePlan==10 ? document.getElementById("customPlan").value : this.state.activePlan
 	let keyword = $('#keywordInput').val()
 	let ownerId = Meteor.userId();
-	console.log(loc)
+	console.log(plan)
 
 	
 		Meteor.call('addYell',loc,plan,keyword,time,publicity,ownerId,function (error, result){

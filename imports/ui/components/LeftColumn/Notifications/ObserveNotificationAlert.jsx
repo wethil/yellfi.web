@@ -51,17 +51,14 @@ var sound =  new howler.Howl({
 }
 
  triggerNtf(ntf) {
- 		  plan = _.find(plans, { 'content': ntf.yell.plan });
-	    //console.log(ntf)
-	    path = window.location.pathname
 
 		 ReactMaterialUiNotifications.showNotification({
 	      title: ntf.sender.username,
 	      additionalText: ntf.content,
 	      autoHide:2600,
-	      icon:<FontIcon   className="material-icons ntf">{plan.icon}</FontIcon> ,
+	      icon:<FontIcon   className="material-icons ntf">{plans[ntf.yell.plan].icon}</FontIcon> ,
 	      iconBadgeColor: deepOrange500,
-	      overflowText: ntf.yell.plan,
+	      overflowText: plans[ntf.yell.plan].content,
 	      timestamp: moment().format('h:mm A'),
 	      personalised: true,
 	      avatar: ntf.sender.profile.avatar

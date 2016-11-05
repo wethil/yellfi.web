@@ -6,6 +6,7 @@ import CommentComposer from '../Comments/CommentComposer.jsx'
 import JoiningComposer from '../Joining/JoiningComposer.jsx'
 import Linkify from 'linkifyjs/react';
 import emitter from '../../emitter.js';
+import {plans} from '../../constants.js';
 import BlockedUser from '../CommonComponents/BlockedUser.jsx'
 import FontIcon from 'material-ui/FontIcon';
 import List from 'material-ui/List/List';
@@ -118,6 +119,13 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 	render() {
 		
 	yell = this.state.yell
+	
+	prePlan=Number(yell.plan)
+	if ( prePlan<1 || prePlan>9  ||  isNaN(prePlan)  ) {
+		plan = yell.plan
+	} else {
+		plan = plans[Number(prePlan)].content  
+	}
 // action buttons label for participants
 	actLblForPartic =_.includes(yell.approved, Meteor.userId()) ? "Approved" : "Waiting for approve"
 // action buttons for participants
@@ -231,7 +239,7 @@ const actions = this.props.userBlocked
 			          subtitle={ <span className="anim">{publicityLabel}</span>} 
 			          avatar={yell.owner.profile.avatar}
 			        />
-			      <CardTitle title={<span className="anim">{yell.plan}</span> } 
+			      <CardTitle title={<span className="anim">{plan}</span> } 
 			      		subtitle={moment(yell.time).calendar()}/>
 			        <CardText>
 			        <span className="anim">  <Linkify>  {yell.keyword} </Linkify> </span>    
@@ -311,5 +319,4 @@ hint
  bottom 23
  	
 */	
-
 
