@@ -11,7 +11,21 @@ Notifications = new Mongo.Collection('notifications' ,{
 
 
 
+/*
+content = [
+  { id: 0, content: 'made a suggestion' },
+  { id: 1, content: 'liked your suggestion'},
+  { id: 2, content: 'wants to join you for'},
+  { id: 3, content: 'approve you to join'}
+]
+about = [
+  { id: 0, content: 'yell' },
+  { id: 1, content: 'comment'},
+  { id: 2, content: 'participation'},
+  { id: 3, content: 'like'}
+]
 
+*/
 
 
 Notifications.attachSchema(
@@ -25,16 +39,16 @@ Notifications.attachSchema(
       optional : true
     },
     content: {
-      type: String,
-      denyUpdate: true
+      type: Number,
+      allowedValues:[0,1,2,3]
     },
     created_at: {
      type: Date,
      denyUpdate: true
     },
     about: {
-      type:String,
-      allowedValues:['yell','comment','participation','like']
+      type:Number,
+      allowedValues:[0,1,2,3]
     },
     yellId:{
       type:String
@@ -65,3 +79,5 @@ Notifications.allow({
 });
 
 export default Notifications;
+
+

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { List, ListItem } from 'material-ui/List';
-import SvgIconFace from 'material-ui/svg-icons/action/face';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
@@ -8,6 +7,7 @@ import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/
 import CustomScroll from 'react-custom-scroll';
 import { browserHistory } from 'react-router'
 import emitter from '../../emitter.js'
+import {plans,ntfTitles} from '../../constants.js';
 import Snackbar from 'material-ui/Snackbar';
 import _ from 'lodash';
 import  verge from 'verge';
@@ -79,18 +79,17 @@ sendNotificationsToTabTitle(notifications){
 
 
 toogleYellCard(yellId,about) {
- 
     switch(about) {
-      case 'yell':
+      case 0:
            browserHistory.push('/yell/'+yellId) 
           break;
-      case 'comment':
+      case 1:
            browserHistory.push('/yell/'+yellId + '?dialog=comment')
           break;
-      case 'like':
+      case 3:
            browserHistory.push('/yell/'+yellId + '?dialog=comment')
           break;
-      case 'participation':
+      case 2:
            browserHistory.push('/yell/'+yellId + '?dialog=joining')
           break;
   }
@@ -204,6 +203,15 @@ if(this.state.notifications && this.state.notifications.length != 0) {
 
         let time = ` ${moment(notification.time).calendar()} `
 
+        ntFPlan=notification.yell.plan
+        prePlan=Number(ntFPlan)
+        if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
+          plan = ntFPlan
+        } else {
+          plan = plans[prePlan].content  
+        }
+
+  
 
 		 notifications.push(
           <div id={notification._id} key={notification._id}>
@@ -212,7 +220,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
                   leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
                   primaryText={
                    <div style={styles.username}>{notification.sender.username + ' '} 
-                     <span style={styles.subhead}>{notification.content + ' for ' + notification.yell.plan}</span>
+                     <span style={styles.subhead}>{ntfTitles[notification.content].content+ ' for ' + plan}</span>
                    </div>
                 }
               />

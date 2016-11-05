@@ -121,7 +121,7 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 	yell = this.state.yell
 	
 	prePlan=Number(yell.plan)
-	if ( prePlan<1 || prePlan>9  ||  isNaN(prePlan)  ) {
+	if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 		plan = yell.plan
 	} else {
 		plan = plans[Number(prePlan)].content  

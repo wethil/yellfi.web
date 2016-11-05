@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Yells from '../yells.js';
 fieldsOpt = {fields:{'username':1 ,'profile.avatar':1}}
+yellsFieldsOpt= {'plan':1,'loc':1,'time':1,'created_at':1,'publicity':1,'ownerId':1}
 
 
 
@@ -41,7 +42,13 @@ Meteor.publishComposite('latestYells', function(limit) { //always [longitude, la
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-          return Yells.find({visible:true},{sort: {created_at: -1},limit:limit});
+          return Yells.find(
+            {'visible':true},
+            {
+              'fields': yellsFieldsOpt,
+              'limit':limit,
+              'sort': {created_at: -1}
+            });
         },
         children: [
             {
@@ -76,9 +83,15 @@ Meteor.publishComposite('nearestYells', function(loc,limit) { //always [longitud
                               coordinates: loc
                             },
                         }
-                      },visible:true
-              },{limit:limit}
-            )
+                      },
+                'visible':true
+              }, 
+
+              {
+              'fields': yellsFieldsOpt,
+              'limit':limit,
+              'sort': {created_at: -1}
+            })
         },
         children: [
             {
@@ -106,7 +119,7 @@ Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longi
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-          return Yells.find({ownerId:userId,visible:true},{sort: {created_at: -1},limit:limit});
+          return Yells.find({ownerId:userId,visible:true},{fields: yellsFieldsOpt,sort: {created_at: -1},limit:limit});
         },
         children: [
             {
@@ -117,24 +130,4 @@ Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longi
         ]
     }
 });
-
-
-
-Meteor.publishComposite('thisUserApproved', function(userId) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-          return Yells.find({visible:true, approved:{$in:[userId]}})
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
-        }
-            }
-        ]
-    }
-});
-
 

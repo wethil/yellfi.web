@@ -202,10 +202,10 @@ if (yell.keyword) {
   keyword =""
 }
 prePlan=Number(yell.plan)
-if ( prePlan<1 || prePlan>9  ||  isNaN(prePlan)  ) {
+if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
   plan = yell.plan
 } else {
-  plan = plans[Number(prePlan)].content  
+  plan = plans[prePlan].content  
 }
 
 		 yells.push(

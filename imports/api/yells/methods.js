@@ -35,9 +35,9 @@ Meteor.methods({
              Notifications.insert({
                 senderId:userId,
                 receiverId:yellOwnerId,
-                content:'wants to join you for',
+                content:2,
                 created_at:Date(),
-                about:'participation',
+                about:2,
                 yellId:yell
              })
         }
@@ -48,9 +48,9 @@ Meteor.methods({
          Notifications.insert({
                 senderId:yellOwnerId,
                 receiverId:userId,
-                content:'approve you to join',
+                content:3,
                 created_at:Date(),
-                about:'participation',
+                about:2,
                 yellId:yell
              })
 

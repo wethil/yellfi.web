@@ -16,9 +16,9 @@ Meteor.methods({
       	  Notifications.insert({
 			senderId:ownerId,
 			receiverId:yellOwnerId,
-			content:'liked your suggestion',
+			content:0,
 			created_at:Date(),
-			about:'like',
+			about:1,
 			yellId:yellId
 		})
       }
@@ -31,9 +31,9 @@ Meteor.methods({
       	  Notifications.insert({
 			senderId:userId,
 			receiverId:yellOwnerId,
-			content:'liked your suggestion',
+			content:1,
 			created_at:Date(),
-			about:'like',
+			about:3,
 			yellId:yellId
 		})
       }

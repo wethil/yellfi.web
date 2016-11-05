@@ -8,6 +8,7 @@ import emitter from '../../emitter.js';
 import  _ from 'lodash';
 import howler from 'howler';
 import { browserHistory } from 'react-router'
+import {plans,ntfTitles} from '../../constants.js';
 
 var sound =  new howler.Howl({
       src: ['/0028.ogg']
@@ -32,29 +33,36 @@ var sound =  new howler.Howl({
 
 
 
- toogleYellCard(yellId,about) {
- 
+toogleYellCard(yellId,about) {
     switch(about) {
-      case 'yell':
+      case 0:
            browserHistory.push('/yell/'+yellId) 
           break;
-      case 'comment':
+      case 1:
            browserHistory.push('/yell/'+yellId + '?dialog=comment')
           break;
-      case 'like':
+      case 3:
            browserHistory.push('/yell/'+yellId + '?dialog=comment')
           break;
-      case 'participation':
+      case 2:
            browserHistory.push('/yell/'+yellId + '?dialog=joining')
           break;
   }
 }
-
  triggerNtf(ntf) {
+
+ 	     ntFPlan=ntf.yell.plan
+        prePlan=Number(ntFPlan)
+        if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
+          plan = ntFPlan
+        } else {
+          plan = plans[prePlan].content  
+        }
+
 
 		 ReactMaterialUiNotifications.showNotification({
 	      title: ntf.sender.username,
-	      additionalText: ntf.content,
+	      additionalText: ntfTitles[ntf.content].content,
 	      autoHide:2600,
 	      icon:<FontIcon   className="material-icons ntf">{plans[ntf.yell.plan].icon}</FontIcon> ,
 	      iconBadgeColor: deepOrange500,
@@ -113,22 +121,6 @@ export default ObserveNotificationAlert;
 
 
 	
-
-const plans = [
-	{ content: 'Listening Music', icon: "audiotrack" },
-	{ content: 'Watching Something', icon: "movie_creation"},
-	{ content: 'Reading a Book', icon:"local_library" },
-	{ content: 'Eating and Drinking', icon:"restaurant" },
-	{ content: 'Cooking', icon:"whatshot"  },
-	{ content: 'Going Outside', icon:"nature_people" },
-	{ content: 'Going to Shopping', icon:"shopping_cart" },
-	{ content: 'Hanging out with Someone', icon:"local_cafe" },
-	{ content: 'Biking', icon:"directions_bike"  },
-	{ content: 'Hiking', icon:"directions_run" },
-	{ content: 'Custom', icon:"add" }
-]
-
-
 
 
 
