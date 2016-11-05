@@ -4,6 +4,7 @@ import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer.js";
 
 const MapBase = withGoogleMap(props => (
    <GoogleMap
+   onClick={props.onMapClick}
     defaultZoom={3}
     ref={props.onMapMounted}
     defaultCenter={{ lat: 25.0391667, lng: 121.525 }}
@@ -15,7 +16,7 @@ const MapBase = withGoogleMap(props => (
       gridSize={60}
       ref={props.onClusterMounted}
       onClick={props.onClusterClick}
-       //maxZoom={5}
+       maxZoom={5}
       zoomOnClick={false}
     >
  

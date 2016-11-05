@@ -48,7 +48,9 @@ componentWillMount(){
 
 componentWillReceiveProps(nextProps){
   this.makePropState(nextProps.yells)
-  this.checkProps(nextProps.yells, nextProps.limit)
+  if(nextProps.yells.length>=9) {
+    this.checkProps(nextProps.yells, nextProps.limit)
+  }
 }
 
 
