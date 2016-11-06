@@ -13,14 +13,11 @@ pantherHome =  [{_id:1,publicPlanLoc:{coordinates:[-88.175429,39.480155]}}]
 
 
   if ( subscription.ready() ) {
-    const preMarkers = Yells.find({visible:true,publicity: { $ne: 0 }},{fields:{'publicPlanLoc.coordinates':1}}).fetch()
-console.log(preMarkers)
-  markers = preMarkers.length >0 ? preMarkers : pantherHome
+    const markers = Yells.find({publicity: { $ne: 0 }}).fetch()
+    console.log(markers)
+
     onData( null, { markers} );
-  } else {
-  	markers = pantherHome
-  	 onData( null, { markers });
-  }
+  } 
 };
 
  const MapComposer = composeWithTracker( composer )( YellMap );

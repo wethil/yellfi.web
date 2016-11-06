@@ -7,7 +7,7 @@ import LoadingCircle from '../YellsComponents/LoadingCircle.jsx'
 
 const composer = ( props, onData ) => {
   coordinates = props.ipLoc.coordinates
-  console.log(coordinates)
+
 yellsFieldsOpt= {'plan':1,'loc':1,'time':1,'created_at':1,'publicity':1,'ownerId':1}
   component=2
   limit=Number(props.limit)
@@ -22,7 +22,7 @@ yellsFieldsOpt= {'plan':1,'loc':1,'time':1,'created_at':1,'publicity':1,'ownerId
                 sort: {created_at: -1}
               }
     	).fetch() 
-    console.log(yells)
+ 
     onData( null, { yells,component,limit } );
   }
 };

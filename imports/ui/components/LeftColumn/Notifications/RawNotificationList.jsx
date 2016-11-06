@@ -132,7 +132,6 @@ undoAction(type,data) {
 handleScroll(lastId){
   var lastElement = document.getElementById(lastId);
    if (verge.inViewport(lastElement)==true && this.state.propDuplicate<2) {
-    console.log(this.state.propDuplicate)
     emitter.emit('ntfInfinite')
   } 
 }
@@ -145,11 +144,9 @@ checkProps(newP,limit){
 
 
   if(newP.length<limit) {
-        console.log('no new yell')
          this.setState({propDuplicate:this.state.propDuplicate + 1})
       } else {
         this.setState({propDuplicate:0})
-        console.log('there is new yell')
       }
 
 }

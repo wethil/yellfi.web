@@ -40,10 +40,10 @@ export default class YellForm extends Component {
 
 	componentDidMount() {
 		//from EtraFormElements
-		emitter.addListener('changeipLoc',(ipLoc)=> this.setState({ipLoc}) );
-		emitter.addListener('changeDate', (date) => {this.setState({date}); console.log(date) }  );
-		emitter.addListener('changeTime', (time) => {this.setState({time}); console.log(time)  } );
-		emitter.addListener('changepublicGeoLoc', function(publicGeoLoc) {this.changepublicGeoLoc.bind(this,publicGeoLoc)});
+		emitter.addListener('changeipLoc',(ipLoc)=> this.setState({ipLoc}));
+		emitter.addListener('changeDate', (date) => this.setState({date}));
+		emitter.addListener('changeTime', (time) => this.setState({time}));
+		emitter.addListener('changepublicGeoLoc', (publicGeoLoc)=> this.changepublicGeoLoc(publicGeoLoc));
 	}
 
 	componentWillMount(){

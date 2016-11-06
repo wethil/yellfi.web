@@ -75,6 +75,7 @@ changeMapMarkers(data){
   }
 
 	render() {
+		console.log(this.state.markers)
 		return (
 <MapBase  containerElement={
             <div className="map-container" />
