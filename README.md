@@ -9,9 +9,11 @@ Location based suggestion platform. You will choose your plan and will get sugge
 ## Usage
 Go [yellfi](http://www.yellfi.com/), create a user and try! (It will open slow, because it is free hosting)
 ## TO DO
-1. Add social login
-2. Make map show plans
-3. Add notification system
-4. Include youtube data api for suggestions
-5. Make it's android app with react native
-6. Approved plans
+
+- [ ] Add social login
+- [x] Make map show public plans
+- [x] Add notification system
+- [ ] Include youtube data api for suggestions
+- [ ] Make it's android app with react native
+
+
