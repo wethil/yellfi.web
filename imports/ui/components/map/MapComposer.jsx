@@ -1,5 +1,5 @@
 import { composeWithTracker } from 'react-komposer';
-import  Yells  from '../../../api/yells/yells.js';
+import  PublicYells  from '../../../api/publicYells/publicYells.js';
 import YellMap from './YellMap.jsx'
 
 
@@ -8,13 +8,14 @@ const composer = ( props, onData ) => {
 pantherHome =  [{_id:1,publicPlanLoc:{coordinates:[-88.175429,39.480155]}}]
 
 
-  const subscription = MarkerSub.subscribe( 'nearestYellsForMap');
+  const subscription = MarkerSub.subscribe('yellsForMap');
 
 
 
   if ( subscription.ready() ) {
-    const markers = Yells.find({publicity: { $ne: 0 }}).fetch()
-    console.log(markers)
+    const mark = PublicYells.find().fetch()
+   console.log(mark)
+   markers =  [{_id:"1",publicPlanLoc:{coordinates:[-88.175429,39.480155]}}]
 
     onData( null, { markers} );
   } 

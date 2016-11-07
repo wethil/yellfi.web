@@ -75,10 +75,6 @@ Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [
 
 
 
-Meteor.publish('nearestYellsForMap', function () {
-  return Yells.find({visible:true,publicity: { $ne: 0 }},{fields:{'publicPlanLoc':1}})
-})
-
 
 
 

@@ -35,7 +35,7 @@ import {geolocated} from 'react-geolocated';
                 coordinates:[lng,lat],//always stay lng lat
                 ipLocAdress:`${data.city} ${data.region} ${data.country}  `
               }
-             
+              emitter.emit('changeLocForMap',ipLoc)
                this.setState({ipLoc:ipLoc})
             })
 
@@ -51,6 +51,7 @@ import {geolocated} from 'react-geolocated';
             ipLocAdress:""
          }
         this.setState({ipLoc:ipLoc})
+         emitter.emit('changeLocForMap',ipLoc)
           } else {
             var lat="no lat"
           }

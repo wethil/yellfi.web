@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Yells from './yells.js'
 import Comments from '../comments/comments.js'
+import PublicYells from '../publicYells/publicYells.js'
 import Notifications from '../notifications/notifications.js'
 
 
@@ -8,7 +9,7 @@ Meteor.methods({
    addYell: function(loc,publicPlanLoc,plan,keyword,time,publicity,ownerId) {
    
     if(publicPlanLoc && publicPlanLoc.coordinates){
-        return Yells.insert({
+       mainYell= Yells.insert({
             loc:loc,
             publicPlanLoc:publicPlanLoc,
             plan : plan,
@@ -19,6 +20,8 @@ Meteor.methods({
             ownerId:ownerId
 
         })
+
+        PublicYells.insert({refYellId:mainYell});
     } else {
         return Yells.insert({
             loc:loc,

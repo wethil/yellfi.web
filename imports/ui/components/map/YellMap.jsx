@@ -16,7 +16,7 @@ const MapBase = withGoogleMap(props => (
       gridSize={60}
       ref={props.onClusterMounted}
       onClick={props.onClusterClick}
-       maxZoom={5}
+       //maxZoom={5}
       zoomOnClick={false}
     >
  
@@ -24,6 +24,7 @@ const MapBase = withGoogleMap(props => (
       
         <Marker
           position={{ lat: marker.publicPlanLoc.coordinates[1], lng: marker.publicPlanLoc.coordinates[0] }}
+          title={marker._id}
           key={marker._id}
         />
     
@@ -70,12 +71,15 @@ changeMapMarkers(data){
   }
   onClusterClick(cluster){
   	markers =cluster.getMarkers()
-  	console.log(markers)
+  	markers.forEach(function (marker) {
+  		console.log(marker.getTitle())
+  	});
+  
   	
   }
 
 	render() {
-		console.log(this.state.markers)
+		
 		return (
 <MapBase  containerElement={
             <div className="map-container" />
