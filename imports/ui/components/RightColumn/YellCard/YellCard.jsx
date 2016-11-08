@@ -37,7 +37,6 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 
  	componentWillReceiveProps (nextProps) {
 		dialog = nextProps.dialog
-		console.log(dialog)
 		this.setDialogContent(dialog)
 		this.changeYell(nextProps.yell)
 	}
@@ -86,7 +85,6 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 	}
 
  	toogleDialogFromLink(){
- 		console.log('asd')
  		this.setState({dialogOpen:true})
  	}
 

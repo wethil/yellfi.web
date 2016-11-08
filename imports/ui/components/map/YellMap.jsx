@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { withGoogleMap,GoogleMap,Marker } from "react-google-maps";
 import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer.js";
+import ClusterAvatars from './ClusterAvatars'
+import _ from 'lodash'
+import { browserHistory } from 'react-router'
+
 
 const MapBase = withGoogleMap(props => (
    <GoogleMap
    onClick={props.onMapClick}
-    defaultZoom={3}
+    zoom={props.zoom}
+    onZoomChanged={props.onZoomChanged}
     ref={props.onMapMounted}
-    defaultCenter={{ lat: 25.0391667, lng: 121.525 }}
+    center={props.center}
     onCenterChanged={props.onCenterChanged}
   >
     <MarkerClusterer
@@ -17,12 +22,13 @@ const MapBase = withGoogleMap(props => (
       ref={props.onClusterMounted}
       onClick={props.onClusterClick}
        //maxZoom={5}
-      zoomOnClick={false}
+      zoomOnClick={props.zoom<7?true:false}
     >
  
       {props.markers.map((marker) => (
       
         <Marker
+         onClick={()=>browserHistory.push('/yell/'+marker.refYellId)}
           position={{ lat: marker.yell.publicPlanLoc.coordinates[1], lng: marker.yell.publicPlanLoc.coordinates[0] }}
           title={marker.refYellId}
           key={marker._id}
@@ -39,9 +45,31 @@ const MapBase = withGoogleMap(props => (
 
 
  class YellMap extends Component {
+  constructor(props) {
+    super(props);
+  
+    this.state = {
+      markers:[],
+      active:false,
+      zoom:3,
+      center:{
+        lat:39.257148,
+        lng:34.564587
+      }
+    };
+  }
+
+    handleZoomChanged() {
+    const nextZoom = this._map.getZoom();
+    if (nextZoom != this.state.zoom) {
+      this.setState({
+        zoom: nextZoom,
+      });
+    }
+  }
+
  	
  componentWillMount(){
- 	console.log(this.props.markers)
 	this.changeMapMarkers(this.props.markers)
  	}
 
@@ -50,7 +78,8 @@ componentWillReceiveProps(nextProps){
 }
 
 onMapClick(){
-	console.log('mapClicked')
+	  this.setState({publicYells:[],active:false})
+
 }
 
 changeMapMarkers(data){
@@ -70,18 +99,29 @@ changeMapMarkers(data){
   	
   }
   onClusterClick(cluster){
-  	markers =cluster.getMarkers()
-  	markers.forEach(function (marker) {
-  		console.log(marker.getTitle())
-  	});
-  
-  	
+    if (window.location.pathname!='/yell/main'){
+      browserHistory.push('/yell/main')
+    }
+
+  	if (this.state.zoom>=7) {
+    	 markers =cluster.getMarkers()
+      yells=[]
+      mapMarkers = this.state.markers
+      markers.forEach(function (marker) {
+        id = marker.getTitle()
+        yell= _.find(mapMarkers, { 'refYellId': id} );
+        yells.push(yell)
+      });
+    this.setState({publicYells:yells,active:true})
+    } 
   }
 
 	render() {
 		
+  const  {center} = this.state
 		return (
-<MapBase  containerElement={
+<div className="className">
+  <MapBase  containerElement={
             <div className="map-container" />
         }
         mapElement={
@@ -93,7 +133,17 @@ changeMapMarkers(data){
          onClusterClick={this.onClusterClick.bind(this)}
          onClusterMounted={this.handleClusterMounted.bind(this)}
          onMapClick={this.onMapClick.bind(this)}
+         onZoomChanged={this.handleZoomChanged.bind(this)}
+        center={center}
+         zoom={this.state.zoom}
       />
+ <div  style={{marginTop:'5%'}} className="two wide column">
+                 <ClusterAvatars publicYells={this.state.publicYells} active={this.state.active} />
+              </div>
+    
+
+
+</div>
 		);
 	}
 }

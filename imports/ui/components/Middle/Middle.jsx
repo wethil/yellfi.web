@@ -17,16 +17,14 @@ import emitter from '../emitter.js'
  	}
  	changeLocForMap(ipLoc){
  		this.setState({ipLoc:ipLoc})
- 		console.log(ipLoc)
+ 		//console.log(ipLoc)
  	}
 
 	render() {
 		return (
 			 <div className="eleven wide column animated fadeIn fixed ">
              	 <MapComposer />
-              <div  className="two wide column">
-                <ClusterAvatars />
-              </div>
+             
             </div>
 		);
 	}
