@@ -19,7 +19,11 @@ const composer = ( props, onData ) => {
   if ( subscription.ready() ) {
     const yell = Yells.findOne({_id:yellId})
   
-    userBlocked = _.includes(yell.blocked_users, Meteor.userId()) ? 1 : 0
+    if (yell.blocked_users) {
+    	userBlocked = _.includes(yell.blocked_users, Meteor.userId()) ? 1 : 0
+    }else {
+    	userBlocked=0
+    }
   
   
     

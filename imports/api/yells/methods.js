@@ -22,6 +22,7 @@ Meteor.methods({
         })
 
         PublicYells.insert({refYellId:mainYell});
+        return mainYell
     } else {
         return Yells.insert({
             loc:loc,

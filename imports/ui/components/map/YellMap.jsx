@@ -23,8 +23,8 @@ const MapBase = withGoogleMap(props => (
       {props.markers.map((marker) => (
       
         <Marker
-          position={{ lat: marker.publicPlanLoc.coordinates[1], lng: marker.publicPlanLoc.coordinates[0] }}
-          title={marker._id}
+          position={{ lat: marker.yell.publicPlanLoc.coordinates[1], lng: marker.yell.publicPlanLoc.coordinates[0] }}
+          title={marker.refYellId}
           key={marker._id}
         />
     

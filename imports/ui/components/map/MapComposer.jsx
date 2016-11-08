@@ -5,7 +5,13 @@ import YellMap from './YellMap.jsx'
 
 const MarkerSub = new SubsManager()
 const composer = ( props, onData ) => {
-pantherHome =  [{_id:1,publicPlanLoc:{coordinates:[-88.175429,39.480155]}}]
+pantherHome =  [{
+	_id:1,
+	yell:{
+		publicPlanLoc:{coordinates:[-88.175429,39.480155]}
+	}
+
+}]
 
 
   const subscription = MarkerSub.subscribe('yellsForMap');
@@ -13,12 +19,15 @@ pantherHome =  [{_id:1,publicPlanLoc:{coordinates:[-88.175429,39.480155]}}]
 
 
   if ( subscription.ready() ) {
-    const mark = PublicYells.find().fetch()
-   console.log(mark)
-   markers =  [{_id:"1",publicPlanLoc:{coordinates:[-88.175429,39.480155]}}]
+    const markers = PublicYells.find().fetch()
+
 
     onData( null, { markers} );
-  } 
+  }  else {
+
+  	     markers =  pantherHome
+  	        onData( null, { markers} );
+  }
 };
 
  const MapComposer = composeWithTracker( composer )( YellMap );
