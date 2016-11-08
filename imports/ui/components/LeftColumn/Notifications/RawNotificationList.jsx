@@ -58,7 +58,7 @@ import  verge from 'verge';
 
   checkNtfForTime(ntf){
 
-   if(!ntf.alerted){
+   if(!ntf.alerted&&ntf.receiverId==Meteor.userId()){
      ntfTime= moment(ntf.created_at).utc()
     now=moment().utc()
     pastTime =  moment(now).subtract(3, 'seconds')
@@ -71,7 +71,10 @@ import  verge from 'verge';
   }
 
 sendNotificationsToTabTitle(notifications){
-  unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received; }), '_id');
+
+  unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received; }),'_id');
+  
+
   
   emitter.emit('changeBadgeContent',unreceivedNtf)
   

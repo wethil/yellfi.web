@@ -17,12 +17,14 @@ content = [
   { id: 1, content: 'liked your suggestion'},
   { id: 2, content: 'wants to join you for'},
   { id: 3, content: 'approve you to join'}
+  { id: 4, content: 'commented to this plan'}
 ]
 about = [
   { id: 0, content: 'yell' },
   { id: 1, content: 'comment'},
   { id: 2, content: 'participation'},
-  { id: 3, content: 'like'}
+  { id: 3, content: 'like'},
+  { id: 4, content: 'comment'}
 ]
 
 */
@@ -40,7 +42,7 @@ Notifications.attachSchema(
     },
     content: {
       type: Number,
-      allowedValues:[0,1,2,3]
+      allowedValues:[0,1,2,3,4]
     },
     created_at: {
      type: Date,
@@ -48,7 +50,7 @@ Notifications.attachSchema(
     },
     about: {
       type:Number,
-      allowedValues:[0,1,2,3]
+      allowedValues:[0,1,2,3,4]
     },
     yellId:{
       type:String

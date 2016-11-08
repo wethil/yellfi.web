@@ -79,6 +79,7 @@ componentWillReceiveProps(nextProps){
 
 onMapClick(){
 	  this.setState({publicYells:[],active:false})
+     this.closeDrawerViaUrl()
 
 }
 
@@ -98,10 +99,14 @@ changeMapMarkers(data){
   	nextLoc = this._map.getCenter()
   	
   }
-  onClusterClick(cluster){
-    if (window.location.pathname!='/yell/main'){
+  closeDrawerViaUrl(){
+     if (window.location.pathname!='/yell/main'){
       browserHistory.push('/yell/main')
     }
+  }
+
+  onClusterClick(cluster){
+   this.closeDrawerViaUrl()
 
   	if (this.state.zoom>=7) {
     	 markers =cluster.getMarkers()
@@ -137,7 +142,7 @@ changeMapMarkers(data){
         center={center}
          zoom={this.state.zoom}
       />
- <div  style={{marginTop:'5%'}} className="two wide column">
+ <div  style={{marginTop:'2%'}} className="two wide column">
                  <ClusterAvatars publicYells={this.state.publicYells} active={this.state.active} />
               </div>
     

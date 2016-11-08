@@ -7,7 +7,10 @@ Meteor.publishComposite('thisUserNotifications', function(receiverId,limit) { //
         find: function() {
             // Find posts made by user. Note arguments for callback function
             // being used in query.
-            return Notifications.find({"receiverId":receiverId, senderId: { $ne: receiverId }},{sort: {created_at: -1},limit:limit})
+            return Notifications.find({ 
+                $or: [ { 'receiverId': receiverId  }, { 'senderId': receiverId , about:1 } ] 
+              }
+                ,{sort: {created_at: -1},limit:limit})
         },
         children: [
             {
@@ -27,58 +30,3 @@ Meteor.publishComposite('thisUserNotifications', function(receiverId,limit) { //
 });
 
 
-     //5987
-Meteor.publishComposite('observingNotifications', function(receiverId) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-
-           minutesBefore = moment().subtract(1, 'minutes')
-           console.log(minutesBefore.toISOString() )
-
-           var self = this;
-
-  var subHandle = Notifications.find({
-                receiverId:receiverId,
-                 senderId: { $ne: receiverId },
-                 received:false,
-                 created_at:{$gte: moment(minutesBefore).toISOString() }
-
-             }).observe({
-    added: function (doc) {
-
-      self.added("Notifications", doc);
-    }
-  });
-
-  self.ready();
-
-  self.onStop(function () {
-    subHandle.stop();
-  });
-           
-
-
-
-
-
-
-            },
-        children: [
-            {
-              find: function (notification) {
-                    return Meteor.users.find({_id:notification.senderId})
-                 }
-            },
-
-            {
-                find: function (notification) {
-                    return Yells.find({_id:notification.yellId},{fields:{plan:1}})
-                 }
-            }
-
-        ]
-    }
-});
-
-
-     

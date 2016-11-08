@@ -14,7 +14,7 @@ limit = props.ntfLimit
 
    
   if ( subscription.ready() ) {
-  const notifications =  Notifications.find({receiverId:userId},{sort: {created_at: -1} , limit:limit}).fetch() 
+  const notifications =  Notifications.find({},{sort: {created_at: -1} , limit:limit}).fetch() 
 
   
     onData( null, { notifications,limit } );

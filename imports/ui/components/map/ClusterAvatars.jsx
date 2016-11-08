@@ -5,6 +5,7 @@ import ListItem from 'material-ui/List/ListItem';
 import FontIcon from 'material-ui/FontIcon';
 import { browserHistory } from 'react-router'
 import {plans} from '../constants.js'
+import Badge from 'material-ui/Badge';
  class ClusterAvatars extends Component {
 	render() {
 		avatars=[]
@@ -22,12 +23,17 @@ import {plans} from '../constants.js'
 							//innerDivStyle={{padding:0}}
 							disabled={true}
 							leftAvatar={
-							  	<Avatar 
-							  	backgroundColor='#FAFAFA'
-							  	color ='#757575'
-							  	style={styles.avatar}
-							  	icon ={<FontIcon className="material-icons">{plans[publicYell.yell.plan].icon}</FontIcon>}
-							  	/>
+							  	  <Badge
+							      badgeContent={<FontIcon  style={styles.avatarBadge} className="material-icons">{plans[publicYell.yell.plan].icon}</FontIcon>}
+							      primary={true}
+							      //style={styles.badge}
+							      badgeStyle={styles.badgeInLine}
+
+							    >
+							    	<Avatar 
+									  	src ={publicYell.yell.owner.profile.avatar}
+									  	/>
+							</Badge> 
 					      }/>
 
 				</span>
@@ -59,6 +65,19 @@ const styles = {
   avatar:{
   	borderStyle:'solid',
   	borderWidth:0.1
+  },
+  badge:{
+  	zIndex:123
+  },
+  badgeInLine:{
+  	bottom:9,
+  	right:10,
+  	top:'initial',
+  	backgroundColor:'#e0e7e7'
+  },
+  avatarBadge:{
+  	color :'#757575',
+  	fontSize:13
   }
 };
 
