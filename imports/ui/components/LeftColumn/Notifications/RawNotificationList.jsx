@@ -9,6 +9,7 @@ import { browserHistory } from 'react-router'
 import emitter from '../../emitter.js'
 import {plans,ntfTitles} from '../../constants.js';
 import Snackbar from 'material-ui/Snackbar';
+import NoNotification from './NoNotification'
 import _ from 'lodash';
 import  verge from 'verge';
 
@@ -211,6 +212,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
           plan = plans[prePlan].content  
         }
 
+        uName = notification.senderId==Meteor.userId() ? "You " : `${notification.sender.username} `
   
 
 		 notifications.push(
@@ -219,7 +221,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
                   onTouchTap={()=>this.toogleYellCard(notification.yellId,notification.about)}
                   leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
                   primaryText={
-                   <div style={styles.username}>{notification.sender.username + ' '} 
+                   <div style={styles.username}>{uName} 
                      <span style={styles.subhead}>{ntfTitles[notification.content].content+ ' for ' + plan}</span>
                    </div>
                 }
@@ -232,7 +234,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
     } else {
           
 
-    	notifications = "no notif"
+    	notifications = <NoNotification />
 
     }
 

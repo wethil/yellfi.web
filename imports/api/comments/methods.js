@@ -12,14 +12,16 @@ Meteor.methods({
 			ownerId :ownerId
 		})
 	
-		  if(ownerId!=yellOwnerId) {
-      	  Notifications.insert({
+		 if(ownerId!=yellOwnerId) {
+      	  Notifications.upsert({
 			senderId:ownerId,
 			receiverId:yellOwnerId,
 			content:0,
-			created_at:Date(),
 			about:1,
 			yellId:yellId
+		},
+		{
+			$set: {created_at:new Date(),received:false,alerted:false }
 		})
       }
 		

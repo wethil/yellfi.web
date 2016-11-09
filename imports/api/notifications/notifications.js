@@ -46,7 +46,7 @@ Notifications.attachSchema(
     },
     created_at: {
      type: Date,
-     denyUpdate: true
+     denyUpdate: false
     },
     about: {
       type:Number,

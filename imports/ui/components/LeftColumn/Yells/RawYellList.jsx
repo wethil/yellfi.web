@@ -7,7 +7,7 @@ import Chip from 'material-ui/Chip';
 import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/styles/colors';
 import CustomScroll from 'react-custom-scroll';
 import NoUserYell from './YellsComponents/NoUserYell.jsx'
-import NoApprovedYell from './YellsComponents/NoApprovedYell.jsx'
+import NoYell from './YellsComponents/NoYell.jsx'
 import { browserHistory } from 'react-router'
 import  verge from 'verge';
 import _ from 'lodash';
@@ -241,7 +241,7 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
         yells = "no yell"
         break;
       case 2:
-        yells = <NoApprovedYell />
+        yells = <NoYell />
         break;
     default:
          yells="error"

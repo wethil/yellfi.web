@@ -2,7 +2,7 @@
 import FontIcon from 'material-ui/FontIcon';
 
 
- const NoApprovedYell = () => (
+ const NoYell = () => (
 	<div 
 		className="ui  center aligned basic segment" 
 		style={{height:'71.6vh',marginRight:0,backgroundColor:'#ffffff'}}> 
@@ -17,7 +17,7 @@ import FontIcon from 'material-ui/FontIcon';
 
 						 	 );
 
- export default NoApprovedYell
+ export default NoYell
 
 
  const styles = {
