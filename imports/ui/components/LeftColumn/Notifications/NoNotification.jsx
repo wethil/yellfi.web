@@ -22,7 +22,7 @@ import FontIcon from 'material-ui/FontIcon';
 
  const styles = {
       icon: {
-        fontSize: 12,
+        fontSize: 129,
         color:'#2196f3'
         },
         subhead:{

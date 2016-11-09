@@ -8,10 +8,10 @@ import FontIcon from 'material-ui/FontIcon';
     style={{height:'71.6vh',marginRight:0,backgroundColor:'#ffffff'}}> 
  <div style={{marginTop:'12%'}}>
       <h2 className="ui center aligned icon header">
-        <FontIcon  style={styles.icon} className="material-icons">feedback</FontIcon> <br />
-        <span style={styles.subhead}> No Any Actions Yet </span>
+        <FontIcon  style={styles.icon} className="material-icons">pets</FontIcon> <br />
+        <span style={styles.subhead}> No Any Yells Yet </span>
       </h2>
-      <div style={styles.content}> You will be notified when a action has occured ,keep suggesting and joining!  </div>
+      <div style={styles.content}> Go.. create first plan! Be our first!  </div>
     </div>
   </div>
 
