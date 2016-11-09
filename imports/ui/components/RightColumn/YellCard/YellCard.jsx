@@ -140,6 +140,7 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 
 	userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
 	if (!this.props.userBlocked) {
+		dialogTitleLabel =`${yell.owner.username} : ${plans[yell.plan].content}` 
 		switch(this.state.dialogContent) {
 		    case 1:
 		    dialogContent = <CommentComposer 
@@ -155,17 +156,15 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 							     	yellOwnerId={yell.ownerId} />
 							    </ListItem>
 							   </List> 
-			dialogTitleLabel =`${yell.owner.username} : ${yell.plan}` 			   
+						   
 		        break;
 		    case 2:
 		  	dialogContent = <JoiningComposer yellId={yell._id} ownerId={yell.ownerId} requests={yell.requests} approved ={yell.approved} />
 		    dialogAction =  actBtnForPartic
-		    dialogTitleLabel = `${yell.owner.username} : ${yell.plan}` 	
 		        break;
 		    default:
 		    dialogContent =  "please do not play with url.."
 		     dialogAction =  "no"
-		    dialogTitleLabel =`${yell.owner.username} : ${yell.plan}` 
 		}
 
 	}  else {

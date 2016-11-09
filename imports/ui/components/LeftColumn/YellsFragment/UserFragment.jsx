@@ -37,10 +37,6 @@ import { browserHistory } from 'react-router'
 	      this.setState({userYellInfinite:this.state.userYellInfinite+5})
     });
 	
-	
-		emitter.addListener('noUserYellAnim', ()=> {
-			$('.fab').toggleClass('animated infinite tada')
-		});
 	}
 
 
@@ -51,11 +47,10 @@ import { browserHistory } from 'react-router'
         break;
     case 1:
 		this.setState({ntfsReceived:false,othersActive:false});
-        $('.fab').removeClass('animated infinite tada'); 
+     
         break;
     case 2:
         this.setState({ntfsReceived:true,othersActive:false});
-        $('.fab').removeClass('animated infinite tada'); 
         break;
 }
 		
