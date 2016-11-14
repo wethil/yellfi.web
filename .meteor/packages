@@ -21,7 +21,6 @@ shell-server@0.2.1            # Server-side component of the `meteor shell` comm
 
 aldeed:collection2
 meteortoys:allthings
-ultimatejs:tracker-react
 nimble:restivus
 http
 reywood:publish-composite

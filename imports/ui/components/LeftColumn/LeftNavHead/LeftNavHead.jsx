@@ -5,10 +5,29 @@ import React, { Component } from 'react';
  import IconMenu from 'material-ui/IconMenu';
  import MenuItem from 'material-ui/MenuItem';
 import emitter from '../../emitter.js'
+import {baseYouTubeUrl} from '../../constants.js'
 
  class LeftNavHead extends Component {
-	render() {
 
+ 	componentDidMount(){
+			emitter.addListener('suggestionToUser', (plan,keywords,data,yellId)=> this.suggestionToUser(plan,keywords,data,yellId));
+		}
+	suggestionToUser(plan,keywords,data,yellId){
+		console.log(plan)
+		console.log(data)
+		console.log(yellId)
+		formattedKeywords = keywords.replace(/ /g, "|")
+		console.log(formattedKeywords)
+		 /*&page=1000&with_genres=37
+		 $.getJSON(baseYouTubeUrl+formattedKeywords, (response)=> {
+				console.log(response)
+	        });
+		 */
+		 
+	}
+
+
+	render() {
 
 
 		return (

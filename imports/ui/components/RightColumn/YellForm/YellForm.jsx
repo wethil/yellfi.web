@@ -9,7 +9,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import ExtraFormElements from './ExtraFormElements.jsx'
 import emitter from '../../emitter.js'
-import {plans} from '../../constants.js';
+import {plans,musicGenres,filmGenres,foods,places} from '../../constants.js';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -17,7 +17,6 @@ import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash'
-import {musicGenres,filmGenres} from './Constant.js'
 import { browserHistory } from 'react-router'
 
 
@@ -34,7 +33,8 @@ export default class YellForm extends Component {
 			publicGeoLoc:{},
 			ipLoc:{},
 			customPlan:"",
-			keyword:""	
+			keyword:"",
+			choosenKeyword:{}	
 		};
 	}
 
@@ -78,26 +78,24 @@ handleTouchMenu(event,menuItem){
 	}
 	
 	changepublicGeoLoc(publicGeoLoc) {
-		console.log(publicGeoLoc)
+		//console.log(publicGeoLoc)
 		this.setState({publicGeoLoc})
 	}
 
 	handleSelectChange() {this.setState({forms: '',plans: 'hidden'})}
 
 	autocompleteUpdate(searchText) {
-		console.log('update')
-		console.log(searchText)
+		//console.log('update')
+		//console.log(searchText)
 	}
 
 	autocompleteRequest(chosenRequest,index){
-		console.log('request')
-		console.log(chosenRequest)
-		console.log(index)
+		this.setState({choosenKeyword:chosenRequest})
 	}
 
 
 	handleSubmit() {
-		const {activePlan,publicity,time,date,publicGeoLoc} = this.state
+		const {activePlan,publicity,time,date,publicGeoLoc,choosenKeyword} = this.state
 		//coordinates came from rightcolumn.jsx
 		let loc = {type:"Point",coordinates:this.props.userCoordinates}
 		let plc=publicGeoLoc
@@ -105,14 +103,20 @@ handleTouchMenu(event,menuItem){
 	 	let plan = activePlan==10 ? document.getElementById("customPlan").value : activePlan
 		let keyword = $('#keywordInput').val()
 		let ownerId = Meteor.userId();
+		
+		
+
+
 		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,ownerId,function (error, result){
 				if (error) {
 					console.log(error)
 				} else {
-					emitter.emit('getSuggestion')
+					emitter.emit('suggestionToUser',plan,keyword,choosenKeyword,result)
 					browserHistory.push('/yell/'+result)
 				}
 			});	
+
+
 
 	}
 
@@ -132,6 +136,12 @@ handleTouchMenu(event,menuItem){
     case 1:
         dataSource = filmGenres;
         break;
+    case 3:
+        dataSource = foods;
+        break;
+    case 5:
+        dataSource = places;
+        break;    
     default:
         dataSource = [];
 }
@@ -149,11 +159,11 @@ handleTouchMenu(event,menuItem){
 						listStyle={{ cursor: 'pointer' }}>
 					{plans.map((plan) => {
 						return <MenuItem
-							key={plan.id}
-							innerDivStyle={{ width: 280 }}
-							leftIcon={<FontIcon className="material-icons">{plan.icon}</FontIcon>}
-							value={plan.id}
-							primaryText={plan.content} />;
+									key={plan.id}
+									innerDivStyle={{ width: 280 }}
+									leftIcon={<FontIcon className="material-icons">{plan.icon}</FontIcon>}
+									value={plan.id}
+									primaryText={plan.content} />;
 					}) }
 				</Menu>
 				<Drawer width={280} openSecondary={true} open={this.state.forms} >

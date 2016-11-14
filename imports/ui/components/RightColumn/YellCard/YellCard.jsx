@@ -13,11 +13,11 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import Avatar from 'material-ui/Avatar';
 import { browserHistory } from 'react-router'
-import DialogContent from './DialogContent.jsx'
 import _ from 'lodash'
 import RaisedButton from 'material-ui/RaisedButton';
 import { Dropdown } from 'semantic-ui-react';
 import SuggestionTextField from './SuggestionTextField.jsx'
+import YellfiSuggestionsList from './YellfiSuggestionsList.jsx'
 
  class YellCard extends Component {
  	constructor(props) {
@@ -258,7 +258,7 @@ const actions = this.props.userBlocked
 
 			        </CardActions>
 			      </Card>
-
+			      <YellfiSuggestionsList />
 
 	 <Dialog
 			          //title="Scrollable Dialog"
