@@ -17,19 +17,19 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 
  	  super(props);
  	
- 	  this.state = { nearestLimit:10 };
+ 	  this.state = { limit:10 };
  	}
 
   componentDidMount(){
      emitter.addListener('incLimit', ()=> { 
-        this.incLimit(component)
+        this.incLimit()
     });
 
   }
 
    incLimit() {
 
-    this.setState({nearestLimit:this.state.nearestLimit+5})
+    this.setState({limit:this.state.limit+5})
   }
  
 
@@ -40,10 +40,10 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
        this.setState({latestLimit:this.state.latestLimit+5})
         break;
     case 2:
-         this.setState({nearestLimit:this.state.nearestLimit+5})
+         this.setState({limit:this.state.limit+5})
         break;
     default:
-        this.setState({latestLimit:10,nearestLimit:10})
+        this.setState({latestLimit:10,limit:10})
 }
   } deactivated because of LatestYells deactivated
  
@@ -54,9 +54,9 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 
 	render() {
 		ipLoc=this.props.ipLoc
-    const {nearestLimit} = this.state
-		//content = this.state.botNavIndex==0 ?  <LatestYells limit={latestLimit} /> : <NearestYells limit={nearestLimit} ipLoc={ipLoc} />
-    content = ipLoc.coordinates ?  <NearestYells limit={nearestLimit} ipLoc={ipLoc} /> : "wait......"
+    const {limit} = this.state
+		//content = this.state.botNavIndex==0 ?  <LatestYells limit={latestLimit} /> : <NearestYells limit={limit} ipLoc={ipLoc} />
+    content = ipLoc.coordinates ?  <LatestYells limit={limit} ipLoc={ipLoc} /> : "wait......"
 
 	
 		return (
@@ -64,9 +64,6 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 			 {
         this.props.othersActive?content:"notActive"
        }	  
-
-
-
 			    
 			 </div>	
 

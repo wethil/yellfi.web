@@ -39,7 +39,54 @@ Meteor.publish('thisUser', function (userId) {
 
 
 
+
+
 // Server
+Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longitude, latitude] order 
+    return {
+        find: function() {
+            // Find posts made by user. Note arguments for callback function
+            // being used in query.
+          return Yells.find({ownerId:userId,visible:true},{fields: yellsFieldsOpt,sort: {created_at: -1},limit:limit});
+        },
+        children: [
+            {
+              find: function (yell) {
+          return Meteor.users.find({_id:yell.ownerId})
+        }
+            }
+        ]
+    }
+});
+
+
+
+
+Meteor.publishComposite('latestYells', function(limit) { //always [longitude, latitude] order 
+    return {
+        find: function() {
+          return Yells.find(
+            {'visible':true},
+            {
+              'fields': yellsFieldsOpt,
+              'limit':limit,
+              'sort': {created_at: -1}
+            });
+        },
+        children: [
+            {
+              find: function (yell) {
+          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
+        }
+            }
+        ]
+    }
+});
+
+
+
+
+/*
 Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [longitude, latitude] order 
     return {
         find: function() {
@@ -71,55 +118,5 @@ Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [
         ]
     }
 });
-
-
-
-
-
-
-
-// Server
-Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-          return Yells.find({ownerId:userId,visible:true},{fields: yellsFieldsOpt,sort: {created_at: -1},limit:limit});
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
-        }
-            }
-        ]
-    }
-});
-
-/*
-// Server
-Meteor.publishComposite('latestYells', function(limit) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-          return Yells.find(
-            {'visible':true},
-            {
-              'fields': yellsFieldsOpt,
-              'limit':limit,
-              'sort': {created_at: -1}
-            });
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
-        }
-            }
-        ]
-    }
-});
-
-
 */
+

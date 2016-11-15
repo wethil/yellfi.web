@@ -9,7 +9,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import ExtraFormElements from './ExtraFormElements.jsx'
 import emitter from '../../emitter.js'
-import {plans,musicGenres,filmGenres,foods,places} from '../../constants.js';
+import {plans,musicGenres,filmGenres,foods,places,eatDrink,shopping} from '../../constants.js';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -34,7 +34,8 @@ export default class YellForm extends Component {
 			ipLoc:{},
 			customPlan:"",
 			keyword:"",
-			choosenKeyword:{}	
+			chosenKeyword:{},
+			chosenIndex:null
 		};
 	}
 
@@ -90,31 +91,36 @@ handleTouchMenu(event,menuItem){
 	}
 
 	autocompleteRequest(chosenRequest,index){
-		this.setState({choosenKeyword:chosenRequest})
+
+		this.setState({chosenKeyword:chosenRequest,chosenIndex:index})
+
 	}
 
 
 	handleSubmit() {
-		const {activePlan,publicity,time,date,publicGeoLoc,choosenKeyword} = this.state
-		//coordinates came from rightcolumn.jsx
+		const {activePlan,publicity,time,date,publicGeoLoc,chosenKeyword,chosenIndex} = this.state
 		let loc = {type:"Point",coordinates:this.props.userCoordinates}
 		let plc=publicGeoLoc
 		let publicPlanLoc = plc.coordinates ? {type:"Point",coordinates:plc.coordinates, adress:plc.geoLocAdress}:false
 	 	let plan = activePlan==10 ? document.getElementById("customPlan").value : activePlan
 		let keyword = $('#keywordInput').val()
 		let ownerId = Meteor.userId();
+		let suggestionCoord= publicGeoLoc.coordinates ? publicGeoLoc.coordinates : this.props.userCoordinates 
+		console.log(chosenIndex)
 		
-		
-
-
+emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,123123,suggestionCoord)
+/*
+	
 		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,ownerId,function (error, result){
 				if (error) {
 					console.log(error)
 				} else {
-					emitter.emit('suggestionToUser',plan,keyword,choosenKeyword,result)
+					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
 					browserHistory.push('/yell/'+result)
 				}
 			});	
+
+*/
 
 
 
@@ -136,12 +142,18 @@ handleTouchMenu(event,menuItem){
     case 1:
         dataSource = filmGenres;
         break;
-    case 3:
+     case 3:
+        dataSource = eatDrink;
+        break;    
+    case 4:
         dataSource = foods;
         break;
     case 5:
         dataSource = places;
-        break;    
+        break; 
+     case 6:
+        dataSource = shopping;
+        break;   
     default:
         dataSource = [];
 }
