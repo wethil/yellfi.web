@@ -72,15 +72,15 @@ Yells.attachSchema(
     },
     requests : {
       type: [String],
-      defaultValue:[]
+     optional:true
     },
     approved:{
       type:[String],
-     defaultValue:[]
+     optional:true
     },
-    gotSuggestionByYellfi : {
-      type:Boolean,
-      defaultValue:false
+    suggestionsByYellfi : {
+      type:[Object],
+      optional:true
     },
     visible :{
       type:Boolean,

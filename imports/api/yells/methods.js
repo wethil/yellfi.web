@@ -93,6 +93,9 @@ Meteor.methods({
     undoDeleteYell:function(yellId) {
         Yells.update({_id:yellId}, {$set : {visible : true }})
     },
+    makeSuggestion:function(yellId,suggestions){
+        Yells.update({_id:yellId}, {$set : {suggestionsByYellfi : suggestions }})
+    }
 
 });
 

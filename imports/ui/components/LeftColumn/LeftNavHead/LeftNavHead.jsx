@@ -166,19 +166,39 @@ hangleGooglePlacesApi(plan,coord,placeType) {
 attachSuggestionsToYell(plan,response){
 	 switch(plan) {
 		    case 0: //music
-		         console.log(_.sampleSize(_.map(response.items,'snippet.title'), 5))
+		        // console.log(_.sampleSize(_.map(response.items,'snippet.title'), 5))
+		        suggestions=[]
+		        res = _.sampleSize(response.items,5)
+		      res.forEach(function (item) {
+		      		obj = {}
+		        	obj.id = item.id.videoId 
+		        	obj.title = item.snippet.title
+		        	suggestions.push(obj)
+		        });
+		      console.log(suggestions)
+		  
 		        break;
 		    case 1://watch
 		        console.log(_.sampleSize(_.map(response.results,'title'), 5))
 		        break;
 		     case 2://read
-		        console.log(_.sampleSize(_.map(response.items,'volumeInfo.title'), 5))
+		     suggestions = []
+		     res = _.sampleSize(response.items,5)
+		     res.forEach(function (item) {
+		      		obj = {}
+		        	obj.id = item.id
+		        	obj.title = item.volumeInfo.title
+		        	suggestions.push(obj)
+		        });
+		     	console.log(suggestions)
 		        break;
 		    default:
 		        console.log(_.sampleSize(_.map(response,'name'), 5))
 		}
 
 }
+//0 and 2 has own link, others will redirect to google
+
 
 
 

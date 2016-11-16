@@ -7,7 +7,7 @@ export const baseThemovieDbApiUrl = `${themovieDbApiUrl}?api_key=${themovieDbApi
 //  &page=1&with_genres=37 
 export const basePlacesApiUrl = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?key=${placesApiKey}&radius=5000`
 //&location=51.503186,-0.126446&type=museum&
-export const baseBookApiUrl = 'https://www.googleapis.com/books/v1/volumes?fields=items(volumeInfo/title)&maxResults=40'
+export const baseBookApiUrl = 'https://www.googleapis.com/books/v1/volumes?fields=items(id,volumeInfo/title)&maxResults=40'
 //&q=polisiye romanı&langRestrict=tr
 
 export const plans = [

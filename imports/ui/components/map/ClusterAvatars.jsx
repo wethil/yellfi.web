@@ -6,8 +6,10 @@ import FontIcon from 'material-ui/FontIcon';
 import { browserHistory } from 'react-router'
 import {plans} from '../constants.js'
 import Badge from 'material-ui/Badge';
+
  class ClusterAvatars extends Component {
 	render() {
+		console.log(this.props.publicYells)
 		avatars=[]
 		const {active,publicYells}=this.props
 		if (publicYells && publicYells.length>0 && active){
