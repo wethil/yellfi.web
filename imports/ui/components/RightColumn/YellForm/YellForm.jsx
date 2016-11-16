@@ -108,8 +108,8 @@ handleTouchMenu(event,menuItem){
 		let suggestionCoord= publicGeoLoc.coordinates ? publicGeoLoc.coordinates : this.props.userCoordinates 
 		console.log(chosenIndex)
 		
-emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,123123,suggestionCoord)
-/*
+
+
 	
 		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,ownerId,function (error, result){
 				if (error) {
@@ -120,7 +120,7 @@ emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,123123,su
 				}
 			});	
 
-*/
+
 
 
 

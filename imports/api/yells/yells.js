@@ -79,8 +79,18 @@ Yells.attachSchema(
      optional:true
     },
     suggestionsByYellfi : {
-      type:[Object],
+      type:Array,
+      defaultValue:[]
+    },
+    'suggestionsByYellfi.$' :{
+      type:Object
+    },
+    'suggestionsByYellfi.$.id':{
+      type:String,
       optional:true
+    },
+    'suggestionsByYellfi.$.title':{
+      type:String,
     },
     visible :{
       type:Boolean,

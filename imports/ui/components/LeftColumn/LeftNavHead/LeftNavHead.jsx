@@ -65,14 +65,16 @@ getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestio
 		switch(plan) {
 	    case 0://listening music
 	     query = data.title ? ` ${formattedKeywords}|${data.title}` :formattedKeywords
-	      this.handleGet(plan,baseYouTubeUrl,query)
+	      this.handleGet(yellId,plan,baseYouTubeUrl,query)
 	        break;
 	    case 1:// watching something
-	    	totalPages = chosenIndex ? filmGenres[chosenIndex].totalPages  : 1000 //total page count on theMovieDb
+	   indexx = chosenIndex!=null ? chosenIndex : _.random(18)
+	    	totalPages = chosenIndex!=null ? filmGenres[indexx].totalPages  : 1000 //total page count on theMovieDb
 	    	page = _.random(totalPages)
-	    	genre =data.id ? data.id : _.sample(_.map(filmGenres,'title'))
+	    	genre =data.id ? data.id : _.sample(_.map(filmGenres,'id'))
 	    	query = `&page=${page}&with_genres=${genre}`
-		    this.handleGet(plan,baseThemovieDbApiUrl,query)
+	    	console.log(query)
+		    this.handleGet(yellId,plan,baseThemovieDbApiUrl,query)
 	        break;
 	    case 2://reading something
 	    	if (formattedKeywords.trim()!="") {
@@ -81,40 +83,37 @@ getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestio
 	    		qWords = 'nutuk+atatürk'
 	    	}
 	        query = `&q=${qWords}`
-	        this.handleGet(plan,baseBookApiUrl,query)
+	        this.handleGet(yellId,plan,baseBookApiUrl,query)
 	        break;
 	    case 3://eating and dringing
 			placeType = data.title ? data.title : _sample(_.map(eatDrink,'title'))
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
-			
-			this.hangleGooglePlacesApi(plan,coord,placeType)
-		
+			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break; 
 	    case 4: //Cooking
 	    	sourceString = data.source ? data.source : _.sample(_.map(foods,'source'))
 	    	source = eval(foodSourcesList[sourceString])
-	    	suggestions = _.sampleSize(source,5)
-	    	console.log(suggestions)
+	    	this.editSuggestion(yellId,plan,source)
 	        break; 
 	    case 5: //Going Outside
 			placeType = data.title ? data.title : _sample(_.map(places,'title'))
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
-			this.hangleGooglePlacesApi(plan,coord,placeType)
+			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break;
 	    case 6: //Going to shopping
 			placeType = data.title ? data.title : _sample(_.map(shopping,'title'))
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
-			this.hangleGooglePlacesApi(plan,coord,placeType)
+			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break; 
 	     case 8: //Biking
 			placeType = 'bicycle_store'
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
-			this.hangleGooglePlacesApi(plan,coord,placeType)
+			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break;
 	      case 9: //Hiking
 			placeType = 'campground'
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
-			this.hangleGooglePlacesApi(plan,coord,placeType)
+			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break;                       
 	    default:
 	        dataSource = [];
@@ -122,7 +121,7 @@ getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestio
 
 }
 
-handleGet(plan,baseUrl,query){
+handleGet(yellId,plan,baseUrl,query){
 	
 	  $.ajax({
             url: baseUrl+query, 
@@ -130,7 +129,7 @@ handleGet(plan,baseUrl,query){
             dataType: 'jsonp',
             cache: false,
             success: (response) =>{                          
-                this.attachSuggestionsToYell(plan,response)                
+                this.editSuggestion(yellId,plan,response)                
             }           
         });  
 }
@@ -141,7 +140,7 @@ handleGet(plan,baseUrl,query){
 
 
 
-hangleGooglePlacesApi(plan,coord,placeType) {
+hangleGooglePlacesApi(yellId,plan,coord,placeType) {
 	var request ={
 				location : coord,
 				type : placeType,
@@ -149,7 +148,7 @@ hangleGooglePlacesApi(plan,coord,placeType) {
 			}
 	service.nearbySearch(request,(results, status) => {
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
- 			 this.attachSuggestionsToYell(plan,results)  
+ 			 this.editSuggestion(yellId,plan,results)  
 
  		}else {
  			console.log(status)
@@ -163,12 +162,11 @@ hangleGooglePlacesApi(plan,coord,placeType) {
 
 
 
-attachSuggestionsToYell(plan,response){
+editSuggestion(yellId,plan,response){
+	   suggestions=[]
 	 switch(plan) {
 		    case 0: //music
-		        // console.log(_.sampleSize(_.map(response.items,'snippet.title'), 5))
-		        suggestions=[]
-		        res = _.sampleSize(response.items,5)
+		       res = _.sampleSize(response.items,5)
 		      res.forEach(function (item) {
 		      		obj = {}
 		        	obj.id = item.id.videoId 
@@ -176,13 +174,22 @@ attachSuggestionsToYell(plan,response){
 		        	suggestions.push(obj)
 		        });
 		      console.log(suggestions)
-		  
+		      this.addSuggestionToYell(yellId,suggestions)
 		        break;
 		    case 1://watch
-		        console.log(_.sampleSize(_.map(response.results,'title'), 5))
+		    console.log('response')
+		    console.log(response)
+		    	res = _.sampleSize(response.results,5)
+		    	console.log(res)
+		    	res.forEach(function (item) {
+		    		obj={}
+		    		obj.title=item.title
+		    		suggestions.push(obj)
+		    	});
+		          console.log(suggestions)
+		      	this.addSuggestionToYell(yellId,suggestions)
 		        break;
 		     case 2://read
-		     suggestions = []
 		     res = _.sampleSize(response.items,5)
 		     res.forEach(function (item) {
 		      		obj = {}
@@ -191,14 +198,43 @@ attachSuggestionsToYell(plan,response){
 		        	suggestions.push(obj)
 		        });
 		     	console.log(suggestions)
+		     	 this.addSuggestionToYell(yellId,suggestions)
 		        break;
+		      case 4 : 
+		      	res =_.sampleSize(response, 5)
+		      	res.forEach(function (item) {
+		      		obj = {}
+		        	obj.title = item
+		        	suggestions.push(obj)
+		      	});
+		      	console.log(suggestions)
+		       this.addSuggestionToYell(yellId,suggestions)
+		       break  
 		    default:
-		        console.log(_.sampleSize(_.map(response,'name'), 5))
+		    	res =_.sampleSize(response, 5)
+		      	res.forEach(function (item) {
+		      		obj = {}
+		        	obj.title = item.name
+		        	suggestions.push(obj)
+		      	});
+		      	console.log(suggestions)
+		       this.addSuggestionToYell(yellId,suggestions)
 		}
 
 }
-//0 and 2 has own link, others will redirect to google
+//0 and 2 has own link, others will redirect to google or otherss
 
+addSuggestionToYell (yellId,suggestions) {
+	console.log(yellId)
+	console.log(suggestions)
+	Meteor.call('makeSuggestion', yellId,suggestions,  (error)=> {
+		if (error) {
+			console.log(error)
+		} else {
+			console.log('done')
+		}
+	});
+}
 
 
 

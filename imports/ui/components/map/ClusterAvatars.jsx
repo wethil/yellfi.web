@@ -9,7 +9,7 @@ import Badge from 'material-ui/Badge';
 
  class ClusterAvatars extends Component {
 	render() {
-		console.log(this.props.publicYells)
+		//console.log(this.props.publicYells)
 		avatars=[]
 		const {active,publicYells}=this.props
 		if (publicYells && publicYells.length>0 && active){

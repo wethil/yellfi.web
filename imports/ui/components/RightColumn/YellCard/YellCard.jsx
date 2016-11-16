@@ -224,8 +224,11 @@ const actions = this.props.userBlocked
   	settingsBtn = null
   }
   
-    
-
+  suggestions = yell.suggestionsByYellfi
+  console.log(suggestions)
+suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
+																 plan={yell.plan}
+																 suggestions={suggestions}  />:""
 
 		return (
 			<div>
@@ -237,7 +240,8 @@ const actions = this.props.userBlocked
 			          avatar={yell.owner.profile.avatar}
 			        />
 			      <CardTitle title={<span className="anim">{plan}</span> } 
-			      		subtitle={moment(yell.time).calendar()}/>
+			      		subtitle={moment(yell.time).calendar()}
+			      		subtitleStyle={{fontSize:13}} />
 			        <CardText>
 			        <span className="anim">  <Linkify>  {yell.keyword} </Linkify> </span>    
 			        </CardText>
@@ -258,7 +262,7 @@ const actions = this.props.userBlocked
 
 			        </CardActions>
 			      </Card>
-			      <YellfiSuggestionsList />
+			      {suggestionFragment}
 
 	 <Dialog
 			          //title="Scrollable Dialog"
