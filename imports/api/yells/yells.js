@@ -40,7 +40,8 @@ Yells.attachSchema(
     },
     plan: {
       type: String,
-      defaultValue : "I am boored"
+      defaultValue : "I am boored",
+      max:41
     },
     keyword :{
       type : String,

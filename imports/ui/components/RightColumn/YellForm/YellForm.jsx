@@ -131,7 +131,7 @@ handleTouchMenu(event,menuItem){
 
 	const {ipLoc,activePlan,publicity} = this.state
 	formAppBarIcon = <IconButton onMouseDown={this.closeFormDrawer.bind(this)}> <NavigationArrowBack style={{color:'white'}} /></IconButton>
-	customPlan = (activePlan == 10 )? <TextField id="customPlan" hintText="Enter a plan."/> : null
+	customPlan = (activePlan == 10 )? <TextField id="customPlan"   maxLength="41" hintText="Enter a plan."/> : null
 	hintForKeywords = (_.includes([0,1,5,6],activePlan) )? "Choose or write something for your plan." : "Write something for your plan. (optional)" 
 	privacySection = (activePlan == 7) ? true : false
 

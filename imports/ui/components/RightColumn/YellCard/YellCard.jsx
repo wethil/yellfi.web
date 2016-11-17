@@ -12,12 +12,13 @@ import FontIcon from 'material-ui/FontIcon';
 import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import Avatar from 'material-ui/Avatar';
-import { browserHistory } from 'react-router'
 import _ from 'lodash'
-import RaisedButton from 'material-ui/RaisedButton';
+import { browserHistory } from 'react-router'
 import { Dropdown } from 'semantic-ui-react';
 import SuggestionTextField from './SuggestionTextField.jsx'
 import YellfiSuggestionsList from './YellfiSuggestionsList.jsx'
+import NoSuggestion from './YellCardComponents/NoSuggestion.jsx'
+import {PublicityLabel,ParticipationsButton} from './YellCardComponents/MiniComponents.jsx'
 
  class YellCard extends Component {
  	constructor(props) {
@@ -181,23 +182,6 @@ import YellfiSuggestionsList from './YellfiSuggestionsList.jsx'
 						    />
 						</span>
 
-switch(yell.publicity) 
-{
-    case 0 : 
-       publicityLabel = <span>  <a className="ui mini circular label"><i className="user icon"></i> Alone</a>  </span> 
-       participationsButton = null
-       break; 
-    case 1:
-       publicityLabel = <span><a className="ui mini circular label"><i className="users icon"></i>With Everyone</a> </span>  
-       participationsButton = <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')} 
-       								  className=" mini ui button teal">PARTICIPATION</button>
-        break;
-    case 2:
-       publicityLabel = <span><a className="ui mini circular label"><i className="users icon"></i>Elected ones</a> </span>  
-       participationsButton = <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')} 
-       								  className=" mini ui button teal">PARTICIPATION</button>
-        break;		   
-}
 
 		
 		userHeader =  <div className="anim">
@@ -225,10 +209,10 @@ const actions = this.props.userBlocked
   }
   
   suggestions = yell.suggestionsByYellfi
-  console.log(suggestions)
+  NoSuggestionFragment = Meteor.userId() ?  <NoSuggestion plan={yell.plan} /> : <span></span>
 suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 																 plan={yell.plan}
-																 suggestions={suggestions}  />:""
+																 suggestions={suggestions}  />:NoSuggestionFragment
 
 		return (
 			<div>
@@ -236,12 +220,12 @@ suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 			        <CardHeader
 			          title={userHeader}
 			          style={styles.cardHeader}
-			          subtitle={ <span className="anim">{publicityLabel}</span>} 
+			          subtitle={ <span className="anim"><PublicityLabel publicity={yell.publicity} /> </span> } 
 			          avatar={yell.owner.profile.avatar}
 			        />
 			      <CardTitle title={<span className="anim">{plan}</span> } 
-			      		subtitle={moment(yell.time).calendar()}
-			      		subtitleStyle={{fontSize:13}} />
+								      		subtitle={moment(yell.time).calendar()}
+								      		subtitleStyle={{fontSize:13}} />
 			        <CardText>
 			        <span className="anim">  <Linkify>  {yell.keyword} </Linkify> </span>    
 			        </CardText>
@@ -254,7 +238,7 @@ suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 							  SUGGESTION
 							</button>
 
-			         {participationsButton}
+			       <ParticipationsButton publicity={yell.publicity} /> 
 			  
 
 
@@ -262,7 +246,7 @@ suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 
 			        </CardActions>
 			      </Card>
-			      {suggestionFragment}
+			    <span className="anim">  {suggestionFragment} </span>
 
 	 <Dialog
 			          //title="Scrollable Dialog"

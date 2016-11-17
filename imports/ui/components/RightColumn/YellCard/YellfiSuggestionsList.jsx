@@ -6,6 +6,7 @@ import Subheader from 'material-ui/Subheader';
 import Paper from 'material-ui/Paper';
 import _ from 'lodash'
 import Divider from 'material-ui/Divider';
+
 const YellfiSuggestionsList = (props)=> {
 	suggestionList=[]
 	switch(props.plan) {
@@ -16,7 +17,8 @@ const YellfiSuggestionsList = (props)=> {
 	        		
 	        		title = <div style={styles.title}> {_.truncate(suggestion.title, {'length': 50,'separator': ' '})} </div>
 
-	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem  style={styles.rootEl} 
+	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem key={suggestion.id}
+	        																		style={styles.rootEl} 
 			        																innerDivStyle={styles.innerDiv}  
 			        																primaryText={title} /></a>)
 	        	});
@@ -26,7 +28,8 @@ const YellfiSuggestionsList = (props)=> {
 	        	props.suggestions.forEach((suggestion) => {
 	        		link =`http://books.google.com.tr/books/reader?id=${suggestion.id}&hl=&printsec=frontcover&output=reader&source=gbs_api`
 	        		title = <div style={styles.title}> {suggestion.title} </div>
-	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem style={styles.rootEl} 
+	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem 	key={suggestion.id}
+	        																		style={styles.rootEl} 
 			        																innerDivStyle={styles.innerDiv}  
 			        																primaryText={title} /></a>)
 	        	});
@@ -37,7 +40,8 @@ const YellfiSuggestionsList = (props)=> {
 	        		query = suggestion.title.replace(/ /g, "+")
 	        		link =`http://www.google.com/search?q=${query}+film`
 	        		title = <div style={styles.title}> {suggestion.title} </div>
-	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem  style={styles.rootEl} 
+	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem  key={Math.floor((Math.random() * 100) + 1)}
+	        																		style={styles.rootEl} 
 			        																innerDivStyle={styles.innerDiv}  
 			        																primaryText={title} /></a>)
 	        	});
@@ -48,7 +52,8 @@ const YellfiSuggestionsList = (props)=> {
 	        		query = suggestion.title.replace(/ /g, "+")
 	        		link =`http://www.google.com/search?q=${query}`
 	        		title = <div style={styles.title}> {suggestion.title} </div>
-	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem  style={styles.rootEl} 
+	        		suggestionList.push(<a href={link}  target="_blank"> <ListItem  key={Math.floor((Math.random() * 100) + 1)}
+	        																		style={styles.rootEl} 
 			        																innerDivStyle={styles.innerDiv}  
 			        																primaryText={title} /></a>)
 	        	});
