@@ -14,7 +14,11 @@ import _ from 'lodash';
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
 import {plans} from '../../constants.js';
-
+import i18n from 'meteor/universe:i18n';
+i18n.setOptions({
+  hostUrl: 'http://'+window.location.hostname+':3000/'
+});
+ const T = i18n.createComponent();
 
 
  class RawYellList extends Component {
@@ -32,6 +36,7 @@ import {plans} from '../../constants.js';
   }
 
   componentDidMount() {
+     
       emitter.addListener('triggerSb', (sbState,sbMessage,sbType,snData)=> { 
       this.setState({
         snackbarState:sbState,
@@ -84,6 +89,7 @@ handleScroll(lastId){
 
 
 toogleYellCard(yellId) {
+   i18n.setLocale("tr-TR");
   browserHistory.push('/yell/'+yellId)
 // emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }
@@ -193,7 +199,7 @@ if (yell.publicity == 0) {
 } else {
   publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>  </span>  
   timeLabel = <span style={styles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
-                        
+                         
    
                           
                          
@@ -201,13 +207,13 @@ if (yell.publicity == 0) {
 if (yell.keyword) {
   keyword = <span> -- <span style={styles.keywords}>  {yell.keyword} </span> </span>
 } else {
-  keyword =""
+  keyword ="" 
 }
 prePlan=Number(yell.plan)
 if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
   plan = yell.plan
 } else {
-  plan = plans[prePlan].content  
+  plan = <T>plans[prePlan].content</T> 
 }
 
 		 yells.push(
@@ -218,7 +224,7 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
                   primaryText={ <div style={styles.username}>{yell.owner.username} <span style={styles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
                   secondaryText={
                       	<p>   
-                        <span style={styles.plan}>{plan}</span> 
+                        <span style={styles.plan}>{plan} </span> 
                         {keyword}
                   		</p>
                   }

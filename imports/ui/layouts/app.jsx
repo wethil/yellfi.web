@@ -17,7 +17,7 @@ export const App = ({children}) => (
       <div className="five wide column ">
         <LeftColumn  />
       </div>
-      <Middle />
+     { /**<Middle />*/}
       <ObserveNotificationAlert />
       {children} {/*right column*/}
     </div>

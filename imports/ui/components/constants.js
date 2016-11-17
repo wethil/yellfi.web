@@ -1,3 +1,4 @@
+
 export const YouTubeKey="AIzaSyCRpfCBvdHWOvOKlCQwi2UiUaFTgKov2g4"
 export const placesApiKey="AIzaSyBnIm4Hg7Uj_jF-eduNHoiSGas-WkNgjg0"
 export const themovieDbApi="b362c3224b3d5cfa4479bc451c1f2f26"
@@ -11,17 +12,17 @@ export const baseBookApiUrl = 'https://www.googleapis.com/books/v1/volumes?field
 //&q=polisiye romanı&langRestrict=tr
 
 export const plans = [
-  { id: 0, "content": 'Listening Music', icon: "audiotrack" },
-  { id: 1, "content": 'Watching Something', icon: "movie_creation"},
-  { id: 2, "content": 'Reading Something', icon:"local_library" },
-  { id: 3, "content": 'Eating and Drinking', icon:"restaurant" },
-  { id: 4, "content": 'Cooking', icon:"whatshot"  },
-  { id: 5, "content": 'Going Outside', icon:"nature_people" },
-  { id: 6, "content": 'Going to Shopping', icon:"shopping_cart" },
-  { id: 7, "content": 'Hanging out with Someone', icon:"local_cafe" },
-  { id: 8, "content": 'Biking', icon:"directions_bike"  },
-  { id: 9, "content": 'Hiking', icon:"directions_run" },
-  { id: 10, "content": 'Custom', icon:"add" }
+  { id: 0, "content": 'common.plans.ListeningMusic', icon: "audiotrack" },
+  { id: 1, "content": 'common.plans.WatchSomething', icon: "movie_creation"},
+  { id: 2, "content": 'common.plans.ReadSomething', icon:"local_library" },
+  { id: 3, "content": 'common.plans.EatAndDrink', icon:"restaurant" },
+  { id: 4, "content": 'common.plans.Cooking', icon:"whatshot"  },
+  { id: 5, "content": 'common.plans.GoinOutside', icon:"nature_people" },
+  { id: 6, "content": 'common.plans.GoinShopping', icon:"shopping_cart" },
+  { id: 7, "content": 'common.plans.HanginOutSomeone', icon:"local_cafe" },
+  { id: 8, "content": 'common.plans.Biking', icon:"directions_bike"  },
+  { id: 9, "content": 'common.plans.Hiking', icon:"directions_run" },
+  { id: 10,"content":'common.plans.Custom', icon:"add" }
 ]
 
 
@@ -250,28 +251,28 @@ export const filmGenres = [
 ]
 
 export const places = [
-  {"id":3, "title":'amusement_park'},
-  {"id":4, "title":'aquarium'},
-  {"id":7, "title":'bakery'},
-  {"id":10, "title":'beauty_salon'},
-  {"id":14, "title":'bus_station'},
-  {"id":16, "title":'campground'},
-  {"id":21, "title":'casino'},
-  {"id":36, "title":'florist'},
-  {"id":41, "title":'gym'},
-  {"id":42, "title":'hair_care'},
-  {"id":45, "title":'hindu_temple'},
-  {"id":52, "title":'library'},
-  {"id":56, "title":'lodging'},
-  {"id":61, "title":'movie_theater'},
-  {"id":63, "title":'museum'},
-  {"id":65, "title":'painter'},
-  {"id":66, "title":'park'},
-  {"id":81, "title":'spa'},
-  {"id":82, "title":'stadium'},
-  {"id":85, "title":'subway_station'},
-  {"id":91, "title":'university'},
-  {"id":93, "title":'zoo'}
+  {"id":3, "title":"amusement_park"},
+  {"id":4, "title":"aquarium"},
+  {"id":7, "title":"bakery"},
+  {"id":10, "title":"beauty_salon"},
+  {"id":14, "title":"bus_station"},
+  {"id":16, "title":"campground"},
+  {"id":21, "title":"casino"},
+  {"id":36, "title":"florist"},
+  {"id":41, "title":"gym"},
+  {"id":42, "title":"hair_care"},
+  {"id":45, "title":"hindu_temple"},
+  {"id":52, "title":"library"},
+  {"id":56, "title":"lodging"},
+  {"id":61, "title":"movie_theater"},
+  {"id":63, "title":"museum"},
+  {"id":65, "title":"painter"},
+  {"id":66, "title":"park"},
+  {"id":81, "title":"spa"},
+  {"id":82, "title":"stadium"},
+  {"id":85, "title":"subway_station"},
+  {"id":91, "title":"university"},
+  {"id":93, "title":"zoo"}
 ]
 
 export const eatDrink = [

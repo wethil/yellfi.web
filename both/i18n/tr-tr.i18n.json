@@ -1,0 +1,17 @@
+{
+  
+    "_namespace": "common",
+    "plans": {
+        "ListeningMusic": "Müzik Dinlemek",
+        "WatchSomething": "Birşeyler İzlemek",
+        "ReadSomething": "Birşeyler Okumak",
+        "EatAndDrink": "Yemek İçmek",
+        "Cooking": "Yemek Yapmak",
+        "GoinOutside": "Dışarı Çıkmak",
+        "GoinShopping": "Alışverişe Gitmek",
+        "HanginOutSomeone": "Birileri ile Takılmak",
+        "Biking": "Bisiklet Sürmek",
+        "Hiking": "Doğa Yürüyüşü",
+        "Custom":"Başka"
+    }
+}

@@ -1,0 +1,17 @@
+{
+   
+    "_namespace": "common",
+    "plans": {
+        "ListeningMusic": "Listening Musica",
+        "WatchSomething": "Watch Something",
+        "ReadSomething": "Reading Something",
+        "EatAndDrink": "Eating and Drinking",
+        "Cooking": "Cooking",
+        "GoinOutside": "Going Outside",
+        "GoinShopping": "Going To Shopping",
+        "HanginOutSomeone": "Hanging out with Someone",
+        "Biking": "Biking",
+        "Hiking": "Hiking",
+        "Custom":"Custom"
+    }
+}

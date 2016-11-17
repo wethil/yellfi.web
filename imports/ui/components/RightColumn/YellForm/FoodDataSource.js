@@ -417,7 +417,7 @@ export const traditionals = [
     "Zıngıl Tatlısı"
 ]
 
-export const rises = [
+export const rices = [
     "Nohutlu Bulgur Pilavı",
     "Tavuklu Perde Pilavı",
     "Kabune",

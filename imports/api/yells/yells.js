@@ -73,11 +73,11 @@ Yells.attachSchema(
     },
     requests : {
       type: [String],
-     optional:true
+     defaultValue:[]
     },
     approved:{
       type:[String],
-     optional:true
+     defaultValue:[]
     },
     suggestionsByYellfi : {
       type:Array,
