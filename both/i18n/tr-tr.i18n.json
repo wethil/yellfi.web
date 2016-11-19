@@ -16,7 +16,7 @@
    	},
      "ntfContent":{
         "madeSug":"şu plana öneri yaptı:",
-        "liked" :"plandaki önerinizi beğendi",
+        "liked" :"şu plandaki önerinizi beğendi",
         "reqJoin":"size şu plan için katılmak istiyor :",
         "appJoin":"katılımınızı şu plan için onayladı :"
     },
@@ -90,7 +90,7 @@
      },
      "joining":{
         "approveDesired":"İstediğiniz kişileri onaylayın",
-        "peopleWantJoin":"Size katılmak isteyenler",
+        "peopleWantJoin":"Katılmak İsteyenler",
         "noJoining":"Henüz bir katılım yok",
         "shareIt":"Bu planı sosyal medyada paylaşın ya da arkadaşlarınıza link atın",
         "joinFirst":"İlk katılımcı olun!"

@@ -362,7 +362,7 @@ export  const shoppingTr= [
   {"id":18,"title":"car_rental","value":"Araba Kiralama"},
   {"id":49,"title":"jewelry_store","value":"Kuyumcu"},
   {"id":11,"title":"bicycle_store","value":"Bisikletçi"},
-  {"id":25,"title":"clothing_store","value":"Giyisi Mağazası"},
+  {"id":25,"title":"clothing_store","value":"Elbise Mağazası"},
   {"id":26,"title":"convenience_store","value":"Market"},
   {"id":29,"title":"department_store","value":"Büyük Mağaza"},
   {"id":32,"title":"electronics_store","value":"Elektronik Mağazası"},

@@ -5,3 +5,4 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 injectTapEventPlugin();
 Meteor.subscribe('yells')
+  moment.locale('en');

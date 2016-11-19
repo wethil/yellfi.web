@@ -75,7 +75,7 @@ import {geolocated} from 'react-geolocated';
 }
 export default MainFragment;
 
-export default geolocated({
+geolocated({
   positionOptions: {
     enableHighAccuracy: false,
   },

@@ -89,7 +89,8 @@ Meteor.methods({
     },
     deleteYell:function(yellId) {
         Yells.update({_id:yellId}, {$set : {visible : false }})
-        
+         Notifications.remove({yellId:yellId})
+
     },
     undoDeleteYell:function(yellId) {
         Yells.update({_id:yellId}, {$set : {visible : true }})

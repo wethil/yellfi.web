@@ -91,6 +91,7 @@ handleScroll(lastId){
 
 toogleYellCard(yellId) {
    i18n.setLocale("tr-TR");
+   moment.locale('tr');
   browserHistory.push('/yell/'+yellId)
 // emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }

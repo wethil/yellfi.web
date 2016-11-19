@@ -124,9 +124,9 @@ const iconButtonElement = (
  this.state.comments.forEach((comment) => {
  let likeButton= _.includes(comment.likes, Meteor.userId()) 
                 ? //like button. look state and change
-                <MenuItem onTouchTap={ ()=> this.unlike(comment._id)}> {i18n.__('common.comments.like')} </MenuItem>
+                <MenuItem onTouchTap={ ()=> this.unlike(comment._id)}> {i18n.__('common.comments.unlike')} </MenuItem>
                 :
-                <MenuItem onTouchTap={()=> this.like(comment._id)}> {i18n.__('common.comments.unlike')} </MenuItem>
+                <MenuItem onTouchTap={()=> this.like(comment._id)}> {i18n.__('common.comments.like')} </MenuItem>
 
 
             let STL = comment.content.length >113 ? 2 : 1

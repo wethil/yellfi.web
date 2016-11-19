@@ -106,14 +106,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
               if (error) { 
                   console.log('error', error); 
               } else {
-
-              	  Meteor.call('deleteNtf', yellId,  (error)=> {
-              	  	if(error) {
-              	  		console.log('error')
-              	  	} else {
-              	  		browserHistory.push('/')
-              	  	}
-              	  });
+              		browserHistory.push('/')
               }        
           });
  		
@@ -236,7 +229,7 @@ content = <div>
 								      		subtitle={moment(yell.time).calendar()}
 								      		subtitleStyle={{fontSize:13}} />
 			        <CardText>
-			        <span className="anim">{yell.keyword}</span>
+			        <span className="anim" style={{minHeight:51}} >{yell.keyword}</span>
 			        </CardText>
 			        <CardActions>
 			        {settingsBtn}

@@ -220,7 +220,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
                   leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
                   primaryText={
                    <div style={styles.username}>{notification.sender.username}
-                     <span style={styles.subhead}>{i18n.__(ntfTitles[notification.content].content)+' '+ plan}</span>
+                     <span style={styles.subhead}>{' ' + i18n.__(ntfTitles[notification.content].content)+' '+ plan}</span>
                    </div>
                 }
               />

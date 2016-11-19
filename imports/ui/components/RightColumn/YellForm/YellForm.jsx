@@ -9,7 +9,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import TextField from 'material-ui/TextField';
 import ExtraFormElements from './ExtraFormElements.jsx'
 import emitter from '../../emitter.js'
-import {plans,musicGenres,filmGenres,foods,places,eatDrink,shopping} from '../../constants.js';
+import {plans,musicGenres,filmGenres,foods,eatDrinkTr,eatDrinkEng,shoppingEng,shoppingTr,placesTr,placesEng} from '../../constants.js';
 import Drawer from 'material-ui/Drawer';
 import AppBar from 'material-ui/AppBar';
 import IconButton from 'material-ui/IconButton';
@@ -66,16 +66,25 @@ handleTouchMenu(event,menuItem){
 }
 
 	closeFormDrawer () {
+		console.log('close')
 		this.setState({ 
 				forms: false,
 				activePlan: 9,
-				forms: false, //value presents hidden step
 				publicity: 0,
 				date: new Date,
 				time: new Date,
-				customPlan:""
+				customPlan:"",
+				keyword:"",
+				chosenKeyword:{},
+				chosenIndex:null
 				
 			 }) 
+		$('#keywordInput').val("")
+	}
+
+	drawerMove(){
+		$('#keywordInput').val("")
+		this.setState({keyword:""})
 	}
 	
 	changepublicGeoLoc(publicGeoLoc) {
@@ -86,7 +95,7 @@ handleTouchMenu(event,menuItem){
 	handleSelectChange() {this.setState({forms: '',plans: 'hidden'})}
 
 	autocompleteUpdate(searchText) {
-		//console.log('update')
+
 		console.log(searchText)
 	}
 
@@ -134,7 +143,8 @@ handleTouchMenu(event,menuItem){
 	customPlan = (activePlan == 10 )? <TextField id="customPlan"   maxLength="41" hintText="Enter a plan."/> : null
 	hintForKeywords = (_.includes([0,1,5,6],activePlan) )? i18n.__('common.yellForm.chooseOrWrite'): i18n.__('common.yellForm.writeSomething')
 	privacySection = (activePlan == 7) ? true : false
-
+	
+	lang=i18n.getLocale()
   switch(activePlan) {
     case 0:
         dataSource = musicGenres;
@@ -145,7 +155,7 @@ handleTouchMenu(event,menuItem){
         dataSourceConfig = {text :'title', value : 'id'}
         break;
      case 3:
-        dataSource = eatDrink;
+        dataSource = (lang=="tr-TR")? eatDrinkTr:eatDrinkEng
         dataSourceConfig = { text: 'value', value: 'title'}
         break;    
     case 4:
@@ -153,11 +163,11 @@ handleTouchMenu(event,menuItem){
         dataSourceConfig = {text :'title', value : 'id'}
         break;
     case 5:
-        dataSource = places;
+       dataSource = (lang=="tr-TR")? placesTr:placesEng
         dataSourceConfig = { text: 'value', value: 'title'}
         break; 
      case 6:
-        dataSource = shopping;
+         dataSource = (lang=="tr-TR")? shoppingTr:shoppingEng
         dataSourceConfig = { text: 'value', value: 'title'}
         break;   
     default:
@@ -180,7 +190,7 @@ handleTouchMenu(event,menuItem){
 									primaryText={i18n.__(plan.content)} />;
 					}) }
 				</Menu>
-				<Drawer width={280} openSecondary={true} open={this.state.forms} >
+				<Drawer width={280} onRequestChange={this.drawerMove.bind(this)} openSecondary={true} open={this.state.forms} >
 					<AppBar
 						titleStyle={styles.formTitle}
 						iconElementLeft={formAppBarIcon} // form drawer title icon
@@ -201,8 +211,9 @@ handleTouchMenu(event,menuItem){
 							<RadioButton value={1} label={i18n.__('common.publicity.everyoneCan')}  style={styles.radioButton} />
 							<RadioButton value={2} label={i18n.__('common.publicity.willChoose')}style={styles.radioButton}/>
 						</RadioButtonGroup>
-						<AutoComplete
-							onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
+					
+					{this.state.forms==true?<span><AutoComplete
+							//onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
 							onNewRequest={ (chosenRequest,index)=> this.autocompleteRequest(chosenRequest,index)}
 							floatingLabelText={hintForKeywords}
 							hintText="Click and choose"
@@ -210,10 +221,11 @@ handleTouchMenu(event,menuItem){
 							textFieldStyle={{ fontSize: 13 }}
 							dataSource={dataSource}
       						dataSourceConfig={dataSourceConfig}
-      						 maxSearchResults={5}
-      						searchText = {this.state.keyword}
+      						maxSearchResults={5}
+      						searchText = ""
       						id="keywordInput"
-							/><br />
+							/><br /></span>:<span></span>}	
+							
 
 
 						{publicity == 0 ?null:<ExtraFormElements />}
