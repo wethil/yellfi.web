@@ -144,7 +144,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 
 	userAvatar = (this.props.user && this.props.user.profile) ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
 	if (!this.props.userBlocked) {
-		dialogTitleLabel =`${yell.owner.username} : ${i18n.__(plans[yell.plan].content)}` 
+		dialogTitleLabel =`${yell.owner.username} : ${plan}` 
 		switch(this.state.dialogContent) {
 		    case 1:
 		    dialogContent = <CommentComposer 

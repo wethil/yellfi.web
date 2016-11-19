@@ -26,12 +26,13 @@ import {geolocated} from 'react-geolocated';
 
   componentWillMount () {
  lang = navigator.language
+ console.log(lang)
 if (lang=='tr' || lang == 'tr-TR'){
   i18n.setLocale('tr-TR');
 } else {
  i18n.setLocale('en-US');
 } 
-
+ i18n.getLocale();
 
   this.setState({lang:lang})
       $.getJSON('http://ipinfo.io', (data) =>{
