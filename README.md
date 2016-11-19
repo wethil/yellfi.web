@@ -13,7 +13,7 @@ Go [yellfi](http://www.yellfi.com/), create a user and try! (It will open slow, 
 - [ ] Add social login
 - [x] Make map show public plans
 - [x] Add notification system
-- [ ] Include youtube data api for suggestions
+- [x] Include youtube , google places, the movie data  data api for suggestions
 - [ ] Make it's android app with react native
 
 
