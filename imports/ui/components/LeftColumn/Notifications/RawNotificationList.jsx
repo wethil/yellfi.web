@@ -12,7 +12,7 @@ import Snackbar from 'material-ui/Snackbar';
 import NoNotification from './NoNotification'
 import _ from 'lodash';
 import  verge from 'verge';
-
+import i18n from 'meteor/universe:i18n';
 
  class RawYellList extends Component {
   constructor(props) {
@@ -209,10 +209,8 @@ if(this.state.notifications && this.state.notifications.length != 0) {
         if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
           plan = ntFPlan
         } else {
-          plan = plans[prePlan].content  
+          plan = i18n.__(plans[prePlan].content)
         }
-
-        uName = notification.senderId==Meteor.userId() ? "You " : `${notification.sender.username} `
   
 
 		 notifications.push(
@@ -221,8 +219,8 @@ if(this.state.notifications && this.state.notifications.length != 0) {
                   onTouchTap={()=>this.toogleYellCard(notification.yellId,notification.about)}
                   leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
                   primaryText={
-                   <div style={styles.username}>{uName} 
-                     <span style={styles.subhead}>{ntfTitles[notification.content].content+ ' for ' + plan}</span>
+                   <div style={styles.username}>{notification.sender.username}
+                     <span style={styles.subhead}>{i18n.__(ntfTitles[notification.content].content)+' '+ plan}</span>
                    </div>
                 }
               />

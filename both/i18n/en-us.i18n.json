@@ -2,7 +2,7 @@
    
     "_namespace": "common",
     "plans": {
-        "ListeningMusic": "Listening Musica",
+        "ListeningMusic": "Listening Music",
         "WatchSomething": "Watch Something",
         "ReadSomething": "Reading Something",
         "EatAndDrink": "Eating and Drinking",
@@ -13,5 +13,87 @@
         "Biking": "Biking",
         "Hiking": "Hiking",
         "Custom":"Custom"
-    }
+    },
+    "ntfContent":{
+        "madeSug":"made a suggestion for",
+        "liked" :"liked your suggestion for",
+        "reqJoin":"wants to join you for",
+        "appJoin":"approve you to join for"
+    },
+    "noUserYell":{
+        "noPlan":"No Plan Yet",
+        "clickButt":"Click + button, choose from the list and get suggesitons! "
+    },
+    "noNotif":{
+        "noAct":"No Any Actions Yet",
+        "willNotif":" You will be notified when a action has occured ,keep suggesting and joining!"
+    },
+    "userFrg":{
+        "feed":"FEED",
+        "myPlans":"MY PLANS",
+        "ntf":"NOTIFICATIONS"
+    },
+    "publicity":{
+        "justMe":"Just Me",
+        "everyoneCan":"Everyone Can Join",
+        "willChoose":"I'll choose participants",
+        "alone":"Alone",
+        "everyone":"With Everyone",
+        "elected":"Elected One"
+    },
+    "yellForm":{
+        "date":"Date",
+        "time":"Time",
+        "newPlan":"New Plan",
+        "getSugg":"Create!",
+        "mapPlaceHolder":"Write a Place to occur on map",
+        "chooseOrWrite":"Choose or write something for your plan.",
+        "writeSomething":"Write something for your plan. (optional)" 
+    },
+    "YellCard":{
+        "deletePlan":"You deleted a plan",
+        "approved":"Approved",
+        "waitApprove":"Waiting for approve",
+        "requestJoin":"request to join",
+        "approveAll":"Approve All",
+        "close":"CLOSE",
+        "share":"Share",
+        "delete":"Delete",
+        "suggestions":"SUGGESTIONS",
+        "participation":"PARTICIPATION",
+        "suggestionsByYellfi":"Suggestions By Yellfi",
+        "noYellOnCard":"Uppps..",
+        "bannedDeleted":"No any plan found.It can be deleted or never existed"
+    },
+    "RightColumn":{
+         "noPermission":"You do not have permission to see this plan anymore"
+     },
+     "NoSugg":{
+        "NoSuggestions":"Sorry, No any suggesiton", 
+        "pubPlanOnMap":"You can find all of public plans on map!",
+        "lookOthers":"You can look for others suggestion !"
+     },
+     "comments":{
+        "like":"Like",
+        "unlike":"Unlike",
+        "delete":"Delete",
+        "block":"Block",
+        "noComment":"No Suggestion Yet",
+        "makeFirstComm":"Make first suggestion for this plan!",
+        "more":"More",
+        "suggested":"suggested",
+        "searchThis":"search this with",
+        "deleteComment":"You deleted a comment",
+        "undo":"undo",
+        "sorryBlockedUser":" Sorry, but...",
+        "blockedUser":"It seems yor suggestions are blocked for this plan. Time to try for others"
+     },
+     "joining":{
+        "approveDesired":"Approve people who you want",
+        "peopleWantJoin":"People who want to join",
+        "noJoining":"No Joining Yet",
+        "shareIt":"Share this plan with your friends on social media or send them link!",
+        "joinFirst":"You join first!"
+     }
+
 }

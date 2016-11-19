@@ -1,4 +1,4 @@
-
+import React, { Component } from 'react';
 export const YouTubeKey="AIzaSyCRpfCBvdHWOvOKlCQwi2UiUaFTgKov2g4"
 export const placesApiKey="AIzaSyBnIm4Hg7Uj_jF-eduNHoiSGas-WkNgjg0"
 export const themovieDbApi="b362c3224b3d5cfa4479bc451c1f2f26"
@@ -11,19 +11,22 @@ export const basePlacesApiUrl = `https://maps.googleapis.com/maps/api/place/near
 export const baseBookApiUrl = 'https://www.googleapis.com/books/v1/volumes?fields=items(id,volumeInfo/title)&maxResults=40'
 //&q=polisiye romanı&langRestrict=tr
 
+
+
 export const plans = [
-  { id: 0, "content": 'common.plans.ListeningMusic', icon: "audiotrack" },
-  { id: 1, "content": 'common.plans.WatchSomething', icon: "movie_creation"},
-  { id: 2, "content": 'common.plans.ReadSomething', icon:"local_library" },
-  { id: 3, "content": 'common.plans.EatAndDrink', icon:"restaurant" },
-  { id: 4, "content": 'common.plans.Cooking', icon:"whatshot"  },
-  { id: 5, "content": 'common.plans.GoinOutside', icon:"nature_people" },
-  { id: 6, "content": 'common.plans.GoinShopping', icon:"shopping_cart" },
-  { id: 7, "content": 'common.plans.HanginOutSomeone', icon:"local_cafe" },
-  { id: 8, "content": 'common.plans.Biking', icon:"directions_bike"  },
-  { id: 9, "content": 'common.plans.Hiking', icon:"directions_run" },
-  { id: 10,"content":'common.plans.Custom', icon:"add" }
+  { id: 0, content: 'common.plans.ListeningMusic', icon: "audiotrack" },
+  { id: 1, content: 'common.plans.WatchSomething', icon: "movie_creation"},
+  { id: 2, content: 'common.plans.ReadSomething', icon:"local_library" },
+  { id: 3, content: 'common.plans.EatAndDrink', icon:"restaurant" },
+  { id: 4, content: 'common.plans.Cooking', icon:"whatshot"  },
+  { id: 5, content: 'common.plans.GoinOutside', icon:"nature_people" },
+  { id: 6, content: 'common.plans.GoinShopping', icon:"shopping_cart" },
+  { id: 7, content: 'common.plans.HanginOutSomeone', icon:"local_cafe" },
+  { id: 8, content: 'common.plans.Biking', icon:"directions_bike"  },
+  { id: 9, content: 'common.plans.Hiking', icon:"directions_run" },
+  { id: 10,content:'common.plans.Custom', icon:"add" }
 ]
+
 
 
 export const foods = [
@@ -51,10 +54,10 @@ export const foods = [
 
 
 export const ntfTitles = [
-  { 'id': 0, "title": 'made a suggestion' },
-  { 'id': 1, "title": 'liked your suggestion'},
-  { 'id': 2, "title": 'wants to join you for'},
-  { 'id': 3, "title": 'approve you to join'}
+  { 'id': 0, "content": 'common.ntfContent.madeSug' },
+  { 'id': 1, "content": 'common.ntfContent.liked'},
+  { 'id': 2, "content": 'common.ntfContent.reqJoin'},
+  { 'id': 3, "content": 'common.ntfContent.appJoin'}
 ]
 
 
@@ -250,61 +253,128 @@ export const filmGenres = [
   {"id":37,"title":"Western","totalPages":192}
 ]
 
-export const places = [
-  {"id":3, "title":"amusement_park"},
-  {"id":4, "title":"aquarium"},
-  {"id":7, "title":"bakery"},
-  {"id":10, "title":"beauty_salon"},
-  {"id":14, "title":"bus_station"},
-  {"id":16, "title":"campground"},
-  {"id":21, "title":"casino"},
-  {"id":36, "title":"florist"},
-  {"id":41, "title":"gym"},
-  {"id":42, "title":"hair_care"},
-  {"id":45, "title":"hindu_temple"},
-  {"id":52, "title":"library"},
-  {"id":56, "title":"lodging"},
-  {"id":61, "title":"movie_theater"},
-  {"id":63, "title":"museum"},
-  {"id":65, "title":"painter"},
-  {"id":66, "title":"park"},
-  {"id":81, "title":"spa"},
-  {"id":82, "title":"stadium"},
-  {"id":85, "title":"subway_station"},
-  {"id":91, "title":"university"},
-  {"id":93, "title":"zoo"}
+export const placesEng =[
+  {"id":3,"title":"amusement_park","value":"Amusement park"},
+  {"id":4,"title":"aquarium","value":"Aquarium"},
+  {"id":7,"title":"bakery","value":"Bakery"},
+  {"id":10,"title":"beauty_salon","value":"Beauty salon"},
+  {"id":14,"title":"bus_station","value":"Bus station"},
+  {"id":16,"title":"campground","value":"Campground"},
+  {"id":21,"title":"casino","value":"Casino"},
+  {"id":36,"title":"florist","value":"Florist"},
+  {"id":41,"title":"gym","value":"Gym"},
+  {"id":42,"title":"hair_care","value":"Hair care"},
+  {"id":45,"title":"hindu_temple","value":"Hindu temple"},
+  {"id":52,"title":"library","value":"Library"},
+  {"id":56,"title":"lodging","value":"Lodging"},
+  {"id":61,"title":"movie_theater","value":"Movie theater"},
+  {"id":63,"title":"museum","value":"Museum"},
+  {"id":66,"title":"park","value":"Park"},
+  {"id":81,"title":"spa","value":"Spa"},
+  {"id":82,"title":"stadium","value":"Stadium"},
+  {"id":85,"title":"subway_station","value":"Subway station"},
+  {"id":91,"title":"university","value":"University"},
+  {"id":93,"title":"zoo","value":"Zoo"}
 ]
 
-export const eatDrink = [
-  {"id":1, "title":'cafe'},
-  {"id":9, "title":'bar'},
-  {"id":2, "title":'restaurant'},
-  {"id":3, "title":'night_club'},
-  {"id":4, "title":'liquor_store'},
-  {"id":57, "title":'meal_delivery'},
-  {"id":58, "title":'meal_takeaway'},
+export const placesTr=[
+  {"id":3,"title":"amusement_park","value":"Eğlence Parkı"},
+  {"id":4,"title":"aquarium","value":"Akvaryum"},
+  {"id":7,"title":"bakery","value":"Fırın-Börekçi"},
+  {"id":10,"title":"beauty_salon","value":"Güzellik Salonu"},
+  {"id":14,"title":"bus_station","value":"Otobüs istasyonu"},
+  {"id":16,"title":"campground","value":"Kamp alanı"},
+  {"id":21,"title":"casino","value":"Gazino"},
+  {"id":36,"title":"florist","value":"Çiçekçi"},
+  {"id":41,"title":"gym","value":"Gym"},
+  {"id":42,"title":"hair_care","value":"Saç Bakım Merkezi"},
+  {"id":45,"title":"hindu_temple","value":"Hindu tapınağı"},
+  {"id":52,"title":"library","value":"Kütüphane"},
+  {"id":56,"title":"lodging","value":"Kalacak Yer"},
+  {"id":61,"title":"movie_theater","value":"Sinema"},
+  {"id":63,"title":"museum","value":"Müze"},
+  {"id":66,"title":"park","value":"Park"},
+  {"id":81,"title":"spa","value":"Spa"},
+  {"id":82,"title":"stadium","value":"Stadyum"},
+  {"id":85,"title":"subway_station","value":"Metro Durağı"},
+  {"id":91,"title":"university","value":"Üniversite"},
+  {"id":93,"title":"zoo","value":"Hayvanat Bahçesi"}
 ]
 
-export const shopping= [
-  {"id":5, "title":'art_gallery'},
-  {"id":7, "title":'bakery'},
-  {"id":84, "title":'store'},
-  {"id":12, "title":'book_store'},
-  {"id":17, "title":'car_dealer'},
-  {"id":18, "title":'car_rental'},
-  {"id":49, "title":'jewelry_store'},
-  {"id":11, "title":'bicycle_store'},
-  {"id":25, "title":'clothing_store'},
-  {"id":26, "title":'convenience_store'},
-  {"id":29, "title":'department_store'},
-  {"id":32, "title":'electronics_store'},
-  {"id":39, "title":'furniture_store'},
-  {"id":43, "title":'hardware_store'},
-  {"id":46, "title":'home_goods_store'},
-  {"id":53, "title":'liquor_store'},
-  {"id":60, "title":'movie_rental'},
-  {"id":69, "title":'pharmacy'},
-  {"id":80, "title":'shopping_mall'},
-  {"id":79, "title":'shoe_store'},
-  {"id":68, "title":'pet_store'}
+
+
+
+
+
+export const eatDrinkEng = [
+  {"id":1,"title":"cafe","value":"Cafe"},
+  {"id":9,"title":"bar","value":"Bar"},
+  {"id":2,"title":"restaurant","value":"Restaurant"},
+  {"id":3,"title":"night_club","value":"Night club"},
+  {"id":4,"title":"liquor_store","value":"Liquor store"},
+  {"id":57,"title":"meal_delivery","value":"Meal delivery"},
+  {"id":58,"title":"meal_takeaway","value":"Meal takeaway"}
 ]
+
+export const eatDrinkTr =[
+  {"id":1,"title":"cafe","value":"Cafe"},
+  {"id":9,"title":"bar","value":"Bar"},
+  {"id":2,"title":"restaurant","value":"Restaurant"},
+  {"id":3,"title":"night_club","value":"Night club"},
+  {"id":4,"title":"liquor_store","value":"Liquor store"},
+  {"id":57,"title":"meal_delivery","value":"Meal delivery"},
+  {"id":58,"title":"meal_takeaway","value":"Meal takeaway"}
+]
+
+
+
+export const shoppingEng= [
+  {"id":5,"title":"art_gallery","value":"Art gallery"},
+  {"id":7,"title":"bakery","value":"Bakery"},
+  {"id":84,"title":"store","value":"Store"},
+  {"id":12,"title":"book_store","value":"Book store"},
+  {"id":17,"title":"car_dealer","value":"Car dealer"},
+  {"id":18,"title":"car_rental","value":"Car rental"},
+  {"id":49,"title":"jewelry_store","value":"Jewelry store"},
+  {"id":11,"title":"bicycle_store","value":"Bicycle store"},
+  {"id":25,"title":"clothing_store","value":"Clothing store"},
+  {"id":26,"title":"convenience_store","value":"Convenience store"},
+  {"id":29,"title":"department_store","value":"Department store"},
+  {"id":32,"title":"electronics_store","value":"Electronics store"},
+  {"id":39,"title":"furniture_store","value":"Furniture store"},
+  {"id":43,"title":"hardware_store","value":"Hardware store"},
+  {"id":46,"title":"home_goods_store","value":"Home goods store"},
+  {"id":53,"title":"liquor_store","value":"Liquor store"},
+  {"id":60,"title":"movie_rental","value":"Movie rental"},
+  {"id":69,"title":"pharmacy","value":"Pharmacy"},
+  {"id":80,"title":"shopping_mall","value":"Shopping mall"},
+  {"id":79,"title":"shoe_store","value":"Shoe store"},
+  {"id":68,"title":"pet_store","value":"Pet store"}
+]
+
+
+export  const shoppingTr= [
+  {"id":5,"title":"art_gallery","value":"Sanat Galerisi"},
+  {"id":7,"title":"bakery","value":"Fırın-Börekçi"},
+  {"id":84,"title":"store","value":"Mağaza"},
+  {"id":12,"title":"book_store","value":"Kitapçı"},
+  {"id":17,"title":"car_dealer","value":"Araba galerisi"},
+  {"id":18,"title":"car_rental","value":"Araba Kiralama"},
+  {"id":49,"title":"jewelry_store","value":"Kuyumcu"},
+  {"id":11,"title":"bicycle_store","value":"Bisikletçi"},
+  {"id":25,"title":"clothing_store","value":"Giyisi Mağazası"},
+  {"id":26,"title":"convenience_store","value":"Market"},
+  {"id":29,"title":"department_store","value":"Büyük Mağaza"},
+  {"id":32,"title":"electronics_store","value":"Elektronik Mağazası"},
+  {"id":39,"title":"furniture_store","value":"Mobilya Mağazası"},
+  {"id":43,"title":"hardware_store","value":"Donanım Mağazası"},
+  {"id":46,"title":"home_goods_store","value":"Ev aletleri"},
+  {"id":53,"title":"liquor_store","value":"Likör bayi"},
+  {"id":60,"title":"movie_rental","value":"Film kiralama"},
+  {"id":69,"title":"pharmacy","value":"Eczane"},
+  {"id":80,"title":"shopping_mall","value":"AVM"},
+  {"id":79,"title":"shoe_store","value":"Ayakkabı Mağazası"},
+  {"id":68,"title":"pet_store","value":"Petshop"}
+]
+
+

@@ -19,6 +19,7 @@ import SuggestionTextField from './SuggestionTextField.jsx'
 import YellfiSuggestionsList from './YellfiSuggestionsList.jsx'
 import NoSuggestion from './YellCardComponents/NoSuggestion.jsx'
 import {PublicityLabel,ParticipationsButton} from './YellCardComponents/MiniComponents.jsx'
+import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 
  class YellCard extends Component {
  	constructor(props) {
@@ -99,13 +100,20 @@ import {PublicityLabel,ParticipationsButton} from './YellCardComponents/MiniComp
  	}
 
  	deleteYell(yellId){
- 		 emitter.emit('triggerSb',true,"You deleted a plan",'yell',yellId)
+ 		 emitter.emit('triggerSb',true,i18n.__('common.YellCard.deletePlan')  ,'yell',yellId)
 
  		 Meteor.call('deleteYell',yellId, error => { 
               if (error) { 
                   console.log('error', error); 
               } else {
-              	  browserHistory.push('/')
+
+              	  Meteor.call('deleteNtf', yellId,  (error)=> {
+              	  	if(error) {
+              	  		console.log('error')
+              	  	} else {
+              	  		browserHistory.push('/')
+              	  	}
+              	  });
               }        
           });
  		
@@ -118,30 +126,32 @@ import {PublicityLabel,ParticipationsButton} from './YellCardComponents/MiniComp
 	render() {
 		
 	yell = this.state.yell
+
 	
-	prePlan=Number(yell.plan)
+	if (yell && yell.plan) {
+		prePlan=Number(yell.plan)
 	if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 		plan = yell.plan
 	} else {
-		plan = plans[Number(prePlan)].content  
+		plan = i18n.__(plans[Number(prePlan)].content) 
 	}
 // action buttons label for participants
-	actLblForPartic =_.includes(yell.approved, Meteor.userId()) ? "Approved" : "Waiting for approve"
-// action buttons for participants
+	actLblForPartic =_.includes(yell.approved, Meteor.userId()) ? i18n.__('common.YellCard.approved'): i18n.__('common.YellCard.waitApprove')
+	// action buttons for participants
 	if(yell.ownerId!=Meteor.userId())
 	 {
 		actBtnForPartic =  _.includes(yell.requests, Meteor.userId()) 
 				?
 			<FlatButton label={actLblForPartic} primary={true} disabled={true} />
 				:
-			<FlatButton label="request to join" onTouchTap={()=>this.reqJoin(yell._id,yell.publicity,yell.ownerId)}  primary={true}  />
+			<FlatButton label={i18n.__('common.YellCard.requestJoin')} onTouchTap={()=>this.reqJoin(yell._id,yell.publicity,yell.ownerId)}  primary={true}  />
 		} else {
-			actBtnForPartic = <FlatButton label="Approve all" primary={true} onTouchTap={()=>this.approveAll(yell._id,yell.requests,yell.approved)} />
+			actBtnForPartic = <FlatButton label={i18n.__('common.YellCard.approveAll')} primary={true} onTouchTap={()=>this.approveAll(yell._id,yell.requests,yell.approved)} />
 	}
 
 	userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
 	if (!this.props.userBlocked) {
-		dialogTitleLabel =`${yell.owner.username} : ${plans[yell.plan].content}` 
+		dialogTitleLabel =`${yell.owner.username} : ${i18n.__(plans[yell.plan].content)}` 
 		switch(this.state.dialogContent) {
 		    case 1:
 		    dialogContent = <CommentComposer 
@@ -192,16 +202,16 @@ import {PublicityLabel,ParticipationsButton} from './YellCardComponents/MiniComp
 
 const actions = this.props.userBlocked
 				   ? 
-				 [<span key={1} ><FlatButton label="CLOSE" primary={true} onTouchTap={ this.handleCloseDialogViaUrl.bind(this,yell._id)}/></span>]
+				 [<span key={1} ><FlatButton label={i18n.__('common.YellCard.close')} primary={true} onTouchTap={ this.handleCloseDialogViaUrl.bind(this,yell._id)}/></span>]
 				   : 
 				[<span key={1}>{dialogAction}</span>]
 
   if (Meteor.userId() && Meteor.userId()==yell.ownerId) {
   	settingsBtn =  <Dropdown pointing={true} className="mini primary icon left bottom basic teal" button={true} icon="setting">
 					    <Dropdown.Menu>
-					      <Dropdown.Item icon="facebook" text='Share' />
-					      <Dropdown.Item icon="twitter" text='Share' />
-					      <Dropdown.Item icon="trash" text='Delete' onClick={()=> this.deleteYell(yell._id)} />
+					      <Dropdown.Item icon="facebook" text={i18n.__('common.YellCard.share')} />
+					      <Dropdown.Item icon="twitter" text={i18n.__('common.YellCard.share')} />
+					      <Dropdown.Item icon="trash" text={i18n.__('common.YellCard.delete')} onClick={()=> this.deleteYell(yell._id)} />
 					    </Dropdown.Menu>
 					  </Dropdown>
   }	else {
@@ -209,13 +219,12 @@ const actions = this.props.userBlocked
   }
   
   suggestions = yell.suggestionsByYellfi
-  NoSuggestionFragment = Meteor.userId() ?  <NoSuggestion plan={yell.plan} /> : <span></span>
+  NoSuggestionFragment = (Meteor.userId()&&Meteor.userId()==yell.ownerId )?  <NoSuggestion plan={yell.plan} /> : <span></span>
 suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 																 plan={yell.plan}
 																 suggestions={suggestions}  />:NoSuggestionFragment
 
-		return (
-			<div>
+content = <div>
 				  <Card>
 			        <CardHeader
 			          title={userHeader}
@@ -227,23 +236,14 @@ suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 								      		subtitle={moment(yell.time).calendar()}
 								      		subtitleStyle={{fontSize:13}} />
 			        <CardText>
-			        <span className="anim">  <Linkify>  {yell.keyword} </Linkify> </span>    
+			        <span className="anim">{yell.keyword}</span>
 			        </CardText>
 			        <CardActions>
-			        
-
 			        {settingsBtn}
-			        
 			         <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  className="mini ui primary button">
-							  SUGGESTION
+							  {i18n.__('common.YellCard.suggestions')}
 							</button>
-
 			       <ParticipationsButton publicity={yell.publicity} /> 
-			  
-
-
-							
-
 			        </CardActions>
 			      </Card>
 			    <span className="anim">  {suggestionFragment} </span>
@@ -270,6 +270,11 @@ suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
        
         </Dialog>
 </div>
+
+	} else { content = <NoYellOnCard /> }
+
+		return (
+			<span>{content}</span>
 		);
 	
 

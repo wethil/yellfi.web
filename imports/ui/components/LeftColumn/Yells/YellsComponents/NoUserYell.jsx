@@ -1,6 +1,6 @@
  import React, { Component } from 'react';
 import FontIcon from 'material-ui/FontIcon';
-
+import i18n from 'meteor/universe:i18n';
 
  const NoUserYell = () => (
 	<div 
@@ -9,9 +9,9 @@ import FontIcon from 'material-ui/FontIcon';
  <div style={{marginTop:'12%'}}>
 			<h2 className="ui center aligned icon header">
 			  <FontIcon  style={styles.icon} className="material-icons">event</FontIcon> <br />
-			  <span style={styles.subhead}> No Plan Yet </span>
+			  <span style={styles.subhead}>{ i18n.__('common.noUserYell.noPlan')} </span>
 			</h2>
-			<div style={styles.content}> Click + button, choose from the list and get suggesitons!  </div>
+			<div style={styles.content}> { i18n.__('common.noUserYell.clickButt')} </div>
 		</div>
 	</div>
 

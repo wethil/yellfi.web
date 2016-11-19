@@ -9,9 +9,9 @@ import FontIcon from 'material-ui/FontIcon';
  <div style={{marginTop:'12%'}}>
 			<h2 className="ui center aligned icon header">
 			  <FontIcon  style={styles.icon} className="material-icons">face</FontIcon> <br />
-			  <span style={styles.subhead}> Sorry, but... </span>
+			  <span style={styles.subhead}>{i18n.__('common.comments.sorryBlockedUser')}</span>
 			</h2>
-			<div style={styles.content}>  It seems yor suggestions are blocked for this plan. Time to try for others </div>
+			<div style={styles.content}>{i18n.__('common.comments.blockedUser')}</div>
 		</div>
 	</div>
 

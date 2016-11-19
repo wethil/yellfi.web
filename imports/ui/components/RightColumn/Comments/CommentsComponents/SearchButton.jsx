@@ -6,11 +6,10 @@ import FontIcon from 'material-ui/FontIcon';
  	url = props.searchUrl
   	content = props.searchContent
   	iconClass = props.iconClass
-  	text = "asdasd"
  
    return (
  		
-  							<FontIcon tooltip="more" >
+  							<FontIcon>
   								 <a href={url+content} target="_blank"> 
   								  <i style={styles.searchIcon}  className={iconClass}></i>
   								  </a>

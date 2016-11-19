@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Badge from 'material-ui/Badge';
 import emitter from '../../emitter.js'
-
+import i18n from 'meteor/universe:i18n';
  class NtfLabel extends Component {
  	constructor(props) {
  	  super(props);
@@ -54,7 +54,7 @@ receiveNotifications(tabState){
 		badgeStyle = badgeContent==0 ? {display:'none'} : {}
 		return (
 			  <Badge badgeStyle={badgeStyle} badgeContent={badgeContent}  secondary={true}>
-			      NOTIFICATIONS
+			     {i18n.__('common.userFrg.ntf')}
 			    </Badge>
 		);
 	}

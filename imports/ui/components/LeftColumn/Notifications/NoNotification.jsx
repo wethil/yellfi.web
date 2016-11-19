@@ -1,6 +1,6 @@
  import React, { Component } from 'react';
 import FontIcon from 'material-ui/FontIcon';
-
+import i18n from 'meteor/universe:i18n';
 
  const NoNotification = () => (
   <div 
@@ -9,9 +9,9 @@ import FontIcon from 'material-ui/FontIcon';
  <div style={{marginTop:'12%'}}>
       <h2 className="ui center aligned icon header">
         <FontIcon  style={styles.icon} className="material-icons">feedback</FontIcon> <br />
-        <span style={styles.subhead}> No Any Actions Yet </span>
+        <span style={styles.subhead}>{i18n.__('common.noNotif.noAct')}  </span>
       </h2>
-      <div style={styles.content}> You will be notified when a action has occured ,keep suggesting and joining!  </div>
+      <div style={styles.content}>{i18n.__('common.noNotif.willNotif')}</div>
     </div>
   </div>
 

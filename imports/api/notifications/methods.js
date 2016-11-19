@@ -30,4 +30,7 @@ Meteor.methods({
                   {multi :true}
             )
     },
+    deleteNtf: function(yellId){
+      Notifications.remove({yellId:yellId},{multi:true})
+    }
 });

@@ -64,7 +64,7 @@ const YellfiSuggestionsList = (props)=> {
 	 <Paper style={{boxShadow:'none'}} zDepth={1} >
 	  <Divider />
 		 <List>
-		 	<Subheader style={{fontSize:16,color:'rgba(0, 0, 0, 0.7)'}} >Suggestions By Yellfi</Subheader>
+		 	<Subheader style={{fontSize:16,color:'rgba(0, 0, 0, 0.7)'}} >{i18n.__('common.YellCard.suggestionsByYellfi')}</Subheader>
 				{suggestionList}
 	     </List>
 	    </Paper>

@@ -5,13 +5,13 @@ import { browserHistory } from 'react-router'
 export const PublicityLabel = (props) => {
 switch(props.publicity){
 	case 0:
-		label = "Alone"
+		label = i18n.__('common.publicity.alone')
 	break;
 	case 1:
-		label = "With Everyone"
+		label = i18n.__('common.publicity.everyone')
 	break;
-	case 0:
-		label = "Elected ones"
+	case 2:
+		label = i18n.__('common.publicity.elected')
 	break;	
 }
 
@@ -25,7 +25,7 @@ switch(props.publicity){
 
 export  const ParticipationsButton = (props) => {
 buttonContent =<button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')} 
-       								  className=" mini ui button teal">PARTICIPATION</button>	
+       				 className=" mini ui button teal">{i18n.__('common.YellCard.participation')}</button>	
 switch(props.publicity){
 	case 0:
 		button = null
@@ -33,7 +33,7 @@ switch(props.publicity){
 	case 1:
 		button = buttonContent
 	break;
-	case 0:
+	case 2:
 		button = buttonContent
 	break;	
 }

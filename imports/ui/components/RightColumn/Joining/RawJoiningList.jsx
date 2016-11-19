@@ -105,8 +105,8 @@ const renderIfData = (requerers,approved,ownership,yellId) => {
   (
  <div style={styles.listSegment} className="comments">
       <List style={styles.list} > 
-    {ownership==1?<Subheader>Approve people who you want</Subheader>:
-      <Subheader>People who want to join</Subheader>}
+    {ownership==1?<Subheader>{i18n.__('common.joining.approveDesired')}</Subheader>:
+      <Subheader>{i18n.__('common.joining.peopleWantJoin')}</Subheader>}
 
   { renderIfData(requerers,approved,ownership,yellId) }
 

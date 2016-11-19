@@ -5,7 +5,7 @@
         "ListeningMusic": "Müzik Dinlemek",
         "WatchSomething": "Birşeyler İzlemek",
         "ReadSomething": "Birşeyler Okumak",
-        "EatAndDrink": "Yemek İçmek",
+        "EatAndDrink": "Yeme İçme",
         "Cooking": "Yemek Yapmak",
         "GoinOutside": "Dışarı Çıkmak",
         "GoinShopping": "Alışverişe Gitmek",
@@ -13,5 +13,91 @@
         "Biking": "Bisiklet Sürmek",
         "Hiking": "Doğa Yürüyüşü",
         "Custom":"Başka"
-    }
+   	},
+     "ntfContent":{
+        "madeSug":"şu plana öneri yaptı:",
+        "liked" :"plandaki önerinizi beğendi",
+        "reqJoin":"size şu plan için katılmak istiyor :",
+        "appJoin":"katılımınızı şu plan için onayladı :"
+    },
+     "noUserYell":{
+        "noPlan":"Henüz Bir Planınız Yok",
+        "clickButt":"Aşağıdaki + butonuna tıklayın, listeden planınızı seçin ve önerilerinizi alın!"
+    },
+     "noNotif":{
+        "noAct":"Henüz Bir Hareket Yok",
+        "willNotif":"Bütün etkileşimlerinizi buradan takip edebilirsiniz."
+    },
+    "userFrg":{
+        "feed":"DUVAR",
+        "myPlans":"PLANLARIM",
+        "ntf":"HAREKETLER"
+    },
+    "publicity":{
+        "justMe":"Sadece Ben",
+        "everyoneCan":"Herkes Katılabilir",
+        "willChoose":"Katılımcıları Ben Seçeceğim",
+        "alone":"Yalnız",
+        "everyone":"Herkesle",
+        "elected":"Seçilenlerle"
+    },
+    "yellForm":{
+        "date":"Tarih",
+        "time":"Zaman",
+        "newPlan":"Yeni Plan",
+        "getSugg":"Oluştur!",
+        "mapPlaceHolder":"Haritada görüneceğiniz adresi yazın.",
+        "chooseOrWrite":"Bir öge seçin ya da kendiniz yazın",
+        "writeSomething":"Planınız için açıklama yazın" 
+    },
+    "YellCard":{
+        "deletePlan":"Bir plan sildiniz",
+        "approved":"Onaylandı",
+        "waitApprove":"Onay bekleniyor",
+        "requestJoin":"Katıl",
+        "approveAll":"Hepsini Onayla",
+        "close":"Kapat",
+        "share":"Paylaş",
+        "delete":"Sil",
+        "suggestions":"ÖNERİLER",
+        "participation":"KATILIM",
+        "suggestionsByYellfi":"Yellfi önerileri",
+        "noYellOnCard":"Amanınn...",
+        "bannedDeleted":"Herhangi bir plan bulunamadı.Ya silindi, ya hiç olmadı."
+    },
+    "RightColumn":{
+         "noPermission":"Bu planı görmeye izniniz yok"
+     },
+     "NoSugg":{
+        "NoSuggestions":"Ihh, Biz bişey bulamadık.", 
+        "pubPlanOnMap":"Bütün halka açık planları haritada bulabilirsiniz !",
+        "lookOthers":"Diğer kullanıcıların önerilerine bakın."
+     },
+     "comments":{
+        "like":"Beğen",
+        "unlike":"Soğu",
+        "delete":"Sil",
+        "block":"Engelle",
+        "noComment":"Henüz bir öneri yok",
+        "makeFirstComm":"İlk öneriyi siz yapın!",
+        "more":"Daha",
+        "suggested":"önerdi",
+        "searchThis":"şunlarla ara",
+        "deleteComment":"Bir öneri sildiniz.",
+        "undo":"geri",
+        "sorryBlockedUser":"Özür.., Fakat",
+        "blockedUser":"Sanırız bloklandınız. Olsun, size plan mı yok!"
+     },
+     "joining":{
+        "approveDesired":"İstediğiniz kişileri onaylayın",
+        "peopleWantJoin":"Size katılmak isteyenler",
+        "noJoining":"Henüz bir katılım yok",
+        "shareIt":"Bu planı sosyal medyada paylaşın ya da arkadaşlarınıza link atın",
+        "joinFirst":"İlk katılımcı olun!"
+     }
+
 }
+
+
+
+

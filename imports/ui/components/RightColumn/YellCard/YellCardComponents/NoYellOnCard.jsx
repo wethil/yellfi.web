@@ -1,15 +1,10 @@
- import React  from 'react';
+import React  from 'react';
 import FontIcon from 'material-ui/FontIcon';
 import Paper from 'material-ui/Paper';
 import Divider from 'material-ui/Divider';
 
- const NoSuggestion = (props) => {
+ const NoYellOnCard = (props) => {
 
-if (props.plan =="7") {
-	content = i18n.__('common.NoSugg.pubPlanOnMap')
-} else {
-	content = i18n.__('common.NoSugg.lookOthers')
-}
 
  return	(
  <Paper style={{boxShadow:'none'}} zDepth={1} >
@@ -17,12 +12,12 @@ if (props.plan =="7") {
 	<div 
 		className="ui  center aligned basic segment " 
 		style={{marginRight:0,backgroundColor:'#ffffff'}}> 
-		<div style={{marginTop:'-7%'}}>
+		<div style={{marginTop:'7%'}}>
 			<h2 className="ui center aligned icon header">
-			<FontIcon  style={styles.icon} className="material-icons">face</FontIcon> <br />
-			<span style={styles.subhead}>  {i18n.__('common.NoSugg.NoSuggestions')}</span>
+			<FontIcon  style={styles.icon} className="material-icons">pets</FontIcon> <br />
+			<span style={styles.subhead}>  {i18n.__('common.YellCard.noYellOnCard')}</span>
 			</h2>
-		<div style={styles.content}>{content} </div>
+		<div style={styles.content}> {i18n.__('common.YellCard.bannedDeleted')} </div>
 		</div>
 	</div>
 </Paper>
@@ -30,7 +25,7 @@ if (props.plan =="7") {
 						 	 );
  }
 
- export default NoSuggestion
+ export default NoYellOnCard
 
 
  const styles = {

@@ -18,7 +18,7 @@ import TimePicker from 'material-ui/TimePicker';
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash'
 import { browserHistory } from 'react-router'
-
+ const T = i18n.createComponent();
 
 export default class YellForm extends Component {
 	constructor(props) {
@@ -87,11 +87,11 @@ handleTouchMenu(event,menuItem){
 
 	autocompleteUpdate(searchText) {
 		//console.log('update')
-		//console.log(searchText)
+		console.log(searchText)
 	}
 
 	autocompleteRequest(chosenRequest,index){
-
+		this.setState({keyword:chosenRequest.value})
 		this.setState({chosenKeyword:chosenRequest,chosenIndex:index})
 
 	}
@@ -128,40 +128,42 @@ handleTouchMenu(event,menuItem){
 
 	render() {
 		
-
+		
 	const {ipLoc,activePlan,publicity} = this.state
 	formAppBarIcon = <IconButton onMouseDown={this.closeFormDrawer.bind(this)}> <NavigationArrowBack style={{color:'white'}} /></IconButton>
 	customPlan = (activePlan == 10 )? <TextField id="customPlan"   maxLength="41" hintText="Enter a plan."/> : null
-	hintForKeywords = (_.includes([0,1,5,6],activePlan) )? "Choose or write something for your plan." : "Write something for your plan. (optional)" 
+	hintForKeywords = (_.includes([0,1,5,6],activePlan) )? i18n.__('common.yellForm.chooseOrWrite'): i18n.__('common.yellForm.writeSomething')
 	privacySection = (activePlan == 7) ? true : false
 
   switch(activePlan) {
     case 0:
         dataSource = musicGenres;
+        dataSourceConfig = {text :'title', value : 'id'}
         break;
     case 1:
         dataSource = filmGenres;
+        dataSourceConfig = {text :'title', value : 'id'}
         break;
      case 3:
         dataSource = eatDrink;
+        dataSourceConfig = { text: 'value', value: 'title'}
         break;    
     case 4:
         dataSource = foods;
+        dataSourceConfig = {text :'title', value : 'id'}
         break;
     case 5:
         dataSource = places;
+        dataSourceConfig = { text: 'value', value: 'title'}
         break; 
      case 6:
         dataSource = shopping;
+        dataSourceConfig = { text: 'value', value: 'title'}
         break;   
     default:
         dataSource = [];
+        dataSourceConfig = { text: 'value', value: 'title'}
 }
-   dataSourceConfig = {
-       	text :'title', 
-       	value : 'id'
-       } 
-
 
 		return (
 
@@ -175,14 +177,14 @@ handleTouchMenu(event,menuItem){
 									innerDivStyle={{ width: 280 }}
 									leftIcon={<FontIcon className="material-icons">{plan.icon}</FontIcon>}
 									value={plan.id}
-									primaryText={plan.content} />;
+									primaryText={i18n.__(plan.content)} />;
 					}) }
 				</Menu>
 				<Drawer width={280} openSecondary={true} open={this.state.forms} >
 					<AppBar
 						titleStyle={styles.formTitle}
 						iconElementLeft={formAppBarIcon} // form drawer title icon
-						title={plans[activePlan].content}  
+						title={i18n.__(plans[activePlan].content)}  
 						/>
 
 					<div style={styles.drwPadd} >
@@ -195,9 +197,9 @@ handleTouchMenu(event,menuItem){
 								 	defaultSelected={0}
 								 	valueSelected={publicity}>
 								 {/*disabled if user choose hangout with someone*/}
-							<RadioButton value={0} label="Just me" disabled={privacySection} style={styles.radioButton}/>
-							<RadioButton value={1} label="Everyone Can Join" style={styles.radioButton} />
-							<RadioButton value={2} label="I'll choose participants" style={styles.radioButton}/>
+							<RadioButton value={0} label={i18n.__('common.publicity.justMe')} disabled={privacySection} style={styles.radioButton}/>
+							<RadioButton value={1} label={i18n.__('common.publicity.everyoneCan')}  style={styles.radioButton} />
+							<RadioButton value={2} label={i18n.__('common.publicity.willChoose')}style={styles.radioButton}/>
 						</RadioButtonGroup>
 						<AutoComplete
 							onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
@@ -209,7 +211,7 @@ handleTouchMenu(event,menuItem){
 							dataSource={dataSource}
       						dataSourceConfig={dataSourceConfig}
       						 maxSearchResults={5}
-      						//searchText = {this.state.keyword}
+      						searchText = {this.state.keyword}
       						id="keywordInput"
 							/><br />
 
@@ -219,7 +221,7 @@ handleTouchMenu(event,menuItem){
 						<RaisedButton
 							onClick={this.handleSubmit.bind(this)}
 							style={{ width: 256 }}
-							label="Get Suggestions!"
+							label={i18n.__('common.yellForm.getSugg')}
 							primary={true} />
 					</div>
 				</Drawer>

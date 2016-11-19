@@ -56,17 +56,17 @@ toogleYellCard(yellId,about) {
         if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
           plan = ntFPlan
         } else {
-          plan = plans[prePlan].content  
+          plan = i18n.__(plans[prePlan].content) 
         }
 
 
 		 ReactMaterialUiNotifications.showNotification({
 	      title: ntf.sender.username,
-	      additionalText: ntfTitles[ntf.content].content,
+	      additionalText: i18n.__(ntfTitles[ntf.content].content),
 	      autoHide:2600,
 	      icon:<FontIcon   className="material-icons ntf">{plans[ntf.yell.plan].icon}</FontIcon> ,
 	      iconBadgeColor: deepOrange500,
-	      overflowText: plans[ntf.yell.plan].content,
+	      overflowText: plan,
 	      timestamp: moment().format('h:mm A'),
 	      personalised: true,
 	      avatar: ntf.sender.profile.avatar

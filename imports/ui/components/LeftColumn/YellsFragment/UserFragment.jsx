@@ -11,7 +11,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 import NtfLabel from '../YellTabs/NtfLabel.jsx'
 import { browserHistory } from 'react-router'
-
+import i18n from 'meteor/universe:i18n';
 
  class UserFragment extends Component {
  	constructor(props) {
@@ -88,8 +88,8 @@ import { browserHistory } from 'react-router'
 			
 	<div className="className">
 		<Tabs value={this.state.activeTab} onChange={this.changeTab.bind(this)}>
-			<Tab style={styles.tab_style} value={0}  label="FEED" />
-			<Tab style={styles.tab_style} value={1} label="MY PLANS" /> 
+			<Tab style={styles.tab_style} value={0}  label={i18n.__('common.userFrg.feed')} />
+			<Tab style={styles.tab_style} value={1} label={i18n.__('common.userFrg.myPlans')} /> 
 			<Tab style={styles.tab_style} value={2}	 label={<NtfLabel notificationsReceived={this.state.ntfsReceived} />} />      	 
 		</Tabs>
 

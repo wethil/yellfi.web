@@ -60,10 +60,10 @@ export default class RightColumn extends Component {
 toogleDrawer(yellId,dialog,lng,lat) {
 switch(yellId) {
     case 'new':
-	    this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:"New Plan",open:true })
+	    this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:i18n.__('common.yellForm.newPlan'),open:true })
         break;
     case 'main':
-        this.setState({open:false})
+        this.setState({open:false}) 
         break;
     default:
         this.setState({drwContent:1, drawerTitle:"Plan",yellId:yellId,open:true})//make drawer content card. yellId came from RawYellList.js
@@ -90,7 +90,7 @@ this.toogleDrawer(yellId,dialog,lng,lat)
 		 this.setState({open:false})
 		 this.setState({
 		 	sBar:true,
-		 	sBarMessage:"You do not have permission to see this plan anymore"
+		 	sBarMessage:i18n.__('common.RightColumn.noPermission')
 		 })
 	}
 

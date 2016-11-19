@@ -9,12 +9,12 @@ import FontIcon from 'material-ui/FontIcon';
  <div>
 			<h2 className="ui center aligned icon header">
 			  <FontIcon  style={styles.icon} className="material-icons">group_add</FontIcon> <br />
-			  <span style={styles.subhead}> No Joining Yet </span>
+			  <span style={styles.subhead}>{i18n.__('common.joining.noJoining')} </span>
 			</h2>
 			{props.ownership ? 
-				<div style={styles.content}> Share this plan with your friends on social media or send them link! </div>
+				<div style={styles.content}>{i18n.__('common.joining.shareIt')}</div>
 				:
-				<div style={styles.content}> You join first! </div>}
+				<div style={styles.content}>{i18n.__('common.joining.joinFirst')}</div>}
 			
 		</div>
 	</div>

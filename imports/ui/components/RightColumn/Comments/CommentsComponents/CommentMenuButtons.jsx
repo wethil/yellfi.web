@@ -7,7 +7,7 @@ import MenuItem from 'material-ui/MenuItem';
 
 
  
-   return (<MenuItem>Like</MenuItem> );
+   return (<MenuItem>{i18n.__('common.comments.like')}</MenuItem> );
 
 }
 

@@ -9,9 +9,9 @@ import FontIcon from 'material-ui/FontIcon';
  <div style={{marginTop:'12%'}}>
 			<h2 className="ui center aligned icon header">
 			  <FontIcon  style={styles.icon} className="material-icons">insert_comment</FontIcon> <br />
-			  <span style={styles.subhead}> No Suggestion Yet </span>
+			  <span style={styles.subhead}> {i18n.__('common.comments.noComment')}</span>
 			</h2>
-			<div style={styles.content}> Make first suggestion for this plan!  </div>
+			<div style={styles.content}>{i18n.__('common.comments.makeFirstComm')}</div>
 		</div>
 	</div>
 

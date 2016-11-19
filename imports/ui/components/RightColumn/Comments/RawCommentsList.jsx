@@ -107,7 +107,7 @@ import Snackbar from 'material-ui/Snackbar';
 const iconButtonElement = (
   <IconButton
     touch={true}
-    tooltip="more"
+    tooltip={i18n.__('common.comments.more')}
     tooltipPosition="bottom-left"
   >
     <MoreVertIcon color={grey400} />
@@ -124,9 +124,9 @@ const iconButtonElement = (
  this.state.comments.forEach((comment) => {
  let likeButton= _.includes(comment.likes, Meteor.userId()) 
                 ? //like button. look state and change
-                <MenuItem onTouchTap={ ()=> this.unlike(comment._id)} >Unlike</MenuItem>
+                <MenuItem onTouchTap={ ()=> this.unlike(comment._id)}> {i18n.__('common.comments.like')} </MenuItem>
                 :
-                <MenuItem onTouchTap={()=> this.like(comment._id)} >Like</MenuItem>
+                <MenuItem onTouchTap={()=> this.like(comment._id)}> {i18n.__('common.comments.unlike')} </MenuItem>
 
 
             let STL = comment.content.length >113 ? 2 : 1
@@ -142,7 +142,7 @@ const iconButtonElement = (
                rightIconMenu = (
           <IconMenu iconButtonElement={iconButtonElement}>
            {likeButton}
-             <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>Delete</MenuItem>
+             <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>{i18n.__('common.comments.delete')}</MenuItem>
           </IconMenu>
         );
             break;
@@ -150,8 +150,8 @@ const iconButtonElement = (
                rightIconMenu = (
                 <IconMenu iconButtonElement={iconButtonElement}>
                  {likeButton}
-                  <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>Delete</MenuItem>
-                 <MenuItem onTouchTap={()=> this.blockUserFromComment(comment._id,comment.ownerId,comment.yellId)} >Block</MenuItem>
+                  <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>{i18n.__('common.comments.delete')}</MenuItem>
+                 <MenuItem onTouchTap={()=> this.blockUserFromComment(comment._id,comment.ownerId,comment.yellId)} >{i18n.__('common.comments.block')}</MenuItem>
                 </IconMenu>
            );
 
@@ -182,8 +182,8 @@ const iconButtonElement = (
                       leftAvatar={<Avatar src={comment.owner.profile.avatar} />}
                       primaryText={
                        <div style={styles.username}>{comment.owner.username}
-                           <span style={styles.subhead} className="hiddenOnMobile" > suggested </span> 
-                           <span style={styles.searchRow}>  <span className="hiddenOnMobile" style={styles.subhead}>  search this with</span>  {searchOnGoogle} | {searchOnYoutube} </span>
+                           <span style={styles.subhead} className="hiddenOnMobile" > {i18n.__('common.comments.suggested')} </span> 
+                           <span style={styles.searchRow}>  <span className="hiddenOnMobile" style={styles.subhead}>{i18n.__('common.comments.searchThis')}</span>  {searchOnGoogle} | {searchOnYoutube} </span>
                            </div>
                          }
                       secondaryText={
@@ -225,9 +225,9 @@ comments = <NoYellComment />
 {/* if add drawer here, it will rendered on left column itself */}
       <Snackbar
           open={this.state.snackbarState}
-          message="You deleted a comment"
+          message={i18n.__('common.comments.deleteComment')}
           autoHideDuration={4000}
-          action="undo"
+          action={i18n.__('common.comments.undo')}
           onActionTouchTap={ ()=>
             this.undoAction(this.state.snackbarData)
           }

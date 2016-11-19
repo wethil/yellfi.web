@@ -26,7 +26,8 @@ export default class ExtraFormElements extends Component {
 			
 
 			});
-	$("#places").attr("placeholder", "Write a Place to occur on map").val("").focus().blur();
+	placeholderMap=i18n.__('common.yellForm.mapPlaceHolder')
+	$("#places").attr("placeholder", placeholderMap).val("").focus().blur();
 
 }
 	render() {
@@ -44,14 +45,14 @@ export default class ExtraFormElements extends Component {
 							onChange={ (e, date) => emitter.emit('changeDate', date) } // to YellForm.jsx
 							textFieldStyle={styles.dateTimeForm}
 							minDate = { new Date() }
-							hintText="Date" />
+							hintText={i18n.__('common.yellForm.date')} />
 					</div>
 					<div className="column">
 						<TimePicker
 							onChange={ (e, time) => emitter.emit('changeTime', time) } // to YellForm.jsx
 							textFieldStyle={styles.dateTimeForm}
 							format="24hr"
-							hintText="Time"
+							hintText={i18n.__('common.yellForm.time')}
 							/>
 					</div>
 				</div>

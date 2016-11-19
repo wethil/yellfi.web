@@ -9,16 +9,17 @@ import CustomScroll from 'react-custom-scroll';
 import NoUserYell from './YellsComponents/NoUserYell.jsx'
 import NoYell from './YellsComponents/NoYell.jsx'
 import { browserHistory } from 'react-router'
-import  verge from 'verge';
+import  verge from 'verge'; 
 import _ from 'lodash';
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
 import {plans} from '../../constants.js';
 import i18n from 'meteor/universe:i18n';
+
 i18n.setOptions({
   hostUrl: 'http://'+window.location.hostname+':3000/'
 });
- const T = i18n.createComponent();
+
 
 
  class RawYellList extends Component {
@@ -183,13 +184,13 @@ if(this.state.yells && this.state.yells.length != 0) {
 
         switch(yell.publicity) {
         case 0 : 
-           publicity = "Alone"
+           publicity = i18n.__('common.publicity.alone')
            break;
 		    case 1:
-		        publicity = "With Everyone"
+		        publicity = i18n.__('common.publicity.everyone')
 		        break;
 		    case 2:
-		        publicity = "Elected ones"
+		        publicity = i18n.__('common.publicity.elected')
 		        break;		   
 		}
     
@@ -213,7 +214,7 @@ prePlan=Number(yell.plan)
 if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
   plan = yell.plan
 } else {
-  plan = <T>plans[prePlan].content</T> 
+  plan =i18n.__(plans[prePlan].content)
 }
 
 		 yells.push(
@@ -269,7 +270,7 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
       open={this.state.snackbarState}
       message={this.state.snackbarMessage}
       autoHideDuration={4000}
-      action="undo"
+      action={i18n.__('common.comments.undo')}
       onActionTouchTap={ ()=>
         this.undoAction(this.state.snackbarType,this.state.snackbarData)
       }
