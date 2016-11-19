@@ -3,7 +3,6 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import UserYells from '../Yells/UserYells.jsx'
 import UserNotificationComposer from '../Notifications/UserNotificationComposer.jsx'
 import OthersYells from '../Yells/OthersYells.jsx'
-import ApprovedYells from '../Yells/ApprovedYells.jsx'
 import SwipeableViews from 'react-swipeable-views';
 import emitter from '../../emitter.js'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
@@ -12,12 +11,16 @@ import NoUserYell from '../Yells/YellsComponents/NoUserYell.jsx'
 import NtfLabel from '../YellTabs/NtfLabel.jsx'
 import { browserHistory } from 'react-router'
 import i18n from 'meteor/universe:i18n';
-
+import Snackbar from 'material-ui/Snackbar';
  class UserFragment extends Component {
  	constructor(props) {
 	  super(props);
 	
 	  this.state = {
+	  	 snackbarState:false,
+        snackbarMessage:"",
+        snackbarType:"",
+        snackbarData:"",
 	  	activeTab:0,
 	  	user:0,
 	  	userHasYell:1,
@@ -28,7 +31,18 @@ import i18n from 'meteor/universe:i18n';
 	  };
 	}
 
+
+
+
 	componentDidMount() {
+		      emitter.addListener('triggerSb', (sbState,sbMessage,sbType,snData)=> { 
+      this.setState({
+        snackbarState:sbState,
+        snackbarMessage:sbMessage,
+        snackbarType:sbType,
+        snackbarData:snData
+      })
+    });
 	 emitter.addListener('ntfInfinite', ()=> { 
 	      this.setState({ntfLimit:this.state.ntfLimit+5})
     });
@@ -81,13 +95,29 @@ import i18n from 'meteor/universe:i18n';
 			$('.fab').addClass('animated infinite tada')
 	}
 
+	closeSb(){
+   this.setState({
+        snackbarState:false,
+        snackbarMessage:"",
+        snackbarType:"",
+        snackbarData:""
+        })
+}
+
 	render() {
 		ipLoc=this.props.ipLoc
 		
 		return (
 			
-	<div className="className">
-		<Tabs value={this.state.activeTab} onChange={this.changeTab.bind(this)}>
+	<div>
+		<Tabs  
+		tabTemplateStyle={{zIndex:333}} 
+		tabItemContainerStyle={styles.tabs}
+		contentContainerStyle={{zIndex:444}} 
+		inkBarStyle={{zIndex:222}}
+		style={styles.tabs} 
+		value={this.state.activeTab} 
+		onChange={this.changeTab.bind(this)}>
 			<Tab style={styles.tab_style} value={0}  label={i18n.__('common.userFrg.feed')} />
 			<Tab style={styles.tab_style} value={1} label={i18n.__('common.userFrg.myPlans')} /> 
 			<Tab style={styles.tab_style} value={2}	 label={<NtfLabel notificationsReceived={this.state.ntfsReceived} />} />      	 
@@ -102,6 +132,19 @@ import i18n from 'meteor/universe:i18n';
 		<FloatingActionButton onClick={this.toogleDrawer.bind(this)} className="fab" style={styles.fab} >
 			<ContentAdd />
 		</FloatingActionButton>
+		  <Snackbar
+		    bodyStyle={{zIndex:9999}}
+		    contentStyle={{zIndex:9999}}
+		    style={{zIndex:9999}}
+		      open={this.state.snackbarState}
+		      message={this.state.snackbarMessage}
+		      autoHideDuration={4000}
+		      action={i18n.__('common.comments.undo')}
+		      onActionTouchTap={ ()=>
+		        this.undoAction(this.state.snackbarType,this.state.snackbarData)
+		      }
+		      onRequestClose={this.closeSb.bind(this)}
+		    />
 
 	</div>
 		);
@@ -119,6 +162,9 @@ export default UserFragment;
         },
         tab_style:{
         	color:'white'
+        },
+        tabs:{
+        	backgroundColor:'rgb(63, 81, 181)'
         }
 
 

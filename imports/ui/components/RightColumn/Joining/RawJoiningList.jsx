@@ -65,7 +65,7 @@ if (ownership) {
                 rightIconButton={
                    <IconButton
                         iconClassName="material-icons"
-                        tooltip="Leave this plan"
+                        tooltip={i18n.__('common.joining.leave')}
                         onTouchTap ={()=>cancelJoin(requerer._id,yellId)}
                       >
                         close

@@ -4,6 +4,7 @@ import React, { Component } from 'react';
  import FontIcon from 'material-ui/FontIcon';
  import IconMenu from 'material-ui/IconMenu';
  import MenuItem from 'material-ui/MenuItem';
+import MediaQuery from 'react-responsive'
 import emitter from '../../emitter.js'
 import _ from 'lodash'
 import {baseYouTubeUrl,
@@ -86,7 +87,7 @@ getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestio
 	        this.handleGet(yellId,plan,baseBookApiUrl,query)
 	        break;
 	    case 3://eating and dringing
-			placeType = data.title ? data.title : _sample(_.map(eatDrink,'title'))
+			placeType = data.title ? data.title : _.sample(_.map(eatDrink,'title'))
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
 			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break; 
@@ -96,12 +97,12 @@ getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestio
 	    	this.editSuggestion(yellId,plan,source)
 	        break; 
 	    case 5: //Going Outside
-			placeType = data.title ? data.title : _sample(_.map(places,'title'))
+			placeType = data.title ? data.title : _.sample(_.map(places,'title'))
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
 			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break;
 	    case 6: //Going to shopping
-			placeType = data.title ? data.title : _sample(_.map(shopping,'title'))
+			placeType = data.title ? data.title : _.sample(_.map(shopping,'title'))
 			 coord = new google.maps.LatLng(suggestionCoord[1],suggestionCoord[0]);
 			this.hangleGooglePlacesApi(yellId,plan,coord,placeType)
 	        break; 
@@ -253,10 +254,11 @@ addSuggestionToYell (yellId,suggestions) {
 				<ToolbarSeparator />
 
 				<IconMenu
-					iconButtonElement={
+					iconButtonElement={<MediaQuery query='(max-width: 767px)'>
 										<IconButton touch={true}>
 										<FontIcon className="material-icons">arrow_back</FontIcon>
 										</IconButton>
+									</MediaQuery>	
 										 }>
 					<MenuItem primaryText="Download" />
 					<MenuItem primaryText="More Info" />

@@ -62,7 +62,7 @@ const locationIcon = <FontIcon className="material-icons">location_on</FontIcon>
 		return (
 			 <div className="className">	
 			 {
-        this.props.othersActive?content:"notActive"
+        this.props.othersActive?content:""
        }	  
 			    
 			 </div>	

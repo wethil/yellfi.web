@@ -142,7 +142,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 			actBtnForPartic = <FlatButton label={i18n.__('common.YellCard.approveAll')} primary={true} onTouchTap={()=>this.approveAll(yell._id,yell.requests,yell.approved)} />
 	}
 
-	userAvatar = this.props.user.profile ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
+	userAvatar = (this.props.user && this.props.user.profile) ? <Avatar src={this.props.user.profile.avatar}/> : <Avatar>U</Avatar>  
 	if (!this.props.userBlocked) {
 		dialogTitleLabel =`${yell.owner.username} : ${i18n.__(plans[yell.plan].content)}` 
 		switch(this.state.dialogContent) {
@@ -233,7 +233,7 @@ content = <div>
 			        </CardText>
 			        <CardActions>
 			        {settingsBtn}
-			         <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  className="mini ui primary button">
+			         <button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=comment')}  className=" basic teal mini ui  button">
 							  {i18n.__('common.YellCard.suggestions')}
 							</button>
 			       <ParticipationsButton publicity={yell.publicity} /> 

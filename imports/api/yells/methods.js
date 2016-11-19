@@ -18,7 +18,7 @@ Meteor.methods({
             time:time,
             created_at : new Date(),
             publicity:publicity,
-            ownerId:ownerId
+            ownerId:this.userId
 
         })
 
@@ -32,7 +32,7 @@ Meteor.methods({
             time:time,
             created_at : new Date(),
             publicity:publicity,
-            ownerId:ownerId
+            ownerId:this.userId
 
         })
     }
@@ -50,10 +50,19 @@ Meteor.methods({
     },
     reqJoin:function(userId,yell,publicity,yellOwnerId) {
         if (publicity==1) {
-            Yells.update({_id:yell}, {$push : {requests : userId , approved:userId }})
+            Yells.update({_id:yell}, {$push : {requests : this.userId , approved:this.userId }})
+
+             Notifications.insert({
+                senderId:yellOwnerId,
+                receiverId:this.userId,
+                content:3,
+                created_at:Date(),
+                about:2,
+                yellId:yell
+             })
 
         } else {
-            Yells.update({_id:yell}, {$push : {requests : userId }})
+            Yells.update({_id:yell}, {$push : {requests : this.userId }})
              
              Notifications.insert({
                 senderId:userId,

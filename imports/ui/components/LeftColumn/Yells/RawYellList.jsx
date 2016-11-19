@@ -38,14 +38,7 @@ i18n.setOptions({
 
   componentDidMount() {
      
-      emitter.addListener('triggerSb', (sbState,sbMessage,sbType,snData)=> { 
-      this.setState({
-        snackbarState:sbState,
-        snackbarMessage:sbMessage,
-        snackbarType:sbType,
-        snackbarData:snData
-      })
-    });
+
   }
 
 componentWillMount(){
@@ -67,7 +60,7 @@ makePropState(data){
 
 checkProps(newP,limit){
   if(newP.length<limit) {
-        console.log('no new yell')
+  
          this.setState({propDuplicate:this.state.propDuplicate + 1})
       } else {
         this.setState({propDuplicate:0})
@@ -90,20 +83,11 @@ handleScroll(lastId){
 
 
 toogleYellCard(yellId) {
-   i18n.setLocale("tr-TR");
-   moment.locale('tr');
+
   browserHistory.push('/yell/'+yellId)
 // emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }
 
-closeSb(){
-   this.setState({
-        snackbarState:false,
-        snackbarMessage:"",
-        snackbarType:"",
-        snackbarData:""
-        })
-}
 
 undoAction(type,data) {
     switch(type) {
@@ -267,16 +251,7 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
       {yells}
       </List> 
     </CustomScroll>
-    <Snackbar
-      open={this.state.snackbarState}
-      message={this.state.snackbarMessage}
-      autoHideDuration={4000}
-      action={i18n.__('common.comments.undo')}
-      onActionTouchTap={ ()=>
-        this.undoAction(this.state.snackbarType,this.state.snackbarData)
-      }
-      onRequestClose={this.closeSb.bind(this)}
-    />
+  
 
 
     {/* if add drawer here, it will rendered on left column itself */}

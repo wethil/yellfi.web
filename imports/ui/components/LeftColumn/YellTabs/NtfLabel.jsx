@@ -51,9 +51,9 @@ receiveNotifications(tabState){
 
 	render() {
 		badgeContent = this.state.badgeContent
-		badgeStyle = badgeContent==0 ? {display:'none'} : {}
+		badgeStyle = badgeContent==0 ? {display:'none'} : {bottom:15,right:'-19px',top:'initial'}
 		return (
-			  <Badge badgeStyle={badgeStyle} badgeContent={badgeContent}  secondary={true}>
+			  <Badge style={{padding:0}} badgeStyle={badgeStyle} badgeContent={badgeContent}  secondary={true}>
 			     {i18n.__('common.userFrg.ntf')}
 			    </Badge>
 		);

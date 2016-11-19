@@ -3,69 +3,69 @@ import {Tabs, Tab} from 'material-ui/Tabs';
 import Login from '../Accounts/Login.jsx'
 import Register from '../Accounts/Register.jsx'
 import LatestYells from '../Yells/OthersYells/LatestYells.jsx'
-import NearestYells from '../Yells/OthersYells/NearestYells.jsx'
+import SwipeableViews from 'react-swipeable-views';
+import OthersYells from '../Yells/OthersYells.jsx'
+
+
 
  class AnonFragment extends Component {
  	constructor(props) {
  	  super(props);
  	
  	  this.state = {
- 	  	activeTab:0
+ 	  	activeTab:0,
+ 	  	othersActive:false
  	  };
  	}
 
  		changeTab(value){
-		this.setState({activeTab:e.target.value})
+	 switch(value) {
+	    case 0:
+	        this.setState({othersActive:false});     
+	        break;
+	    case 1:
+			this.setState({othersActive:true});
+	        break;
+		}
+		this.setState({activeTab:value})
 	}
 
 
 	render() {
 		console.log(this.state.activeTab)
-		if (this.props.ipLoc.coordinates){
-			nearest = <NearestYells
-		              	  	ipLoc={this.props.ipLoc} 
-		              	 //ipLoc from MainFragment
-		              	 />
-		} else {
-			nearest =" Please wait"
-		}
 		return (
-			 <div className="heads">
-		        
-		          <Tabs value={this.state.activeTab}
-		          		onChange={(e)=>this.changeTab.bind(this,e)}
-		          		>
-		            <Tab style={tab_style}
-		            	 value={0}		  
-		                 label="LOGIN">
-
-		                <Login /> 
-		                <Register />
-		            
-		            </Tab>
-
-		            <Tab style={tab_style}
-		            	 value={1}	
-		                  label="LATEST"> 
-
-		                 <LatestYells />
-		            </Tab>
-
-
-		            <Tab style={tab_style}
-		            	 value={2}	
-		                 label="NEAREST"> 
-
-		              	{nearest}
-		                 
-		            </Tab>
-		          </Tabs>
+			 <div>	
+			 	<Tabs  
+					tabTemplateStyle={{zIndex:333}} 
+					tabItemContainerStyle={styles.tabs}
+					contentContainerStyle={{zIndex:444}} 
+					inkBarStyle={{zIndex:222}}
+					style={styles.tabs} 
+					value={this.state.activeTab} 
+					onChange={this.changeTab.bind(this)}>
+			<Tab style={styles.tab_style} value={0} label={i18n.__('common.anonFrg.login')} /> 
+			<Tab style={styles.tab_style} value={1}  label={i18n.__('common.anonFrg.feed')} />
+		
+		</Tabs>
+		  <SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
+		  		<div>  <Login /> <Register />  </div>
+			<OthersYells othersActive={this.state.othersActive}  ipLoc={this.props.ipLoc} />
+		</SwipeableViews>
+		
 		      </div>
 		);
 	}
 }
 export default AnonFragment;
 
-const tab_style = {
-       //backgroundColor: '#3f51b5'
-      };
+
+     const styles = {
+        tab_style:{
+        	color:'white'
+        },
+        tabs:{
+        	backgroundColor:'rgb(63, 81, 181)'
+        }
+
+
+    }

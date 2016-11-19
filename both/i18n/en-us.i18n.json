@@ -28,6 +28,10 @@
         "noAct":"No Any Actions Yet",
         "willNotif":" You will be notified when a action has occured ,keep suggesting and joining!"
     },
+    "anonFrg":{
+        "feed":"Feed",
+        "login":"Login"
+    },
     "userFrg":{
         "feed":"FEED",
         "myPlans":"MY PLANS",
@@ -93,7 +97,8 @@
         "peopleWantJoin":"People who want to join",
         "noJoining":"No Joining Yet",
         "shareIt":"Share this plan with your friends on social media or send them link!",
-        "joinFirst":"You join first!"
+        "joinFirst":"You join first!",
+        "leave":"Leave this plan"
      }
 
 }

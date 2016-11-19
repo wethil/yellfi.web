@@ -12,12 +12,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 export const App = ({children}) => (
 <MuiThemeProvider muiTheme={getMuiTheme()}>
   <div>
-  <div className="ui grid" style={{height: '100vh'}} >
+  <div className="ui grid" style={{height: '100vh',overflowY:'hidden'}} >
     <div className="ui stackable two column grid main_content fixed ">
       <div className="five wide column ">
         <LeftColumn  />
       </div>
-     { /**<Middle />*/}
+    <Middle />
       <ObserveNotificationAlert />
       {children} {/*right column*/}
     </div>

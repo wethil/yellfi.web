@@ -27,6 +27,10 @@
      "noNotif":{
         "noAct":"Henüz Bir Hareket Yok",
         "willNotif":"Bütün etkileşimlerinizi buradan takip edebilirsiniz."
+    },   
+    "anonFrg":{
+        "feed":"Duvar",
+        "login":"Giriş"
     },
     "userFrg":{
         "feed":"DUVAR",
@@ -93,7 +97,8 @@
         "peopleWantJoin":"Katılmak İsteyenler",
         "noJoining":"Henüz bir katılım yok",
         "shareIt":"Bu planı sosyal medyada paylaşın ya da arkadaşlarınıza link atın",
-        "joinFirst":"İlk katılımcı olun!"
+        "joinFirst":"İlk katılımcı olun!",
+        "leave":"Bu plandan ayrılın"
      }
 
 }

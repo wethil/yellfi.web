@@ -28,17 +28,6 @@ import i18n from 'meteor/universe:i18n';
     };
   }
 
-  componentDidMount() {
-   
-      emitter.addListener('triggerSb', (sbState,sbMessage,sbType,snData)=> { 
-      this.setState({
-        snackbarState:sbState,
-        snackbarMessage:sbMessage,
-        snackbarType:sbType,
-        snackbarData:snData
-      })
-    });
-  }
 
   componentWillMount() {
      this.makePropState(this.props.notifications)
@@ -246,17 +235,6 @@ if(this.state.notifications && this.state.notifications.length != 0) {
         {notifications}
       </List> 
     </CustomScroll>
-    <Snackbar
-      open={this.state.snackbarState}
-      message={this.state.snackbarMessage}
-      autoHideDuration={4000}
-      action="undo"
-      onActionTouchTap={ ()=>
-        this.undoAction(this.state.snackbarType,this.state.snackbarData)
-      }
-      onRequestClose={this.closeSb.bind(this)}
-    />
-
 
     {/* if add drawer here, it will rendered on left column itself */}
   </div>  

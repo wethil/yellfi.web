@@ -11,7 +11,8 @@ import {geolocated} from 'react-geolocated';
  
  	  this.state = {
  	  	userId:Meteor.userId(),
-      ipLoc:{}
+      ipLoc:{},
+      lang:"en-US"
  	  }
 
  	}
@@ -24,7 +25,15 @@ import {geolocated} from 'react-geolocated';
  	}
 
   componentWillMount () {
- 
+ lang = navigator.language
+if (lang=='tr' || lang == 'tr-TR'){
+  i18n.setLocale('tr-TR');
+} else {
+ i18n.setLocale('en-US');
+} 
+
+
+  this.setState({lang:lang})
       $.getJSON('http://ipinfo.io', (data) =>{
               console.log(data)
               preLoc=data.loc.split(",")
@@ -55,10 +64,11 @@ import {geolocated} from 'react-geolocated';
           } else {
             var lat="no lat"
           }
+}
   
 }
 
-  }
+  
 
 	render() {
 
