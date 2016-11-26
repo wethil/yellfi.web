@@ -243,7 +243,7 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 
 
 		return (
-  <div className="className">
+  <div className="sixteen wide column">
     <CustomScroll
       onScroll={this.handleScroll.bind(this,lastId)}
     > 

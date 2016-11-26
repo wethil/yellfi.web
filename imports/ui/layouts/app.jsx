@@ -7,25 +7,29 @@ import RightColumn from '../components/RightColumn/RightColumn.jsx'
 import Middle from '../components/Middle/Middle.jsx'
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-
+import Index from '../components/mobile/Index.jsx'
 
 export const App = ({children}) => (
 <MuiThemeProvider muiTheme={getMuiTheme()}>
-  <div>
-  <div className="ui grid" style={{height: '100vh',overflowY:'hidden'}} >
-    <div className="ui stackable two column grid main_content fixed ">
-      <div className="five wide column ">
-        <LeftColumn  />
-      </div>
-    <Middle />
-      <ObserveNotificationAlert />
-      {children} {/*right column*/}
-    </div>
-  </div> 
-  </div>
+
+  <Index />
+
 </MuiThemeProvider> 
 )
 
+
+/*
+
+  <div className="ui stackable grid" style={{height: '100vh',overflowY:'hidden'}} >
+    
+      <div className="five wide column ">
+        <LeftColumn  />
+      </div>
+      {children} 
+    </div>
+
+
+*/
 
 
 

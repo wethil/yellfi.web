@@ -11,13 +11,21 @@ import emitter from '../../emitter.js'
  		username = document.getElementById('username').value
  		password = document.getElementById('password').value
 
-			Meteor.loginWithPassword(username, password, function(error){
+		/*	Meteor.loginWithPassword(username, password, function(error){
 				    if(error){
 				    	console.log(error)
 				    } else {
 				    	 emitter.emit('userLogin')
 				    }
-				}); 
+				}); */
+
+	Meteor.loginWithFacebook({}, function(err){
+		if (err) {
+			throw new Meteor.Error("Facebook login failed");
+		} else {
+			 emitter.emit('userLogin')
+		}
+	});
 		}
 	render() {
 

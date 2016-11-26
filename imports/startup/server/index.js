@@ -3,6 +3,7 @@ import  '../../api/yells/server/publications.js';
 import  '../../api/comments/server/publications.js';
 import  '../../api/notifications/server/publications.js';
 import  '../../api/publicYells/server/publications.js';
+import './social-config.js'
 
 
 
