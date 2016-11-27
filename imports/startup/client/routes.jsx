@@ -4,7 +4,7 @@ import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import { App } from '../../ui/layouts/app.jsx';
 import Index from '../../ui/components/index.jsx';
 import RightColumn from '../../ui/components/RightColumn/RightColumn.jsx';
-
+import SecondActivity from '../../ui/components/mobile/SecondActivity/SecondActivity.jsx'
 //import  {Admin}  from '../../ui/components/admin/Admin.jsx';
 //import { NotFound } from '../../ui/components/NotFound.jsx';
 
@@ -15,7 +15,7 @@ Meteor.startup(()=> {
             <Route path="/" component={App} >
               {/**    <IndexRoute component={ Index } /> **/}
 
-                <Route path="/yell/:id" component = {RightColumn} /> 
+                <Route path="/yell/:id" component = {SecondActivity} /> 
           
             </Route>
             {/**<Route path="*" component={NotFound} /> **/}

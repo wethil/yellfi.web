@@ -10,16 +10,17 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Index from '../components/mobile/Index.jsx'
 
 export const App = ({children}) => (
-<MuiThemeProvider muiTheme={getMuiTheme()}>
 
-  <Index />
 
-</MuiThemeProvider> 
+  <div >
+  	<Index />
+    {children} 
+  </div>
 )
 
 
 /*
-
+<MuiThemeProvider muiTheme={getMuiTheme()}>
   <div className="ui stackable grid" style={{height: '100vh',overflowY:'hidden'}} >
     
       <div className="five wide column ">
@@ -28,7 +29,7 @@ export const App = ({children}) => (
       {children} 
     </div>
 
-
+</MuiThemeProvider> 
 */
 
 

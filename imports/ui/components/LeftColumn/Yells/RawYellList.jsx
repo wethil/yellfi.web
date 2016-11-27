@@ -167,7 +167,7 @@ if(this.state.yells && this.state.yells.length != 0) {
 
 
 
-        switch(yell.publicity) {
+    switch(yell.publicity) {
         case 0 : 
            publicity = i18n.__('common.publicity.alone')
            break;
@@ -185,11 +185,10 @@ if (yell.publicity == 0) {
 } else {
   publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>  </span>  
   timeLabel = <span style={styles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
-                         
-   
-                          
-                         
+                                                  
 }
+
+
 if (yell.keyword) {
   keyword = <span> -- <span style={styles.keywords}>  {yell.keyword} </span> </span>
 } else {
