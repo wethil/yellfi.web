@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import NoComment from './components/NoComment.jsx'
 import { Dropdown } from 'semantic-ui-react';
 import _ from 'lodash'
+import { Notification } from 'react-notification';
 
  class RawCommentListM extends Component {
  	constructor(props) {
  	  super(props);
  	
- 	  this.state = { comments:[] };
+ 	  this.state = { comments:[],snackbarState:false,deletedComment:"" };
  	}
 
   componentWillMount(){
@@ -54,6 +55,39 @@ import _ from 'lodash'
       
    }
 
+   deleteComment(comment) {
+  	this.setState({deletedComment:comment})
+      Meteor.call('deleteComment', comment,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+          this.setState({snackbarState:true})
+        }
+      });
+   }
+
+
+    undoAction (comment){
+	       Meteor.call('undoDeleteComment',  comment,  (error) => {
+	        if (error) {
+	          console.log(error)
+	        }else {
+	          this.setState({snackbarState:false})
+	        }
+	      })
+      } 
+
+      blockUserFromComment(commentId,commentOwner,yellId){
+        Meteor.call('blockUserFromComment',commentId, commentOwner, yellId,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+         console.log(('blocked'))
+        }
+      });
+     
+   }
+
 	render() {
 		
 		 const {comments,yellId,yellOwnerId} = this.state
@@ -64,16 +98,19 @@ import _ from 'lodash'
 			 var User = Meteor.userId()
 			 comments.forEach((comment)=>{
 
-	 		yellOwnerSettings = (User && User == comment.yellOwnerId)?
-				<Dropdown  pointing='right'  className='ui right floated top '>
-					<Dropdown.Menu> 
-						{User  != comment.ownerId ? <Dropdown.Item icon="ban" text={i18n.__('common.comments.block')} /> :null } 
-						 <Dropdown.Item icon="trash" text={i18n.__('common.YellCard.delete')} onClick={()=> this.deleteYell(yell._id)} />
-					</Dropdown.Menu>
-				</Dropdown> : null;
+	 	yellOwnerSettings = (User && User == comment.yellOwnerId)?
+			<Dropdown  pointing='right'  className='ui right floated top '>
+				<Dropdown.Menu> 
+					{User  != comment.ownerId ? <Dropdown.Item 
+													icon="ban" 
+													onClick={()=> this.blockUserFromComment(comment._id,comment.ownerId,yellId)}
+													text={i18n.__('common.comments.block')} /> :null } 
+					 <Dropdown.Item icon="trash" text={i18n.__('common.comments.delete')} onClick={()=> this.deleteComment(comment._id)} />
+				</Dropdown.Menu>
+			</Dropdown> : null;
 
 			comentOwnerSettings = (User && User == comment.ownerId)?
-				<div className="ui tiny basic   icon button">
+				<div className="ui tiny basic  icon button" onClick={()=> this.deleteComment(comment._id)} >
 					<i className="trash icon"/> 
 				</div>:null;
 						 	 
@@ -127,6 +164,15 @@ import _ from 'lodash'
 		return (
 			<div className="ui container ">
  					{commentList}
+ 					<Notification
+					  isActive={this.state.snackbarState}
+					  dismissAfter={2000}
+					  message={i18n.__('common.comments.deleteComment')}
+					  action={i18n.__('common.comments.undo')}
+					  activeBarStyle={{zIndex:99,bottom:'1rem',left:'3rem'}}
+					  onClick={ ()=> this.undoAction(this.state.deletedComment)}
+					
+					/>
 			</div>
 		);
 	}
