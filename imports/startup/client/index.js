@@ -7,3 +7,4 @@ injectTapEventPlugin();
 Meteor.subscribe('yells')
 
   moment.locale(navigator.language);
+

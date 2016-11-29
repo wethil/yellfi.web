@@ -1,4 +1,4 @@
-const fields = {fields:{'username':1 ,'profile':1  }}
+const fields = {fields:{'firstName':1 ,'picture':1  }}
 import Yells from '../yells/yells.js'
 Notifications = new Mongo.Collection('notifications' ,{
                 transform : function(doc) {

@@ -28,12 +28,12 @@ import { browserHistory } from 'react-router'
  	}
 
 
- 	openComments(yellId){
- 			  browserHistory.push('/yell/'+yellId + '?dialog=comment')
+ 	openComments(yellId,ownerId){
+ 			  browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
  	}
 
- 	openJoinings(yellId){
- 			 browserHistory.push('/yell/'+yellId + '?dialog=joining')
+ 	openJoinings(yellId,ownerId){
+ 			 browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
  	}
 
 	render() {
@@ -77,9 +77,9 @@ if (yell.publicity == 0) {
 			planList.push(  
 				<div className=" ui centered fluid card" id={yell._id} key={yell._id}>
 				    <div className="content">
-				      <img className="right floated mini ui circular image" src={yell.owner.profile.avatar}/>
+				      <img className="right floated mini ui circular image" src="#"/>
 				      <div className="header">
-				        {yell.owner.username} 
+				      username
 				      </div>
 				      <div className="meta">
 				          {publicityLabel}  {timeLabel} 
@@ -93,8 +93,8 @@ if (yell.publicity == 0) {
 				    </div>
 				    <div className="extra content">
 				      <div className="ui two buttons">
-				        <div onClick={()=> this.openComments(yell._id)} className="ui basic green button">Suggestions</div>
-				        <div onClick={()=> this.openJoinings(yell._id)}	className="ui basic red button">Joinings</div>
+				        <div onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions</div>
+				        <div onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings</div>
 				      </div>
 				    </div>
 				  </div>)

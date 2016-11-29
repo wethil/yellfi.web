@@ -48,7 +48,7 @@ import Snackbar from 'material-ui/Snackbar';
    like(comment) {
     yellOwnerId = this.props.yellOwnerId
     yellId = this.props.yellId
-      Meteor.call('likeComment', Meteor.userId(), comment,yellOwnerId,yellId,  (error) => {
+      Meteor.call('likeComment', comment,yellOwnerId,yellId,  (error) => {
         if (error) {
           console.log(error)
         }else {
@@ -59,7 +59,7 @@ import Snackbar from 'material-ui/Snackbar';
 
 
    unlike(comment) {
-      Meteor.call('unlikeComment', Meteor.userId(), comment,  (error) => {
+      Meteor.call('unlikeComment', comment,  (error) => {
         if (error) {
           console.log(error)
         }else {
@@ -129,7 +129,7 @@ const iconButtonElement = (
                 <MenuItem onTouchTap={()=> this.like(comment._id)}> {i18n.__('common.comments.like')} </MenuItem>
 
 
-            let STL = comment.content.length >113 ? 2 : 1
+            let STL = comment.content.length >113 ? 2 : 1 //secondary text lines
             let content = comment.content.replace(/ /g, "+")
 
     let searchOnGoogle =  <SearchButton searchUrl="http://www.google.com/search?q=" searchContent={content} iconClass="google icon" />
@@ -217,7 +217,7 @@ comments = <NoYellComment />
 
 
 		return (
-  <div style={styles.listSegment} className="comments">
+  <div style={styles.listSegment} className="commentFragment">
       <List style={styles.list} > 
         {comments}
       </List>  

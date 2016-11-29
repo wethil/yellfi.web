@@ -66,7 +66,7 @@
     display:none !important
   }
 
-  .comments {
+  .commentFragment {
     height:84vh !important
   }
 
@@ -89,4 +89,32 @@
 .ui.stackable.grid > .row > .wide.column, .ui.stackable.grid > .wide.column, .ui.stackable.grid > .column.grid > .column, .ui.stackable.grid > .column.row > .column, .ui.stackable.grid > .row > .column, .ui.stackable.grid > .column:not(.row), .ui.grid > .stackable.stackable.row > .column{
    padding: 0rem 0rem !important
 }
+}
+
+
+.ui.modal > .content {
+  padding: 0.1rem !important;
+}
+
+.ui.modal .content > .description {
+  padding: 0 !important
+}
+
+.ui.labeled.icon.button{
+
+    padding-left: 3em !important;
+}
+
+.ui.modal > .actions {
+        padding: 1rem 1rem 1rem !important;
+}
+
+.comm {
+      width: auto !important;
+      margin-left: 0.1% !important;
+    margin-right: 0.1% !important;
+}
+
+.ui.modal .content > .image{
+ padding: 0rem 0rem 0.2rem !important;
 }

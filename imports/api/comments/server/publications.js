@@ -1,6 +1,6 @@
 import Comments from '../comments.js'
 import { Meteor } from 'meteor/meteor';
-fieldsOpt = {fields:{'username':1 ,'profile.avatar':1}}
+fieldsOpt = {fields:{'picture':1 ,'firstName':1 }}
 
 
 

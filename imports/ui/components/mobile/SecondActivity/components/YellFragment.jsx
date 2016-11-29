@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import CommentComposerM from './comments/CommentComposerM.jsx'
 
 const YellFragment = (props) => {
+	
 	switch (props.dialog){
 		case 'comment':
-			content ="comment" + props.yell._id
+			content = <CommentComposerM 
+							yellId={props.yell._id} 
+							yellOwnerId={props.yell.ownerId} />
 			break;
 		case 'joining':
 			content ="joining" + props.yell._id

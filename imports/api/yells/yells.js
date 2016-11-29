@@ -1,5 +1,5 @@
 import LocationSchema from '../Schemas/LocationSchema.js'
-const fields = {fields:{'services':0 ,'createdAt':0 ,'emails' :0 }}
+const fields = {fields:{'createdAt':0 ,'emails' :0 , 'profile':0, 'services.resume':0}}
 
 Yells = new Mongo.Collection('yells' ,{
                 transform : function(doc) {

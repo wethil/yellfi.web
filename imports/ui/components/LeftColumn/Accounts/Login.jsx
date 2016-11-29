@@ -7,19 +7,27 @@ import emitter from '../../emitter.js'
  
  class Login extends Component {
 
-		handleLogin(){
+ 	handleManualLogin(){
  		username = document.getElementById('username').value
  		password = document.getElementById('password').value
-
-		/*	Meteor.loginWithPassword(username, password, function(error){
+ 				Meteor.loginWithPassword(username, password, function(error){
 				    if(error){
 				    	console.log(error)
 				    } else {
 				    	 emitter.emit('userLogin')
 				    }
-				}); */
+				}); 
 
-	Meteor.loginWithFacebook({}, function(err){
+ 	}
+
+		handleLogin(){
+ 	
+
+	
+
+	Meteor.loginWithFacebook({
+		requestPermissions: ['public_profile', 'email']
+	}, function(err){
 		if (err) {
 			throw new Meteor.Error("Facebook login failed");
 		} else {
@@ -31,18 +39,13 @@ import emitter from '../../emitter.js'
 
 		return (
 			
-				<div className="className">
-						 <List>
-					 <Subheader>Login</Subheader>
-						<ListItem
-							disabled={true}
-							children ={<TextField id="username"  style={{height: 37}} hintText="Username"/>} />
-						<ListItem
-							disabled={true}
-							children ={<TextField  id="password" style={{height: 37}} hintText="Password"/>} />
+				<div >
+						 
+				<input type="text" id="username"  placeholder="username" />
+				<input type="text" id="password"  placeholder="password" />
+				<button onClick={this.handleManualLogin.bind(this)} className="ui button">Login</button>
 						
-					</List>
-					<button onClick={this.handleLogin.bind(this)} className="ui button">Login</button>
+					<button onClick={this.handleLogin.bind(this)} className="ui button"> Facebook Login</button>
 				</div>	
 			 
 		);

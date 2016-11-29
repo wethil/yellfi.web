@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar.jsx'
-import LatestPlans from './MainActivity/yells/LatestPlans.jsx'
+import MainActivity from './MainActivity/MainActivity.jsx'
 
  class Index extends Component {
 
@@ -10,7 +10,7 @@ import LatestPlans from './MainActivity/yells/LatestPlans.jsx'
 		return (
 				<div>
 						<Navbar />
-						<LatestPlans />
+						<MainActivity  />
 
 				</div>
 		);

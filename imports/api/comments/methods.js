@@ -3,35 +3,24 @@ import Comments from './comments.js'
 import Notifications from '../notifications/notifications.js'
 
 Meteor.methods({
-	addComment : function (comCont,yellId,yellOwnerId,ownerId) {
+	addComment : function (comCont,yellId,yellOwnerId) {
 		Comments.insert({
 			content: comCont,   
 			yellId: yellId,
 			yellOwnerId:yellOwnerId,
 			created_at : new Date(),
-			ownerId :ownerId
+			ownerId :this.userId
 		})
 	
-		 if(ownerId!=yellOwnerId) {
-      	  Notifications.upsert({
-			senderId:ownerId,
-			receiverId:yellOwnerId,
-			content:0,
-			about:1,
-			yellId:yellId
-		},
-		{
-			$set: {created_at:new Date(),received:false,alerted:false }
-		})
-      }
+		
 		
 	},
-	 likeComment:function(userId,commentId,yellOwnerId,yellId) {
-        Comments.update({_id:commentId}, {$push : {likes : userId }})
+	 likeComment:function(commentId,yellOwnerId,yellId) {
+        Comments.update({_id:commentId}, {$push : {likes : this.userId }})
       
-      if(userId!=yellOwnerId) {
+      if(this.userId!=yellOwnerId) {
       	  Notifications.insert({
-			senderId:userId,
+			senderId:this.userId,
 			receiverId:yellOwnerId,
 			content:1,
 			created_at:Date(),
@@ -40,8 +29,8 @@ Meteor.methods({
 		})
       }
     },
-    unlikeComment:function(userId,commentId) {
-        Comments.update({_id:commentId}, {$pull : {likes : userId }})
+    unlikeComment:function(commentId) {
+        Comments.update({_id:commentId}, {$pull : {likes : this.userId }})
     },
      deleteComment:function(commentId) {
         Comments.update({_id:commentId}, {$set : {visible : false }})

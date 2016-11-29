@@ -4,9 +4,8 @@ Comments = new Mongo.Collection('comments' ,{
                   doc.owner = Meteor.users.findOne({
                     _id:doc.ownerId
                   },{fields: {
-                              'services':0 ,
-                              'createdAt':0 ,
-                               'emails' :0
+                              'picture':1,
+                               'firstName' :1
                          }});
                   return doc
                 }
@@ -26,7 +25,7 @@ Comments.attachSchema(
     },
     likes:{
       type:[String],
-      optional:true
+      defaultValue:[]
     },
     created_at: {
       type: Date,

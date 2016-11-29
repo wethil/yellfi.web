@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import Yells from '../yells.js';
-fieldsOpt = {fields:{'username':1 ,'profile.avatar':1}}
+fieldsOpt = {fields:{'username':1 ,'services':0}}
 yellsFieldsOpt= {'plan':1,'loc':1,'time':1,'created_at':1,'publicity':1,'ownerId':1}
 
 
