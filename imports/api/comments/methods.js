@@ -12,7 +12,30 @@ Meteor.methods({
 			ownerId :this.userId
 		})
 	
-		
+
+	 if(this.userId!=yellOwnerId) {
+	 	console.log(this.userId)
+	 	console.log(yellOwnerId)
+	      	  Notifications.upsert({
+				senderId:this.userId,
+				receiverId:yellOwnerId,
+				content:0,
+				about:1,
+				yellId:yellId
+			},
+			{
+				$set: {
+					senderId:this.userId,
+					receiverId:yellOwnerId,
+					created_at:new Date(),
+					received:false,
+					alerted:false,
+					content:0,
+					about:1,
+					yellId:yellId
+				}
+			})
+      }
 		
 	},
 	 likeComment:function(commentId,yellOwnerId,yellId) {
@@ -40,3 +63,5 @@ Meteor.methods({
     },
 
 })
+
+

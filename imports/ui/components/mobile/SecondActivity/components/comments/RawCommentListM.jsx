@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import NoComment from './components/NoComment.jsx'
 import { Dropdown } from 'semantic-ui-react';
-import LikeButton from './components/LikeButton.jsx'
+import _ from 'lodash'
 
  class RawCommentListM extends Component {
  	constructor(props) {
@@ -30,6 +30,30 @@ import LikeButton from './components/LikeButton.jsx'
   })
 }
 
+
+ unlike  (comment) {
+      Meteor.call('unlikeComment', comment,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+          console.log('unliked')
+        }
+      });
+   }
+
+
+   like (comment,yellId,yellOwnerId){
+      
+        Meteor.call('likeComment', comment,yellOwnerId,yellId,  (error) => {
+        if (error) {
+          console.log(error)
+        }else {
+          console.log('liked')
+        }
+      });
+      
+   }
+
 	render() {
 		
 		 const {comments,yellId,yellOwnerId} = this.state
@@ -45,7 +69,13 @@ import LikeButton from './components/LikeButton.jsx'
 					      <Dropdown.Item icon="trash" text={i18n.__('common.YellCard.delete')} onClick={()=> this.deleteYell(yell._id)} />
 					    </Dropdown.Menu>
 					  </Dropdown> : null
-			 	
+		
+		 likeButtonDecide= _.includes(comment.likes, Meteor.userId()) 
+			                ? //like button. look state and change
+			                 <div  onClick={ ()=> this.unlike(comment._id)} className="ui tiny basic red  icon button"><i className="heart icon"/></div>
+			                :
+			               <div onClick={ ()=> this.like(comment._id,yellId,yellOwnerId)} className="ui tiny basic red  icon button"><i className="empty heart icon"/></div>	  
+						 	
 			 	commentList.push(
 						 <div className="ui centered fluid  card" key={comment._id}>
 						    <div className="content">
@@ -67,7 +97,7 @@ import LikeButton from './components/LikeButton.jsx'
   								 <a href={"https://www.youtube.com/results?search_query="+"asd"} target="_blank"> 
                      					 <div className="ui tiny basic red labeled  icon button"><i className="youtube icon"/> {i18n.__('common.comments.search')} </div>
   								 </a>
-						       <LikeButton yellId={yellId} yellOwner={yellOwnerId} commentId={comment._id} likes={comment.likes} />
+						      {likeButtonDecide}
 						        {settingsBtn}
 						    </div>
 						  </div>	 		
