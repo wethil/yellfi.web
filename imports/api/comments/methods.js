@@ -14,8 +14,6 @@ Meteor.methods({
 	
 
 	 if(this.userId!=yellOwnerId) {
-	 	console.log(this.userId)
-	 	console.log(yellOwnerId)
 	      	  Notifications.upsert({
 				senderId:this.userId,
 				receiverId:yellOwnerId,
