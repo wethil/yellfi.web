@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CommentComposerM from './comments/CommentComposerM.jsx'
+import JoiningComposerM from './joining/JoiningComposerM.jsx'
 
 const YellFragment = (props) => {
 	
@@ -10,7 +11,11 @@ const YellFragment = (props) => {
 							yellOwnerId={props.yell.ownerId} />
 			break;
 		case 'joining':
-			content ="joining" + props.yell._id
+			content = <JoiningComposerM yellId={props.yell._id}
+										ownerId={props.yell.ownerId} 
+										requests={props.yell.requests} 
+										approved ={props.yell.approved}
+										publicity={props.yell.publicity} />
 			break;	
 	}
 
@@ -18,3 +23,4 @@ const YellFragment = (props) => {
 }
 
 export default YellFragment;
+

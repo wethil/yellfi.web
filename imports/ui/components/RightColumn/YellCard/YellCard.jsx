@@ -163,7 +163,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 						   
 		        break;
 		    case 2:
-		  	dialogContent = <JoiningComposer yellId={yell._id} ownerId={yell.ownerId} requests={yell.requests} approved ={yell.approved} />
+		  	dialogContent = <JoiningComposer yellId={yell._id} ownerId={yell.ownerId} requests={yell.requests} approved ={yell.approved} publicity={yell.publicity} />
 		    dialogAction =  actBtnForPartic
 		        break;
 		    default:
