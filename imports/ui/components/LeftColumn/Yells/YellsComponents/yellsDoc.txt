@@ -1,4 +1,0 @@
-if nonpublic, username, plan, desc
-if public, username, plan, history 
-
-xYells.jsxs will be composers
