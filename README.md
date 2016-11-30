@@ -10,7 +10,7 @@ Location based suggestion platform. You will choose your plan and will get sugge
 Go [yellfi](http://www.yellfi.com/), create a user and try! (It will open slow, because it is free hosting)
 ## TO DO
 
-- [ ] Add social login
+- [x] Add social login
 - [x] Make map show public plans
 - [x] Add notification system
 - [x] Include youtube , google places, the movie data  data api for suggestions
