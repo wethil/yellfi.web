@@ -86,6 +86,27 @@ changeCommentInput(e){
 	render() {
 		$('.modal').modal({detachable: false});
 		const {dialog,yellId,modal} = this.state
+		switch (dialog) {
+			case 'comment':
+				modalAction =  <div className="ui fluid left icon input">
+									 <input type="text"
+							  		 id="commentInput"   
+							  		 onKeyUp={this.inputSubmit.bind(this)}
+							  		 placeholder="Write your suggestion." /> 
+							  		  <i className="user icon"></i>
+								</div> 
+				break;
+			case 'joining':
+				modalAction =<button className="fluid ui button">Join</button>
+				break;	
+			default:
+				modalAction =<span> default </span>
+				break;
+				
+		}
+
+
+
 		return (
 	      <Modal  size="fullscreen" dimmer={true} open={modal} onClose={this.closeModal.bind(this)} >
           <Modal.Header>{this.state.drawerTitle}</Modal.Header>
@@ -100,15 +121,9 @@ changeCommentInput(e){
           </Modal.Content>
           <Modal.Actions>
            
-           		<div className="ui fluid left icon input">
-				  <input type="text"
-				  		 id="commentInput"   
-				  		 onKeyUp={this.inputSubmit.bind(this)}
-				  		 placeholder="Write your suggestion." 
-				  		
-				  		 	/>
-				  <i className="user icon"></i>
-				</div>
+           		
+					{modalAction}
+				
           </Modal.Actions>
         </Modal> 
 		);
