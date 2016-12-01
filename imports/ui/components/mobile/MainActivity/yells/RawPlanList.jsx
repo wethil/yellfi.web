@@ -79,7 +79,7 @@ if (yell.publicity == 0) {
 				    <div className="content">
 				      <img className="right floated mini ui circular image" src="#"/>
 				      <div className="header">
-				      username
+				    {yell.owner.firstName}
 				      </div>
 				      <div className="meta">
 				          {publicityLabel}  {timeLabel} 

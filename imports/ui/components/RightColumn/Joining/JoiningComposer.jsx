@@ -1,6 +1,33 @@
 import { composeWithTracker } from 'react-komposer';
 import  RawJoiningList  from './RawJoiningList.jsx';
-import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
+//import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
+const JoiningSub = new SubsManager()
+
+const composer = ( props, onData ) => {
+yell = props.yell
+requests = props.yell.requests
+fields = {fields:{'firstName':1 ,'picture':1}}
+
+	console.log(requests)
+  const subscription = JoiningSub.subscribe( 'multipleUsers',requests );
+
+  if ( subscription.ready() ) {
+    const requerers = Meteor.users.find({_id: {$in:requests}},fields).fetch() 
+    onData( null, { requerers,yell } );
+  }
+};
+
+ const JoiningComposer = composeWithTracker( composer)( RawJoiningList ); 
+ export default JoiningComposer
+
+
+
+
+
+ /*
+import { composeWithTracker } from 'react-komposer';
+import  RawJoiningListM  from './RawJoiningListM.jsx';
+//import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
 const JoiningSub = new SubsManager()
 
 const composer = ( props, onData ) => {
@@ -21,5 +48,8 @@ ownership = Meteor.userId() && Meteor.userId() == ownerId ? true : false
   }
 };
 
- const JoiningComposer = composeWithTracker( composer,LoadingCircle )( RawJoiningList );
+ const JoiningComposer = composeWithTracker( composer )( RawJoiningListM );
  export default JoiningComposer
+
+
+ */

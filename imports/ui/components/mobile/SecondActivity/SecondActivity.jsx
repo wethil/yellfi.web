@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import YellComposer from './components/YellComposer.jsx'
 import { browserHistory } from 'react-router'
 import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
+import emitter from '../emitter.js'
 
  class SecondActivity extends Component {
  	constructor(props) {
@@ -9,14 +10,26 @@ import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
  	
  	  this.state = {
  	  	yellId:"",
- 	  	commentText:""};
+ 	  	commentText:"",
+ 	  	dialog:""
+ 	  };
+ 	}
+
+ 	componentDidMount(){
+ 		//YellFragment
+ 		emitter.addListener('changeDialogAction',(dialog) => {
+ 		 	this.setState({dialog:dialog  })
+
+ 		  });
+ 		//JoiningList
+ 		 emitter.addListener('changeYell',(yell,ownership) => { this.setState({yell:yell,ownership:ownership}) } );   
  	}
 
  	componentWillMount(){
+
 			let yellId = this.props.params.id
 			let dialog = this.props.location.query.dialog
 			let owner = this.props.location.query.owner
-			console.log(owner)
 			let lng = parseFloat(this.props.location.query.lng)
 			let lat = parseFloat(this.props.location.query.lat)
 			this.toogleModal(yellId,owner,dialog,lng,lat)
@@ -28,7 +41,6 @@ import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
 			let yellId = nextProps.params.id
 			let dialog = nextProps.location.query.dialog
 			let owner = nextProps.location.query.owner
-			console.log(owner)
 			let lng = parseFloat(nextProps.location.query.lng)
 			let lat = parseFloat(nextProps.location.query.lat)
 			this.toogleModal(yellId,owner,dialog,lng,lat)
@@ -45,7 +57,7 @@ import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
 	        break;
 	    default:
 	        this.setState({drwContent:1, owner:owner, drawerTitle:"Plan",yellId:yellId})//make drawer content card. yellId came from RawYellList.js
-			dialog ? this.setState({dialog:dialog}) : this.setState({dialog:'no'})
+			dialog ? this.setState({dialogFromLink:dialog}) : this.setState({dialogFromLink:'no'})
 			this.setState({modal:true})
 			
 		}
@@ -85,7 +97,8 @@ changeCommentInput(e){
 
 	render() {
 		$('.modal').modal({detachable: false});
-		const {dialog,yellId,modal} = this.state
+		const {dialogFromLink,yellId,modal,dialog,ownership} = this.state
+		console.log(dialog)
 		switch (dialog) {
 			case 'comment':
 				modalAction =  <div className="ui fluid left icon input">
@@ -96,11 +109,12 @@ changeCommentInput(e){
 							  		  <i className="user icon"></i>
 								</div> 
 				break;
-			case 'joining':
-				modalAction =<button className="fluid ui button">Join</button>
+			case 'joining': 
+				modalAction = <button className="fluid  disable ui toggle button" style={{visibility:'hidden'}} > charleston IL </button>
+								
 				break;	
 			default:
-				modalAction =<span> default </span>
+				modalAction = <span> wait please  </span>
 				break;
 				
 		}
@@ -114,7 +128,7 @@ changeCommentInput(e){
            
 			    <div style={{overflowY: 'scroll', height: '70vh', paddingTop:'3%'}}>
 
-			       <YellComposer yellId={yellId} dialog={dialog}  />
+			       <YellComposer yellId={yellId} dialog={dialogFromLink}  />
 
 			    </div>
 

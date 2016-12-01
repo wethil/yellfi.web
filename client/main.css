@@ -12,6 +12,14 @@
 }
 
 
+html {
+    overflow: hidden;
+}
+body {
+    overflow-y: scroll;
+    -webkit-overflow-scrolling:touch;
+}
+
 .eleven.wide.column.animated.fadeIn{
     position: absolute;
     padding: 0px;
@@ -117,4 +125,12 @@
 
 .ui.modal .content > .image{
  padding: 0rem 0rem 0.2rem !important;
+}
+
+.ui.modal .actions > .button {
+    margin-left: 0em;
+}
+
+.ui.dimmer{
+  height: 100vh !important
 }

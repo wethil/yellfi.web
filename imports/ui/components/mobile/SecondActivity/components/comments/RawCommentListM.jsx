@@ -3,6 +3,7 @@ import NoComment from './components/NoComment.jsx'
 import { Dropdown } from 'semantic-ui-react';
 import _ from 'lodash'
 import { Notification } from 'react-notification';
+import emitter from '../../../emitter.js'
 
  class RawCommentListM extends Component {
  	constructor(props) {
@@ -12,6 +13,7 @@ import { Notification } from 'react-notification';
  	}
 
   componentWillMount(){
+  	emitter.emit('changeDialogAction','comment') //second Activity
   	const {comments,yellId,yellOwnerId} = this.props
     this.makePropState(comments,yellId,yellOwnerId)
   }

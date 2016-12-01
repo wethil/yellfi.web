@@ -4,22 +4,18 @@ import  RawJoiningListM  from './RawJoiningListM.jsx';
 const JoiningSub = new SubsManager()
 
 const composer = ( props, onData ) => {
-yellId = props.yellId
-ownerId = props.ownerId
-requests = props.requests
-approved = props.approved
-publicity = props.publicity
-ownership = Meteor.userId() && Meteor.userId() == ownerId ? true : false 
- fields = {fields:{'username':1 ,'profile.avatar':1}}
-
+yell = props.yell
+requests = yell.requests
+fields = {fields:{'firstName':1 ,'picture':1}}
+console.log(requests)
 
   const subscription = JoiningSub.subscribe( 'multipleUsers',requests );
 
   if ( subscription.ready() ) {
     const requerers = Meteor.users.find({_id: {$in:requests}},fields).fetch() 
-    onData( null, { requerers,approved,ownership,yellId,publicity } );
+    onData( null, { requerers,yell, } );
   }
 };
 
- const JoiningComposer = composeWithTracker( composer )( RawJoiningListM );
- export default JoiningComposer
+ const JoiningComposerM = composeWithTracker( composer )( RawJoiningListM );
+ export default JoiningComposerM
