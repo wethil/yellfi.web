@@ -22,7 +22,7 @@ import emitter from '../emitter.js'
 
  		  });
  		//JoiningList
- 		 emitter.addListener('changeYell',(yell,ownership) => { this.setState({yell:yell,ownership:ownership}) } );   
+ 		 emitter.addListener('changeYell',(yell) => { this.setState({yell:yell}) } );   
  	}
 
  	componentWillMount(){
@@ -97,7 +97,7 @@ changeCommentInput(e){
 
 	render() {
 		$('.modal').modal({detachable: false});
-		const {dialogFromLink,yellId,modal,dialog,ownership} = this.state
+		const {dialogFromLink,yellId,modal,dialog} = this.state
 		console.log(dialog)
 		switch (dialog) {
 			case 'comment':
