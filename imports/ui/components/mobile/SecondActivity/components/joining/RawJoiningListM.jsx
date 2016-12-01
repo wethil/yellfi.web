@@ -14,8 +14,6 @@ import _ from 'lodash'
 
  	componentWillMount(){
  		const {yell,requerers}=this.props
-
- 		emitter.emit('changeYell',yell)//second Activity
  		emitter.emit('changeDialogAction','joining') //second Activity
  		this.setState({yell:yell, requerers:requerers })
  		

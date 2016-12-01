@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import CommentComposerM from './comments/CommentComposerM.jsx'
 import JoiningComposerM from './joining/JoiningComposerM.jsx'
+import BlockedUser from './others/BlockedUser.jsx'
 
 
 const YellFragment = (props) => {
@@ -21,7 +22,7 @@ const YellFragment = (props) => {
 				break;	
 		}
 	} else {
-		content ="you are blocked "
+		content =<BlockedUser />
 	}
 
 	return ( <span> {content} </span> )

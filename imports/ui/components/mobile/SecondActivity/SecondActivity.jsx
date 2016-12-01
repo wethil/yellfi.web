@@ -22,7 +22,7 @@ import emitter from '../emitter.js'
 
  		  });
  		//JoiningList
- 		 emitter.addListener('changeYell',(yell) => { this.setState({yell:yell}) } );   
+
  	}
 
  	componentWillMount(){
@@ -112,6 +112,9 @@ changeCommentInput(e){
 			case 'joining': 
 				modalAction = <button className="fluid  disable ui toggle button" style={{visibility:'hidden'}} > charleston IL </button>
 								
+				break;	
+			case 'blocked':
+				modalAction = "you are blocked"
 				break;	
 			default:
 				modalAction = <span> wait please  </span>
