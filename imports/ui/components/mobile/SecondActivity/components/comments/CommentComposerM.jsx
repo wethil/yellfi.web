@@ -1,7 +1,7 @@
 import { composeWithTracker } from 'react-komposer';
 import  Comments  from '../../../../../../api/comments/comments.js';
 import  RawCommentListM  from './RawCommentListM.jsx';
-//import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
+import Loading from '../others/Loading.jsx'
 
 const CommentSub = new SubsManager()
 const composer = ( props, onData ) => {
@@ -23,5 +23,5 @@ yellOwnerId = props.yellOwnerId
   }
 };
 
- const CommentComposerM = composeWithTracker( composer )( RawCommentListM );
+ const CommentComposerM = composeWithTracker( composer,Loading )( RawCommentListM );
  export default CommentComposerM

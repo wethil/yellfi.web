@@ -64,8 +64,8 @@
         "share":"Share",
         "approveUser":"Approve user",
         "delete":"Delete",
-        "suggestions":"SUGGESTIONS",
-        "participation":"PARTICIPATION",
+        "suggestions":"Suggestions",
+        "participation":"Participation",
         "suggestionsByYellfi":"Suggestions By Yellfi",
         "noYellOnCard":"Uppps..",
         "bannedDeleted":"No any plan found.It can be deleted or never existed"
@@ -90,6 +90,7 @@
         "searchThis":"search this with",
         "search":"Search",
         "deleteComment":"You deleted a comment",
+        "blockANuser":"You blocked a user",
         "undo":"undo",
         "sorryBlockedUser":" Sorry, but...",
         "blockedUser":"It seems yor suggestions are blocked for this plan. Time to try for others"

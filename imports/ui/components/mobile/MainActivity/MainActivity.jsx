@@ -19,9 +19,36 @@ import emitter from '../../emitter.js'
 		return (
 			<span >
 				{this.state.userId==null ? <div style={{marginTop:'50%'}} >  <Login /> </div> : <LatestPlans />} 
+				<div className="ui content">
+					  <div className="ui inverted bottom fixed two item menu">
+						  <a className="active violet item">Public Plans</a>
+						  <a className="active blue item">Create a Plan</a>
+					 </div>
+				</div>
 			</span>	
 			
 		);
 	}
 }
 export default MainActivity;
+
+
+  const styles = {
+        buttons:{
+          bottom: '0%',
+          position:'fixed'
+        }
+
+    }
+
+
+
+
+
+ /*
+ <div style={styles.buttons} className="ui two buttons">
+				        <div className="ui  violet button">Public Plans</div>
+				        <div className="ui  blue button">Create a Plan</div>
+				    </div>
+
+ */

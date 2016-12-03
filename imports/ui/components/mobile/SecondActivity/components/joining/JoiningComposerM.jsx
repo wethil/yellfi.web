@@ -1,6 +1,6 @@
 import { composeWithTracker } from 'react-komposer';
 import  RawJoiningListM  from './RawJoiningListM.jsx';
-//import LoadingCircle from '../CommonComponents/LoadingCircle.jsx'
+import Loading from '../others/Loading.jsx'
 const JoiningSub = new SubsManager()
 
 const composer = ( props, onData ) => {
@@ -17,5 +17,5 @@ console.log(requests)
   }
 };
 
- const JoiningComposerM = composeWithTracker( composer )( RawJoiningListM );
+ const JoiningComposerM = composeWithTracker( composer,Loading )( RawJoiningListM );
  export default JoiningComposerM

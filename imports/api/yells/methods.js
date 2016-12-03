@@ -45,8 +45,9 @@ Meteor.methods({
         Comments.update({_id:commentId}, {$set : {visible : false }})
 
     },
-    unblockUser:function(userId,yell) {
+    unblockUser:function(commentId,userId,yell) {
         Yells.update({_id:yell}, {$pull : {blocked_users : userId }})
+        Comments.update({_id:commentId}, {$set : {visible : true }})
     },
     reqJoin:function(userId,yell,publicity,yellOwnerId) {
         if (publicity==1) {

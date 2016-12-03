@@ -63,28 +63,60 @@ import emitter from '../../../emitter.js'
         if (error) {
           console.log(error)
         }else {
-          this.setState({snackbarState:true})
+        this.setState({sb:'delete'})
+          this.setState({
+          	snackbarState:true,
+          	snackbarText:i18n.__('common.comments.deleteComment')
+          })
         }
       });
    }
 
 
-    undoAction (comment){
-	       Meteor.call('undoDeleteComment',  comment,  (error) => {
+    undoAction (commentId,commentOwner,yellId){
+    	commentId = this.state.deletedComment
+    	if (this.state.sb=='delete') {
+
+	       Meteor.call('undoDeleteComment',  commentId,  (error) => {
 	        if (error) {
 	          console.log(error)
 	        }else {
 	          this.setState({snackbarState:false})
 	        }
 	      })
+			   } else {
+			   	const {commentId,commentOwner,yellId} = this.state
+			   	this.undoBlock(commentId,commentOwner,yellId)
+			   }
+     
+
       } 
 
+      undoBlock(commentId,commentOwner,yellId){
+      	 Meteor.call('unblockUser',  commentId,commentOwner,yellId,  (error) => {
+	        if (error) {
+	          console.log(error)
+	        }else {
+	          this.setState({snackbarState:false})
+	        }
+	      })
+      }
+
       blockUserFromComment(commentId,commentOwner,yellId){
+      	this.setState({
+      		commentId:commentId,
+      		commentOwner:commentOwner,
+      		yellId:yellId
+      	})
         Meteor.call('blockUserFromComment',commentId, commentOwner, yellId,  (error) => {
         if (error) {
           console.log(error)
         }else {
-         console.log(('blocked'))
+        this.setState({sb:'block'})
+          this.setState({
+          	snackbarState:true,
+          	snackbarText:i18n.__('common.comments.blockANuser')
+          })
         }
       });
      
@@ -169,10 +201,10 @@ import emitter from '../../../emitter.js'
  					<Notification
 					  isActive={this.state.snackbarState}
 					  dismissAfter={2000}
-					  message={i18n.__('common.comments.deleteComment')}
+					  message={this.state.snackbarText}
 					  action={i18n.__('common.comments.undo')}
 					  activeBarStyle={{zIndex:99,bottom:'1rem',left:'3rem'}}
-					  onClick={ ()=> this.undoAction(this.state.deletedComment)}
+					  onClick={ ()=> this.undoAction()}
 					
 					/>
 			</div>

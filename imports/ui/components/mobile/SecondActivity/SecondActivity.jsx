@@ -56,7 +56,7 @@ import emitter from '../emitter.js'
 	         this.setState({modal:false})
 	        break;
 	    default:
-	        this.setState({drwContent:1, owner:owner, drawerTitle:"Plan",yellId:yellId})//make drawer content card. yellId came from RawYellList.js
+	        this.setState({drwContent:1, owner:owner, drawerTitle:"plan",yellId:yellId})//make drawer content card. yellId came from RawYellList.js
 			dialog ? this.setState({dialogFromLink:dialog}) : this.setState({dialogFromLink:'no'})
 			this.setState({modal:true})
 			
@@ -96,45 +96,58 @@ changeCommentInput(e){
 
 
 	render() {
+	
+
 		$('.modal').modal({detachable: false});
-		const {dialogFromLink,yellId,modal,dialog} = this.state
+		const {drawerTitle,dialogFromLink,yellId,modal,dialog} = this.state
 		console.log(dialog)
-		switch (dialog) {
-			case 'comment':
-				modalAction =  <div className="ui fluid left icon input">
-									 <input type="text"
-							  		 id="commentInput"   
-							  		 onKeyUp={this.inputSubmit.bind(this)}
-							  		 placeholder="Write your suggestion." /> 
-							  		  <i className="user icon"></i>
-								</div> 
-				break;
-			case 'joining': 
-				modalAction = <button className="fluid  disable ui toggle button" style={{visibility:'hidden'}} > charleston IL </button>
-								
-				break;	
-			case 'blocked':
-				modalAction = "you are blocked"
-				break;	
-			default:
-				modalAction = <span> wait please  </span>
-				break;
-				
-		}
+		if(drawerTitle=='plan') {
+			switch (dialog) {
+				case 'comment':
+					modalAction =  <div className="ui fluid left icon input">
+										 <input type="text"
+								  		 id="commentInput"   
+								  		 onKeyUp={this.inputSubmit.bind(this)}
+								  		 placeholder="Write your suggestion." /> 
+								  		  <i className="user icon"></i>
+									</div> 
+					modalTitle = i18n.__('common.YellCard.suggestions')			
+					break;
+				case 'joining': 
+					modalAction = <button className="fluid  disable ui blue button" style={{visibility:'hidden'}} > charleston IL </button>
+					modalTitle = i18n.__('common.YellCard.participation')				
+					break;	
+				case 'blocked':
+					modalAction = <button className="fluid  ui basic red  button" onClick={this.closeModal.bind(this)} > {i18n.__('common.YellCard.close')}  </button>
+					modalTitle="yellfi"
+					break;	
+				default:
+					modalAction = null
+					modalTitle="yellfi"
+					break;
+					
+			}
+		}else {
+				modalTitle="yellfi"
+				modalAction="action"
+			}
 
 
 
 		return (
 	      <Modal  size="fullscreen" dimmer={true} open={modal} onClose={this.closeModal.bind(this)} >
-          <Modal.Header>{this.state.drawerTitle}</Modal.Header>
+          <Modal.Header>
+          	{modalTitle}
+		  	<span onClick={this.closeModal.bind(this)}  
+		  	   	  style={styles.iconContainer}
+		  		  className="right aligned">  
+		  		  	 <i  style={{cursor:'pointer'}} className="remove icon" /> 
+		  	</span> 
+          </Modal.Header>
           <Modal.Content >
-           
 			    <div style={{overflowY: 'scroll', height: '70vh', paddingTop:'3%'}}>
-
 			       <YellComposer yellId={yellId} dialog={dialogFromLink}  />
-
 			    </div>
-
           </Modal.Content>
           <Modal.Actions>
            
@@ -150,6 +163,13 @@ export default SecondActivity;
 
 
 
+
+ const styles = {
+        iconContainer:{
+            right: '1%',
+   			position: 'fixed'
+        }
+    }
 
 
   /*

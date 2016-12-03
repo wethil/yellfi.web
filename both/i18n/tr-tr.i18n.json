@@ -64,8 +64,8 @@
         "share":"Paylaş",
         "approveUser":"Katılımı Onayla",
         "delete":"Sil",
-        "suggestions":"ÖNERİLER",
-        "participation":"KATILIM",
+        "suggestions":"Öneriler",
+        "participation":"Katılım",
         "suggestionsByYellfi":"Yellfi önerileri",
         "noYellOnCard":"Amanınn...",
         "bannedDeleted":"Herhangi bir plan bulunamadı.Ya silindi, ya hiç olmadı."
@@ -90,6 +90,7 @@
         "search":"Ara",
         "searchThis":"şunlarla ara",
         "deleteComment":"Bir öneri sildiniz.",
+        "blockANuser":"Bir kullanıcıyı engellediniz",
         "undo":"geri",
         "sorryBlockedUser":"Özür.., Fakat",
         "blockedUser":"Sanırız bloklandınız. Olsun, size plan mı yok!"
