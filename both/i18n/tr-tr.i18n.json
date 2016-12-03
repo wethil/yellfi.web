@@ -35,7 +35,10 @@
     "userFrg":{
         "feed":"DUVAR",
         "myPlans":"PLANLARIM",
-        "ntf":"HAREKETLER"
+        "ntf":"HAREKETLER",
+        "pubPlans":"Herkese Açık Planlar",
+        "createPlan":"Plan Oluştur",
+        "goToPlan":"Plana git"
     },
     "publicity":{
         "justMe":"Sadece Ben",

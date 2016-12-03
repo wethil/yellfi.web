@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {plans,ntfTitles} from '../../../constants.js';
 import { browserHistory } from 'react-router'
 import emitter from '../../emitter.js'
+import NoNotification from './component/NoNotification.jsx'
 import _ from 'lodash'
 
  class RawNotificationList extends Component {
@@ -57,7 +58,7 @@ sendNotificationsToTabTitle(notifications){
 		const {notifications} =this.props
 		
 
-	if (notifications && notifications.length > 0) {
+	if (1>7) {
 			var notificationList = []
 			var User = Meteor.userId()
 			notifications.forEach((notification)=>{
@@ -89,18 +90,18 @@ sendNotificationsToTabTitle(notifications){
 						 <div onClick={()=>this.tooglePlanDialog(notification.yellId,notification.about)} 
 						 	  className="ui bottom attached  blue button">
 						      <i className="share icon"></i>
-						      Take a Look
+						     {i18n.__('common.userFrg.goToPlan')}
 						    </div>
 						  </div>	 		
 			 		)
 			 });
 		} else {
-			notificationList = "<NoComment />"
+			notificationList = <NoNotification />
 		}
 
 
 		return (
-				<div className="ui container" style={{marginTop:67}}>
+				<div className="ui container" style={{marginTop:67,marginBottom:70}}>
  					{notificationList}
  				
 			</div>

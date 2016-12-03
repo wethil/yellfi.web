@@ -26,11 +26,11 @@ import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 							  <div className="ui inverted bottom fixed two item menu">
 								  <a className="active violet item">
 								  	<i className="marker icon"></i>
-								  	Public Plans
+								  	{i18n.__('common.userFrg.pubPlans')}
 								  </a>
 								  <a className="active blue item">
 								  	<i className="add icon"></i>
-								  	Create a Plan
+								  	{i18n.__('common.userFrg.createPlan')}
 								  	</a>
 							 </div>
 						</div>

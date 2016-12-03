@@ -26,7 +26,7 @@
     },
     "noNotif":{
         "noAct":"No Any Actions Yet",
-        "willNotif":" You will be notified when a action has occured ,keep suggesting and joining!"
+        "willNotif":" You will be notified when a action has occured, keep suggesting and joining!"
     },
     "anonFrg":{
         "feed":"Feed",
@@ -35,7 +35,10 @@
     "userFrg":{
         "feed":"FEED",
         "myPlans":"MY PLANS",
-        "ntf":"NOTIFICATIONS"
+        "ntf":"NOTIFICATIONS",
+        "pubPlans":"Public Plans",
+        "createPlan":"Create a Plan",
+        "goToPlan":"Go to Plan"
     },
     "publicity":{
         "justMe":"Just Me",
