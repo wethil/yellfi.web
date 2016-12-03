@@ -19,12 +19,7 @@ import emitter from '../../emitter.js'
 		return (
 			<span >
 				{this.state.userId==null ? <div style={{marginTop:'50%'}} >  <Login /> </div> : <LatestPlans />} 
-				<div className="ui content">
-					  <div className="ui inverted bottom fixed two item menu">
-						  <a className="active violet item">Public Plans</a>
-						  <a className="active blue item">Create a Plan</a>
-					 </div>
-				</div>
+			
 			</span>	
 			
 		);

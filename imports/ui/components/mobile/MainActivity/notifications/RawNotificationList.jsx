@@ -82,12 +82,13 @@ sendNotificationsToTabTitle(notifications){
 						        {moment(notification.created_at).startOf('hour').fromNow()}
 						      </div>
 						      <div  className="description">
-						      { `${i18n.__(ntfTitles[notification.content].content)} ${plan}`}
+						      { i18n.__(ntfTitles[notification.content].content)}
+						      <span style={{fontWeight:'bolder'}}> {plan} </span>
 						      </div>
 						    </div>
 						 <div onClick={()=>this.tooglePlanDialog(notification.yellId,notification.about)} 
-						 	  className="ui bottom attached button">
-						      <i className="add icon"></i>
+						 	  className="ui bottom attached  blue button">
+						      <i className="share icon"></i>
 						      Take a Look
 						    </div>
 						  </div>	 		
@@ -99,7 +100,7 @@ sendNotificationsToTabTitle(notifications){
 
 
 		return (
-				<div className="ui container ">
+				<div className="ui container" style={{marginTop:67}}>
  					{notificationList}
  				
 			</div>

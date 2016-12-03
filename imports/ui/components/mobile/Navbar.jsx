@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MainActivity from './MainActivity/MainActivity.jsx'
 import UserNotificationsCompM from './MainActivity/notifications/UserNotificationsCompM.jsx'
+import UserPlansComposer from './MainActivity/yells/UserPlansComposer.jsx'
 import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 
  class Navbar extends Component {
@@ -21,11 +22,21 @@ import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 		switch(activeTab){
 			case 0:
 				content = <MainActivity />
+				bottomMenu=	<div className="ui content">
+							  <div className="ui inverted bottom fixed two item menu">
+								  <a className="active violet item">
+								  	<i className="marker icon"></i>
+								  	Public Plans
+								  </a>
+								  <a className="active blue item">
+								  	<i className="add icon"></i>
+								  	Create a Plan
+								  	</a>
+							 </div>
+						</div>
 				break;
 			case 1:
-				content = <div style={{marginTop:'50%'}} >  	
-				 			sidfldsfsdilfdsifsdifldsfsdiposdşflopdşldfspoşlşlsöş
-				 		 </div> 
+				content = <UserPlansComposer />
 				 break;
 		 
 				 		 	
@@ -47,9 +58,22 @@ import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 				</div>
 				<span style={cntStyle} >
 					{content}
+					{bottomMenu}
 				</span>
 				<span style={ntfStyle} >
-					<UserNotificationsCompM />	
+					<UserNotificationsCompM />
+						<div className="ui content">
+							<div className="ui inverted bottom fixed two item menu">
+								<a className="active violet item">
+									<i className="marker icon"></i>
+									Public Plans
+									</a>
+								<a className="active blue item">
+									<i className="add icon"></i>
+									Create a Plan
+								</a>
+							</div>
+						</div>	
 				</span>
 			</div>
 		);

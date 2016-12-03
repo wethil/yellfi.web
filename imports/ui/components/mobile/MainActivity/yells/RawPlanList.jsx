@@ -77,7 +77,7 @@ if (yell.publicity == 0) {
 			planList.push(  
 				<div className=" ui centered fluid card" id={yell._id} key={yell._id}>
 				    <div className="content">
-				      <img className="right floated mini ui circular image" src="#"/>
+				      <img className="right floated mini ui circular image" src={yell.owner.picture}/>
 				      <div className="header">
 				    {yell.owner.firstName}
 				      </div>
@@ -103,7 +103,7 @@ if (yell.publicity == 0) {
 		return (
 			<div>
 				
-				<div className="ui container" style={{marginTop:60}}>
+				<div className="ui container" style={{marginTop:67}}>
 				{planList}
 				</div>
 			</div>	
