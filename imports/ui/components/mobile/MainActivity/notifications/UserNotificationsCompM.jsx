@@ -1,13 +1,13 @@
 import { composeWithTracker } from 'react-komposer';
 import React, { Component } from 'react';
-import  Notifications  from '../../../../api/notifications/notifications.js';
+import  Notifications  from '../../../../../api/notifications/notifications.js';
 import  RawNotificationList  from './RawNotificationList.jsx';
-import LoadingCircle from '../Yells/YellsComponents/LoadingCircle.jsx'
+
 const NotificationSubs = new SubsManager()
 
 const composer = ( props, onData ) => {
 userId=Meteor.userId()
-limit = props.ntfLimit
+limit = 5
 //console.log(limit)
   const subscription =  NotificationSubs.subscribe( 'thisUserNotifications',userId,limit ) 
 
@@ -20,5 +20,5 @@ limit = props.ntfLimit
   }
 };
 
- const UserNotificationComposer = composeWithTracker( composer,LoadingCircle )( RawNotificationList );
- export default UserNotificationComposer
+ const UserNotificationsCompM = composeWithTracker(composer)( RawNotificationList );
+ export default UserNotificationsCompM

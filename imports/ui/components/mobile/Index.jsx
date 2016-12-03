@@ -10,8 +10,7 @@ import MainActivity from './MainActivity/MainActivity.jsx'
 		return (
 				<div>
 						<Navbar />
-						<MainActivity  />
-
+						
 				</div>
 		);
 	}

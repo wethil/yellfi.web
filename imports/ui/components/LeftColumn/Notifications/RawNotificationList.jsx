@@ -48,16 +48,14 @@ import i18n from 'meteor/universe:i18n';
 
   checkNtfForTime(ntf){
 
-   if(!ntf.alerted&&ntf.receiverId==Meteor.userId()){
-     ntfTime= moment(ntf.created_at).utc()
-    now=moment().utc()
-    pastTime =  moment(now).subtract(3, 'seconds')
-    if (moment(ntfTime).isAfter(pastTime)){
-      emitter.emit('triggerNtf',ntf)
-  
-    } 
-   }
-  
+if(!ntf.alerted&&ntf.receiverId==Meteor.userId()){
+        ntfTime = moment(ntf.created_at).utc()
+        now = moment().utc()
+        pastTime =  moment(now).subtract(3, 'seconds')
+        if (moment(ntfTime).isAfter(pastTime)){
+           emitter.emit('triggerNtf',ntf)
+        } 
+      }
   }
 
 sendNotificationsToTabTitle(notifications){
@@ -170,10 +168,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
       plan: {
         color: grey800,
         fontSize:12
-        },
-      timeDate: {
-        color: grey800
-        },  
+        }, 
        keywords:{
         fontSize:12
         },
@@ -206,9 +201,9 @@ if(this.state.notifications && this.state.notifications.length != 0) {
           <div id={notification._id} key={notification._id}>
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(notification.yellId,notification.about)}
-                  leftAvatar={<Avatar src={notification.sender.profile.avatar} />}
+                  leftAvatar={<Avatar src={notification.sender.picture} />}
                   primaryText={
-                   <div style={styles.username}>{notification.sender.username}
+                   <div style={styles.username}>{notification.sender.firstname}
                      <span style={styles.subhead}>{' ' + i18n.__(ntfTitles[notification.content].content)+' '+ plan}</span>
                    </div>
                 }

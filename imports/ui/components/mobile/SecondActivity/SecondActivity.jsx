@@ -19,7 +19,6 @@ import emitter from '../emitter.js'
  		//YellFragment
  		emitter.addListener('changeDialogAction',(dialog) => {
  		 	this.setState({dialog:dialog  })
-
  		  });
  		//JoiningList
 

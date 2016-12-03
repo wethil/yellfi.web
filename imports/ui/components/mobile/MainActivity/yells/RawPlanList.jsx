@@ -101,7 +101,7 @@ if (yell.publicity == 0) {
 
 })
 		return (
-			<div className="className">
+			<div>
 				
 				<div className="ui container" style={{marginTop:60}}>
 				{planList}
