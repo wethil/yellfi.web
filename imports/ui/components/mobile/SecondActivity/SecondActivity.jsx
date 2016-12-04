@@ -98,38 +98,48 @@ changeCommentInput(e){
 	
 
 		$('.modal').modal({detachable: false});
-		const {drawerTitle,dialogFromLink,yellId,modal,dialog} = this.state
+		const {drwContent,dialogFromLink,yellId,modal,dialog} = this.state
 		console.log(dialog)
-		if(drawerTitle=='plan') {
-			switch (dialog) {
-				case 'comment':
-					modalAction =  <div className="ui fluid left icon input">
-										 <input type="text"
-								  		 id="commentInput"   
-								  		 onKeyUp={this.inputSubmit.bind(this)}
-								  		 placeholder="Write your suggestion." /> 
-								  		  <i className="user icon"></i>
-									</div> 
-					modalTitle = i18n.__('common.YellCard.suggestions')			
-					break;
-				case 'joining': 
-					modalAction = <button className="fluid  disable ui blue button" style={{visibility:'hidden'}} > charleston IL </button>
-					modalTitle = i18n.__('common.YellCard.participation')				
-					break;	
-				case 'blocked':
-					modalAction = <button className="fluid  ui basic red  button" onClick={this.closeModal.bind(this)} > {i18n.__('common.YellCard.close')}  </button>
-					modalTitle="yellfi"
-					break;	
-				default:
-					modalAction = null
-					modalTitle="yellfi"
-					break;
-					
-			}
-		}else {
+		switch (drwContent){
+			case 1:
+				modalContent =  <YellComposer yellId={yellId} dialog={dialogFromLink}  />
+				switch (dialog) {
+						case 'comment':
+							modalAction =  <div className="ui fluid left icon input">
+												 <input type="text"
+										  		 id="commentInput"   
+										  		 onKeyUp={this.inputSubmit.bind(this)}
+										  		 placeholder="Write your suggestion." /> 
+										  		  <i className="user icon"></i>
+											</div> 
+							modalTitle = i18n.__('common.YellCard.suggestions')			
+							break;
+						case 'joining': 
+							modalAction = <button className="fluid  disable ui blue button" style={{visibility:'hidden'}} > charleston IL </button>
+							modalTitle = i18n.__('common.YellCard.participation')				
+							break;	
+						case 'blocked':
+							modalAction = <button className="fluid  ui basic red  button" onClick={this.closeModal.bind(this)} > {i18n.__('common.YellCard.close')}  </button>
+							modalTitle="yellfi"
+							break;	
+						default:
+							modalAction = null
+							modalTitle="yellfi"
+							break;
+							
+					}
+				break;	
+			case 0 :
+				modalAction = null
+				modalTitle = i18n.__('common.yellForm.newPlan')	
+				modalContent = "this is yell form"
+				break;
+			default:
 				modalTitle="yellfi"
 				modalAction="action"
-			}
+				modalContent = "content"
+		 	
+}			
 
 
 
@@ -145,7 +155,7 @@ changeCommentInput(e){
           </Modal.Header>
           <Modal.Content >
 			    <div style={{overflowY: 'scroll', height: '70vh', paddingTop:'3%'}}>
-			       <YellComposer yellId={yellId} dialog={dialogFromLink}  />
+			      {modalContent}
 			    </div>
           </Modal.Content>
           <Modal.Actions>
@@ -177,7 +187,7 @@ export default SecondActivity;
 				<div className={modal} >
 				  <i onClick={this.closeModal.bind(this)} className="close icon"></i>
 				  <div className="header">
-				    {this.state.drawerTitle}
+				    {this.state.drwContent}
 				  </div>
 				<div className="content">
 				<YellComposer yellId={yellId} dialog={dialog} />	    

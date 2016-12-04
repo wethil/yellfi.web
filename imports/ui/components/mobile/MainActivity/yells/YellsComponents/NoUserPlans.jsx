@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 
- const NoNotification = () => (
+ const NoUserPlans = () => (
   <div className="ui  center aligned basic segment" style={styles.segment}> 
     <div style={{marginTop:'12%'}}>
       <h2 className="ui center aligned icon header">
-        <i style={styles.icon} className="warning circle icon" />
-        <span style={styles.subhead}> {i18n.__('common.noNotif.noAct')}</span>
+        <i style={styles.icon} className="user icon" />
+        <span style={styles.subhead}> {i18n.__('common.noUserYell.noPlan')}</span>
       </h2>
-      <div style={styles.content}>{i18n.__('common.noNotif.willNotif')}</div>
+      <div style={styles.content}>{i18n.__('common.noUserYell.clickButt')}</div>
     </div>
   </div>
   );
 
- export default NoNotification
+ export default NoUserPlans
 
 
  const styles = {

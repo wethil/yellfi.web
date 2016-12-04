@@ -62,8 +62,6 @@ sendNotificationsToTabTitle(notifications){
 
   unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received; }),'_id');
   
-
-  
   emitter.emit('changeBadgeContent',unreceivedNtf)
   
 }

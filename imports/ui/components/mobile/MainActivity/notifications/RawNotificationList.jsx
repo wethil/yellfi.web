@@ -58,7 +58,7 @@ sendNotificationsToTabTitle(notifications){
 		const {notifications} =this.props
 		
 
-	if (1>7) {
+	if (notifications && notifications.length > 0) {
 			var notificationList = []
 			var User = Meteor.userId()
 			notifications.forEach((notification)=>{
