@@ -3,6 +3,7 @@ import YellComposer from './components/YellComposer.jsx'
 import { browserHistory } from 'react-router'
 import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
 import emitter from '../emitter.js'
+import YellForm from './components/yellForm/YellForm.jsx'
 
  class SecondActivity extends Component {
  	constructor(props) {
@@ -102,7 +103,9 @@ changeCommentInput(e){
 		console.log(dialog)
 		switch (drwContent){
 			case 1:
-				modalContent =  <YellComposer yellId={yellId} dialog={dialogFromLink}  />
+				modalContent =<div style={{overflowY: 'scroll', height: '70vh', paddingTop:'3%'}}> 
+									 <YellComposer yellId={yellId} dialog={dialogFromLink}  />
+								</div>	 
 				switch (dialog) {
 						case 'comment':
 							modalAction =  <div className="ui fluid left icon input">
@@ -132,7 +135,9 @@ changeCommentInput(e){
 			case 0 :
 				modalAction = null
 				modalTitle = i18n.__('common.yellForm.newPlan')	
-				modalContent = "this is yell form"
+				modalContent = <div style={{overflowY: 'scroll', height: '77vh', paddingTop:'0%'}}>
+										<YellForm />
+								 </div>
 				break;
 			default:
 				modalTitle="yellfi"
@@ -154,9 +159,9 @@ changeCommentInput(e){
 		  	</span> 
           </Modal.Header>
           <Modal.Content >
-			    <div style={{overflowY: 'scroll', height: '70vh', paddingTop:'3%'}}>
+			   
 			      {modalContent}
-			    </div>
+			   
           </Modal.Content>
           <Modal.Actions>
            
