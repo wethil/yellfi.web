@@ -13,7 +13,8 @@ import YellForm from './components/yellForm/YellForm.jsx'
  	  this.state = {
  	  	yellId:"",
  	  	commentText:"",
- 	  	dialog:""
+ 	  	dialog:"",
+ 	  	userCoordinates:[-88.175354,39.480200]
  	  };
  	}
 
@@ -100,7 +101,7 @@ changeCommentInput(e){
 	
 
 		$('.modal').modal({detachable: false});
-		const {drwContent,dialogFromLink,yellId,modal,dialog} = this.state
+		const {drwContent,dialogFromLink,yellId,modal,dialog,userCoordinates} = this.state
 		console.log(dialog)
 		switch (drwContent){
 			case 1:
@@ -138,7 +139,7 @@ changeCommentInput(e){
 				modalTitle = i18n.__('common.yellForm.newPlan')	
 				modalContent =
 								<div style={{overflowY: 'scroll', height: '77vh', paddingTop:'0%'}}>
-										<YellForm />
+										<YellForm coordinates={userCoordinates} />
 								 </div>
 						
 				break;

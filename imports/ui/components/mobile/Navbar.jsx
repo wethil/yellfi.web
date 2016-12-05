@@ -17,12 +17,16 @@ import { browserHistory } from 'react-router'
  	  };
  	}
 
-openForm(){
-	browserHistory.push('/yell/new') 
+openForm(coord){
+	console.log(coord)
+	lng = coord[0]
+	lat = coord[1]
+	browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
 }
 
 
 	render() {
+		const {coordinates} = this.props
 		const {activeTab,cntStyle,ntfStyle} = this.state
 		mainBottomNav =<div className="ui content">
 							  <div className="ui inverted bottom fixed two item menu">
@@ -30,7 +34,7 @@ openForm(){
 								  	<i className="marker icon"></i>
 								  	{i18n.__('common.userFrg.pubPlans')}
 								  </a>
-								  <a className="active blue item" onClick={this.openForm.bind(this)} >
+								  <a className="active blue item" onClick={()=> this.openForm(coordinates)} >
 								  	<i className="add icon"></i>
 								  	{i18n.__('common.userFrg.createPlan')}
 								  	</a>

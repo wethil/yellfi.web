@@ -82,6 +82,24 @@ import emitter from '../../../emitter.js'
 	}
 
 
+	submitDate(){
+		const {coordinates} = this.props 
+		const {publicGeoLoc} = this.state
+		let loc = {type:"Point",coordinates:coordinatess}
+
+
+		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,ownerId,function (error, result){
+				if (error) {
+					console.log(error)
+				} else {
+					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
+					browserHistory.push('/yell/'+result)
+				}
+			});	
+
+	}
+
+
 
 	render() {
 
@@ -106,6 +124,23 @@ import emitter from '../../../emitter.js'
 		      						id="keywordInput"
 		      						 fullWidth={true}
 									/>
+
+								<AutoComplete
+									//onUpdateInput={ (searchText)=> this.autocompleteUpdate(searchText)}
+									//onNewRequest={ (chosenRequest,index)=> this.autocompleteRequest(chosenRequest,index)}
+									//floatingLabelText={hintForKeywords}
+									hintText="Click and choose"
+									filter={AutoComplete.fuzzyFilter}
+									textFieldStyle={{ fontSize:13 , marginTop:'-5%' }}
+									dataSource={dataSource}
+		      						dataSourceConfig={dataSourceConfig}
+		      						maxSearchResults={5}
+		      						searchText = ""
+		      						targetOrigin={{ vertical: 'bottom', horizontal: 'left'}}
+		      						id="keywoardInput"
+		      						 fullWidth={true}
+									/>
+								
 
 								<span style={locInputStyle} >	
 									 <TextField //location autocomplete
@@ -152,16 +187,20 @@ import emitter from '../../../emitter.js'
 	</div>
 												
 					</div>:null}	
-			<span>
-					<button className="ui fluid circular red basic mini button" onClick={()=> emitter.emit('backToPlanList') }>
+			<div style={styles.actions} >
+					 <button className="ui fluid circular blue big button" onClick={()=> emitter.emit('backToPlanList') }>
+					 	Create 
+					 </button>	
+					 <div style={styles.divider} id="divider" className="ui  divider"></div>	
+					 <div style={styles.backBtnCont} >	
+					<button style={styles.backBtn} className="ui fluid circular red basic backBtn mini button" onClick={()=> emitter.emit('backToPlanList') }>
 						<i className="left chevron mini icon"></i>
 					 	back 
 					 </button>
-					 <button className="ui fluid circular blue  button" onClick={()=> emitter.emit('backToPlanList') }>
-						
-					 	Create 
-					 </button>
-			</span>		 
+				</div>		 
+			</div>
+
+				 
 						
 								</div>
 								
@@ -183,5 +222,20 @@ const styles = {
 		      dateTimeForm:{
 		      	width :115,
 		      	fontSize:16
+		      },
+		      actions:{
+			    zIndex:99
+		      },
+		      backBtnCont:{
+			    zIndex: 50
+		      },
+		      divider :{
+		      	marginTop:'2%',
+		      	marginBottom:'2%'
+		      },
+		      backBtn:{
+		      	paddingTop: '1%',
+		      	paddingBottom: '1%',
 		      }
+		      
 		};

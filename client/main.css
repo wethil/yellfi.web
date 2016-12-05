@@ -155,3 +155,11 @@ body {
 
   input::-webkit-datetime-edit{ color: transparent; }
 input:focus::-webkit-datetime-edit{ color: #000; }
+
+.backBtn{
+    padding: 0.6em 1.5em 0.6em !important;
+  }
+
+#divider {
+   margin: 0.4rem 0rem !important;
+}

@@ -24,13 +24,13 @@ componentDidMount(){
 
 
 	chooseParticipation(id){
-		$('.button').toggleClass('basic',true)
+		$('.button.pub').toggleClass('basic',true)
 		$('#'+id).removeClass('basic')
 		this.setState({publicity:id})
 	}
 
 	render() {
-		
+		const {coordinates} = this.props
 		const {planChoosed,plan,publicity} = this.state
 		if (!planChoosed) {
 			return (<div className="ui  large fluid vertical menu">
@@ -46,21 +46,21 @@ componentDidMount(){
 			return (
 						<div>
 							<div className="ui vertical fluid  labeled icon buttons">
-								<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui  button">
+								<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui  button pub">
 									<i className="user icon"></i>
 									 {i18n.__('common.publicity.justMe')}
 								</button>
-								<button  id={1}  onClick={()=> this.chooseParticipation(1)} className="ui basic  button">
+								<button  id={1}  onClick={()=> this.chooseParticipation(1)} className="ui basic  button pub">
 									<i className="users icon"></i>
 									{i18n.__('common.publicity.everyoneCan')}
 								</button>
-								<button id={2} onClick={()=> this.chooseParticipation(2)} className="ui basic button">
+								<button id={2} onClick={()=> this.chooseParticipation(2)} className="ui basic button pub">
 									<i className="add user icon"></i>
 									{i18n.__('common.publicity.willChoose')}
 								</button>
 							</div>
 							<div className="ui container">
-								<SubmitForm publicity={publicity} />
+								<SubmitForm coordinates={coordinates} chosenPlan={plan} publicity={publicity} />
 							</div>
 					
 						</div>
