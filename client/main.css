@@ -147,3 +147,11 @@ body {
     left: 81% !important;
     margin: 1em 0em 0em -1.5em !important;
   }
+
+
+   .pac-container{
+    margin-top: -210px;
+  }
+
+  input::-webkit-datetime-edit{ color: transparent; }
+input:focus::-webkit-datetime-edit{ color: #000; }

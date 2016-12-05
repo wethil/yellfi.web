@@ -5,6 +5,7 @@ import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
 import emitter from '../emitter.js'
 import YellForm from './components/yellForm/YellForm.jsx'
 
+
  class SecondActivity extends Component {
  	constructor(props) {
  	  super(props);
@@ -135,9 +136,11 @@ changeCommentInput(e){
 			case 0 :
 				modalAction = null
 				modalTitle = i18n.__('common.yellForm.newPlan')	
-				modalContent = <div style={{overflowY: 'scroll', height: '77vh', paddingTop:'0%'}}>
+				modalContent =
+								<div style={{overflowY: 'scroll', height: '77vh', paddingTop:'0%'}}>
 										<YellForm />
 								 </div>
+						
 				break;
 			default:
 				modalTitle="yellfi"
