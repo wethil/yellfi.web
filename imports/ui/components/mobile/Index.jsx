@@ -11,7 +11,12 @@ import MainActivity from './MainActivity/MainActivity.jsx'
  	  };
  	}
 
+ 	componentDidMount(){
+ 		moment.locale('tr')
+ 	}
+
  	componentWillMount(){
+
  		   $.getJSON('http://ipinfo.io', (data) =>{
               console.log(data)
               preLoc=data.loc.split(",")

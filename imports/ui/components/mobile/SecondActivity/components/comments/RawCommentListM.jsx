@@ -170,7 +170,7 @@ import emitter from '../../../emitter.js'
 						      {comment.owner.firstName} 
 						      </div>
 						      <div style={styles.meta} className="meta">
-						        {moment(comment.created_at).startOf('hour').fromNow()}
+						        {moment(comment.created_at).startOf('minute').fromNow()}
 						      </div>
 						      <div  className="description">
 						        {comment.content}

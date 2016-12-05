@@ -82,6 +82,7 @@ inputSubmit(e){
 				console.log(error)
 			} else {
 				$('#commentInput').val("")
+				 document.getElementById("commentInput").blur()
 				
 			}
 		});	
