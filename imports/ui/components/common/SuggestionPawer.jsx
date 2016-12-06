@@ -3,6 +3,7 @@ import emitter from '../emitter.js'
 import _ from 'lodash'
 import {baseYouTubeUrl,
 	filmGenres,
+	musicGenres,
 	baseThemovieDbApiUrl,
 	baseBookApiUrl,
 	eatDrink,
@@ -62,7 +63,12 @@ service = new google.maps.places.PlacesService($attrib[0]);
 getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestionCoord){
 		switch(plan) {
 	    case 0://listening music
-	     query = data.title ? ` ${formattedKeywords}|${data.title}` :formattedKeywords
+    	if (formattedKeywords.trim()!="") {
+    		qWords =formattedKeywords
+    	}else {
+    		qWords = musicGenres[_.random(0, 163)].title
+    	}
+	     query = data.title ? ` ${qWords}|${data.title}` :qWords
 	      this.handleGet(yellId,plan,baseYouTubeUrl,query)
 	        break;
 	    case 1:// watching something

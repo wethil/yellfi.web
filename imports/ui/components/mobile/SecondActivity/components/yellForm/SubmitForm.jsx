@@ -93,7 +93,7 @@ import _ from 'lodash';
 		} else {
 			 plan = chosenPlan
 		}
-		let keyword = $('#keywordInput').val()
+		let keyword = $('#keywordInput').val().replace(/^\s+|\s+$|\s+(?=\s)/g, "")
 		let suggestionCoord= (plc.coordinates && plc.coordinates.length>0)? plc.coordinates : coordinates
 		let time = $('#timeField').val()
 		let date = $('#dateField').val()
