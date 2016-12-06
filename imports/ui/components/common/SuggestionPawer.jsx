@@ -20,7 +20,7 @@ var $attrib = $('<div id="attributions"></div>');
 $('#main').append($attrib);
 service = new google.maps.places.PlacesService($attrib[0]);
 
-
+//This suggestion engine will grow up. It deserve a name. Svenja, yellPanther or etc...
  class SuggestionPawer extends Component {
 
  	componentDidMount(){
@@ -232,7 +232,7 @@ addSuggestionToYell (yellId,suggestions) {
 	console.log(yellId)
 	console.log(suggestions)
 
-	/*
+	
 		Meteor.call('makeSuggestion', yellId,suggestions,  (error)=> {
 		if (error) {
 			console.log(error)
@@ -241,7 +241,7 @@ addSuggestionToYell (yellId,suggestions) {
 		}
 	});
 
-	*/
+	
 }
 
 

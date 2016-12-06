@@ -67,7 +67,7 @@ import _ from 'lodash';
 	}
 
 	changeDate(date){
-		console.log(date)
+
 		this.setState({choosenDate:date})
 		console.log(moment().format('hh:mm'))
 	}
@@ -75,8 +75,7 @@ import _ from 'lodash';
 		autocompleteRequest(chosenRequest,index){
 		this.setState({keyword:chosenRequest.value})
 		this.setState({chosenKeyword:chosenRequest,chosenIndex:index})
-		console.log(chosenRequest)
-		console.log(index)
+
 
 	}
 
@@ -89,9 +88,9 @@ import _ from 'lodash';
 		let publicPlanLoc = (plc.coordinates && plc.coordinates.length>0) ? {type:"Point",coordinates:plc.coordinates, adress:plc.geoLocAdress}:loc
 		if (chosenPlan==10){
 			 customPlan = document.getElementById("customPlan").value.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
-			 plan = (customPlan!="") ? customPlan :  _.random(0, 10);  
+			var plan = (customPlan!="") ? customPlan :  _.random(0, 10);  
 		} else {
-			 plan = chosenPlan
+			var plan = chosenPlan
 		}
 		let keyword = $('#keywordInput').val().replace(/^\s+|\s+$|\s+(?=\s)/g, "")
 		let suggestionCoord= (plc.coordinates && plc.coordinates.length>0)? plc.coordinates : coordinates
@@ -99,27 +98,32 @@ import _ from 'lodash';
 		let date = $('#dateField').val()
 		formatted = moment(new Date(`${date} ${time}`)).format()
 		if (moment.isDate(formatted)) {
-			console.log('formatted is date')
-			console.log(formatted)
+			//console.log('formatted is date')
+			time = formatted
 		} else {
-			console.log('is not')
-
+			//console.log('is not')
+			time = new Date()
 		}
-		//LeftNavHead
-		emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,"id",suggestionCoord)
-		//emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
-/*
 
+		console.log(plan)
+		//LeftNavHead
+		//emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,"id",suggestionCoord)
+		//emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
+
+
+		
 		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,function (error, result){
 				if (error) {
 					console.log(error)
 				} else {
+					console.log(plan)
 					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
-					browserHistory.push('/yell/'+result)
+					//browserHistory.push('/yell/'+result)
 				}
 			});	
+		
 			
-*/
+
 	}
 
 	handleBack(){
