@@ -7,7 +7,7 @@ import Notifications from '../notifications/notifications.js'
 const yellsFieldsOpt= {'plan':1,'loc':1,'time':1,'created_at':1,'publicity':1,'ownerId':1}
 
 Meteor.methods({
-   addYell: function(loc,publicPlanLoc,plan,keyword,time,publicity,ownerId) {
+   addYell: function(loc,publicPlanLoc,plan,keyword,time,publicity) {
    
     if(publicPlanLoc && publicPlanLoc.coordinates){
        mainYell= Yells.insert({

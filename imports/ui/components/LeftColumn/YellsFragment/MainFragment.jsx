@@ -76,7 +76,7 @@ if (lang=='tr' || lang == 'tr-TR'){
 
 
 		return (
-			 <div className="className">
+			 <div>
 
 			 	{this.state.userId==null ? <AnonFragment ipLoc={this.state.ipLoc} /> : <UserFragment ipLoc={this.state.ipLoc} />} 
 			 	

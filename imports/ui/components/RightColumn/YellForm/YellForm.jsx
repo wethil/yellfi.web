@@ -113,17 +113,17 @@ handleTouchMenu(event,menuItem){
 		let publicPlanLoc = plc.coordinates ? {type:"Point",coordinates:plc.coordinates, adress:plc.geoLocAdress}:false
 	 	let plan = activePlan==10 ? document.getElementById("customPlan").value : activePlan
 		let keyword = $('#keywordInput').val()
-		let ownerId = Meteor.userId();
 		let suggestionCoord= publicGeoLoc.coordinates ? publicGeoLoc.coordinates : this.props.userCoordinates 
 		console.log(chosenIndex)
 		
 
 
 	
-		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,ownerId,function (error, result){
+		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,function (error, result){
 				if (error) {
 					console.log(error)
 				} else {
+					//LeftNavHead
 					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
 					browserHistory.push('/yell/'+result)
 				}
@@ -140,7 +140,7 @@ handleTouchMenu(event,menuItem){
 		
 	const {ipLoc,activePlan,publicity} = this.state
 	formAppBarIcon = <IconButton onMouseDown={this.closeFormDrawer.bind(this)}> <NavigationArrowBack style={{color:'white'}} /></IconButton>
-	customPlan = (activePlan == 10 )? <TextField id="customPlan"   maxLength="41" hintText="Enter a plan."/> : null
+	customPlan = (activePlan == 10 )? <TextField id="customPlan"   maxLength="41" hintText={i18n.__('common.yellForm.customPlan')}/> : null
 	hintForKeywords = (_.includes([0,1,5,6],activePlan) )? i18n.__('common.yellForm.chooseOrWrite'): i18n.__('common.yellForm.writeSomething')
 	privacySection = (activePlan == 7) ? true : false
 	

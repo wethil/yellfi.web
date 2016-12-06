@@ -51,6 +51,7 @@
     "yellForm":{
         "date":"Tarih",
         "time":"Zaman",
+        "customPlan":"Planınız nedir ?",
         "newPlan":"Yeni Plan",
         "getSugg":"Oluştur!",
         "mapPlaceHolder":"Haritada görüneceğiniz adresi yazın.",

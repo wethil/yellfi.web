@@ -51,6 +51,7 @@
     "yellForm":{
         "date":"Date",
         "time":"Time",
+        "customPlan":"What is your Plan ?",
         "newPlan":"New Plan",
         "getSugg":"Create!",
         "mapPlaceHolder":"Write a Place to occur on map",

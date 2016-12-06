@@ -4,6 +4,7 @@ import UserNotificationsCompM from './MainActivity/notifications/UserNotificatio
 import UserPlansComposer from './MainActivity/yells/UserPlansComposer.jsx'
 import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 import { browserHistory } from 'react-router'
+import SuggestionPawer from '../common/SuggestionPawer.jsx'
 
  class Navbar extends Component {
  	
@@ -55,6 +56,7 @@ openForm(coord){
 		}
 		return (
 			<div >
+			<SuggestionPawer />
 				<div className="ui fixed icon large inverted borderless menu" style={{backgroundColor:'#3f51b5'}}  >
 				  <a className="item" onClick={()=>this.setState({activeTab:0,cntStyle:{},ntfStyle:styles.hidden})}>
 				    <i className="large browser icon"></i>

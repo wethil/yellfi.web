@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SubmitForm from './SubmitForm.jsx'
 import {plans} from '../../../../constants.js';
-import emitter from '../../../emitter.js'
+import emitter from '../../../../emitter.js'; // it is use main emitter to connect SuggestionPaws
 
 
 
@@ -18,14 +18,14 @@ import emitter from '../../../emitter.js'
 
 componentDidMount(){
 	emitter.addListener('backToPlanList',() => {
- 		 	this.setState({planChoosed:false})
+ 		 	this.setState({planChoosed:false,publicity:0})
  		  });
 }
 
 
 	chooseParticipation(id){
-		$('.button.pub').toggleClass('basic',true)
-		$('#'+id).removeClass('basic')
+		$('.button.pub').toggleClass('basic',true).removeClass('blue')
+		$('#'+id).removeClass('basic').addClass('blue')
 		this.setState({publicity:id})
 	}
 
@@ -46,7 +46,7 @@ componentDidMount(){
 			return (
 						<div>
 							<div className="ui vertical fluid  labeled icon buttons">
-								<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui  button pub">
+								<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui blue button pub">
 									<i className="user icon"></i>
 									 {i18n.__('common.publicity.justMe')}
 								</button>
