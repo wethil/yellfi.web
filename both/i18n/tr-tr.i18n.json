@@ -96,6 +96,8 @@
         "deleteComment":"Bir öneri sildiniz.",
         "blockANuser":"Bir kullanıcıyı engellediniz",
         "undo":"geri",
+        "yelly" : "(Yellfi Öneri Botu)",
+        "goSuggestion":"Öneriyi aç",
         "sorryBlockedUser":"Özür.., Fakat",
         "blockedUser":"Sanırız bloklandınız. Olsun, size plan mı yok!"
      },

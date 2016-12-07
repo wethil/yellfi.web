@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import FontIcon from 'material-ui/FontIcon';
 import { List, ListItem } from 'material-ui/List';
 import {plans} from '../../constants.js';
 import Subheader from 'material-ui/Subheader';

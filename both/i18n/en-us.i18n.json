@@ -96,6 +96,8 @@
         "deleteComment":"You deleted a comment",
         "blockANuser":"You blocked a user",
         "undo":"undo",
+        "yelly" : "(Yellfi Suggestion Bot)",
+        "goSuggestion":"Go this suggestion",
         "sorryBlockedUser":" Sorry, but...",
         "blockedUser":"It seems yor suggestions are blocked for this plan. Time to try for others"
      },

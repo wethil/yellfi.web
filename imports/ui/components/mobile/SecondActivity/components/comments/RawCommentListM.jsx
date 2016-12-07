@@ -3,33 +3,36 @@ import NoComment from './components/NoComment.jsx'
 import { Dropdown } from 'semantic-ui-react';
 import _ from 'lodash'
 import { Notification } from 'react-notification';
-import emitter from '../../../emitter.js'
+import emitter from '../../../emitter.js';
+import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.jsx'
 
  class RawCommentListM extends Component {
  	constructor(props) {
  	  super(props);
  	
- 	  this.state = { comments:[],snackbarState:false,deletedComment:"" };
+ 	  this.state = {snackbarText:"", comments:[],snackbarState:false,deletedComment:"",suggestions:[] };
  	}
 
   componentWillMount(){
   	emitter.emit('changeDialogAction','comment') //second Activity
-  	const {comments,yellId,yellOwnerId} = this.props
-    this.makePropState(comments,yellId,yellOwnerId)
+  	const {comments,yellId,yellOwnerId,suggestions} = this.props
+    this.makePropState(comments,yellId,yellOwnerId,suggestions)
   }
 
   componentWillReceiveProps(nextProps){
-  	const {comments,yellId,yellOwnerId} = nextProps
-  this.makePropState(comments,yellId,yellOwnerId)
+  	const {comments,yellId,yellOwnerId,suggestions} = nextProps
+  this.makePropState(comments,yellId,yellOwnerId,suggestions)
 
 }
 
 
-  makePropState(comments,yellId,yellOwnerId){
+  makePropState(comments,yellId,yellOwnerId,suggestions){
+  	console.log(suggestions)
   this.setState({
   	comments:comments,
   	yellId:yellId,
-  	yellOwnerId:yellOwnerId
+  	yellOwnerId:yellOwnerId,
+  	suggestions:suggestions
   })
 }
 
@@ -124,7 +127,16 @@ import emitter from '../../../emitter.js'
 
 	render() {
 		
-		 const {comments,yellId,yellOwnerId} = this.state
+		 const {comments,yellId,yellOwnerId,suggestions} = this.state
+
+		 if (suggestions && suggestions.length!=0) {
+		 	suggestionList = <YellfiSuggestionsList  suggestions={suggestions} plan={this.props.plan} />
+		 	haveSuggestions = true	
+		 } else {
+		 	console.log(suggestions)
+		 	haveSuggestions = false
+		 	suggestionList = null
+		 }
 		
 	
 		if (comments && comments.length > 0) {
@@ -144,7 +156,7 @@ import emitter from '../../../emitter.js'
 			</Dropdown> : null;
 
 			comentOwnerSettings = (User && User == comment.ownerId)?
-				<div className="ui tiny basic  icon button" onClick={()=> this.deleteComment(comment._id)} >
+				<div className="ui tiny   icon button" onClick={()=> this.deleteComment(comment._id)} >
 					<i className="trash icon"/> 
 				</div>:null;
 						 	 
@@ -178,10 +190,10 @@ import emitter from '../../../emitter.js'
 						    </div>
 						    <div className="extra content">
 						       	 <a href={"http://www.google.com/search?q="+"asd"} target="_blank"> 
-                     					 <div className="ui tiny basic  labeled  icon button"><i className="google icon"/> {i18n.__('common.comments.search')} </div>
+                     					 <div className="ui tiny   labeled  icon button"><i className="google icon"/> {i18n.__('common.comments.search')} </div>
   								 </a>
   								 <a href={"https://www.youtube.com/results?search_query="+"asd"} target="_blank"> 
-                     					 <div className="ui tiny basic  labeled  icon button"><i className="youtube icon"/> {i18n.__('common.comments.search')} </div>
+                     					 <div className="ui tiny   labeled  icon button"><i className="youtube icon"/> {i18n.__('common.comments.search')} </div>
   								 </a>
 						       { (Meteor.userId() && Meteor.userId()!=comment.ownerId ) ? likeButtonDecide : null}
 
@@ -191,13 +203,14 @@ import emitter from '../../../emitter.js'
 			 		)
 			 });
 		} else {
-			commentList = <NoComment />
+			commentList = haveSuggestions ? null :  <NoComment />
 		}
 
 
 		return (
 			<div className="ui container ">
  					{commentList}
+ 					{suggestionList}
  					<Notification
 					  isActive={this.state.snackbarState}
 					  dismissAfter={2000}

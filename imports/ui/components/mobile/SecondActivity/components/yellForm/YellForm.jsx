@@ -29,6 +29,14 @@ componentDidMount(){
 		this.setState({publicity:id})
 	}
 
+	choosePlan(planId){
+		 this.setState({planChoosed:true,plan:planId }) 
+		 if (planId==7) {
+		 	this.setState({publicity:1})
+		 }
+
+	}
+
 	render() {
 		const {coordinates} = this.props
 		const {planChoosed,plan,publicity} = this.state
@@ -36,7 +44,7 @@ componentDidMount(){
 			return (<div className="ui  large fluid vertical menu">
 								 {plans.map((plan) => {
 								return 	 <a className="item" 
-											 onClick= {()=> this.setState({planChoosed:true,plan:plan.id }) }
+											 onClick= { ()=> this.choosePlan(plan.id)}
 											 key={plan.id} >
 											<i style={styles.icon} className="material-icons">{plan.icon}</i> 
 											<div style={styles.content} >  {i18n.__(plan.content)} </div>
@@ -46,10 +54,10 @@ componentDidMount(){
 			return (
 						<div>
 							<div className="ui vertical fluid  labeled icon buttons">
-								<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui blue button pub">
-									<i className="user icon"></i>
-									 {i18n.__('common.publicity.justMe')}
-								</button>
+								{(plan && plan!=7)?<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui blue button pub">
+																	<i className="user icon"></i>
+																	 {i18n.__('common.publicity.justMe')}
+								</button>:null}
 								<button  id={1}  onClick={()=> this.chooseParticipation(1)} className="ui basic  button pub">
 									<i className="users icon"></i>
 									{i18n.__('common.publicity.everyoneCan')}
