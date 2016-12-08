@@ -10,7 +10,7 @@ const YellfiSuggestionsList = (props)=> {
 	        	
 	        	props.suggestions.forEach((suggestion,index) => {
 	        		link =`https://www.youtube.com/watch?v=${suggestion.id}`
-	        		title =  _.truncate(suggestion.title, {'length': 50,'separator': ' '})
+	        		title =  _.truncate(suggestion.title, {'length': 90,'separator': ' '})
 	        		suggestionList.push(<RawNotificationNode key={index}  link={link} title={title} />)
 
 	        	});

@@ -3,12 +3,16 @@ import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/
 import {plans} from '../../../constants.js';
 import { browserHistory } from 'react-router'
 import NoUserPlans from './YellsComponents/NoUserPlans.jsx'
+import { Dropdown } from 'semantic-ui-react';
+import { Notification } from 'react-notification';
  class RawPlanList extends Component {
  	constructor(props) {
  	  super(props);
  	
  	  this.state = {
- 	  	plans : 5
+ 	  	plans : 5,
+ 	  	snackbarState:false,
+ 	  	snackbarText:""
  	  };
  	}
 
@@ -37,8 +41,48 @@ import NoUserPlans from './YellsComponents/NoUserPlans.jsx'
  			 browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
  	}
 
+ deleteYell(yellId,ownerId){
+ 	this.setState({activeYellId:yellId,activeOwnerId:ownerId})
+ 		 Meteor.call('deleteYell',yellId, error => { 
+              if (error) { 
+                  console.log('error', error); 
+              } else {
+              		 this.setState({
+			          	snackbarState:true,
+			          	snackbarText:i18n.__('common.YellCard.deletePlan')
+			          })
+              }        
+          });
+ 		 setTimeout(()=>{ this.closeSb() }, 2000);
+ 		
+ 		
+ 	}
+
+
+ 	undoAction() {
+ 		yellId = this.state.activeYellId
+ 		ownerId= this.state.activeOwnerId
+ 		    Meteor.call('undoDeleteYell',yellId,error=> {
+            if (error) {
+              console.log(error)
+            } else {
+             
+              browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+
+            }
+          });
+}
+
+closeSb(){
+	 this.setState({
+			          	snackbarState:false,
+			          	snackbarText:""
+			          })
+}
+
 	render() {
 	const {yells} = this.props
+	const {snackbarState,snackbarText} = this.state
 if (yells && yells.length > 0) {
 		planList = []
 		yells.forEach( (yell) => {
@@ -56,6 +100,14 @@ if (yells && yells.length > 0) {
 			break;		   
 		}
 
+	var User = Meteor.userId()
+	yellOwnerSettings = (User && User == yell.ownerId)?
+				<Dropdown  pointing='right'  className='ui right floated top '>
+				<Dropdown.Menu> 
+					 <Dropdown.Item icon="trash" text={i18n.__('common.comments.delete')} onClick={()=> this.deleteYell(yell._id,yell.ownerId)} />
+				</Dropdown.Menu>
+			</Dropdown> : null;
+						 	 
 
 
 	prePlan=Number(yell.plan)
@@ -74,30 +126,40 @@ if (yells && yells.length > 0) {
 	                                                  
 	}
 
-
-
-				planList.push(  
-					<div className=" ui centered fluid card" id={yell._id} key={yell._id}>
-					    <div className="content">
-					      <img className="right floated mini ui circular image" src={yell.owner.picture}/>
-					      <div className="header">
-					    {yell.owner.firstName}
-					      </div>
-					      <div className="meta">
-					          {publicityLabel}  {timeLabel} 
-					      </div>
-					      <div className="description">
-					        {plan}
-					         <div className="meta">
-					        	 {yell.keyword}
-					    	  </div>	
-					      </div>
-					    </div>
-					    <div className="extra content">
-					      <div className="ui two buttons">
+	if(yell.publicity==0) {
+		actionButtons =  <div onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic fluid green button">Suggestions</div>
+		
+					       
+					     
+	} else {
+		actionButtons =    <div className="ui two buttons">
 					        <div onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions</div>
 					        <div onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings</div>
 					      </div>
+	}
+
+
+
+				planList.push(  
+					<div className=" ui centered fluid card card--z-2" id={yell._id} key={yell._id}>
+					    <div className="content">	
+					        <img  style={styles.avatar} className="left floated mini ui circular  image" src={yell.owner.picture} />
+							{yellOwnerSettings}					  
+						     <div style={styles.header} className="header">
+						    {yell.owner.firstName}
+						      </div>
+						      <div className="meta">
+						          {publicityLabel}  {timeLabel} 
+						      </div>
+						      <div  className="description">
+						       <span style={styles.desc}> {plan} </span>
+						         <div style={styles.meta} className="meta">
+						        	 {yell.keyword}
+						    	  </div>	
+						      </div>
+					    </div>
+					    <div className="extra content">
+					      {actionButtons}
 					    </div>
 					  </div>)
 
@@ -111,6 +173,18 @@ if (yells && yells.length > 0) {
 				
 				<div className="ui container" style={{marginTop:67,marginBottom:70}}>
 				{planList}
+				<Notification
+					  isActive={snackbarState}
+					  dismissAfter={2000}
+					  message={snackbarText}
+					  action={i18n.__('common.comments.undo')}
+					  activeBarStyle={{zIndex:150,bottom:'4rem',left:'5rem'}}
+					  onClick={ ()=> this.undoAction()}
+					  onDismiss={()=>this.setState({
+			          	snackbarState:false,
+			          	snackbarText:""
+			          })}
+					/>
 				</div>
 			</div>	
 		);
@@ -125,11 +199,14 @@ export default RawPlanList;
           height: '80.6vh',
           backgroundColor:'white'
         },
-      username: {
-        color: lightBlue900
+      header: {
+        //marginLeft: '2.4em',
+		color:'rgb(65, 131, 196)'  //'#4183c4'
         },
-      plan: {
-        color: grey800
+      meta: {
+      	fontWeight:100
+        //marginLeft: '3.9em',
+        //fontSize:'0.8em'
         },
       timeDate: {
         color: grey800
@@ -137,9 +214,12 @@ export default RawPlanList;
        keywords:{
         fontSize:12
         },
-        subhead:{
-          fontSize:11,
-          color:'#9E9E9E'
+        avatar:{
+          paddingBottom: '0em !important'
+        },
+        desc:{
+        	fontWeight:'bolder',
+        	fontSize: 16
         }
 
     }

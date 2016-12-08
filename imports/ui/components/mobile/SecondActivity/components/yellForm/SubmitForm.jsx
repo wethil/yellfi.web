@@ -18,7 +18,7 @@ import _ from 'lodash';
  	  	choosenDate:"",
  	  	publicGeoLoc:{},
  	  	chosenKeyword:"",
- 	  	chosenIndex:""
+ 	  	chosenIndex:"null"
  	  };
  	}
 

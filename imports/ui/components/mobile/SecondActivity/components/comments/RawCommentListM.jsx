@@ -73,8 +73,15 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
           })
         }
       });
+       setTimeout(()=>{ this.closeSb() }, 2000);
    }
 
+   closeSb(){
+	 this.setState({
+			          	snackbarState:false,
+			          	snackbarText:""
+			          })
+}
 
     undoAction (commentId,commentOwner,yellId){
     	commentId = this.state.deletedComment
@@ -218,7 +225,6 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 					  action={i18n.__('common.comments.undo')}
 					  activeBarStyle={{zIndex:99,bottom:'1rem',left:'3rem'}}
 					  onClick={ ()=> this.undoAction()}
-					
 					/>
 			</div>
 		);

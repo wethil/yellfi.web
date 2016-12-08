@@ -72,8 +72,11 @@ getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestio
 	      this.handleGet(yellId,plan,baseYouTubeUrl,query)
 	        break;
 	    case 1:// watching something
-	   indexx = chosenIndex!=null ? chosenIndex : _.random(18)
+	    console.log(chosenIndex)
+	   indexx = isNaN(chosenIndex) ?  _.random(18) : chosenIndex
+	   console.log(indexx) 
 	    	totalPages = chosenIndex!=null ? filmGenres[indexx].totalPages  : 1000 //total page count on theMovieDb
+	    	console.log(totalPages)
 	    	page = _.random(totalPages)
 	    	genre =data.id ? data.id : _.sample(_.map(filmGenres,'id'))
 	    	query = `&page=${page}&with_genres=${genre}`

@@ -88,7 +88,7 @@ sendNotificationsToTabTitle(notifications){
 						      </div>
 						    </div>
 						 <div onClick={()=>this.tooglePlanDialog(notification.yellId,notification.about)} 
-						 	  className="ui bottom attached  blue button">
+						 	  className="ui bottom attached tiny  blue button">
 						      <i className="share icon"></i>
 						     {i18n.__('common.userFrg.goToPlan')}
 						    </div>
