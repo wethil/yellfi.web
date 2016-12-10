@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import MainActivity from './MainActivity/MainActivity.jsx'
-import UserNotificationsCompM from './MainActivity/notifications/UserNotificationsCompM.jsx'
-import UserPlansComposer from './MainActivity/yells/UserPlansComposer.jsx'
+import MainPlansFeed from './MainActivity/MainPlansFeed.jsx'
+import UserPlansFeed from './MainActivity/UserPlansFeed.jsx'
+import UserNotificationsFeed from './MainActivity/UserNotificationsFeed.jsx'
 import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 import { browserHistory } from 'react-router'
 import SuggestionPawer from '../common/SuggestionPawer.jsx'
 
- class Navbar extends Component {
+ class LoggedInUserFragment extends Component {
  	
  	constructor(props) {
  	  super(props);
@@ -45,11 +45,11 @@ openForm(coord){
 
 		switch(activeTab){
 			case 0:
-				content = <MainActivity />
+				content = <MainPlansFeed />
 				bottomMenu=	mainBottomNav						  
 				break;
 			case 1:
-				content = <UserPlansComposer />
+				content = <UserPlansFeed />
 				 break;
 		 
 				 		 	
@@ -72,17 +72,17 @@ openForm(coord){
 				</div>
 				<span style={cntStyle} >
 					{content}
-					{bottomMenu}
+					{/*bottomMenu*/}
 				</span>
 				<span style={ntfStyle} >
-					<UserNotificationsCompM />
-					{mainBottomNav}	
+					<UserNotificationsFeed />
+					{/*mainBottomNav*/}	
 				</span>
 			</div>
 		);
 	}
 }
-export default Navbar;
+export default LoggedInUserFragment;
 
 
 const styles= {

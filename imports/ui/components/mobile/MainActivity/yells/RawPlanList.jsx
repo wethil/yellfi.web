@@ -5,32 +5,67 @@ import { browserHistory } from 'react-router'
 import NoUserPlans from './YellsComponents/NoUserPlans.jsx'
 import { Dropdown } from 'semantic-ui-react';
 import { Notification } from 'react-notification';
+import ScrollMagic from 'scrollmagic';
+import emitter from '../../emitter.js'
+
  class RawPlanList extends Component {
  	constructor(props) {
  	  super(props);
  	
  	  this.state = {
- 	  	plans : 5,
+ 	  	plans : [],
  	  	snackbarState:false,
- 	  	snackbarText:""
+ 	  	snackbarText:"",
+ 	  	haveMore:false,
+ 	  	lastYellId:"#lastcont"
  	  };
  	}
 
 
- 	componentDidMount(){
- 		$('.ui.container')
-				  .visibility({
-				    once: false,
-				    // update size when new content loads
-				    observeChanges: true,
-				    // load content on bottom edge visible
-				    onBottomVisible: ()=> {
-				      // loads a max of 5 times
-				      this.setState({plans:plans+5})
-				    }
-				  })
-				;
+ 	
+ componentDidMount(){
+ 	var controller = new ScrollMagic.Controller();
+ 	var scene = new ScrollMagic.Scene({triggerElement: '#loader', triggerHook: "onEnter"})
+					.addTo(controller)
+					.on("enter",  (e)=> {
+							if(this.state.haveMore==true){
+									$('#loader').toggleClass('active',true)
+									 	emitter.emit('increaseLimit')
+									 	scene.update()
+									 }
+					});
+
  	}
+
+componentWillMount(){
+  this.makePropState(this.props.yells)
+   this.checkProps(this.props.yells, this.props.limit)
+}
+
+componentWillReceiveProps(nextProps){
+  this.makePropState(nextProps.yells)
+  this.checkProps(nextProps.yells, nextProps.limit)
+  
+}
+
+
+makePropState(data){
+  this.setState({yells:data})
+}
+
+checkProps(newP,limit){
+
+  if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
+
+      this.setState({haveMore:false})
+      $('#loader').toggleClass('active',false)
+      } else {
+        this.setState({haveMore:true})
+      }
+
+}
+
+
 
 
  	openComments(yellId,ownerId){
@@ -81,6 +116,8 @@ closeSb(){
 }
 
 	render() {
+
+
 	const {yells} = this.props
 	const {snackbarState,snackbarText} = this.state
 if (yells && yells.length > 0) {
@@ -176,10 +213,11 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-			<div>
+<div className="ui container" id="container" style={{marginTop:67}}>
 				
-				<div className="ui container" style={{marginTop:67,marginBottom:70}}>
-				{planList}
+		    
+        {planList}
+<div id="loader" className="ui active centered inline loader"></div>
 				<Notification
 					  isActive={snackbarState}
 					  dismissAfter={2000}
@@ -192,8 +230,9 @@ if (yells && yells.length > 0) {
 			          	snackbarText:""
 			          })}
 					/>
+		
+			
 				</div>
-			</div>	
 		);
 	}
 }
@@ -230,3 +269,6 @@ export default RawPlanList;
         }
 
     }
+
+
+

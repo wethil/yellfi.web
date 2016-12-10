@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import Navbar from './Navbar.jsx'
-import MainActivity from './MainActivity/MainActivity.jsx'
+import LoggedInUserFragment from './LoggedInUserFragment.jsx'
 import emitter from '../emitter.js' //main emitter
 import Login from '../LeftColumn/Accounts/Login.jsx'
 
@@ -43,7 +42,7 @@ import Login from '../LeftColumn/Accounts/Login.jsx'
 		return (
 				<div>
 					
-        {userId==null ? <div style={{marginTop:'50%'}} >  <Login /> </div> : <Navbar  coordinates={userCoord} />} 
+        {userId==null ? <div style={{marginTop:'50%'}} >  <Login /> </div> : <LoggedInUserFragment  coordinates={userCoord} />} 
 						
 				</div>
 		);
