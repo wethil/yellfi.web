@@ -59,13 +59,13 @@ Yells.attachSchema(
       type:Number,
       defaultValue:0 // 0 is just for owner, 1 is public 2 is private
     },
-    rating : {
+    joining_quantity : {
         type : Number,
-        optional : true
+        defaultValue:0
     },
     comment_quantity : {
        type : Number,
-        optional : true
+      defaultValue:0
     },
     ownerId : {
          type : String,

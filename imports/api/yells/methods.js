@@ -52,7 +52,7 @@ Meteor.methods({
     reqJoin:function(userId,yell,publicity,yellOwnerId) {
         if (publicity==1) {
             Yells.update({_id:yell}, {$push : {requests : this.userId , approved:this.userId }})
-
+            Yells.update({ _id: yell }, {$inc: {joining_quantity :1}});
              Notifications.insert({
                 senderId:yellOwnerId,
                 receiverId:this.userId,
@@ -77,7 +77,7 @@ Meteor.methods({
     },
     approveJoin:function(userId,yell,yellOwnerId) {
         Yells.update({_id:yell}, {$push : {approved : userId }})
-        
+        Yells.update({ _id: yell }, {$inc: {joining_quantity :1}});
          Notifications.insert({
                 senderId:yellOwnerId,
                 receiverId:userId,
@@ -90,6 +90,7 @@ Meteor.methods({
     },
     cancelApprove:function(userId,yell) {
         Yells.update({_id:yell}, {$pull : {approved : userId }})
+        Yells.update({ _id: yell }, {$inc: {joining_quantity :-1}});
     },
      cancelJoin: function(userId,yell) {//requerers will use this
          Yells.update({_id:yell}, {$pull : {requests : userId }})
@@ -99,7 +100,7 @@ Meteor.methods({
     },
     deleteYell:function(yellId) {
         Yells.update({_id:yellId}, {$set : {visible : false }})
-         Notifications.remove({yellId:yellId})
+         Notifications.remove({yellId:yellId},{multi :true})
 
     },
     undoDeleteYell:function(yellId) {
@@ -107,6 +108,8 @@ Meteor.methods({
     },
     makeSuggestion:function(yellId,suggestions){
         Yells.update({_id:yellId}, {$set : {suggestionsByYellfi : suggestions }})
+        sugsNumber = suggestions.length
+        Yells.update({ _id: yellId }, {$inc: {comment_quantity :sugsNumber}});
     }
 
 });

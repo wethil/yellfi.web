@@ -11,7 +11,7 @@ const composer = ( props, onData ) => {
   userId = Meteor.userId();
   limit=20
   const fieldsOpt = {
-  	fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0},
+  	fields: {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'keyword':1,'joining_quantity':1,'comment_quantity':1},
   	limit:limit,
 	sort: {created_at: -1}
 }

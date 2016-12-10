@@ -116,6 +116,10 @@ if (yells && yells.length > 0) {
 	} else {
 	  plan =i18n.__(plans[prePlan].content)
 	}		
+	cQ = yell.comment_quantity
+	jQ = yell.joining_quantity
+	commentQuantity = (cQ && cQ>0 )? `(${yell.comment_quantity})` :null
+	joiningQuantity = (jQ&&jQ>0) ? `(${yell.joining_quantity})` :null
 
 	if (yell.publicity == 0) {
 	  publicityLabel =  <span>  <a className="ui mini circular label"><i className="user icon"></i> {publicity}</a>  </span>  
@@ -127,14 +131,17 @@ if (yells && yells.length > 0) {
 	}
 
 	if(yell.publicity==0) {
-		actionButtons =  <div onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic fluid green button">Suggestions</div>
+		actionButtons =  <div onClick={()=> this.openComments(yell._id, yell.ownerId )}
+							  className="ui basic fluid green button">
+								Suggestions {commentQuantity}
+						</div>
 		
 					       
 					     
 	} else {
 		actionButtons =    <div className="ui two buttons">
-					        <div onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions</div>
-					        <div onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings</div>
+					        <div onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions {commentQuantity}</div>
+					        <div onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings {joiningQuantity}</div>
 					      </div>
 	}
 
