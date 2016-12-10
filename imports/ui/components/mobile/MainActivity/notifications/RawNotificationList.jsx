@@ -73,7 +73,7 @@ sendNotificationsToTabTitle(notifications){
 				}
 			 	
 			 	notificationList.push(
-						 <div className="ui centered fluid  card" key={notification._id}>
+						 <div className="ui centered fluid  card card--z-2" key={notification._id}>
 						    <div className="content">
 						      <img  style={styles.avatar} className="left floated mini ui circular  image" src={notification.sender.picture} />	      
 						      <div style={styles.header} className="header">

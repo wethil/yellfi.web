@@ -10,7 +10,7 @@ yellsFieldsOpt= {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'key
 const composer = ( props, onData ) => {
  //limit=Number(props.limit)
  limit = 20
-component = 1
+component = 0
   const subscription =  YellSubs.subscribe( 'latestYells',limit ) 
    
 

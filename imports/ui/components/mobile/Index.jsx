@@ -1,18 +1,22 @@
 import React, { Component } from 'react';
 import Navbar from './Navbar.jsx'
 import MainActivity from './MainActivity/MainActivity.jsx'
+import emitter from '../emitter.js' //main emitter
+import Login from '../LeftColumn/Accounts/Login.jsx'
 
  class Index extends Component {
  	constructor(props) {
  	  super(props);
  	
  	  this.state = {
- 	  	userCoord:[-88.175354,39.480200] //eieieiu
- 	  };
+ 	  	userCoord:[-88.175354,39.480200], //eieieiu
+ 	    userId:Meteor.userId()
+    };
  	}
 
  	componentDidMount(){
- 		moment.locale('tr')
+ 		//moment.locale('tr')
+    emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}) ); //from login jsx
  	}
 
  	componentWillMount(){
@@ -34,11 +38,12 @@ import MainActivity from './MainActivity/MainActivity.jsx'
 
 
 	render() {
-		const {userCoord} = this.state
+		const {userCoord,userId} = this.state
 
 		return (
 				<div>
-						<Navbar  coordinates={userCoord} />
+					
+        {userId==null ? <div style={{marginTop:'50%'}} >  <Login /> </div> : <Navbar  coordinates={userCoord} />} 
 						
 				</div>
 		);
