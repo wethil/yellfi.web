@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Comments from './comments.js'
 import Notifications from '../notifications/notifications.js'
+import Yells from '../yells/yells.js'
 
 Meteor.methods({
 	addComment : function (comCont,yellId,yellOwnerId) {
@@ -11,7 +12,9 @@ Meteor.methods({
 			created_at : new Date(),
 			ownerId :this.userId
 		})
-	
+if(this.userId!=yellOwnerId){
+	Yells.update({ _id: yellId }, {$inc: {comment_quantity : 1} });
+}	
 
 	 if(this.userId!=yellOwnerId) {
 	      	  Notifications.upsert({
@@ -52,6 +55,7 @@ Meteor.methods({
     },
     unlikeComment:function(commentId) {
         Comments.update({_id:commentId}, {$pull : {likes : this.userId }})
+        Yells.update({ _id: yellId }, {$inc: {comment_quantity : -1} });
     },
      deleteComment:function(commentId) {
         Comments.update({_id:commentId}, {$set : {visible : false }})
