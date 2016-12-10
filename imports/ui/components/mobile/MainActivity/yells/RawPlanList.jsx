@@ -30,8 +30,17 @@ import emitter from '../../emitter.js'
 					.on("enter",  (e)=> {
 							if(this.state.haveMore==true){
 									$('#loader').toggleClass('active',true)
-									 	emitter.emit('increaseLimit')
-									 	scene.update()
+										switch (this.props.component) {
+											case 0:
+												emitter.emit('increaseLimit')
+											break;
+											case 1:
+												emitter.emit('increaseUPLimit')
+											break;		
+
+										}
+									 	
+									 	scene.update()									 	
 									 }
 					});
 

@@ -14,9 +14,9 @@ import emitter from '../emitter.js'
 
  	componentDidMount(){
  		//moment.locale('tr')
-		 	const {limit} = this.state
+		 
 		    emitter.addListener('increaseUPLimit',()=> {
-		    	this.setState({limit:limit+1});
+		    	this.setState({limit:this.state.limit+5});
 		    	}); 
  	}
 	render() {

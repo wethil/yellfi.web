@@ -9,7 +9,7 @@ import {YellSubs} from './YellsComponents/subsManager.js'
 
 const composer = ( props, onData ) => {
   userId = Meteor.userId();
-  limit=20
+  limit=Number(props.limit)
   component = 1
   const fieldsOpt = {
   	fields: {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'keyword':1,'joining_quantity':1,'comment_quantity':1},
