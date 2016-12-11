@@ -17,8 +17,7 @@ import _ from 'lodash'
  	  	plans : [],
  	  	snackbarState:false,
  	  	snackbarText:"",
- 	  	haveMore:false,
- 	  	lastYellId:"#lastcont"
+ 	  	haveMore:false
  	  };
  	}
 
@@ -48,13 +47,17 @@ import _ from 'lodash'
  	}
 
 componentWillMount(){
-  this.makePropState(this.props.yells)
-   this.checkProps(this.props.yells, this.props.limit)
+	yells = this.props.yells;
+	limit = this.props.limit;
+  this.makePropState(yells)
+   this.checkProps(yells, limit)
 }
 
 componentWillReceiveProps(nextProps){
-  this.makePropState(nextProps.yells)
-  this.checkProps(nextProps.yells, nextProps.limit)
+	yells = nextProps.yells;
+	limit = nextProps.limit
+  this.makePropState(yells)
+  this.checkProps(yells,limit)
   
 }
 
@@ -64,29 +67,18 @@ makePropState(data){
 }
 
 checkProps(newP,limit){
-	console.log( newP.length + ' ' + limit )
-	//document.getElementById("div_top2").setAttribute("id", "div_top1");
-  if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
-  	console.log('false')
-      this.setState({haveMore:false})
-      $('#loader').toggleClass('active',false)
-      } else {
-        this.setState({haveMore:true})
-      }
+	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
+		this.setState({haveMore:false})
+		$('.loader').toggleClass('active',false)
+	} else {
+		this.setState({haveMore:true})
+	}
 
-      if(newP && newP.length != 0) {
-			  last = _.last(newP);
-			  lastId=last._id
-			  this.setState({lastYellId:lastId})
-			  $('#' + lastId).attr("id", "lastEl");
-			   $('.loader').attr("id", "loader");
-
-			
-			} else {
-			  lastId=""
-			}
-
-
+	if(newP && newP.length != 0) {
+		last = _.last(newP)._id;
+		$('#' + last).attr("id", "lastEl");
+		$('.loader').attr("id", "loader");
+	} 
 }
 
 

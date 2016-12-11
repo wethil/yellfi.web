@@ -13,8 +13,7 @@ import emitter from '../emitter.js'
  	}
 
  	componentDidMount(){
- 		//moment.locale('tr')
-		 
+ 		//moment.locale('tr')	 
 		    emitter.addListener('increaseUPLimit',()=> {
 		    	this.setState({limit:this.state.limit+5});
 		    	}); 

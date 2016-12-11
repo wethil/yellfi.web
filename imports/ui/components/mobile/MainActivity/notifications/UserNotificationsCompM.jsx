@@ -7,7 +7,7 @@ const NotificationSubs = new SubsManager()
 
 const composer = ( props, onData ) => {
 userId=Meteor.userId()
-limit = 5
+limit=Number(props.limit)
 //console.log(limit)
   const subscription =  NotificationSubs.subscribe( 'thisUserNotifications',userId,limit ) 
 

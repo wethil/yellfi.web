@@ -3,6 +3,7 @@ import {plans,ntfTitles} from '../../../constants.js';
 import { browserHistory } from 'react-router'
 import emitter from '../../emitter.js'
 import NoNotification from './component/NoNotification.jsx'
+import ScrollMagic from 'scrollmagic';
 import _ from 'lodash'
 
  class RawNotificationList extends Component {
@@ -10,24 +11,61 @@ import _ from 'lodash'
  	  super(props);
  	
  	  this.state = {
- 	  	notifications:[]
+ 	  	notifications:[],
+ 	  	haveMore:false
  	  };
  	}
 
+ componentDidMount(){
+ 	var controller = new ScrollMagic.Controller();
+ 	var scene = new ScrollMagic.Scene({triggerElement: "#lastEl", triggerHook: "onEnter"})
+					.addTo(controller)
+					.on("enter",  (e)=> {
+						if(this.state.haveMore==true){
+							$('#loader').toggleClass('active',true)
+							emitter.emit('increaseNtFLimit')
+							scene.update()									 	
+						}
+					});
+
+ 	}	
+
  componentWillMount() {
-     this.makePropState(this.props.notifications)
-    this.sendNotificationsToTabTitle(this.props.notifications)
+ 	var ntf = this.props.notifications;
+ 	var limit = this.props.limit;
+    this.makePropState(ntf)
+    this.checkProps(ntf,limit)
+    this.sendNotificationsToTabTitle(ntf)
+    
   }
 
    componentWillReceiveProps(nextProps){
-   
-    this.sendNotificationsToTabTitle(nextProps.notifications)
-    this.makePropState(nextProps.notifications)
+   var ntf = nextProps.notifications
+   var limit = nextProps.limit
+	this.sendNotificationsToTabTitle(ntf)
+	this.makePropState(ntf)
+	this.checkProps(ntf,limit)
   } 
 
 makePropState(data){
   this.setState({notifications:data})
 }
+
+checkProps(newP,limit){
+	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
+		this.setState({haveMore:false})
+		$('.loader').toggleClass('active',false)
+	} else {
+		this.setState({haveMore:true})
+	}
+
+	if(newP && newP.length != 0) {
+		last = _.last(newP)._id;
+		$('#' + last).attr("id", "lastEl");
+		$('.loader').attr("id", "loader");
+	} 
+}
+
 
 
 sendNotificationsToTabTitle(notifications){
@@ -103,7 +141,9 @@ sendNotificationsToTabTitle(notifications){
 		return (
 				<div className="ui container" style={{marginTop:67,marginBottom:70}}>
  					{notificationList}
- 				
+ 					<div>        
+					 <div  id="lastEl" className="ui active centered inline loader"></div>
+					 </div>
 			</div>
 		);
 	}
