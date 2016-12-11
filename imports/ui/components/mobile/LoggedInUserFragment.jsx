@@ -72,11 +72,11 @@ openForm(coord){
 				</div>
 				<span style={cntStyle} >
 					{content}
-					{/*bottomMenu*/}
+					{bottomMenu}
 				</span>
 				<span style={ntfStyle} >
 					<UserNotificationsFeed />
-					{/*mainBottomNav*/}	
+					{mainBottomNav}	
 				</span>
 			</div>
 		);

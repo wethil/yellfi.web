@@ -7,6 +7,7 @@ import { Dropdown } from 'semantic-ui-react';
 import { Notification } from 'react-notification';
 import ScrollMagic from 'scrollmagic';
 import emitter from '../../emitter.js'
+import _ from 'lodash'
 
  class RawPlanList extends Component {
  	constructor(props) {
@@ -25,7 +26,7 @@ import emitter from '../../emitter.js'
  	
  componentDidMount(){
  	var controller = new ScrollMagic.Controller();
- 	var scene = new ScrollMagic.Scene({triggerElement: '#loader', triggerHook: "onEnter"})
+ 	var scene = new ScrollMagic.Scene({triggerElement: "#lastEl", triggerHook: "onEnter"})
 					.addTo(controller)
 					.on("enter",  (e)=> {
 							if(this.state.haveMore==true){
@@ -63,14 +64,28 @@ makePropState(data){
 }
 
 checkProps(newP,limit){
-
+	console.log( newP.length + ' ' + limit )
+	//document.getElementById("div_top2").setAttribute("id", "div_top1");
   if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
-
+  	console.log('false')
       this.setState({haveMore:false})
       $('#loader').toggleClass('active',false)
       } else {
         this.setState({haveMore:true})
       }
+
+      if(newP && newP.length != 0) {
+			  last = _.last(newP);
+			  lastId=last._id
+			  this.setState({lastYellId:lastId})
+			  $('#' + lastId).attr("id", "lastEl");
+			   $('.loader').attr("id", "loader");
+
+			
+			} else {
+			  lastId=""
+			}
+
 
 }
 
@@ -222,11 +237,13 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={{marginTop:67}}>
+<div className="ui container" id="container" style={{marginTop:67,marginBottom:70}}>
 				
 		    
         {planList}
-<div id="loader" className="ui active centered inline loader"></div>
+<div>        
+ <div  id="lastEl" className="ui active centered inline loader"></div>
+ </div>
 				<Notification
 					  isActive={snackbarState}
 					  dismissAfter={2000}

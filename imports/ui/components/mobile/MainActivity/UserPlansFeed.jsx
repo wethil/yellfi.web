@@ -20,9 +20,9 @@ import emitter from '../emitter.js'
 		    	}); 
  	}
 	render() {
-		const {limit} = this.state
+	
 		return (
-			<UserPlansComposer limit={limit} />
+			<UserPlansComposer limit={this.state.limit} />
 		);
 	}
 }

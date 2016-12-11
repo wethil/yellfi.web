@@ -21,7 +21,7 @@ import emitter from '../emitter.js'
 	render() {
 		const {limit} = this.state
 		return (
-			  <LatestPlans  limit={limit} />				
+			  <LatestPlans  limit={this.state.limit} />				
 		);
 	}
 }
