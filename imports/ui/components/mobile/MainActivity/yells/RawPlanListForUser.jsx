@@ -7,6 +7,7 @@ import { Dropdown ,Loader } from 'semantic-ui-react';
 import { Notification } from 'react-notification';
 import VisibilitySensor from 'react-visibility-sensor';
 import emitter from '../../emitter.js';
+import  {frameStyle} from './YellsComponents/constant.js'
 import _ from 'lodash';
 
 
@@ -206,7 +207,7 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={{height: '70vh',marginBottom:75,marginTop:58}}>
+<div className="ui container" id="container" style={frameStyle}>
 	{planList}
 	<VisibilitySensor 
 		partialVisibility={true}

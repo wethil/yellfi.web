@@ -179,7 +179,7 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 			               <div onClick={ ()=> this.like(comment._id,yellId,yellOwnerId)} className="ui tiny basic   icon button"><i className="empty heart icon"/></div>	  
 						 	
 			 	commentList.push(
-						 <div className="ui centered fluid  card" key={comment._id}>
+						 <div className="ui centered fluid  card card--z-1" key={comment._id}>
 						    <div className="content">
 						      <img  style={styles.avatar} className="left floated mini ui circular  image" src={comment.owner.picture} />
 						   

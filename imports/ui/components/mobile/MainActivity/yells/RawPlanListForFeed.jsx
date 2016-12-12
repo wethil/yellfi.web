@@ -9,6 +9,7 @@ import emitter from '../../emitter.js'
 import _ from 'lodash';
 import { Loader } from 'semantic-ui-react'
 import VisibilitySensor from 'react-visibility-sensor'
+import  {frameStyle} from './YellsComponents/constant.js'
 
 
  	
@@ -215,7 +216,7 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={{height: '70vh',marginBottom:75,marginTop:58}}>
+<div className="ui container" id="container" style={frameStyle}>
 				
 		    
         {planList}

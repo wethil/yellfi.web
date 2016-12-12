@@ -144,7 +144,7 @@ import _ from 'lodash'
 		if (requerers && requerers.length>0) {
 				requerers.forEach((requerer) => { //src={requerer.picture}
 					requererList.push(
-						 <div className="ui centered fluid  card" >
+						 <div className="ui centered fluid  card card--z-1" >
 						    <div className="content"> 
 						      <img  style={styles.avatar} className="left floated mini ui circular  image" src={requerer.picture} />
 						      <div style={styles.header} className="header">

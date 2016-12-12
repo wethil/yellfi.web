@@ -5,6 +5,7 @@ import emitter from '../../emitter.js'
 import NoNotification from './component/NoNotification.jsx';
 import VisibilitySensor from 'react-visibility-sensor';
 import { Loader } from 'semantic-ui-react'
+import {frameStyle} from '../yells/YellsComponents/constant.js'
 import _ from 'lodash'
 
  class RawNotificationList extends Component {
@@ -136,7 +137,7 @@ sendNotificationsToTabTitle(notifications){
 
 
 		return (
-<div className="ui container" style={{height: '70vh',marginBottom:75,marginTop:58}}>
+<div className="ui container" style={frameStyle}>
 	{notificationList}
 	<VisibilitySensor 
 		partialVisibility={true}

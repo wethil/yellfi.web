@@ -1,8 +1,9 @@
 import React from 'react';
-const bg = "http://i.hizliresim.com/2n181j.png"
- const LoadingList = () => (
-			<div style={{height: '70vh',marginBottom:75,marginTop:58}} >	
-				<div  className="ui card card--z-2">
+import  {bg,frameStyle} from './constant.js'
+
+const LoadingList = () => (
+			<div style={frameStyle} >	
+				<div  style={loadingCard} className="ui card card--z-2">
 					<div  className="content">
 						<img src={bg} alt="" />
 					</div>
@@ -30,3 +31,8 @@ const bg = "http://i.hizliresim.com/2n181j.png"
 			</div>
 		);
 export default LoadingList;
+
+
+loadingCard={
+	height:'12em'
+}
