@@ -25,9 +25,11 @@ var getFbPicture = function(accessToken) { // make async call to grab the pictur
   };
 
 
-
+/*
   Accounts.onCreateUser(function(options, user) {
 	  user.picture = getFbPicture(user.services.facebook.accessToken);
 	  user.firstName = user.services.facebook.first_name
 	  return user;
 });
+
+*/

@@ -7,6 +7,7 @@ import { Dropdown } from 'semantic-ui-react';
 import { Notification } from 'react-notification';
 import emitter from '../../emitter.js'
 import _ from 'lodash';
+import { Loader } from 'semantic-ui-react'
 import VisibilitySensor from 'react-visibility-sensor'
 
 
@@ -14,126 +15,106 @@ import VisibilitySensor from 'react-visibility-sensor'
 
  class RawPlanListForFeed extends Component {
 
- 	constructor(props) {
- 	  super(props);
- 	
- 	  this.state = {
- 	  	plans : [],
- 	  	snackbarState:false,
- 	  	snackbarText:"",
- 	  	haveMore:false,
- 	  	sensor:true
- 	  };
- 	}
+constructor(props) {
+	super(props);
+	this.state = {
+		plans : [],
+		snackbarState:false,
+		snackbarText:"",
+		haveMore:false,
+		sensor:true,
+		loader:true
+	};
+}
+
+handleVisibleSensor(isVisible){
+	if (isVisible){
+	$('#lastElFeed').toggleClass('active',true)
+	this.setState({sensor:false})
+	emitter.emit('increaseLimit')
+	}
+}
 
 
- 	
-
-
- 	handleVisibleSensor(isVisible){
- 		
- 		if (isVisible){
- 			$('#lastElFeed').toggleClass('active',true)
-			console.log('increase')
-			this.setState({sensor:false})
-			emitter.emit('increaseLimit')
-			
- 		}
- 	}
-
- 	
 
 componentWillMount(){
-	 this.setState({sensor:true})
+	this.setState({sensor:true})
 	yells = this.props.yells;
 	limit = this.props.limit;
-  this.makePropState(yells)
-   this.checkProps(yells, limit)
+	this.makePropState(yells)
+	this.checkProps(yells, limit)
 }
 
 componentWillReceiveProps(nextProps){
-	 this.setState({sensor:true})
+	this.setState({sensor:true})
 	yells = nextProps.yells;
 	limit = nextProps.limit
-  this.makePropState(yells)
-  this.checkProps(yells,limit)
-  	
-  
+	this.makePropState(yells)
+	this.checkProps(yells,limit)
 }
 
 
 
 makePropState(data){
   this.setState({yells:data})
- 
 }
 
 componentWillUnmount(){
- 		emitter.emit('resetLimit')
- 	}
+	emitter.emit('resetLimit')
+}
 
 checkProps(newP,limit){
-	
 	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
-		this.setState({haveMore:false})
-		this.setState({sensor:false})
-		$('.loader').toggleClass('active',false)
+		this.setState({haveMore:false,sensor:false,loader:false})
 	} else {
-		this.setState({haveMore:true})
-		this.setState({sensor:true})
-	}
-
-	
+		this.setState({haveMore:true,sensor:true,loader:true})
+	}	
 }
 
 
 
 
- 	openComments(yellId,ownerId){
- 			  browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
- 	}
+openComments(yellId,ownerId){
+	browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+}
 
- 	openJoinings(yellId,ownerId){
- 			 browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
- 	}
+openJoinings(yellId,ownerId){
+	browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
+}
 
- deleteYell(yellId,ownerId){
- 	this.setState({activeYellId:yellId,activeOwnerId:ownerId})
- 		 Meteor.call('deleteYell',yellId, error => { 
-              if (error) { 
-                  console.log('error', error); 
-              } else {
-              		 this.setState({
-			          	snackbarState:true,
-			          	snackbarText:i18n.__('common.YellCard.deletePlan')
-			          })
-              }        
-          });
- 		 setTimeout(()=>{ this.closeSb() }, 2000);
- 		
- 		
- 	}
+deleteYell(yellId,ownerId){
+	this.setState({activeYellId:yellId,activeOwnerId:ownerId})
+	Meteor.call('deleteYell',yellId, error => { 
+		if (error) { 
+			console.log('error', error); 
+		} else {
+			this.setState({
+			snackbarState:true,
+			snackbarText:i18n.__('common.YellCard.deletePlan')
+			})
+		}        
+	});
+	setTimeout(()=>{ this.closeSb() }, 2000);	
+}
 
 
- 	undoAction() {
- 		yellId = this.state.activeYellId
- 		ownerId= this.state.activeOwnerId
- 		    Meteor.call('undoDeleteYell',yellId,error=> {
-            if (error) {
-              console.log(error)
-            } else {
-             
-              browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
-
-            }
-          });
+undoAction() {
+	var yellId = this.state.activeYellId
+	var ownerId= this.state.activeOwnerId
+	Meteor.call('undoDeleteYell',yellId,error=> {
+	if (error) {
+		console.log(error)
+	} else {
+		browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+	}
+	});
 }
 
 closeSb(){
-	 this.setState({
-			          	snackbarState:false,
-			          	snackbarText:""
-			          })
+	this.setState({
+		snackbarState:false,
+		snackbarText:""
+	})
 }
 
 	render() {
@@ -141,7 +122,6 @@ closeSb(){
 
 	const {yells} = this.props
 	const {snackbarState,snackbarText,sensor} = this.state
-	console.log('sensor ' + sensor)
 if (yells && yells.length > 0) {
 		planList = []
 		yells.forEach( (yell) => {
@@ -235,7 +215,7 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={{height: '70vh',marginBottom:70}}>
+<div className="ui container" id="container" style={{height: '70vh',marginBottom:70,marginTop:70}}>
 				
 		    
         {planList}
@@ -244,7 +224,7 @@ if (yells && yells.length > 0) {
      		 delayedCall={true}
      		 onChange={this.handleVisibleSensor.bind(this)}
      		 active={this.state.sensor} >  
- 		<div  id="lastElFeed" className="ui active centered inline loader"></div>
+ 		 <Loader active={this.state.loader} inline='centered' />
  	</VisibilitySensor>	
 
 				<Notification

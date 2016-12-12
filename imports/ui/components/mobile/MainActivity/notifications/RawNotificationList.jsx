@@ -2,35 +2,36 @@ import React, { Component } from 'react';
 import {plans,ntfTitles} from '../../../constants.js';
 import { browserHistory } from 'react-router'
 import emitter from '../../emitter.js'
-import NoNotification from './component/NoNotification.jsx'
-import ScrollMagic from 'scrollmagic';
+import NoNotification from './component/NoNotification.jsx';
+import VisibilitySensor from 'react-visibility-sensor';
+import { Loader } from 'semantic-ui-react'
 import _ from 'lodash'
 
  class RawNotificationList extends Component {
  	constructor(props) {
  	  super(props);
- 	
  	  this.state = {
  	  	notifications:[],
- 	  	haveMore:false
+ 	  	haveMore:false,
+ 	  	sensor:true,
+ 	  	loader:true
  	  };
  	}
 
- componentDidMount(){
- 	var controller = new ScrollMagic.Controller();
- 	var scene = new ScrollMagic.Scene({triggerElement: "#lastEl", triggerHook: "onEnter"})
-					.addTo(controller)
-					.on("enter",  (e)=> {
-						if(this.state.haveMore==true){
-							$('#loader').toggleClass('active',true)
-							emitter.emit('increaseNtFLimit')
-							scene.update()									 	
-						}
-					});
+	
 
- 	}	
+ handleVisibleSensor(isVisible){
+if (isVisible){
+	this.setState({sensor:false,loader:true})
+	console.log('inmc')
+	emitter.emit('increaseNtFLimit')
+
+	}
+}	
+
 
  componentWillMount() {
+ 	this.setState({sensor:true})
  	var ntf = this.props.notifications;
  	var limit = this.props.limit;
     this.makePropState(ntf)
@@ -53,10 +54,10 @@ makePropState(data){
 
 checkProps(newP,limit){
 	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
-		this.setState({haveMore:false})
-		$('.loader').toggleClass('active',false)
+		this.setState({haveMore:false,sensor:false,loader:false})
+		$('#lastEl').toggleClass('active',false)
 	} else {
-		this.setState({haveMore:true})
+		this.setState({haveMore:true,sensor:true,loader:true})
 	}
 
 	
@@ -135,12 +136,17 @@ sendNotificationsToTabTitle(notifications){
 
 
 		return (
-				<div className="ui container" style={{height: '80.6vh',marginBottom:70}}>
- 					{notificationList}
- 					<div>        
-					 <div  id="lastEl" className="ui active centered inline loader"></div>
-					 </div>
-			</div>
+<div className="ui container" style={{height: '70vh',marginBottom:70,marginTop:70}}>
+	{notificationList}
+	<VisibilitySensor 
+		partialVisibility={true}
+		delayedCall={true}
+		onChange={this.handleVisibleSensor.bind(this)}
+		active={this.state.sensor}
+		>
+		<Loader active={this.state.loader} inline='centered' />
+	</VisibilitySensor>	
+</div>
 		);
 	}
 }

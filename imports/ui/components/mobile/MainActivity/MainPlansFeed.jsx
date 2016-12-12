@@ -18,7 +18,6 @@ import emitter from '../emitter.js'
 
 		    emitter.addListener('resetLimit',()=> {
 		    		this.setState({limit:10});
-		    		console.log(this.state.limit)
 		    	}); 
  	}
 

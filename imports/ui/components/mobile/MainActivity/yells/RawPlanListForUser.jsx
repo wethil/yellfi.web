@@ -3,128 +3,109 @@ import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/
 import {plans} from '../../../constants.js';
 import { browserHistory } from 'react-router'
 import NoUserPlans from './YellsComponents/NoUserPlans.jsx'
-import { Dropdown } from 'semantic-ui-react';
+import { Dropdown ,Loader } from 'semantic-ui-react';
 import { Notification } from 'react-notification';
-import VisibilitySensor from 'react-visibility-sensor'
-import emitter from '../../emitter.js'
-import _ from 'lodash'
+import VisibilitySensor from 'react-visibility-sensor';
+import emitter from '../../emitter.js';
+import _ from 'lodash';
 
 
  class RawPlanListForUser extends Component {
  	constructor(props) {
- 	  super(props);
- 	
- 	  this.state = {
- 	  	plans : [],
- 	  	snackbarState:false,
- 	  	snackbarText:"",
- 	  	haveMore:false,
- 	  	sensor:true
- 	  };
- 	}
+	super(props);
+	this.state = {
+		plans : [],
+		snackbarState:false,
+		snackbarText:"",
+		haveMore:false,
+		sensor:true,
+		loader:true
+	};
+}
 
+handleVisibleSensor(isVisible){
+if (isVisible){
+	this.setState({sensor:false,loader:true})
+	console.log('inctp')
+	emitter.emit('increaseUPLimit')
 
- 	
-
-
- 		handleVisibleSensor(isVisible){
- 		
- 		if (isVisible){
- 			$('#lastElUser').toggleClass('active',true)
-			console.log('increaseu')
-			emitter.emit('increaseUPLimit')
-			this.setState({sensor:false})
- 		}
- 	}
+	}
+}
 
 componentWillMount(){
-	 this.setState({sensor:true})
+	this.setState({sensor:true})
 	yells = this.props.yells;
 	limit = this.props.limit;
-  this.makePropState(yells)
-   this.checkProps(yells, limit)
+	this.makePropState(yells)
+	this.checkProps(yells, limit)
 }
 
 componentWillReceiveProps(nextProps){
-	 this.setState({sensor:true})
 	yells = nextProps.yells;
 	limit = nextProps.limit
-  this.makePropState(yells)
-  this.checkProps(yells,limit)
- 
+	this.makePropState(yells)
+	this.checkProps(yells,limit)
 }
 
-	componentWillUnmount(){
- 		emitter.emit('resetUPLimit')
- 	}
+componentWillUnmount(){
+	emitter.emit('resetUPLimit')
+}
 
 
 makePropState(data){
   this.setState({yells:data})
-
 }
 
 checkProps(newP,limit){
 	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
-		this.setState({haveMore:false})
-		this.setState({sensor:false})
-		$('.loader').toggleClass('active',false)
+		this.setState({haveMore:false,sensor:false,loader:false})
+		console.log('active false')
 	} else {
-		this.setState({haveMore:true})
-		this.setState({sensor:true})
+		this.setState({haveMore:true,sensor:true,loader:true})
 	}
+}
 
-	
+openComments(yellId,ownerId){
+  browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+}
+
+openJoinings(yellId,ownerId){
+ browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
+}
+
+deleteYell(yellId,ownerId){
+	this.setState({activeYellId:yellId,activeOwnerId:ownerId})
+	Meteor.call('deleteYell',yellId, error => { 
+		if (error) { 
+			console.log('error', error); 
+		} else {
+			this.setState({
+			snackbarState:true,
+			snackbarText:i18n.__('common.YellCard.deletePlan')
+			})
+		}        
+	});
+	setTimeout(()=>{ this.closeSb() }, 2000);	
 }
 
 
-
-
- 	openComments(yellId,ownerId){
- 			  browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
- 	}
-
- 	openJoinings(yellId,ownerId){
- 			 browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
- 	}
-
- deleteYell(yellId,ownerId){
- 	this.setState({activeYellId:yellId,activeOwnerId:ownerId})
- 		 Meteor.call('deleteYell',yellId, error => { 
-              if (error) { 
-                  console.log('error', error); 
-              } else {
-              		 this.setState({
-			          	snackbarState:true,
-			          	snackbarText:i18n.__('common.YellCard.deletePlan')
-			          })
-              }        
-          });
- 		 setTimeout(()=>{ this.closeSb() }, 2000);
- 		
- 		
- 	}
-
-
- 	undoAction() {
- 		yellId = this.state.activeYellId
- 		ownerId= this.state.activeOwnerId
- 		    Meteor.call('undoDeleteYell',yellId,error=> {
-            if (error) {
-              console.log(error)
-            } else {
-             
-              browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
-
-            }
-          });
+undoAction() {
+	var yellId = this.state.activeYellId
+	var ownerId= this.state.activeOwnerId
+	Meteor.call('undoDeleteYell',yellId,error=> {
+	if (error) {
+		console.log(error)
+	} else {
+		browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+	}
+	});
 }
 
 closeSb(){
-	 this.setState({
-			          	snackbarState:false,
-			          	snackbarText:""
-			          })
+	this.setState({
+		snackbarState:false,
+		snackbarText:""
+	})
 }
 
 	render() {
@@ -225,35 +206,31 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={{height: '70vh',marginBottom:70}}>
-				
-		    
-        {planList}
-         <VisibilitySensor 
-     		partialVisibility={true}
-     		 delayedCall={true}
-     		 onChange={this.handleVisibleSensor.bind(this)}
-     		 active={this.state.sensor}
-     		  >  
- 		<div  id="lastElUser" className="ui active centered inline loader"></div>
- 	</VisibilitySensor>	
+<div className="ui container" id="container" style={{height: '70vh',marginBottom:70,marginTop:70}}>
+	{planList}
+	<VisibilitySensor 
+		partialVisibility={true}
+		delayedCall={true}
+		onChange={this.handleVisibleSensor.bind(this)}
+		active={this.state.sensor}
+		>  
+			 <Loader active={this.state.loader} inline='centered' />
+	</VisibilitySensor>	
 
 
-				<Notification
-					  isActive={snackbarState}
-					  dismissAfter={2000}
-					  message={snackbarText}
-					  action={i18n.__('common.comments.undo')}
-					  activeBarStyle={{zIndex:150,bottom:'4rem',left:'5rem'}}
-					  onClick={ ()=> this.undoAction()}
-					  onDismiss={()=>this.setState({
-			          	snackbarState:false,
-			          	snackbarText:""
-			          })}
-					/>
-		
-			
-				</div>
+	<Notification
+		isActive={snackbarState}
+		dismissAfter={2000}
+		message={snackbarText}
+		action={i18n.__('common.comments.undo')}
+		activeBarStyle={{zIndex:150,bottom:'4rem',left:'5rem'}}
+		onClick={ ()=> this.undoAction()}
+		onDismiss={()=>this.setState({
+		snackbarState:false,
+		snackbarText:""
+		})}
+	/>
+</div>
 		);
 	}
 }

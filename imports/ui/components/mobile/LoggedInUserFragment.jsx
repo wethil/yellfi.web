@@ -57,6 +57,8 @@ changeTab(value){
 			 <Tabs
 		          onChange={this.changeTab.bind(this)}
 		          value={activeTab}
+		          tabItemContainerStyle={styles.tabs} 
+		          style={{backgroundColor:'rgb(63, 81, 181)'}}
 		        >	
 				<Tab label="One" value={0} />
 				<Tab label="Two" value={1} />
@@ -67,10 +69,11 @@ changeTab(value){
 			<SwipeableViews
 				index={activeTab}
 				 onChangeIndex={this.changeTab.bind(this)}>
-				<MainPlansFeed activeTab={activeTab} />
-				<UserPlansFeed activeTab={activeTab} />
-				<UserNotificationsFeed activeTab={activeTab} />
+			<div>	<MainPlansFeed activeTab={activeTab} /> </div>
+			<div>	<UserPlansFeed activeTab={activeTab} /> </div>
+			<div>	<UserNotificationsFeed activeTab={activeTab} /></div>
 			</SwipeableViews>
+			{mainBottomNav}
 			</div>
 		);
 	}
@@ -82,6 +85,11 @@ const styles= {
 	hidden:{
 		display:'none',
 		overflow:'hidden'
-	}
+	},
+	 tabs:{
+        	backgroundColor:'rgb(63, 81, 181)',
+        	position:'fixed',
+        	zIndex:'999'
+        }
 }
 
