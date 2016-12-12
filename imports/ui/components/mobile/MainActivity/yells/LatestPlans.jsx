@@ -1,7 +1,7 @@
 import { composeWithTracker } from 'react-komposer';
 import React from 'react';
 import  Yells  from '../../../../../api/yells/yells.js';
-import  RawPlanList  from './RawPlanList.jsx';
+import  RawPlanListForFeed  from './RawPlanListForFeed.jsx';
 import {YellSubs} from './YellsComponents/subsManager.js'
 
 
@@ -10,7 +10,6 @@ yellsFieldsOpt= {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'key
 const composer = ( props, onData ) => {
 
 limit=Number(props.limit)
-component = 0
   const subscription =  YellSubs.subscribe( 'latestYells',limit ) 
    
 
@@ -22,9 +21,9 @@ component = 0
                 sort: {created_at: -1}
               }
     	).fetch()
-    onData( null, { yells,component,limit } );
+    onData( null, { yells,limit } );
   }
 };
 
- const LatestPlans = composeWithTracker( composer )( RawPlanList );
+ const LatestPlans = composeWithTracker( composer )( RawPlanListForFeed );
  export default LatestPlans

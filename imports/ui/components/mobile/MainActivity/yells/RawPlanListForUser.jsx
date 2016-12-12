@@ -5,11 +5,12 @@ import { browserHistory } from 'react-router'
 import NoUserPlans from './YellsComponents/NoUserPlans.jsx'
 import { Dropdown } from 'semantic-ui-react';
 import { Notification } from 'react-notification';
-import ScrollMagic from 'scrollmagic';
+import VisibilitySensor from 'react-visibility-sensor'
 import emitter from '../../emitter.js'
 import _ from 'lodash'
 
- class RawPlanList extends Component {
+
+ class RawPlanListForUser extends Component {
  	constructor(props) {
  	  super(props);
  	
@@ -17,36 +18,27 @@ import _ from 'lodash'
  	  	plans : [],
  	  	snackbarState:false,
  	  	snackbarText:"",
- 	  	haveMore:false
+ 	  	haveMore:false,
+ 	  	sensor:true
  	  };
  	}
 
 
  	
- componentDidMount(){
- 	var controller = new ScrollMagic.Controller();
- 	var scene = new ScrollMagic.Scene({triggerElement: "#lastEl", triggerHook: "onEnter"})
-					.addTo(controller)
-					.on("enter",  (e)=> {
-							if(this.state.haveMore==true){
-									$('#loader').toggleClass('active',true)
-										switch (this.props.component) {
-											case 0:
-												emitter.emit('increaseLimit')
-											break;
-											case 1:
-												emitter.emit('increaseUPLimit')
-											break;		
 
-										}
-									 	
-									 	scene.update()									 	
-									 }
-					});
 
+ 		handleVisibleSensor(isVisible){
+ 		
+ 		if (isVisible){
+ 			$('#lastElUser').toggleClass('active',true)
+			console.log('increaseu')
+			emitter.emit('increaseUPLimit')
+			this.setState({sensor:false})
+ 		}
  	}
 
 componentWillMount(){
+	 this.setState({sensor:true})
 	yells = this.props.yells;
 	limit = this.props.limit;
   this.makePropState(yells)
@@ -54,31 +46,35 @@ componentWillMount(){
 }
 
 componentWillReceiveProps(nextProps){
+	 this.setState({sensor:true})
 	yells = nextProps.yells;
 	limit = nextProps.limit
   this.makePropState(yells)
   this.checkProps(yells,limit)
-  
+ 
 }
+
+	componentWillUnmount(){
+ 		emitter.emit('resetUPLimit')
+ 	}
 
 
 makePropState(data){
   this.setState({yells:data})
+
 }
 
 checkProps(newP,limit){
 	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
 		this.setState({haveMore:false})
+		this.setState({sensor:false})
 		$('.loader').toggleClass('active',false)
 	} else {
 		this.setState({haveMore:true})
+		this.setState({sensor:true})
 	}
 
-	if(newP && newP.length != 0) {
-		last = _.last(newP)._id;
-		$('#' + last).attr("id", "lastEl");
-		$('.loader').attr("id", "loader");
-	} 
+	
 }
 
 
@@ -184,7 +180,7 @@ if (yells && yells.length > 0) {
 	}
 
 	if(yell.publicity==0) {
-		actionButtons =  <div onClick={()=> this.openComments(yell._id, yell.ownerId )}
+		actionButtons =  <div style={styles.buttons} onClick={()=> this.openComments(yell._id, yell.ownerId )}
 							  className="ui basic fluid green button">
 								Suggestions {commentQuantity}
 						</div>
@@ -193,15 +189,15 @@ if (yells && yells.length > 0) {
 					     
 	} else {
 		actionButtons =    <div className="ui two buttons">
-					        <div onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions {commentQuantity}</div>
-					        <div onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings {joiningQuantity}</div>
+					        <div style={styles.buttons} onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions {commentQuantity}</div>
+					        <div style={styles.buttons} onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings {joiningQuantity}</div>
 					      </div>
 	}
 
 
 
 				planList.push(  
-					<div className=" ui centered fluid card card--z-2" id={yell._id} key={yell._id}>
+					<div className=" ui centered fluid card" id={yell._id} key={yell._id}>
 					    <div className="content">	
 					        <img  style={styles.avatar} className="left floated mini ui circular  image" src={yell.owner.picture} />
 							{yellOwnerSettings}					  
@@ -229,13 +225,20 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={{marginTop:67,marginBottom:70}}>
+<div className="ui container" id="container" style={{height: '70vh',marginBottom:70}}>
 				
 		    
         {planList}
-<div>        
- <div  id="lastEl" className="ui active centered inline loader"></div>
- </div>
+         <VisibilitySensor 
+     		partialVisibility={true}
+     		 delayedCall={true}
+     		 onChange={this.handleVisibleSensor.bind(this)}
+     		 active={this.state.sensor}
+     		  >  
+ 		<div  id="lastElUser" className="ui active centered inline loader"></div>
+ 	</VisibilitySensor>	
+
+
 				<Notification
 					  isActive={snackbarState}
 					  dismissAfter={2000}
@@ -254,7 +257,7 @@ if (yells && yells.length > 0) {
 		);
 	}
 }
-export default RawPlanList;
+export default RawPlanListForUser;
 
 
 
@@ -284,6 +287,9 @@ export default RawPlanList;
         desc:{
         	fontWeight:'bolder',
         	fontSize: 16
+        },
+        buttons:{
+        	padding : '0.78571429em 1em 0.78571429em 1em'
         }
 
     }

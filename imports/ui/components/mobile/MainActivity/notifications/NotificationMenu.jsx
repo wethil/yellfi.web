@@ -15,7 +15,7 @@ import emitter from '../../emitter.js'
 componentDidMount(){
 	emitter.addListener('changeBadgeContent',(unreceivedNtf) => {
  		 	this.setState({unreceivedNtf:unreceivedNtf  })
- 		 	 console.log(unreceivedNtf.length)
+ 		 	 
  		  });
 }
 

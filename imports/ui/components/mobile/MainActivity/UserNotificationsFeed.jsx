@@ -11,8 +11,15 @@ import emitter from '../emitter.js'
  		componentDidMount(){
  		//moment.locale('tr')	 
 		    emitter.addListener('increaseNtFLimit',()=> {
-		    	this.setState({limit:this.state.limit+5})
+		    	if(this.props.activeTab==2){
+		    		this.setState({limit:this.state.limit+5});
+		    		}
 		    	}); 
+ 	}
+ 	componentWillReceiveProps(){
+ 		if (this.props.activeTab!=2){
+ 			this.setState({limit:10})
+ 		}
  	}
 
 

@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import LoggedInUserFragment from './LoggedInUserFragment.jsx'
 import emitter from '../emitter.js' //main emitter
 import Login from '../LeftColumn/Accounts/Login.jsx'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+
 
  class Index extends Component {
  	constructor(props) {
@@ -40,11 +43,11 @@ import Login from '../LeftColumn/Accounts/Login.jsx'
 		const {userCoord,userId} = this.state
 
 		return (
-				<div>
+			<MuiThemeProvider muiTheme={getMuiTheme()}>
 					
         {userId==null ? <div style={{marginTop:'50%'}} >  <Login /> </div> : <LoggedInUserFragment  coordinates={userCoord} />} 
 						
-				</div>
+				</MuiThemeProvider>  
 		);
 	}
 }

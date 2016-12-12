@@ -5,17 +5,20 @@ import UserNotificationsFeed from './MainActivity/UserNotificationsFeed.jsx'
 import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 import { browserHistory } from 'react-router'
 import SuggestionPawer from '../common/SuggestionPawer.jsx'
-
+import SwipeableViews from 'react-swipeable-views';
+import {Tabs, Tab} from 'material-ui/Tabs';
  class LoggedInUserFragment extends Component {
  	
  	constructor(props) {
  	  super(props);
  	
  	  this.state = {
- 	  	activeTab:0,
- 	  	cntStyle:{},
- 	  	ntfStyle:styles.hidden
+ 	  	activeTab:0
  	  };
+ 	}
+
+ 	componentDidMount(){
+ 		
  	}
 
 openForm(coord){
@@ -24,6 +27,10 @@ openForm(coord){
 	lat = coord[1]
 	browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
 }
+
+changeTab(value){
+	this.setState({activeTab:value})
+}	
 
 
 	render() {
@@ -43,41 +50,27 @@ openForm(coord){
 						</div>
 
 
-		switch(activeTab){
-			case 0:
-				content = <MainPlansFeed />
-				bottomMenu=	mainBottomNav						  
-				break;
-			case 1:
-				content = <UserPlansFeed />
-				 break;
-		 
-				 		 	
-		}
+
 		return (
-			<div >
-			<SuggestionPawer />
-				<div className="ui fixed icon large inverted borderless menu" style={{backgroundColor:'#3f51b5'}}  >
-				  <a className="item" onClick={()=>this.setState({activeTab:0,cntStyle:{},ntfStyle:styles.hidden})}>
-				    <i className="large browser icon"></i>
-				  </a>
-				  <a className="item" onClick={()=>this.setState({activeTab:1,cntStyle:{},ntfStyle:styles.hidden})}>
-				    <i className="large user icon"></i>
-				  </a>
-				<span onClick={()=>this.setState({activeTab:2,cntStyle:styles.hidden,ntfStyle:{} })} >
-					<NotificationMenu activeTab={activeTab} />
-				</span>
-					
-					
-				</div>
-				<span style={cntStyle} >
-					{content}
-					{bottomMenu}
-				</span>
-				<span style={ntfStyle} >
-					<UserNotificationsFeed />
-					{mainBottomNav}	
-				</span>
+			<div id="mainDiv" style={{height:'100vh',padding:'0px !important'}} >
+		
+			 <Tabs
+		          onChange={this.changeTab.bind(this)}
+		          value={activeTab}
+		        >	
+				<Tab label="One" value={0} />
+				<Tab label="Two" value={1} />
+				<Tab label="Three" value={2} />
+  </Tabs>
+				
+				
+			<SwipeableViews
+				index={activeTab}
+				 onChangeIndex={this.changeTab.bind(this)}>
+				<MainPlansFeed activeTab={activeTab} />
+				<UserPlansFeed activeTab={activeTab} />
+				<UserNotificationsFeed activeTab={activeTab} />
+			</SwipeableViews>
 			</div>
 		);
 	}
@@ -87,6 +80,8 @@ export default LoggedInUserFragment;
 
 const styles= {
 	hidden:{
-		display:'none'
+		display:'none',
+		overflow:'hidden'
 	}
 }
+

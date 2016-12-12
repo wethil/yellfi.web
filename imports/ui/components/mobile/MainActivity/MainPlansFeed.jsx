@@ -12,16 +12,26 @@ import emitter from '../emitter.js'
  	}
 
  	componentDidMount(){
- 		//moment.locale('tr')
-		 
 		    emitter.addListener('increaseLimit',()=> {
-		    	this.setState({limit:this.state.limit+5});
+		    		this.setState({limit:this.state.limit+5});
+		    	}); 
+
+		    emitter.addListener('resetLimit',()=> {
+		    		this.setState({limit:10});
+		    		console.log(this.state.limit)
 		    	}); 
  	}
+
+
 	render() {
 		const {limit} = this.state
+		const {activeTab} =this.props
+		
+		content = (activeTab == 0 )? <LatestPlans limit={limit} /> : <span>wait</span>	
 		return (
-			  <LatestPlans  limit={this.state.limit} />				
+		<div>	
+		 {content}
+		</div> 			
 		);
 	}
 }

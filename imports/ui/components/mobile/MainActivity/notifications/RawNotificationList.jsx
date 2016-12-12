@@ -59,11 +59,7 @@ checkProps(newP,limit){
 		this.setState({haveMore:true})
 	}
 
-	if(newP && newP.length != 0) {
-		last = _.last(newP)._id;
-		$('#' + last).attr("id", "lastEl");
-		$('.loader').attr("id", "loader");
-	} 
+	
 }
 
 
@@ -139,7 +135,7 @@ sendNotificationsToTabTitle(notifications){
 
 
 		return (
-				<div className="ui container" style={{marginTop:67,marginBottom:70}}>
+				<div className="ui container" style={{height: '80.6vh',marginBottom:70}}>
  					{notificationList}
  					<div>        
 					 <div  id="lastEl" className="ui active centered inline loader"></div>
