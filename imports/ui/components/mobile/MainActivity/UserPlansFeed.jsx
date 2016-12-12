@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import UserPlansComposer from './yells/UserPlansComposer.jsx'
 import emitter from '../emitter.js'
+import LoadingList from './yells/YellsComponents/LoadingList.jsx'
 
 
  class UserPlansFeed extends Component {
@@ -26,7 +27,7 @@ import emitter from '../emitter.js'
 	render() {
 			const {activeTab} =this.props
 			
-		content = (activeTab==1) ?<UserPlansComposer limit={this.state.limit} /> : <span>wait</span>	
+		content = (activeTab==1) ?<UserPlansComposer limit={this.state.limit} /> : <LoadingList />		
 		
 		return (
 		<div>		

@@ -136,7 +136,7 @@ sendNotificationsToTabTitle(notifications){
 
 
 		return (
-<div className="ui container" style={{height: '70vh',marginBottom:70,marginTop:70}}>
+<div className="ui container" style={{height: '70vh',marginBottom:75,marginTop:58}}>
 	{notificationList}
 	<VisibilitySensor 
 		partialVisibility={true}

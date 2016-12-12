@@ -2,7 +2,8 @@ import { composeWithTracker } from 'react-komposer';
 import React from 'react';
 import  Yells  from '../../../../../api/yells/yells.js';
 import  RawPlanListForFeed  from './RawPlanListForFeed.jsx';
-import {YellSubs} from './YellsComponents/subsManager.js'
+import {YellSubs} from './YellsComponents/subsManager.js';
+import LoadingList from './YellsComponents/LoadingList.jsx'
 
 
 yellsFieldsOpt= {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'keyword':1,'joining_quantity':1,'comment_quantity':1}
@@ -25,5 +26,5 @@ limit=Number(props.limit)
   }
 };
 
- const LatestPlans = composeWithTracker( composer )( RawPlanListForFeed );
+ const LatestPlans = composeWithTracker( composer,LoadingList )( RawPlanListForFeed );
  export default LatestPlans

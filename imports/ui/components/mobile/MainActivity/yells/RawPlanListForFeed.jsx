@@ -187,7 +187,7 @@ if (yells && yells.length > 0) {
 
 
 				planList.push(  
-					<div className=" ui centered fluid card" id={yell._id} key={yell._id}>
+					<div className=" ui centered fluid card card--z-2" id={yell._id} key={yell._id}>
 					    <div className="content">	
 					        <img  style={styles.avatar} className="left floated mini ui circular  image" src={yell.owner.picture} />
 							{yellOwnerSettings}					  
@@ -215,7 +215,7 @@ if (yells && yells.length > 0) {
 		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={{height: '70vh',marginBottom:70,marginTop:70}}>
+<div className="ui container" id="container" style={{height: '70vh',marginBottom:75,marginTop:58}}>
 				
 		    
         {planList}

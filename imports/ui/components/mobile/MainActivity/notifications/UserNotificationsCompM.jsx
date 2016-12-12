@@ -2,6 +2,7 @@ import { composeWithTracker } from 'react-komposer';
 import React, { Component } from 'react';
 import  Notifications  from '../../../../../api/notifications/notifications.js';
 import  RawNotificationList  from './RawNotificationList.jsx';
+import LoadingList from '../yells/YellsComponents/LoadingList.jsx'
 
 const NotificationSubs = new SubsManager()
 
@@ -20,5 +21,5 @@ limit=Number(props.limit)
   }
 };
 
- const UserNotificationsCompM = composeWithTracker(composer)( RawNotificationList );
+ const UserNotificationsCompM = composeWithTracker(composer,LoadingList)( RawNotificationList );
  export default UserNotificationsCompM

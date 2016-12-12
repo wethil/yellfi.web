@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import LatestPlans from './yells/LatestPlans.jsx'
-import emitter from '../emitter.js'
-
+import LatestPlans from './yells/LatestPlans.jsx';
+import emitter from '../emitter.js';
+import LoadingList from './yells/YellsComponents/LoadingList.jsx'
  class MainPlansFeed extends Component {
  		constructor(props) {
  	  super(props);
@@ -26,7 +26,7 @@ import emitter from '../emitter.js'
 		const {limit} = this.state
 		const {activeTab} =this.props
 		
-		content = (activeTab == 0 )? <LatestPlans limit={limit} /> : <span>wait</span>	
+		content = (activeTab == 0 )? <LatestPlans limit={limit} /> : <LoadingList />	
 		return (
 		<div>	
 		 {content}

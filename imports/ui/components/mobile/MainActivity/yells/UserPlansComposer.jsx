@@ -3,6 +3,7 @@ import React from 'react';
 import  Yells  from '../../../../../api/yells/yells.js';
 import  RawPlanListForUser  from './RawPlanListForUser.jsx';
 import {YellSubs} from './YellsComponents/subsManager.js'
+import LoadingList from './YellsComponents/LoadingList.jsx'
 
 
 
@@ -24,5 +25,5 @@ const composer = ( props, onData ) => {
   }
 };
 
- const UserPlansComposer = composeWithTracker( composer )( RawPlanListForUser );
+ const UserPlansComposer = composeWithTracker( composer,LoadingList )( RawPlanListForUser );
  export default UserPlansComposer
