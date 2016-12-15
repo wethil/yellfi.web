@@ -113,6 +113,9 @@ Meteor.methods({
     },
     changeUserName:function(newName) {
         Meteor.users.update({_id:this.userId},{$set:{firstName:newName}})
+    },
+     changeUserPic:function(newPic) {
+        Meteor.users.update({_id:this.userId},{$set:{picture:newPic}})
     }
 
 });

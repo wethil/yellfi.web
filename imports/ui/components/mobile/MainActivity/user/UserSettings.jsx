@@ -12,13 +12,14 @@ import TextField from 'material-ui/TextField';
  	
  	  this.state = {
  	  	language:0,
- 	  	uNameInput:false
+ 	  	uNameInput:false,
+ 	  	uploadButtonLabel:"Change Avatar"
  	  };
  	}
 
  	uploadPhoto(){
+ 		this.setState({uploadButtonLabel:"Uploading.."})
  		var fileInput = document.getElementById('fileInput');
-		var fileDisplayArea = document.getElementById('fileDisplayArea');
 		var file = fileInput.files[0];
 			var imageType = /image.*/;
 
@@ -26,19 +27,17 @@ import TextField from 'material-ui/TextField';
 				var reader = new FileReader();
 
 				reader.onload = (e)=> {
-					fileDisplayArea.innerHTML = "";
+				
 
 					var img = new Image();
 					img.src = reader.result;
 				  	this.sendToCDN(reader.result)
-					fileDisplayArea.appendChild(img);
+				
 				}
 
 				reader.readAsDataURL(file);	
-			} else {
-				fileDisplayArea.innerHTML = "File not supported!"
 			}
-
+			
  	}
 
 
@@ -55,14 +54,27 @@ sendToCDN(imageUrl){
 	    "api_key": "819761397689221",
 	    "signature": sha1(`public_id=${publicId}&timestamp=${n}P8LUCpnRemNl2ryYz4Na1BtEVlg`)
 	  }
-	}, function( error, response ) {
+	}, ( error, response )=> {
 	  if ( error ) {
 	    console.log( error );
 	  } else {
 	    console.log( response );
+	    this.changeUserPic(response.data)
 	   
 	  }
 	});
+}
+
+changeUserPic(data){
+	imageUrl = data.secure_url
+	 Meteor.call('changeUserPic', imageUrl,  (error)=> {
+ 		if (error) {
+ 			console.log(error)
+ 		} else {
+ 			console.log('ok')
+ 		}
+ 	});
+ 	this.setState({uploadButtonLabel:"Change Avatar"})
 }
 
 
@@ -80,9 +92,11 @@ sendToCDN(imageUrl){
  	this.setState({uNameInput:false})
  }
 
+
+
 	render() {
 		const {user} = this.props
-		const {uNameInput} = this.state
+		const {uNameInput,uploadButtonLabel} = this.state
 		var time = new Date();
 		var year = time.getFullYear();
 		switch (uNameInput) {
@@ -123,13 +137,17 @@ sendToCDN(imageUrl){
 					
 						<div className="row" >
 						    <RaisedButton
-						      label="Choose an Image"
+						      label={uploadButtonLabel}
 						      labelPosition="before"
 						      fullWidth={true}
 						      //style={styles.button}
 						      containerElement="label"
 						    >
-						     <input style={styles.ImageInput} accept="image/*" id="fileInput" type="file" />
+						     <input style={styles.ImageInput} 
+						     		accept="image/*" 
+						     		id="fileInput" 
+						     		type="file"
+						     		onChange={this.uploadPhoto.bind(this)} />
 						
 						    </RaisedButton>
 						</div>
