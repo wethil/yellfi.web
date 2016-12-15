@@ -110,6 +110,9 @@ Meteor.methods({
         Yells.update({_id:yellId}, {$set : {suggestionsByYellfi : suggestions }})
         sugsNumber = suggestions.length
         Yells.update({ _id: yellId }, {$inc: {comment_quantity :sugsNumber}});
+    },
+    changeUserName:function(newName) {
+        Meteor.users.update({_id:this.userId},{$set:{firstName:newName}})
     }
 
 });
