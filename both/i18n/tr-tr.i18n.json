@@ -42,8 +42,9 @@
     },
      "userSett":{
         "save":"KAYDET",
-        "clickToEmail":"Bize email atmak için tıklayın",
-        "logout":"ÇIKIŞ"
+        "clickToEmail":"İletişim için tıklayın",
+        "logout":"ÇIKIŞ",
+        "clickAnyWhere":"Değişikliği görmek için ana sayfaya gidin"
     },
     "publicity":{
         "justMe":"Sadece Ben",

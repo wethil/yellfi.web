@@ -173,15 +173,15 @@ if (yells && yells.length > 0) {
 	if(yell.publicity==0) {
 		actionButtons =  <div style={styles.buttons} onClick={()=> this.openComments(yell._id, yell.ownerId )}
 							  className="ui basic fluid green button">
-								Suggestions {commentQuantity}
+								{i18n.__('common.YellCard.suggestions')} {commentQuantity}
 						</div>
 		
 					       
 					     
 	} else {
 		actionButtons =    <div className="ui two buttons">
-					        <div style={styles.buttons} onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions {commentQuantity}</div>
-					        <div style={styles.buttons} onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings {joiningQuantity}</div>
+					        <div style={styles.buttons} onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">{i18n.__('common.YellCard.suggestions')}  {commentQuantity}</div>
+					        <div style={styles.buttons} onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">{i18n.__('common.YellCard.participation')}  {joiningQuantity}</div>
 					      </div>
 	}
 

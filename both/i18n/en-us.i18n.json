@@ -43,7 +43,8 @@
     "userSett":{
         "save":"SAVE",
         "clickToEmail":"Click to email us",
-        "logout":"LOGOUT"
+        "logout":"LOGOUT",
+        "clickAnyWhere":"Go to feed to see diffrence"
     },
     "publicity":{
         "justMe":"Just Me",

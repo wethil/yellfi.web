@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import emitter from '../../emitter.js'
-
+import FontIcon from 'material-ui/FontIcon';
+import Badge from 'material-ui/Badge';
 
 
  class NotificationMenu extends Component {
@@ -47,14 +48,13 @@ receiveNotifications(){
 	render() {
 		const {unreceivedNtf} = this.state
 		unreceived = unreceivedNtf.length
+		const badgeHasValue = {width:20,height:20,paddingTop:2,paddingRight:2,fontSize:11,bottom:15,right:'-19px',top:'initial'}
+		badgeStyle = unreceived==0 ? {display:'none'} : badgeHasValue
 		
 		return (
-			<a className="item" >
-					    <i className="large world icon"></i>
-					     {unreceived>0?<div  className="floating ui mini red circular label"> 
-					     					{unreceived} 
-					     				 </div>:null}
-				</a>
+			 <Badge style={{padding:0}} badgeStyle={badgeStyle} badgeContent={unreceived} secondary={true}>
+		 		 <FontIcon color="rgba(255, 255, 255, 0.701961)" className="material-icons">notifications</FontIcon>
+			</Badge>
 		);
 	}
 }

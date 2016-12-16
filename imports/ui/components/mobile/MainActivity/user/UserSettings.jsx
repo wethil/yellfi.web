@@ -9,17 +9,20 @@ import TextField from 'material-ui/TextField';
 import Avatar from 'material-ui/Avatar';
 import Badge from 'material-ui/Badge';
 import FontIcon from 'material-ui/FontIcon';
+import i18n from 'meteor/universe:i18n';
+import emitter from '../../emitter.js'
  class UserSettings extends Component {
  	constructor(props) {
  	  super(props);
  	
  	  this.state = {
- 	  	language:0,
+ 	  	language:i18n.getLocale(),
  	  	uNameInput:false,
  	  	uploadButtonLabel:"add_a_photo"
  	  };
  	}
 
+ 
  	clickBadge(){
  		$("#fileInput").trigger("click");
  	}
@@ -86,7 +89,14 @@ changeUserPic(data){
 }
 
 
- changeLang  (event, index, value) {this.setState({language:value})}
+ changeLang  (event, index, value) {
+	i18n.setLocale(value)
+	moment.locale(value);
+	this.setState({language:value})
+	emitter.emit('changeLng',value)	
+	$('#clickAny').removeClass('hidden')
+
+ 	}
 
 CUNSubmit(e){
 	e.preventDefault()
@@ -167,12 +177,12 @@ CUNSubmit(e){
 					
 						  {uNameButton} 
 					
-						
 						     <input style={styles.ImageInput} 
 						     		accept="image/*" 
 						     		id="fileInput" 
 						     		type="file"
 						     		onChange={this.uploadPhoto.bind(this)} />
+					
 						
 						
 
@@ -183,18 +193,17 @@ CUNSubmit(e){
 					          value={this.state.language}
 					          onChange={this.changeLang.bind(this)}
 					        >
-					          <MenuItem value={0} primaryText="Türkçe" />
-					          <MenuItem value={1} primaryText="English" />
+					          <MenuItem value='tr-TR' primaryText="Türkçe" />
+					          <MenuItem value='en-US' primaryText="English" />
 					        </SelectField>
 					</div>
-					 <RaisedButton
-						      label={i18n.__('common.userSett.logout')}
-						      labelPosition="before"
-						      //style={styles.button}
-						      containerElement="label"
-						    /><br/>
+				<div id="clickAny" className="row hidden" style={{padding:'0em'}} >
+					<h5> {i18n.__('common.userSett.clickAnyWhere')} </h5>
+				</div>	
+					<a href="#" style={{color:'#F44336'}} >{i18n.__('common.userSett.logout')}</a>
+					<br/>
 					<div className="row" style={{paddingBottom:'0em'}} >
-						  <a  href="#">{i18n.__('common.userSett.logout')} : support@yellfi.com</a>
+						  <a  href="#">{i18n.__('common.userSett.clickToEmail')} : support@yellfi.com</a>
 					</div>
 						<h5> yellfi | {year} </h5>
 					

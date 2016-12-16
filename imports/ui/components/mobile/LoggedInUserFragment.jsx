@@ -7,7 +7,9 @@ import { browserHistory } from 'react-router'
 import SuggestionPawer from '../common/SuggestionPawer.jsx'
 import SwipeableViews from 'react-swipeable-views';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import UserComposer from './MainActivity/user/UserComposer.jsx'
+import UserSettingsFrg from './MainActivity/UserSettingsFrg.jsx'
+import emitter from './emitter.js'
+import FontIcon from 'material-ui/FontIcon';
  class LoggedInUserFragment extends Component {
  	
  	constructor(props) {
@@ -19,7 +21,11 @@ import UserComposer from './MainActivity/user/UserComposer.jsx'
  	}
 
  	componentDidMount(){
- 		
+ 		    emitter.addListener('changeLng',(a)=> this.changeLng(a) ); 
+ 	}
+
+ 	changeLng(a){
+ 		this.setState({lng:a})
  	}
 
 openForm(coord){
@@ -61,11 +67,12 @@ changeTab(value){
 		          tabItemContainerStyle={styles.tabs} 
 		          style={{backgroundColor:'rgb(63, 81, 181)'}}
 		        >	
-				<Tab label="One" value={0} />
-				<Tab label="Two" value={1} />
-				<Tab label="Three" value={2} />
-				<Tab label="User" value={3} />
+				<Tab icon={<FontIcon className="material-icons">web</FontIcon>} value={0} />
+				<Tab icon={<FontIcon className="material-icons">account_circle</FontIcon>} value={1} />
+				<Tab icon={<NotificationMenu />} value={2} />
+				<Tab icon={<FontIcon className="material-icons">settings</FontIcon>} value={3} />
   </Tabs>
+  	
 				
 				
 			<SwipeableViews
@@ -74,7 +81,7 @@ changeTab(value){
 			<div>	<MainPlansFeed activeTab={activeTab} /> </div>
 			<div>	<UserPlansFeed activeTab={activeTab} /> </div>
 			<div>	<UserNotificationsFeed activeTab={activeTab} /></div>
-			<div>	<UserComposer /></div>
+			<div>	<UserSettingsFrg activeTab={activeTab} /></div>
 			</SwipeableViews>
 			{mainBottomNav}
 			</div>
