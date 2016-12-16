@@ -18,16 +18,6 @@ const LoadingList = () => (
 						<img src={bg} alt="" />
 					</div>
 				</div>
-				<div  className="ui card card--z-2">
-					<div  className="content">
-						<img src={bg} alt="" />
-					</div>
-				</div>
-				<div  className="ui card card--z-2">
-					<div  className="content">
-						<img src={bg} alt="" />
-					</div>
-				</div>
 			</div>
 		);
 export default LoadingList;

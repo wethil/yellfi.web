@@ -1,6 +1,7 @@
 import { composeWithTracker } from 'react-komposer';
 import { Meteor } from 'meteor/meteor';
 import UserSettings from './UserSettings.jsx'
+import LoadingCircle from './LoadingCircle.jsx'
 
 
 
@@ -23,5 +24,5 @@ const composer = ( props, onData ) => {
   }
 }
 
- const UserComposer = composeWithTracker( composer )( UserSettings );
+ const UserComposer = composeWithTracker( composer,LoadingCircle )( UserSettings );
  export default UserComposer

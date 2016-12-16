@@ -40,6 +40,11 @@
         "createPlan":"Plan Oluştur",
         "goToPlan":"Plana git"
     },
+     "userSett":{
+        "save":"KAYDET",
+        "clickToEmail":"Bize email atmak için tıklayın",
+        "logout":"ÇIKIŞ"
+    },
     "publicity":{
         "justMe":"Sadece Ben",
         "everyoneCan":"Herkes Katılabilir",

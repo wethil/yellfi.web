@@ -40,6 +40,11 @@
         "createPlan":"Create a Plan",
         "goToPlan":"Go to Plan"
     },
+    "userSett":{
+        "save":"SAVE",
+        "clickToEmail":"Click to email us",
+        "logout":"LOGOUT"
+    },
     "publicity":{
         "justMe":"Just Me",
         "everyoneCan":"Everyone Can Join",

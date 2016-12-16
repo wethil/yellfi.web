@@ -132,7 +132,7 @@ CUNSubmit(e){
 			case true : 
 				uNameField = <TextField id="uNameInput" onKeyUp={this.CUNSubmit.bind(this)} defaultValue={user.firstName}/>
 				uNameButton = <RaisedButton
-							      label="Save"
+							      label={i18n.__('common.userSett.save')}
 							      fullWidth={true}
 							      labelPosition="before"
 							      onTouchTap={this.changeUserName.bind(this) }
@@ -188,13 +188,13 @@ CUNSubmit(e){
 					        </SelectField>
 					</div>
 					 <RaisedButton
-						      label="Logout"
+						      label={i18n.__('common.userSett.logout')}
 						      labelPosition="before"
 						      //style={styles.button}
 						      containerElement="label"
 						    /><br/>
 					<div className="row" style={{paddingBottom:'0em'}} >
-						  <a  href="#">Click to email us : support@yellfi.com</a>
+						  <a  href="#">{i18n.__('common.userSett.logout')} : support@yellfi.com</a>
 					</div>
 						<h5> yellfi | {year} </h5>
 					
