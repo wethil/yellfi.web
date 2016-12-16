@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import {frameStyle} from '../yells/YellsComponents/constant.js'
 import sha1 from 'js-sha1';
 import RaisedButton from 'material-ui/RaisedButton';
+import IconButton from 'material-ui/IconButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import TextField from 'material-ui/TextField';
-
+import Avatar from 'material-ui/Avatar';
+import Badge from 'material-ui/Badge';
+import FontIcon from 'material-ui/FontIcon';
  class UserSettings extends Component {
  	constructor(props) {
  	  super(props);
@@ -13,12 +16,16 @@ import TextField from 'material-ui/TextField';
  	  this.state = {
  	  	language:0,
  	  	uNameInput:false,
- 	  	uploadButtonLabel:"Change Avatar"
+ 	  	uploadButtonLabel:"add_a_photo"
  	  };
  	}
 
+ 	clickBadge(){
+ 		$("#fileInput").trigger("click");
+ 	}
+
  	uploadPhoto(){
- 		this.setState({uploadButtonLabel:"Uploading.."})
+ 		this.setState({uploadButtonLabel:"watch_later"})
  		var fileInput = document.getElementById('fileInput');
 		var file = fileInput.files[0];
 			var imageType = /image.*/;
@@ -65,6 +72,7 @@ sendToCDN(imageUrl){
 	});
 }
 
+
 changeUserPic(data){
 	imageUrl = data.secure_url
 	 Meteor.call('changeUserPic', imageUrl,  (error)=> {
@@ -74,11 +82,18 @@ changeUserPic(data){
  			console.log('ok')
  		}
  	});
- 	this.setState({uploadButtonLabel:"Change Avatar"})
+ 	this.setState({uploadButtonLabel:"add_a_photo"})
 }
 
 
  changeLang  (event, index, value) {this.setState({language:value})}
+
+CUNSubmit(e){
+	e.preventDefault()
+	if (e.key == 'Enter') {
+ 		this.changeUserName()
+	}
+}
 
  changeUserName(){
  	newName = $("#uNameInput").val();
@@ -101,17 +116,21 @@ changeUserPic(data){
 		var year = time.getFullYear();
 		switch (uNameInput) {
 			case false :
-				uNameField = <div style={styles.userName} className="ui header"> {user.firstName} </div>
-				uNameButton =  <RaisedButton
-							      label="Change Visible Name"
-							      fullWidth={true}
-							      labelPosition="before"
-							      onTouchTap={()=> this.setState({uNameInput:true}) }
-							      containerElement="label"
-						    />
+				uNameField = 
+									<div style={styles.userName} className="ui header"> {user.firstName} 
+									  <IconButton
+									  	 onTouchTap={()=> this.setState({uNameInput:true}) }
+									      iconClassName="material-icons"
+									      iconStyle={styles.editIcon}
+									      style={styles.editButton}
+									    >
+									      edit
+									    </IconButton>
+							</div>	
+				uNameButton = null
 				break;
 			case true : 
-				uNameField = <TextField id="uNameInput" defaultValue={user.firstName}/>
+				uNameField = <TextField id="uNameInput" onKeyUp={this.CUNSubmit.bind(this)} defaultValue={user.firstName}/>
 				uNameButton = <RaisedButton
 							      label="Save"
 							      fullWidth={true}
@@ -125,32 +144,37 @@ changeUserPic(data){
 		return (
 			<div className="ui container" style={frameStyle} >	
 				<div className="ui center aligned padded grid">		  
-					<div className="row">
-						<img src={user.picture} alt="Smiley face" className="ui circular image" width="130" height="130" />
+					<div className="row"  style={{padding:'0em'}} >
+							<Badge
+								onTouchTap={this.clickBadge.bind(this)}
+								badgeContent={
+									<FontIcon   style={styles.avatarBadge} 
+												className="material-icons">{uploadButtonLabel}
+									</FontIcon>
+								}
+								primary={true}
+								badgeStyle={styles.badgeInLine}
+
+								>
+									<Avatar //onTouchTap={this.clickBadge.bind(this)}
+											 style={{cursor:'pointer'}} src={user.picture} size={80}/>
+								</Badge> 
 					</div>
 				<div className="row" style={{paddingTop:'0em'}} >
-						{uNameField}
+					{uNameField}
 				</div>		
 				
 					
-						  {uNameButton}
+						  {uNameButton} 
 					
-						<div className="row" >
-						    <RaisedButton
-						      label={uploadButtonLabel}
-						      labelPosition="before"
-						      fullWidth={true}
-						      //style={styles.button}
-						      containerElement="label"
-						    >
+						
 						     <input style={styles.ImageInput} 
 						     		accept="image/*" 
 						     		id="fileInput" 
 						     		type="file"
 						     		onChange={this.uploadPhoto.bind(this)} />
 						
-						    </RaisedButton>
-						</div>
+						
 
 					<div className="row" style={{padding:'0em'}} >
 						  <SelectField
@@ -168,10 +192,12 @@ changeUserPic(data){
 						      labelPosition="before"
 						      //style={styles.button}
 						      containerElement="label"
-						    />
-					<div className="row"   >
-						<div className="ui header"> yellfi | {year} </div>
+						    /><br/>
+					<div className="row" style={{paddingBottom:'0em'}} >
+						  <a  href="#">Click to email us : support@yellfi.com</a>
 					</div>
+						<h5> yellfi | {year} </h5>
+					
 						
 					
 				</div>
@@ -198,4 +224,26 @@ const styles = {
 	    width: '100%',
 	    opacity: 0,
   },
+    badgeInLine:{
+	  	bottom:18,
+	  	cursor:'pointer',
+	  	right:21,
+	  	top:'initial',
+	  	backgroundColor:'#3F51B5'
+  },
+   avatarBadge:{
+  	color :'#ffffff',
+  	fontSize:13
+  },
+  editIcon:{
+  	zIndex:888,
+  	marginLeft:-9,
+  	fontSize:20
+  },
+  editButton:{
+  	zIndex:999,
+  	marginTop:-12,
+  	padding:'0px !important',
+  	height:'20px !important'
+  }
 }
