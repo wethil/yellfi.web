@@ -14,30 +14,29 @@ import FontIcon from 'material-ui/FontIcon';
  	
  	constructor(props) {
  	  super(props);
- 	
  	  this.state = {
  	  	activeTab:0
  	  };
  	}
 
- 	componentDidMount(){
- 		    emitter.addListener('changeLng',(a)=> this.changeLng(a) ); 
- 	}
+	componentDidMount(){
+		emitter.addListener('changeLng',(a)=> this.changeLng(a) ); 
+	}
 
- 	changeLng(a){
- 		this.setState({lng:a})
- 	}
+	changeLng(a){
+		this.setState({lng:a})
+	}
 
-openForm(coord){
-	console.log(coord)
-	lng = coord[0]
-	lat = coord[1]
-	browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
-}
+	openForm(coord){
+		console.log(coord)
+		lng = coord[0]
+		lat = coord[1]
+		browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
+	}
 
-changeTab(value){
-	this.setState({activeTab:value})
-}	
+	changeTab(value){
+		this.setState({activeTab:value})
+	}	
 
 
 	render() {
@@ -60,28 +59,26 @@ changeTab(value){
 
 		return (
 			<div id="mainDiv" style={{height:'100vh',padding:'0px !important'}} >
-		
+		<SuggestionPawer />
 			 <Tabs
 		          onChange={this.changeTab.bind(this)}
 		          value={activeTab}
 		          tabItemContainerStyle={styles.tabs} 
-		          style={{backgroundColor:'rgb(63, 81, 181)'}}
-		        >	
-				<Tab icon={<FontIcon className="material-icons">web</FontIcon>} value={0} />
-				<Tab icon={<FontIcon className="material-icons">account_circle</FontIcon>} value={1} />
-				<Tab icon={<NotificationMenu />} value={2} />
-				<Tab icon={<FontIcon className="material-icons">settings</FontIcon>} value={3} />
-  </Tabs>
-  	
+		          style={{backgroundColor:'rgb(63, 81, 181)'}}>	
+						<Tab icon={<FontIcon className="material-icons">web</FontIcon>} value={0} />
+						<Tab icon={<FontIcon className="material-icons">account_circle</FontIcon>} value={1} />
+						<Tab icon={<NotificationMenu />} value={2} />
+						<Tab icon={<FontIcon className="material-icons">settings</FontIcon>} value={3} />
+ 			 </Tabs>
+  		
 				
 				
-			<SwipeableViews
-				index={activeTab}
-				 onChangeIndex={this.changeTab.bind(this)}>
-			<div>	<MainPlansFeed activeTab={activeTab} /> </div>
-			<div>	<UserPlansFeed activeTab={activeTab} /> </div>
-			<div>	<UserNotificationsFeed activeTab={activeTab} /></div>
-			<div>	<UserSettingsFrg activeTab={activeTab} /></div>
+			<SwipeableViews index={activeTab}
+							onChangeIndex={this.changeTab.bind(this)}>
+					<div><MainPlansFeed activeTab={activeTab} /> </div>
+					<div><UserPlansFeed activeTab={activeTab} /> </div>
+					<div><UserNotificationsFeed activeTab={activeTab} /></div>
+					<div><UserSettingsFrg activeTab={activeTab} /></div>
 			</SwipeableViews>
 			{mainBottomNav}
 			</div>

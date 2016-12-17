@@ -21,7 +21,14 @@ import emitter from '../../emitter.js'
  	  	uploadButtonLabel:"add_a_photo"
  	  };
  	}
-
+componentWillMount(){
+	var lang = i18n.getLocale()
+	if (lang=="tr" || lang== "tr-TR") {
+		this.setState({language:"tr-TR"})
+	} else {
+		this.setState({language:"en-US"})
+	}
+}
  
  	clickBadge(){
  		$("#fileInput").trigger("click");

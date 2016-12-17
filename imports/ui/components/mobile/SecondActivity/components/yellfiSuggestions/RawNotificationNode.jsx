@@ -9,7 +9,7 @@ const avatarLink = "https://s-media-cache-ak0.pinimg.com/236x/e6/49/c1/e649c1ada
 const RawNotificationNode = (props) =>{
 	const {title,link} = props
 				return	(
-			<div className="ui centered fluid  card" >
+			<div className="ui centered fluid  card card--z-1" >
 			    <div className="content">
 			      <img  style={styles.avatar} className="left floated mini ui circular  image" src={avatarLink} />	      
 			      <div style={styles.header} className="header">

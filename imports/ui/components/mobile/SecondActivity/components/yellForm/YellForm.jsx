@@ -38,8 +38,11 @@ componentDidMount(){
 	}
 
 	render() {
+
 		const {coordinates} = this.props
 		const {planChoosed,plan,publicity} = this.state
+		const classNamesForHOWS = (plan==7) ? "ui blue button pub" : "ui basic button pub"
+
 		if (!planChoosed) {
 			return (<div className="ui  large fluid vertical menu">
 								 {plans.map((plan) => {
@@ -58,7 +61,7 @@ componentDidMount(){
 																	<i className="user icon"></i>
 																	 {i18n.__('common.publicity.justMe')}
 								</button>:null}
-								<button  id={1}  onClick={()=> this.chooseParticipation(1)} className="ui basic  button pub">
+								<button  id={1}  onClick={()=> this.chooseParticipation(1)} className={classNamesForHOWS} >
 									<i className="users icon"></i>
 									{i18n.__('common.publicity.everyoneCan')}
 								</button>

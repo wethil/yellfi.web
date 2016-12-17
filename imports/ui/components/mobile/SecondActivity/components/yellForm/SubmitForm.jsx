@@ -7,6 +7,7 @@ import {plans,musicGenres,filmGenres,foods,eatDrinkTr,eatDrinkEng,shoppingEng,sh
 import DatePicker from 'material-ui/DatePicker';
 import TimePicker from 'material-ui/TimePicker';
 import emitter from '../../../../emitter.js';// it is using main emitter to connect SuggestionPaws
+import { browserHistory } from 'react-router'
 import _ from 'lodash';
 
  class SubmitForm extends Component {
@@ -117,10 +118,13 @@ import _ from 'lodash';
 					console.log(error)
 				} else {
 					console.log(plan)
-					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
-					//browserHistory.push('/yell/'+result)
+					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord);
+					browserHistory.push('/yell/'+result + '?dialog=comment' + '&owner='+ Meteor.userId() )
+					
 				}
 			});	
+			
+
 		
 			
 

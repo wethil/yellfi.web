@@ -94,6 +94,7 @@
         "delete":"Delete",
         "block":"Block",
         "noComment":"No Suggestion Yet",
+        "writeSugg":"Write your suggestion",
         "makeFirstComm":"Make first suggestion for this plan!",
         "more":"More",
         "suggested":"suggested",

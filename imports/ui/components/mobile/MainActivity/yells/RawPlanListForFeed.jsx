@@ -106,7 +106,7 @@ undoAction() {
 	if (error) {
 		console.log(error)
 	} else {
-		browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+		browserHistory.push('/yell/'+yellId + '?dialog=comment')
 	}
 	});
 }

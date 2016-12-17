@@ -6,6 +6,7 @@ import { Notification } from 'react-notification';
 import emitter from '../../../emitter.js';
 import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.jsx'
 
+
  class RawCommentListM extends Component {
  	constructor(props) {
  	  super(props);
@@ -16,11 +17,13 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
   componentWillMount(){
   	emitter.emit('changeDialogAction','comment') //second Activity
   	const {comments,yellId,yellOwnerId,suggestions} = this.props
+  	emitter.emit('getIDs',yellOwnerId,yellId)
     this.makePropState(comments,yellId,yellOwnerId,suggestions)
   }
 
   componentWillReceiveProps(nextProps){
   	const {comments,yellId,yellOwnerId,suggestions} = nextProps
+  	emitter.emit('getIDs',yellOwnerId,yellId)
   this.makePropState(comments,yellId,yellOwnerId,suggestions)
 
 }
@@ -132,6 +135,27 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
      
    }
 
+   	inputSubmit(e){
+	e.preventDefault()
+	if (e.key == 'Enter') {
+		let comCont = $('#commentInput').val()
+		let yellId = this.state.yellId
+ 		let yellOwnerId = this.state.yellOwnerId
+
+ 
+		Meteor.call('addComment',comCont,yellId,yellOwnerId,error=>{
+			if (error) {
+				console.log(error)
+			} else {
+				$('#commentInput').val("")
+				 document.getElementById("commentInput").blur()
+				
+			}
+		});	
+
+	}
+}
+
 	render() {
 		
 		 const {comments,yellId,yellOwnerId,suggestions} = this.state
@@ -216,6 +240,13 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 
 		return (
 			<div className="ui container ">
+				 <div className="ui fluid left icon input card--z-1">
+							 <input type="text"
+						  		 id="commentInput"   
+						  		 onKeyUp={this.inputSubmit.bind(this)}
+						  		 placeholder={i18n.__('common.comments.writeSugg')} /> 
+					  		  <i className="user icon"></i>
+						</div> 
  					{commentList}
  					{suggestionList}
  					<Notification
@@ -245,7 +276,14 @@ const styles= {
 
 	avatar:{
 		paddingBottom: '0em !important'
+	},
+	commentInput:{
+		position:'fixed',
+	    zIndex: 9999,
+		bottom: '6%',
+	    width: '92%'
 	}
+
 }
 
 
