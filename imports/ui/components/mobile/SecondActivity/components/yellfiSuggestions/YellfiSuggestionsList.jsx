@@ -43,7 +43,7 @@ const YellfiSuggestionsList = (props)=> {
 	}
 
 
-	return (<div>{suggestionList}</div>)
+	return (<div style={{marginTop:10}} >{suggestionList}</div>)
 }
 
 export default YellfiSuggestionsList;

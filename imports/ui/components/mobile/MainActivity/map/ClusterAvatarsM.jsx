@@ -4,12 +4,12 @@ import List from 'material-ui/List/List';
 import ListItem from 'material-ui/List/ListItem';
 import FontIcon from 'material-ui/FontIcon';
 import { browserHistory } from 'react-router'
-import {plans} from '../constants.js'
+import {plans} from '../../../constants.js'
 import Badge from 'material-ui/Badge';
 
- class ClusterAvatars extends Component {
+ class ClusterAvatarsM extends Component {
 	render() {
-		//console.log(this.props.publicYells)
+		console.log(this.props.publicYells)
 		avatars=[]
 		const {active,publicYells}=this.props
 		if (publicYells && publicYells.length>0 && active){
@@ -49,7 +49,7 @@ import Badge from 'material-ui/Badge';
 
 
 				} else {
-			content =<span></span>
+			content =<span ></span>
 				}
 
 		return (
@@ -57,7 +57,7 @@ import Badge from 'material-ui/Badge';
 		);
 	}
 }
-export default ClusterAvatars;
+export default ClusterAvatarsM;
 
 const styles = {
   clusterAvatars:{

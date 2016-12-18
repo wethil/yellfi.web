@@ -119,7 +119,7 @@ import _ from 'lodash';
 				} else {
 					console.log(plan)
 					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord);
-					browserHistory.push('/yell/'+result + '?dialog=comment' + '&owner='+ Meteor.userId() )
+					browserHistory.push('/yell/'+result + '?dialog=comment')
 					
 				}
 			});	

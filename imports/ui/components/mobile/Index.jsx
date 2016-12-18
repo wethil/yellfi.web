@@ -44,11 +44,11 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 		const {userCoord,userId} = this.state
 
 		return (
-			<MuiThemeProvider muiTheme={getMuiTheme()}>
-					
+		
+				<span>	
         {userId==null ? <div style={{marginTop:'50%'}} > <Register /> <Login /> </div> : <LoggedInUserFragment  coordinates={userCoord} />} 
-						
-				</MuiThemeProvider>  
+				</span>		
+			 
 		);
 	}
 }

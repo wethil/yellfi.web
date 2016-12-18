@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MainPlansFeed from './MainActivity/MainPlansFeed.jsx'
 import UserPlansFeed from './MainActivity/UserPlansFeed.jsx'
+import PublicPlansMap from './MainActivity/PublicPlansMap.jsx'
 import UserNotificationsFeed from './MainActivity/UserNotificationsFeed.jsx'
 import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 import { browserHistory } from 'react-router'
@@ -44,7 +45,7 @@ import FontIcon from 'material-ui/FontIcon';
 		const {activeTab,cntStyle,ntfStyle} = this.state
 		mainBottomNav =<div className="ui content">
 							  <div className="ui inverted bottom fixed two item menu">
-								  <a className="active violet item">
+								  <a className="active violet item" onClick={()=> this.setState({activeTab:4})} >
 								  	<i className="marker icon"></i>
 								  	{i18n.__('common.userFrg.pubPlans')}
 								  </a>
@@ -67,18 +68,21 @@ import FontIcon from 'material-ui/FontIcon';
 		          style={{backgroundColor:'rgb(63, 81, 181)'}}>	
 						<Tab icon={<FontIcon className="material-icons">web</FontIcon>} value={0} />
 						<Tab icon={<FontIcon className="material-icons">account_circle</FontIcon>} value={1} />
-						<Tab icon={<NotificationMenu />} value={2} />
+						<Tab icon={<NotificationMenu activeTab={activeTab}  />} value={2} />
 						<Tab icon={<FontIcon className="material-icons">settings</FontIcon>} value={3} />
  			 </Tabs>
   		
 				
 				
 			<SwipeableViews index={activeTab}
+							animateTransitions={false}
+							disabled={activeTab==4?true:false}
 							onChangeIndex={this.changeTab.bind(this)}>
 					<div><MainPlansFeed activeTab={activeTab} /> </div>
 					<div><UserPlansFeed activeTab={activeTab} /> </div>
 					<div><UserNotificationsFeed activeTab={activeTab} /></div>
 					<div><UserSettingsFrg activeTab={activeTab} /></div>
+					<div> <PublicPlansMap activeTab={activeTab} /> </div>
 			</SwipeableViews>
 			{mainBottomNav}
 			</div>

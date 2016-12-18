@@ -10,12 +10,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import Index from '../components/mobile/Index.jsx'
 
 export const App = ({children}) => (
-
+  <MuiThemeProvider muiTheme={getMuiTheme()}>
 
   <div >
   	<Index />
     {children} 
   </div>
+  </MuiThemeProvider>  
 )
 
 

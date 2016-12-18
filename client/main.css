@@ -11,6 +11,18 @@
     bottom:0;
 }
 
+.map-container_mobile {
+    height: 33vh;
+    width: 100%;
+    position: absolute;
+    margin-top: 2.8em;
+    z-index: 15;
+   
+}
+
+
+    
+
 
 html {
     overflow: hidden;

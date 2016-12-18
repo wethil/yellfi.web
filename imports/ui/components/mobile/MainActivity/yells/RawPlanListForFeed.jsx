@@ -76,11 +76,11 @@ checkProps(newP,limit){
 
 
 openComments(yellId,ownerId){
-	browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+	browserHistory.push('/yell/'+yellId + '?dialog=comment' )
 }
 
 openJoinings(yellId,ownerId){
-	browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
+	browserHistory.push('/yell/'+yellId + '?dialog=joining')
 }
 
 deleteYell(yellId,ownerId){

@@ -39,7 +39,7 @@ receiveNotifications(){
 				if (error) {
 					console.log(error)
 				} else {
-					//console.log('okay')
+					console.log('okay')
 				
 				}
 		});
