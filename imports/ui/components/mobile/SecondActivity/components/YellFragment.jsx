@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import CommentComposerM from './comments/CommentComposerM.jsx'
 import JoiningComposerM from './joining/JoiningComposerM.jsx'
 import BlockedUser from './others/BlockedUser.jsx'
+import NoAnyYell from './others/NoAnyYell.jsx'
 
 
 const YellFragment = (props) => {
 	blocked = props.userBlocked
-	dialog = props.dialog
-	yellfySuggestions = props.yell.suggestionsByYellfi
-	
+	dialog = props.resDialog
+	yellfySuggestions = props.suggestionsByYellfi
 	if (yellfySuggestions && yellfySuggestions.length>0){
 		suggestions = yellfySuggestions
 	
@@ -17,7 +17,7 @@ const YellFragment = (props) => {
 	}
 	
 	if (blocked==false) {
-		switch (props.dialog){
+		switch (props.resDialog){
 			case 'comment':
 			
 				content = <CommentComposerM 
@@ -30,6 +30,12 @@ const YellFragment = (props) => {
 			
 			case 'joining':
 				content = <JoiningComposerM  yell={props.yell} />
+				break;	
+			case false :
+				content = <NoAnyYell />
+				break;
+			default : 
+				content = <NoAnyYell />
 				break;	
 		}
 	} else {

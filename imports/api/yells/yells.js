@@ -99,7 +99,7 @@ Yells.attachSchema(
     },
     blocked_users:{
       type:[String],
-      optional:true
+      defaultValue:[]
     }
 
   })

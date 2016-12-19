@@ -98,7 +98,7 @@ changeMapMarkers(data){
   const {limit} = this.props
 		return (
 <div >
-<div className="ui small label" style={header} >Drag your desired location under the marker</div>
+<div className="ui small label" style={header}>{i18n.__('common.publicYells.dragMap')}</div>
 	<div>
   <MapBase  containerElement={
             <div className="map-container_mobile" />

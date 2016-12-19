@@ -13,13 +13,19 @@ console.log(coordinates)
  const subscription = PubYellSub.subscribe( 'nearestYells',coordinates,limit )
   if ( subscription.ready() ) {
     const yells =  Yells.find({
-
+        "publicPlanLoc":{  
+                  $near:{  
+                    $geometry:{  
+                      type:"Point",
+                      coordinates:coordinates
+                    },
+                  }
+                },
        'publicity':{ $ne: 0 }
     },
               {  
                 fields:yellsFieldsOpt,
                 limit:limit,
-                sort: {created_at: -1}
               }
       ).fetch() 
     console.log(yells)

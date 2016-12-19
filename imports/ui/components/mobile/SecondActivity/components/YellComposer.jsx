@@ -20,16 +20,20 @@ const composer = ( props, onData ) => {
   if ( subscription.ready() ) {
     const yell = Yells.findOne({_id:yellId})
 
-    if (yell && yell.blocked_users && yell.blocked_users.length>0 ) {
+    if (yell && yell._id) {
     	userBlocked = _.includes(yell.blocked_users, Meteor.userId()) ? true : false
+      resDialog = dialog
+      suggestionsByYellfi = yell.suggestionsByYellfi
     }else {
-    	userBlocked=false
+      userBlocked = false
+      resDialog = false
+       suggestionsByYellfi = false
     }
   
   
     
    
-    onData( null, { yell,userBlocked,user,dialog } );
+    onData( null, { yell,userBlocked,user,resDialog,suggestionsByYellfi } );
   }
 };
 

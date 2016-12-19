@@ -80,6 +80,9 @@
         "noYellOnCard":"Amanınn...",
         "bannedDeleted":"Herhangi bir plan bulunamadı.Ya silindi, ya hiç olmadı."
     },
+      "publicYells":{
+        "dragMap":"İstediğiniz lokasyonu kırmızı imlecin altına sürükleyin."
+    },
     "RightColumn":{
          "noPermission":"Bu planı görmeye izniniz yok"
      },

@@ -57,7 +57,7 @@ componentDidMount(){
 			return (
 						<div>
 							<div className="ui vertical fluid  labeled icon buttons">
-								{(plan && plan!=7)?<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui blue button pub">
+								{(plan && plan!=7 || plan==0)?<button id={0} onClick={()=> this.chooseParticipation(0)} className="ui blue button pub">
 																	<i className="user icon"></i>
 																	 {i18n.__('common.publicity.justMe')}
 								</button>:null}

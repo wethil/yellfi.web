@@ -80,6 +80,9 @@
         "noYellOnCard":"Uppps..",
         "bannedDeleted":"No any plan found.It can be deleted or never existed"
     },
+    "publicYells":{
+        "dragMap":"Drag your desired location under the marker"
+    },
     "RightColumn":{
          "noPermission":"You do not have permission to see this plan anymore"
      },
