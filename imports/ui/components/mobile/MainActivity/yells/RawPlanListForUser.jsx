@@ -39,6 +39,7 @@ componentWillMount(){
 	limit = this.props.limit;
 	this.makePropState(yells)
 	this.checkProps(yells, limit)
+
 }
 
 componentWillReceiveProps(nextProps){

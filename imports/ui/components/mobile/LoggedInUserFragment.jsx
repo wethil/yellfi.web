@@ -82,7 +82,7 @@ import FontIcon from 'material-ui/FontIcon';
 					<div><UserPlansFeed activeTab={activeTab} /> </div>
 					<div><UserNotificationsFeed activeTab={activeTab} /></div>
 					<div><UserSettingsFrg activeTab={activeTab} /></div>
-					<div> <PublicPlansMap activeTab={activeTab} /> </div>
+					<div> <PublicPlansMap coordinates={this.props.coordinates} activeTab={activeTab} /> </div>
 			</SwipeableViews>
 			{mainBottomNav}
 			</div>

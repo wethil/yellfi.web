@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Yells from '../yells.js';
 fieldsOpt = {fields:{'username':1 ,'services':0}}
-yellsFieldsOpt= {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'keyword':1,'joining_quantity':1,'comment_quantity':1}
+yellsFieldsOpt= {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'keyword':1,'joining_quantity':1,'comment_quantity':1,'publicPlanLoc':1}
 
 
 
@@ -87,7 +87,7 @@ Meteor.publishComposite('latestYells', function(limit) { //always [longitude, la
 
 
 
-/*
+
 Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [longitude, latitude] order 
     return {
         find: function() {
@@ -95,7 +95,7 @@ Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [
             // being used in query.
           return Yells.find(
               {  
-                "loc":{  
+                "publicPlanLoc":{  
                   $near:{  
                     $geometry:{  
                       type:"Point",
@@ -103,7 +103,8 @@ Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [
                     },
                   }
                 },
-                'visible':true
+                'visible':true,
+                'publicity':{ $ne: 0 }
               },
               {  
                 'fields':yellsFieldsOpt,
@@ -119,5 +120,5 @@ Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [
         ]
     }
 });
-*/
+
 

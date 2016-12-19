@@ -9,7 +9,6 @@ import emitter from '../emitter.js'
 	 	  };
  	}
  		componentDidMount(){
- 		//moment.locale('tr')	 
 		    emitter.addListener('increaseNtFLimit',()=> {
 		    	if(this.props.activeTab==2){
 		    		this.setState({limit:this.state.limit+1});

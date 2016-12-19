@@ -2,7 +2,7 @@ import React from 'react';
 import  {bg,frameStyle} from './constant.js'
 
 const LoadingList = () => (
-			<div className="ui container" style={frameStyle} >	
+			<div className="ui container center aligned grid" style={frameStyle} >	
 				<div  style={loadingCard} className="ui card card--z-2">
 					<div  className="content">
 						<img src={bg} alt="" />

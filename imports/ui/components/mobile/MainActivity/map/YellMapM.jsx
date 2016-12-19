@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
 import { withGoogleMap,GoogleMap,Marker } from "react-google-maps";
-import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer.js";
-import ClusterAvatarsM from './ClusterAvatarsM'
-import _ from 'lodash'
-import { browserHistory } from 'react-router'
-
+import _ from 'lodash';
+import emitter from '../../emitter.js'
+import RawPublicYells from './RawPublicYells.jsx'
 
 const MapBase = withGoogleMap(props => (
    <GoogleMap
-   onClick={props.onMapClick}
     zoom={props.zoom}
     clickableIcons={false}
     onZoomChanged={props.onZoomChanged}
@@ -39,7 +36,7 @@ const MapBase = withGoogleMap(props => (
     super(props);
   
     this.state = {
-      markers:[],
+      yells:[],
       active:false,
       zoom:3,
       center:{
@@ -60,71 +57,48 @@ const MapBase = withGoogleMap(props => (
 
  	
  componentWillMount(){
-	this.changeMapMarkers(this.props.markers)
+	this.changeMapMarkers(this.props.yells)
  	}
 
 componentWillReceiveProps(nextProps){
-	this.changeMapMarkers(nextProps.markers)
+	this.changeMapMarkers(nextProps.yells)
 }
 
-onMapClick(){
-	  this.setState({publicYells:[],active:false})
-     this.closeDrawerViaUrl()
 
-}
 
 changeMapMarkers(data){
-	this.setState({markers:data})
+	this.setState({yells:data})
 }
 
   handleMapMounted(map) {
     this._map = map;
   }
 
-   handleClusterMounted(cluster) {
-    this._cluster = cluster;
-  }
+
 
   handleCenterChanged(){
   	nextLoc = this._map.getCenter()
-
+  	lat = nextLoc.lat()
+  	lng = nextLoc.lng()
   	this.setState({
   		  center:{
-	        lat:nextLoc.lat(),
-	        lng:nextLoc.lng()
+	        lat:lat,
+	        lng:lng
       }
   	})
+  	loc = [lng,lat]
+  	emitter.emit('changeLoc',loc)
   	
   }
-  closeDrawerViaUrl(){
-     if (window.location.pathname!='/yell/main'){
-      browserHistory.push('/yell/main')
-    }
-  }
 
-  onClusterClick(cluster){
-   this.closeDrawerViaUrl()
-
-  	if (this.state.zoom>=7) {
-  		console.log('clusters active')
-    	 markers =cluster.getMarkers()
-      yells=[]
-      mapMarkers = this.state.markers
-      markers.forEach(function (marker) {
-        id = marker.getTitle()
-        yell= _.find(mapMarkers, { 'refYellId': id} );
-        yells.push(yell)
-      });
-    this.setState({publicYells:yells,active:true})
-    } 
-  }
 
 	render() {
 		
-  const  {center} = this.state
+  const  {center,yells} = this.state
+  const {limit} = this.props
 		return (
 <div >
-<h4 className="ui  header" style={header} >Drag your desired location under the marker</h4>
+<div className="ui small label" style={header} >Drag your desired location under the marker</div>
 	<div>
   <MapBase  containerElement={
             <div className="map-container_mobile" />
@@ -132,12 +106,8 @@ changeMapMarkers(data){
         mapElement={
            <div className="map-container_mobile" />
         }
-        markers={this.state.markers}
          onMapMounted={this.handleMapMounted.bind(this)}
          onCenterChanged={this.handleCenterChanged.bind(this)}
-         onClusterClick={this.onClusterClick.bind(this)}
-         onClusterMounted={this.handleClusterMounted.bind(this)}
-         onMapClick={this.onMapClick.bind(this)}
          onZoomChanged={this.handleZoomChanged.bind(this)}
         center={center}
          zoom={this.state.zoom}
@@ -146,24 +116,7 @@ changeMapMarkers(data){
 </div>
 
 <div>
-     		<div className="ui container center aligned grid" style={frameStyle} >	
-				<div  style={loadingCard} className="ui card card--z-2">
-					<div  className="content">
-						<img src={bg} alt="" />
-					</div>
-				</div>
-				<div  className="ui card card--z-2">
-					<div  className="content">
-						<img src={bg} alt="" />
-					</div>
-				</div>
-				<div  className="ui card card--z-2">
-					<div  className="content">
-						<img src={bg} alt="" />
-					</div>
-				</div>
-			</div>
-    
+     	<RawPublicYells userCoordinates={this.props.userCoordinates} yells={yells} limit={limit} />
 
 
 </div>
@@ -174,11 +127,11 @@ changeMapMarkers(data){
 export default YellMapM;
 
 const bg = "http://i.hizliresim.com/2n181j.png";
- const frameStyle = {paddingTop: '90%'};
+
 
  const header={
  	 position: 'fixed',
-    top: '3.2em',
+    top: '4em',
     width: '100%',
     'textAlign': 'center',
     'zIndex':"20",

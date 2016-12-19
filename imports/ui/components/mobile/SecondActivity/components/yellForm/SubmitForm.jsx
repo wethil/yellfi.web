@@ -32,11 +32,14 @@ import _ from 'lodash';
 			myLatLng = place.geometry.location
 			var lat = myLatLng.lat();
 			var lng = myLatLng.lng();
+			
 			publicGeoLoc={
 					coordinates:[lng,lat],
 					geoLocAdress:place.formatted_address
 				}
+				this.setState({publicGeoLoc:publicGeoLoc})	
 			});
+		
 	placeholderMap=i18n.__('common.yellForm.mapPlaceHolder')
 	$("#places").attr("placeholder", placeholderMap).val("").focus().blur();
 	

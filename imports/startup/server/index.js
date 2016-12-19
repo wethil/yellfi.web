@@ -22,6 +22,7 @@ Meteor.startup(function() {
 
 
 Yells._ensureIndex({'loc':'2dsphere'});
+Yells._ensureIndex({'publicPlanLoc':'2dsphere'});
 
 });
 
