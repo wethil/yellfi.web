@@ -78,7 +78,7 @@ getSuggestionsFromCloud(plan,formattedKeywords,data,chosenIndex,yellId,suggestio
 	    	totalPages = chosenIndex!=null ? filmGenres[indexx].totalPages  : 1000 //total page count on theMovieDb
 	    	console.log(totalPages)
 	    	page = _.random(totalPages)
-	    	genre =data.id ? data.id : _.sample(_.map(filmGenres,'id'))
+	    	genre =data.id ? data.id : filmGenres[indexx].id
 	    	query = `&page=${page}&with_genres=${genre}`
 	    	console.log(query)
 		    this.handleGet(yellId,plan,baseThemovieDbApiUrl,query)
