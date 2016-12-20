@@ -4,6 +4,7 @@ import { browserHistory } from 'react-router'
 import { Popup, Button, Header, Image, Modal } from 'semantic-ui-react'
 import emitter from '../emitter.js'
 import YellForm from './components/yellForm/YellForm.jsx'
+import FacebookProvider, { Share } from 'react-facebook';
 
 
 
@@ -50,8 +51,12 @@ import YellForm from './components/yellForm/YellForm.jsx'
 	toogleModal(yellId,dialog,lng,lat){
 	switch(yellId) {
 	    case 'new':
-		    this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:i18n.__('common.yellForm.newPlan')})
-		    this.setState({modal:true})
+		    if(Meteor.userId()){
+		    	this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:i18n.__('common.yellForm.newPlan')})
+		    	this.setState({modal:true})
+		    } else {
+		    	browserHistory.push('/yell/main')
+		    }
 	        break;
 	    case 'main':
 	         this.setState({modal:false})
@@ -68,6 +73,37 @@ import YellForm from './components/yellForm/YellForm.jsx'
 		 browserHistory.push('/yell/main')
 	}
 
+	commentDialogActions(){
+
+		if (Meteor.userId()){
+			return (
+				 <div>
+					<FacebookProvider appID="1307279049313135">
+						        <Share href="https://atmospherejs.com/packages/trending">
+						          	<button className="ui  facebook button">
+									  <i className="facebook icon"></i>
+									  Share
+									</button>
+						        </Share>
+					 </FacebookProvider>
+						 <a className="ui  twitter button"  href="https://twitter.com/intent/tweet?text=Hello%20world">
+								  <i className="twitter icon"></i>
+								  Share
+						</a>      
+					</div>
+			)
+		} else {
+			return (
+					<button className="ui fluid facebook button">
+					  <i className="facebook icon"></i>
+					  Log in with Facebook
+					</button>
+				)
+		}
+	}
+
+
+
 	render() {
 	
 
@@ -81,7 +117,8 @@ import YellForm from './components/yellForm/YellForm.jsx'
 								</div>	 
 				switch (dialog) {
 						case 'comment':
-							modalAction =  null
+							modalAction = this.commentDialogActions()
+
 							modalTitle = i18n.__('common.YellCard.suggestions')			
 							break;
 						case 'joining': 

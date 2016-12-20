@@ -240,13 +240,15 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 
 		return (
 			<div className="ui container ">
-				 <div className="ui fluid left icon input card--z-1">
+				{Meteor.userId()?
+					 <div className="ui fluid left icon input card--z-1">
 							 <input type="text"
 						  		 id="commentInput"   
 						  		 onKeyUp={this.inputSubmit.bind(this)}
 						  		 placeholder={i18n.__('common.comments.writeSugg')} /> 
 					  		  <i className="user icon"></i>
-						</div> 
+						</div> :null
+				}
  					{commentList}
  					{suggestionList}
  					<Notification

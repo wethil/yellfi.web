@@ -102,7 +102,7 @@ import _ from 'lodash'
 
 	approveAllButton (diff,yellId) {
 		if (diff.length==0){
-			return (<button className="fluid ui basic violet disabled button"> {i18n.__('common.YellCard.approveAll')} </button>)
+			return (<button className="fluid ui basic violet disabled button"> {i18n.__('common.YellCard.noJoiningReq')} </button>)
 		} else {
 			return (
 					<button className="fluid ui basic violet button" 
@@ -160,11 +160,19 @@ import _ from 'lodash'
 		}
 
 		return (
-			<div className="ui container "> 
-				{requererList}
+				<div className="ui container "> 
+					{requererList}
 
-			<span style={styles.mainButton}> {mainButton}  </span>
-				 </div>
+					<span style={styles.mainButton}>
+						{ 
+							Meteor.userId()? mainButton:
+							<button className="ui fluid facebook button">
+								<i className="facebook icon"></i>
+								Log in with Facebook
+							</button>
+						} 
+					</span>
+				</div>
 		);
 	}
 }
