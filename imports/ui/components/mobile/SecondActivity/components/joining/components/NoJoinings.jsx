@@ -17,9 +17,9 @@ import FacebookProvider, { Share } from 'react-facebook';
    <div style={{marginTop:'19%'}} >
     <FacebookProvider appID="1307279049313135">
               <Share href="https://atmospherejs.com/packages/trending">
-                  <button className="ui  facebook button">
-              <i className="facebook icon"></i>
-              Share
+             <button className="ui  facebook button">
+                <i className="facebook icon"></i>
+                Share
             </button>
               </Share>
      </FacebookProvider>

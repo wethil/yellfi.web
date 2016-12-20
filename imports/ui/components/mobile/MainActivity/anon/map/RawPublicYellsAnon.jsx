@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import {grey800} from 'material-ui/styles/colors';
-import {plans} from '../../../constants.js';
+import {plans} from '../../../../constants.js';
 import { browserHistory } from 'react-router'
 import { Dropdown } from 'semantic-ui-react';
-import emitter from '../../emitter.js'
+import emitter from '../../../emitter.js'
 import _ from 'lodash';
 import { Loader } from 'semantic-ui-react';
 import VisibilitySensor from 'react-visibility-sensor';
 import GreatCircle from 'great-circle';
 
-class RawPublicYells extends Component {
+class RawPublicYellsAnon extends Component {
 
 constructor(props) {
 	super(props);
@@ -24,7 +24,7 @@ constructor(props) {
 handleVisibleSensor(isVisible){
 	if (isVisible){
 	this.setState({sensor:false})
-	emitter.emit('increasePubYellLimit')
+	emitter.emit('increasePubYellLimitAnon')
 	}
 }
 
@@ -53,7 +53,7 @@ makePropState(data){
 }
 
 componentWillUnmount(){
-	emitter.emit('resetPublicLimit')
+	emitter.emit('resetPublicLimitAnon')
 }
 
 checkProps(newP,limit){
@@ -198,7 +198,7 @@ if (yells && yells.length > 0) {
 		);
 	}
 }
-export default RawPublicYells;
+export default RawPublicYellsAnon;
 
 
 

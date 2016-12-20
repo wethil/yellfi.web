@@ -1,0 +1,37 @@
+import React, { Component } from 'react';
+import PlanListComposer from './feed/PlanListComposer.jsx';
+import emitter from '../../emitter.js';
+import LoadingList from '../yells/YellsComponents/LoadingList.jsx'
+ class AnonFeed extends Component {
+ 		constructor(props) {
+ 	  super(props);
+ 	
+ 	  this.state = {
+ 	  	limit:10
+ 	  };
+ 	}
+
+ 	componentDidMount(){
+		    emitter.addListener('increaseLimitAnon',()=> {
+		    		this.setState({limit:this.state.limit+5});
+		    	}); 
+
+		    emitter.addListener('resetLimitAnon',()=> {
+		    		this.setState({limit:10});
+		    	}); 
+ 	}
+
+
+	render() {
+		const {limit} = this.state
+		const {activeTab} =this.props
+		
+		content = (activeTab == 1 )? <PlanListComposer limit={limit} /> : <LoadingList />	
+		return (
+		<div>	
+		 {content}
+		</div> 			
+		);
+	}
+}
+export default AnonFeed;

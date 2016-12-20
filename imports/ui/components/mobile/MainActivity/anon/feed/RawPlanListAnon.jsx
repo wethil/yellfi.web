@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
-import {grey800} from 'material-ui/styles/colors';
-import {plans} from '../../../constants.js';
+import {grey800 } from 'material-ui/styles/colors';
+import {plans} from '../../../../constants.js';
 import { browserHistory } from 'react-router'
+import NoUserPlans from '../../yells/YellsComponents/NoUserPlans.jsx'
 import { Dropdown } from 'semantic-ui-react';
-import emitter from '../../emitter.js'
+import emitter from '../../../emitter.js'
 import _ from 'lodash';
-import { Loader } from 'semantic-ui-react';
-import VisibilitySensor from 'react-visibility-sensor';
-import GreatCircle from 'great-circle';
+import { Loader } from 'semantic-ui-react'
+import VisibilitySensor from 'react-visibility-sensor'
+import  {frameStyle} from '../../yells/YellsComponents/constant.js'
 
-class RawPublicYells extends Component {
+
+ 	
+
+ class RawPlanListAnon extends Component {
 
 constructor(props) {
 	super(props);
 	this.state = {
 		plans : [],
+		snackbarState:false,
+		snackbarText:"",
 		haveMore:false,
 		sensor:true,
 		loader:true
@@ -24,7 +30,7 @@ constructor(props) {
 handleVisibleSensor(isVisible){
 	if (isVisible){
 	this.setState({sensor:false})
-	emitter.emit('increasePubYellLimit')
+	emitter.emit('increaseLimitAnon')
 	}
 }
 
@@ -53,12 +59,10 @@ makePropState(data){
 }
 
 componentWillUnmount(){
-	emitter.emit('resetPublicLimit')
+	emitter.emit('resetLimitAnon')
 }
 
 checkProps(newP,limit){
-	console.log('yell ' + newP.length)
-	console.log(limit)
 	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
 		this.setState({haveMore:false,sensor:false,loader:false})
 	} else {
@@ -77,15 +81,46 @@ openJoinings(yellId,ownerId){
 	browserHistory.push('/yell/'+yellId + '?dialog=joining')
 }
 
+deleteYell(yellId,ownerId){
+	this.setState({activeYellId:yellId,activeOwnerId:ownerId})
+	Meteor.call('deleteYell',yellId, error => { 
+		if (error) { 
+			console.log('error', error); 
+		} else {
+			this.setState({
+			snackbarState:true,
+			snackbarText:i18n.__('common.YellCard.deletePlan')
+			})
+		}        
+	});
+	setTimeout(()=>{ this.closeSb() }, 2000);	
+}
 
 
+undoAction() {
+	var yellId = this.state.activeYellId
+	var ownerId= this.state.activeOwnerId
+	Meteor.call('undoDeleteYell',yellId,error=> {
+	if (error) {
+		console.log(error)
+	} else {
+		browserHistory.push('/yell/'+yellId + '?dialog=comment')
+	}
+	});
+}
 
+closeSb(){
+	this.setState({
+		snackbarState:false,
+		snackbarText:""
+	})
+}
 
 	render() {
 
 
-	const {yells,userCoordinates} = this.props
-	const {sensor} = this.state
+	const {yells} = this.props
+	const {snackbarState,snackbarText,sensor} = this.state
 if (yells && yells.length > 0) {
 		planList = []
 		yells.forEach( (yell) => {
@@ -103,15 +138,7 @@ if (yells && yells.length > 0) {
 			break;		   
 		}
 
-	var User = Meteor.userId()
-	
 
-	yellCord=yell.publicPlanLoc.coordinates
-	console.log(userCoordinates)
-	console.log(yellCord)
-	distance =	_.round(GreatCircle.distance(userCoordinates[1], userCoordinates[0], yellCord[1], yellCord[0]), 2);
-
-						 	 
 
 
 	prePlan=Number(yell.plan)
@@ -154,8 +181,7 @@ if (yells && yells.length > 0) {
 				planList.push(  
 					<div className=" ui centered fluid card card--z-2" id={yell._id} key={yell._id}>
 					    <div className="content">	
-					        <img  style={styles.avatar} className="left floated mini ui circular  image" src={yell.owner.picture} />
-							<div style={{fontSize:12,color:'#595858'}} className="ui right floated" > {distance} km </div>					  
+					        <img  style={styles.avatar} className="left floated mini ui circular  image" src={yell.owner.picture} />			  
 						     <div style={styles.header} className="header">
 						    {yell.owner.firstName}
 						      </div>
@@ -177,13 +203,12 @@ if (yells && yells.length > 0) {
 	}) 
 
 	} else {
-		planList = "no user plans"
+		planList = <NoUserPlans />
 	}
 		return (
-<div className="ui container" id="container" style={styles.frameStyle}>
+<div className="ui container" id="container" style={frameStyle}>
 				
-<div id="pList" style ={styles.container} >
-			    
+		    
         {planList}
      <VisibilitySensor 
      		partialVisibility={true}
@@ -191,24 +216,17 @@ if (yells && yells.length > 0) {
      		 onChange={this.handleVisibleSensor.bind(this)}
      		 active={this.state.sensor} >  
  		 <Loader active={this.state.loader} inline='centered' />
- 	</VisibilitySensor>		
-</div>	
+ 	</VisibilitySensor>	
 			
-</div>
+				</div>
 		);
 	}
 }
-export default RawPublicYells;
+export default RawPlanListAnon;
 
 
 
   const styles = {
-  	container:{
-	  	position: 'fixed',
-	    height: '44vh',
-	    width: '92%',
-	    overflow: 'scroll',
-  	},
         list:{
           height: '80.6vh',
           backgroundColor:'white'
@@ -237,10 +255,6 @@ export default RawPublicYells;
         },
         buttons:{
         	padding : '0.78571429em 1em 0.78571429em 1em'
-        },
-        frameStyle:{
-        	paddingTop: '75%',
-        	marginBottom:150
         }
 
     }

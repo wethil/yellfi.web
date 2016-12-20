@@ -1,5 +1,7 @@
 /* CSS declarations go here */
 @import 'https://fonts.googleapis.com/css?family=Roboto';
+@import url('https://fonts.googleapis.com/css?family=McLaren|Rakkas');
+
 .map-container {
     height: 100vh;
     width: 100%;

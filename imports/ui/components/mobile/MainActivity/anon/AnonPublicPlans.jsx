@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import MapComposer from './map/MapComposer.jsx'
-import emitter from '../emitter.js'
-import LoadingList from './yells/YellsComponents/LoadingList.jsx'
+import emitter from '../../emitter.js';
+import LoadingList from '../yells/YellsComponents/LoadingList.jsx'
 
 
 
- class PublicPlansMap extends Component {
+ class AnonPublicPlans extends Component {
  	constructor(props) {
  	  super(props);
  	
@@ -17,20 +17,20 @@ import LoadingList from './yells/YellsComponents/LoadingList.jsx'
  	}
 
  		componentDidMount(){ 
-		    emitter.addListener('increasePubYellLimit',()=> {
-		    	if(this.props.activeTab==4){
+		    emitter.addListener('increasePubYellLimitAnon',()=> {
+		    	if(this.props.activeTab==2){
 		    		this.setState({limit:this.state.limit+5});
 		    		}
 		    	}); 
-		    emitter.addListener('changeLoc',(loc)=> {
-		    	if(this.props.activeTab==4){
+		    emitter.addListener('changeLocAnon',(loc)=> {
+		    	if(this.props.activeTab==2){
 		    		this.setState({limit:10,location:loc});
 		    		}
 		    		console.log('change Loc')
 		    		console.log(loc)
 		    		console.log(this.state.limit)
 		    	});  
-		     emitter.addListener('resetPublicLimit',()=> {
+		     emitter.addListener('resetPublicLimitAnon',()=> {
 		    		this.setState({limit:10});
 		    	}); 
  	}
@@ -55,7 +55,7 @@ setUserCoord(coord){
 	render() {
 		const {limit,location,userCoordinates} = this.state 
 		const {activeTab} =this.props
-	content=(activeTab==4)?<div className="ui column" style={{height:'90vh'}}>
+	content=(activeTab==2)?<div className="ui column" style={{height:'90vh'}}>
 								<MapComposer userCoordinates={userCoordinates} limit={limit} location={location} />
 							</div>:<LoadingList />
 		return (
@@ -63,7 +63,7 @@ setUserCoord(coord){
 		);
 	}
 }
-export default PublicPlansMap;
+export default AnonPublicPlans;
 
 
 

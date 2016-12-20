@@ -5,6 +5,7 @@ import Login from '../LeftColumn/Accounts/Login.jsx'
 import Register from '../LeftColumn/Accounts/Register.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import AnonUserFragment from './AnonUserFragment.jsx'
 
 
  class Index extends Component {
@@ -46,7 +47,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 		return (
 		
 				<span>	
-        {userId==null ? <div style={{marginTop:'50%'}} > <Register /> <Login /> </div> : <LoggedInUserFragment  coordinates={userCoord} />} 
+        {userId==null ? <AnonUserFragment /> : <LoggedInUserFragment  coordinates={userCoord} />} 
 				</span>		
 			 
 		);

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { withGoogleMap,GoogleMap,Marker } from "react-google-maps";
 import _ from 'lodash';
-import emitter from '../../emitter.js'
-import RawPublicYells from './RawPublicYells.jsx'
+import emitter from '../../../emitter.js'
+import RawPublicYellsAnon from './RawPublicYellsAnon.jsx'
 
 const MapBase = withGoogleMap(props => (
    <GoogleMap
@@ -13,17 +13,12 @@ const MapBase = withGoogleMap(props => (
     center={props.center}
     onCenterChanged={props.onCenterChanged}
   >
-
-
-      
+   
         <Marker
-       
           position={{ lat: props.center.lat, lng: props.center.lng }}
           title="see"
           key="1"
         />
-    
-
   </GoogleMap>
 
 
@@ -31,7 +26,7 @@ const MapBase = withGoogleMap(props => (
 ));
 
 
- class YellMapM extends Component {
+ class YellMapAnonM extends Component {
   constructor(props) {
     super(props);
   
@@ -87,7 +82,7 @@ changeMapMarkers(data){
       }
   	})
   	loc = [lng,lat]
-  	emitter.emit('changeLoc',loc)
+  	emitter.emit('changeLocAnon',loc)
   	
   }
 
@@ -116,7 +111,7 @@ changeMapMarkers(data){
 </div>
 
 <div>
-     	<RawPublicYells userCoordinates={this.props.userCoordinates} yells={yells} limit={limit} />
+     	<RawPublicYellsAnon userCoordinates={this.props.userCoordinates} yells={yells} limit={limit} />
 
 
 </div>
@@ -124,9 +119,10 @@ changeMapMarkers(data){
 		);
 	}
 }
-export default YellMapM;
+export default YellMapAnonM;
+
  const header={
- 	 position: 'fixed',
+   position: 'fixed',
     top: '4em',
     width: '100%',
     'textAlign': 'center',
