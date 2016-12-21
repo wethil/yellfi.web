@@ -53,6 +53,12 @@ import FacebookProvider, { Share } from 'react-facebook';
 	}
 
 	toogleModal(yellId,dialog,lng,lat){
+		if (typeof dialog== "undefined"){
+			 dialog = "comment"
+			}
+
+
+
 	switch(yellId) {
 	    case 'new':
 		    if(Meteor.userId()){
