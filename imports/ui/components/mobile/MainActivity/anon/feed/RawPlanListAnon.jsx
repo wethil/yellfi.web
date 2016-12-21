@@ -3,7 +3,6 @@ import {grey800 } from 'material-ui/styles/colors';
 import {plans} from '../../../../constants.js';
 import { browserHistory } from 'react-router'
 import NoUserPlans from '../../yells/YellsComponents/NoUserPlans.jsx'
-import { Dropdown } from 'semantic-ui-react';
 import emitter from '../../../emitter.js'
 import _ from 'lodash';
 import { Loader } from 'semantic-ui-react'
@@ -19,8 +18,6 @@ constructor(props) {
 	super(props);
 	this.state = {
 		plans : [],
-		snackbarState:false,
-		snackbarText:"",
 		haveMore:false,
 		sensor:true,
 		loader:true
@@ -81,46 +78,13 @@ openJoinings(yellId,ownerId){
 	browserHistory.push('/yell/'+yellId + '?dialog=joining')
 }
 
-deleteYell(yellId,ownerId){
-	this.setState({activeYellId:yellId,activeOwnerId:ownerId})
-	Meteor.call('deleteYell',yellId, error => { 
-		if (error) { 
-			console.log('error', error); 
-		} else {
-			this.setState({
-			snackbarState:true,
-			snackbarText:i18n.__('common.YellCard.deletePlan')
-			})
-		}        
-	});
-	setTimeout(()=>{ this.closeSb() }, 2000);	
-}
 
-
-undoAction() {
-	var yellId = this.state.activeYellId
-	var ownerId= this.state.activeOwnerId
-	Meteor.call('undoDeleteYell',yellId,error=> {
-	if (error) {
-		console.log(error)
-	} else {
-		browserHistory.push('/yell/'+yellId + '?dialog=comment')
-	}
-	});
-}
-
-closeSb(){
-	this.setState({
-		snackbarState:false,
-		snackbarText:""
-	})
-}
 
 	render() {
 
 
 	const {yells} = this.props
-	const {snackbarState,snackbarText,sensor} = this.state
+	const {sensor} = this.state
 if (yells && yells.length > 0) {
 		planList = []
 		yells.forEach( (yell) => {

@@ -25,6 +25,10 @@ import FacebookProvider, { Share } from 'react-facebook';
  		emitter.addListener('changeDialogAction',(dialog) => {
  		 	this.setState({dialog:dialog  })
  		  });
+ 		emitter.addListener('fixModal',() => {
+ 			console.log('blur')
+ 		 	$(".ui.fullscreen.modal").css("margin-top","-257px");
+ 		  });
  		//JoiningList
 
  	}
@@ -78,17 +82,18 @@ import FacebookProvider, { Share } from 'react-facebook';
 		if (Meteor.userId()){
 			return (
 				 <div>
+				     	<button className="ui circular basic violet button">
+									Joinings
+						</button>
 					<FacebookProvider appID="1307279049313135">
 						        <Share href="https://atmospherejs.com/packages/trending">
-						          	<button className="ui  facebook button">
+						          	<button className="ui circular facebook basic blue icon button">
 									  <i className="facebook icon"></i>
-									  Share
 									</button>
 						        </Share>
 					 </FacebookProvider>
-						 <a className="ui  twitter button"  href="https://twitter.com/intent/tweet?text=Hello%20world">
+						 <a className="ui circular  twitter basic blue icon button"  href="https://twitter.com/intent/tweet?text=Hello%20world">
 								  <i className="twitter icon"></i>
-								  Share
 						</a>      
 					</div>
 			)
@@ -105,8 +110,17 @@ import FacebookProvider, { Share } from 'react-facebook';
 
 
 	render() {
-	
-
+		singInToSuggest = <button className="ui fluid facebook button">
+								<i className="facebook icon"></i>
+								Log in with Facebook to Suggest
+						</button>		
+		singInToJoin = <button className="ui fluid facebook button">
+								<i className="facebook icon"></i>
+								Log in with Facebook to Join
+						</button>
+							
+		charlestonButton = <button className="fluid  disable ui blue button" style={{visibility:'hidden'}} > charleston IL </button>		
+		
 		$('.modal').modal({detachable: false});
 		const {drwContent,dialogFromLink,yellId,modal,dialog,userCoordinates} = this.state
 		console.log(dialog)
@@ -117,12 +131,12 @@ import FacebookProvider, { Share } from 'react-facebook';
 								</div>	 
 				switch (dialog) {
 						case 'comment':
-							modalAction = this.commentDialogActions()
+							modalAction = (!Meteor.userId()) ? singInToSuggest : null
 
 							modalTitle = i18n.__('common.YellCard.suggestions')			
 							break;
 						case 'joining': 
-							modalAction = <button className="fluid  disable ui blue button" style={{visibility:'hidden'}} > charleston IL </button>
+							modalAction = (!Meteor.userId()) ? singInToJoin : charlestonButton
 							modalTitle = i18n.__('common.YellCard.participation')				
 							break;	
 						case 'blocked':
@@ -155,7 +169,7 @@ import FacebookProvider, { Share } from 'react-facebook';
 
 
 		return (
-	      <Modal  size="fullscreen" dimmer={true} open={modal} onClose={this.closeModal.bind(this)} >
+	      <Modal style={{marginTop:'-275px !important'}} size="fullscreen" dimmer={true} open={modal} onClose={this.closeModal.bind(this)} >
           <Modal.Header>
           	{modalTitle}
 		  	<span onClick={this.closeModal.bind(this)}  

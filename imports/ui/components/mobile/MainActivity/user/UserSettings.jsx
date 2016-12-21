@@ -11,6 +11,7 @@ import Badge from 'material-ui/Badge';
 import FontIcon from 'material-ui/FontIcon';
 import i18n from 'meteor/universe:i18n';
 import emitter from '../../emitter.js'
+import { browserHistory } from 'react-router'
  class UserSettings extends Component {
  	constructor(props) {
  	  super(props);
@@ -97,10 +98,10 @@ changeUserPic(data){
 
 
  changeLang  (event, index, value) {
-	i18n.setLocale(value)
 	moment.locale(value);
-	this.setState({language:value})
-	emitter.emit('changeLng',value)	
+	i18n.setLocale(value).then(()=>{
+		this.setState({language:value});
+	})	
 	$('#clickAny').removeClass('hidden')
 
  	}
@@ -122,6 +123,10 @@ CUNSubmit(e){
  		}
  	});
  	this.setState({uNameInput:false})
+ }
+
+ logout(){
+ 	 	emitter.emit('logout')
  }
 
 
@@ -193,9 +198,17 @@ CUNSubmit(e){
 						
 						
 
-					<div className="row" style={{padding:'0em'}} >
+					<div className="row"  >
 						  <SelectField
-						  		fullWidth={true}
+							  //style={{zIndex:999}}
+							  //labelStyle={{zIndex:888}}
+							  //hintStyle={{zIndex:777}}
+						  	fullWidth={true}
+						  	//floatingLabelStyle={{zIndex:666}}
+						  	//hintStyle={{zIndex:555}}
+						  	//listStyle={{zIndex:444}}
+						  	//menuStyle={{zIndex:333}}
+						  	//underlineStyle={{zIndex:222}}
 					          floatingLabelText="Dil / Language"
 					          value={this.state.language}
 					          onChange={this.changeLang.bind(this)}
@@ -207,7 +220,8 @@ CUNSubmit(e){
 				<div id="clickAny" className="row hidden" style={{padding:'0em'}} >
 					<h5> {i18n.__('common.userSett.clickAnyWhere')} </h5>
 				</div>	
-					<a href="#" style={{color:'#F44336'}} >{i18n.__('common.userSett.logout')}</a>
+					<br/>
+					<a href="#" onClick={this.logout.bind(this)} style={{color:'#F44336'}} >{i18n.__('common.userSett.logout')}</a>
 					<br/>
 					<div className="row" style={{paddingBottom:'0em'}} >
 						  <a  href="#">{i18n.__('common.userSett.clickToEmail')} : support@yellfi.com</a>

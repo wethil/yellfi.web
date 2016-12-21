@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import NoJoinings from './components/NoJoinings.jsx'
 import emitter from '../../../emitter.js'
 import _ from 'lodash'
-
+import { browserHistory } from 'react-router';
+import {plans,planCardStyles} from '../../../../constants.js';
+import CircleShareButtons from '../others/CircleShareButtons.jsx'
  class RawJoiningListM extends Component {
  	constructor(props) {
  	  super(props);
@@ -124,11 +126,15 @@ import _ from 'lodash'
 
 	}
 
+	openComments(yellId){
+	browserHistory.push('/yell/'+yellId + '?dialog=comment' )
+}
+
 
 	render() {
 
 		const {requerers} = this.state
-		const {_id,publicity,ownerId,requests,approved } = this.state.yell
+		const {_id,publicity,ownerId,requests,approved,owner,plan,keyword } = this.state.yell
 		 ownership = Meteor.userId() && Meteor.userId() == ownerId ? true : false 
 		diff = _.difference(requests, approved);
 		 if (ownership) {
@@ -136,6 +142,40 @@ import _ from 'lodash'
 		 } else {
 		 	mainButton = this.JoiningButton(_id,requests,approved)
 		 }
+
+
+		 prePlan=Number(plan)
+	if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
+	  planT = plan
+	} else {
+	  planT =i18n.__(plans[prePlan].content)
+	}	
+
+	commentsButton = <button onClick={()=>this.openComments(_id)} className="ui right floated circular basic mini violet button">
+										{i18n.__('common.YellCard.suggestions')} 
+									</button>
+	 actionButtons = 	<div>
+				     	{commentsButton}
+						<CircleShareButtons />    
+					</div>
+
+	planCard = 	<div className="ui centered fluid card card--z-2" >
+					    <div className="content">	
+					        <img  style={planCardStyles.avatar} className="left floated mini ui circular  image" src={yell.owner.picture} />				  
+						     <div style={planCardStyles.header} className="header">
+						    {yell.owner.firstName}
+						      </div>
+						      <div  className="description">
+						       <span style={planCardStyles.desc}> {planT} </span>
+						         <div style={planCardStyles.meta} className="meta">
+						        	 {keyword}
+						    	  </div>	
+						      </div>
+					    </div>
+					    <div className="extra content">
+					      <div>{actionButtons}</div>
+					    </div>
+					  </div>
 
 		
 
@@ -161,15 +201,12 @@ import _ from 'lodash'
 
 		return (
 				<div className="ui container "> 
+				{planCard}
 					{requererList}
 
 					<span style={styles.mainButton}>
 						{ 
-							Meteor.userId()? mainButton:
-							<button className="ui fluid facebook button">
-								<i className="facebook icon"></i>
-								Log in with Facebook
-							</button>
+							Meteor.userId()? mainButton:null
 						} 
 					</span>
 				</div>
@@ -200,6 +237,8 @@ const styles= {
 	    width: '92%'
 	}
 }
+
+
 
 
 

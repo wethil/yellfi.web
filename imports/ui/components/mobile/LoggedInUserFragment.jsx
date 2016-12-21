@@ -20,9 +20,7 @@ import FontIcon from 'material-ui/FontIcon';
  	  };
  	}
 
-	componentDidMount(){
-		emitter.addListener('changeLng',(a)=> this.changeLng(a) ); 
-	}
+
 
 	changeLng(a){
 		this.setState({lng:a})

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {grey800 } from 'material-ui/styles/colors';
 export const YouTubeKey="AIzaSyCRpfCBvdHWOvOKlCQwi2UiUaFTgKov2g4"
 export const placesApiKey="AIzaSyBnIm4Hg7Uj_jF-eduNHoiSGas-WkNgjg0"
 export const themovieDbApi="b362c3224b3d5cfa4479bc451c1f2f26"
@@ -377,4 +378,36 @@ export  const shoppingTr= [
   {"id":68,"title":"pet_store","value":"Petshop"}
 ]
 
+  export const planCardStyles = {
+        list:{
+          height: '80.6vh',
+          backgroundColor:'white'
+        },
+      header: {
+        marginLeft: '2.4em',
+          marginTop:'0.3em',
+          color:'rgb(65, 131, 196)'  //'#4183c4'
+        },
+      meta: {
+        fontWeight:100
+        //marginLeft: '3.9em',
+        //fontSize:'0.8em'
+        },
+      timeDate: {
+        color: grey800
+        },  
+       keywords:{
+        fontSize:12
+        },
+        avatar:{
+          paddingBottom: '0em !important'
+        },
+        desc:{
+          fontWeight:'bolder',
+          fontSize: 16
+        },
+        buttons:{
+          padding : '0.78571429em 1em 0.78571429em 1em'
+        }
 
+    }

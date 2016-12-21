@@ -21,10 +21,12 @@ const YellFragment = (props) => {
 			case 'comment':
 			
 				content = <CommentComposerM 
-								yellId={props.yell._id} 
-								yellOwnerId={props.yell.ownerId}
+								yellId={props.yell._id}
+								yellOwner={props.yell.owner}
 								plan={props.yell.plan}
-								suggestions= {suggestions} 
+								keyword={props.yell.keyword}
+								suggestions= {suggestions}
+								publicity={props.yell.publicity==0?false:true} 
 								/>
 				break;
 			

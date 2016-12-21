@@ -14,6 +14,16 @@
         "Hiking": "Doğa Yürüyüşü",
         "Custom":"Başka"
    	},
+       "anonMain":{
+        "slogan":"Öneri alın, insanlarla buluşun.",
+        "facebookLogin":"Facebook ile giriş yapın",
+        "or":"ya da",
+        "takeLook":"Bir göz atın",
+        "contact":"İletişim",
+        "signInToCreate":"Giriş yapın ve sizde oluşturun",
+        "signInToSuggest":"Öneri vermek için giriş yapın",
+        "signInToJoin":"Katılmak için giriş yapın"
+    },
      "ntfContent":{
         "madeSug":"şu plana öneri yaptı:",
         "liked" :"şu plandaki önerinizi beğendi",

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LoggedInUserFragment from './LoggedInUserFragment.jsx'
-import emitter from '../emitter.js' //main emitter
+import emitter from './emitter.js' //main emitter
 import Login from '../LeftColumn/Accounts/Login.jsx'
 import Register from '../LeftColumn/Accounts/Register.jsx'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -21,7 +21,13 @@ import AnonUserFragment from './AnonUserFragment.jsx'
  	componentDidMount(){
  		//moment.locale('tr')
     emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}) ); //from login jsx
- 	}
+ 	   emitter.addListener('logout',()=> this.logout() );
+  }
+
+  logout(){
+    Meteor.logout()
+    this.setState({userId:null})
+  }
 
  	componentWillMount(){
 
@@ -39,7 +45,7 @@ import AnonUserFragment from './AnonUserFragment.jsx'
 
 
  	}
-
+//<AnonUserFragment  coordinates={userCoord} /> 
 
 	render() {
 		const {userCoord,userId} = this.state
@@ -47,7 +53,7 @@ import AnonUserFragment from './AnonUserFragment.jsx'
 		return (
 		
 				<span>	
-        {userId==null ? <AnonUserFragment /> : <LoggedInUserFragment  coordinates={userCoord} />} 
+        {userId==null ? <Login /> : <LoggedInUserFragment  coordinates={userCoord} />} 
 				</span>		
 			 
 		);

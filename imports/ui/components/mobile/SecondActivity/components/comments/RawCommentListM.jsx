@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
 import NoComment from './components/NoComment.jsx'
 import { Dropdown } from 'semantic-ui-react';
+import {grey800 } from 'material-ui/styles/colors';
 import _ from 'lodash'
 import { Notification } from 'react-notification';
 import emitter from '../../../emitter.js';
+import {plans,planCardStyles} from '../../../../constants.js'
 import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.jsx'
-
+import CircleShareButtons from '../others/CircleShareButtons.jsx'
+import { browserHistory } from 'react-router';
 
  class RawCommentListM extends Component {
  	constructor(props) {
@@ -16,25 +19,25 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 
   componentWillMount(){
   	emitter.emit('changeDialogAction','comment') //second Activity
-  	const {comments,yellId,yellOwnerId,suggestions} = this.props
-  	emitter.emit('getIDs',yellOwnerId,yellId)
-    this.makePropState(comments,yellId,yellOwnerId,suggestions)
+  	const {comments,yellId,yellOwner,suggestions} = this.props
+  	emitter.emit('getIDs',yellOwner,yellId)
+    this.makePropState(comments,yellId,yellOwner,suggestions)
   }
 
   componentWillReceiveProps(nextProps){
-  	const {comments,yellId,yellOwnerId,suggestions} = nextProps
-  	emitter.emit('getIDs',yellOwnerId,yellId)
-  this.makePropState(comments,yellId,yellOwnerId,suggestions)
+  	const {comments,yellId,yellOwner,suggestions} = nextProps
+  	emitter.emit('getIDs',yellOwner,yellId)
+  this.makePropState(comments,yellId,yellOwner,suggestions)
 
 }
 
 
-  makePropState(comments,yellId,yellOwnerId,suggestions){
+  makePropState(comments,yellId,yellOwner,suggestions){
   	console.log(suggestions)
   this.setState({
   	comments:comments,
   	yellId:yellId,
-  	yellOwnerId:yellOwnerId,
+  	yellOwner:yellOwner,
   	suggestions:suggestions
   })
 }
@@ -140,7 +143,7 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 	if (e.key == 'Enter') {
 		let comCont = $('#commentInput').val()
 		let yellId = this.state.yellId
- 		let yellOwnerId = this.state.yellOwnerId
+ 		let yellOwnerId = this.state.yellOwner._id
 
  
 		Meteor.call('addComment',comCont,yellId,yellOwnerId,error=>{
@@ -156,9 +159,63 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 	}
 }
 
+openJoinings(yellId){
+	browserHistory.push('/yell/'+yellId + '?dialog=joining')
+}
+
+
+
 	render() {
+	const {comments,yellId,yellOwner,suggestions} = this.state
+	yellOwnerId = yellOwner._id
+	const {publicity,keyword} = this.props
+
+prePlan=Number(this.props.plan)
+	if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
+	  plan = this.props.plan
+	} else {
+	  plan =i18n.__(plans[prePlan].content)
+	}
+
+	joiningButton = publicity ? <button onClick={()=>this.openJoinings(yellId)} className="ui right floated circular basic mini violet button">
+										{i18n.__('common.YellCard.participation')} 
+									</button>:null
+	 actionButtons = 	<div>
+				     	{joiningButton}
+						<CircleShareButtons />     
+					</div>
+
+	planCard = 	<div className="ui centered fluid card card--z-2" >
+					    <div className="content">	
+					        <img  style={planCardStyles.avatar} className="left floated mini ui circular  image" src={yellOwner.picture} />				  
+						     <div style={planCardStyles.header} className="header">
+						    {yellOwner.firstName}
+						      </div>
+						      <div  className="description">
+						       <span style={planCardStyles.desc}> {plan} </span>
+						         <div style={planCardStyles.meta} className="meta">
+						        	 {keyword}
+						    	  </div>	
+						    	   <div>{actionButtons}</div>
+						      </div>
+					    </div>
+					    <div className="extra content">
+					     
+							{Meteor.userId()?
+									 <div style={{marginTop:3}} className="ui fluid left icon input ">
+											 <input type="text"
+										  		 id="commentInput"   
+										  		 onKeyUp={this.inputSubmit.bind(this)}
+										  		 placeholder={i18n.__('common.comments.writeSugg')} /> 
+									  		  <i className="user icon"></i>
+										</div> :null
+								}
+					    </div>
+					  </div>
 		
-		 const {comments,yellId,yellOwnerId,suggestions} = this.state
+
+
+
 
 		 if (suggestions && suggestions.length!=0) {
 		 	suggestionList = <YellfiSuggestionsList  suggestions={suggestions} plan={this.props.plan} />
@@ -240,15 +297,8 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 
 		return (
 			<div className="ui container ">
-				{Meteor.userId()?
-					 <div className="ui fluid left icon input card--z-1">
-							 <input type="text"
-						  		 id="commentInput"   
-						  		 onKeyUp={this.inputSubmit.bind(this)}
-						  		 placeholder={i18n.__('common.comments.writeSugg')} /> 
-					  		  <i className="user icon"></i>
-						</div> :null
-				}
+			{planCard}
+			
  					{commentList}
  					{suggestionList}
  					<Notification
@@ -259,6 +309,7 @@ import YellfiSuggestionsList from '../yellfiSuggestions/YellfiSuggestionsList.js
 					  activeBarStyle={{zIndex:99,bottom:'1rem',left:'3rem'}}
 					  onClick={ ()=> this.undoAction()}
 					/>
+				
 			</div>
 		);
 	}
@@ -284,10 +335,15 @@ const styles= {
 	    zIndex: 9999,
 		bottom: '6%',
 	    width: '92%'
+	},
+		mainButton:{
+			position:'fixed',
+		    zIndex: 9999,
+			top: '89%',
+		    width: '92%'
 	}
 
 }
-
 
 
 

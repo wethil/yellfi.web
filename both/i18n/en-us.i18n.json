@@ -14,6 +14,17 @@
         "Hiking": "Hiking",
         "Custom":"Custom"
     },
+    "anonMain":{
+        "slogan":"Get suggestions, get people",
+        "facebookLogin":"Sign in with Facebook",
+        "or":"or",
+        "takeLook":"Take a look",
+        "contact":"Contact",
+        "signInToCreate":"Sign in with Facebok to Create yours",
+        "signInToSuggest":"Sign in with Facebook to Suggest",
+        "signInToJoin":"Sign in with Facebook to Join"
+
+    },
     "ntfContent":{
         "madeSug":"made a suggestion for",
         "liked" :"liked your suggestion for",

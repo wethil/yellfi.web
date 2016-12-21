@@ -28,10 +28,11 @@ import LoadingList from '../yells/YellsComponents/LoadingList.jsx'
 		
 		content = (activeTab == 1 )? <PlanListComposer limit={limit} /> : <LoadingList />	
 		return (
-		<div>	
-		 {content}
+		<div >	
+			  {content}
 		</div> 			
 		);
 	}
 }
 export default AnonFeed;
+

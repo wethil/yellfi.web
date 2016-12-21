@@ -21,19 +21,15 @@ import emitter from '../../emitter.js'
  	}
 
 		handleLogin(){
- 	
-
-	
-
-	Meteor.loginWithFacebook({
-		requestPermissions: ['public_profile', 'email']
-	}, function(err){
-		if (err) {
-			throw new Meteor.Error("Facebook login failed");
-		} else {
-			 emitter.emit('userLogin')
-		}
-	});
+			Meteor.loginWithFacebook({
+				requestPermissions: ['public_profile', 'email']
+			}, function(err){
+				if (err) {
+					throw new Meteor.Error("Facebook login failed");
+				} else {
+					 emitter.emit('userLogin')
+				}
+			});
 		}
 	render() {
 

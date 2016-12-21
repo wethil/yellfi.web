@@ -5,7 +5,7 @@ import Loading from '../others/Loading.jsx'
 
 const CommentSub = new SubsManager()
 const composer = ( props, onData ) => {
-	const {yellId,yellOwnerId,plan,suggestions} = props
+	const {yellId,yellOwner,plan,suggestions,publicity,keyword} = props
 
 
 
@@ -19,7 +19,7 @@ const composer = ( props, onData ) => {
     const comments = Comments.find({yellId:yellId},{sort: {'created_at': -1}}).fetch()
 
    
-    onData( null, {comments,yellOwnerId,yellId,plan,suggestions} );
+    onData( null, {comments,yellOwner,yellId,plan,suggestions,publicity,keyword} );
   }
 };
 
