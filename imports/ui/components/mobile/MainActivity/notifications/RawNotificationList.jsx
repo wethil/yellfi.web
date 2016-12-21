@@ -67,7 +67,8 @@ checkProps(newP,limit){
 
 
 sendNotificationsToTabTitle(notifications){
-  unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received; }),'_id');
+  unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received && o.senderId!=Meteor.userId(); }),'_id');
+
 
   emitter.emit('changeBadgeContent',unreceivedNtf)
 }

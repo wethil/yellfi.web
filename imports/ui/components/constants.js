@@ -12,7 +12,7 @@ export const basePlacesApiUrl = `https://maps.googleapis.com/maps/api/place/near
 export const baseBookApiUrl = 'https://www.googleapis.com/books/v1/volumes?fields=items(id,volumeInfo/title)&maxResults=40'
 //&q=polisiye romanı&langRestrict=tr
 
-
+export const mailAddress = "fdogru@yellfi.com"
 
 export const plans = [
   { id: 0, content: 'common.plans.ListeningMusic', icon: "audiotrack" },

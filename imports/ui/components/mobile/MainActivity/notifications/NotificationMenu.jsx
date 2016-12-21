@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import emitter from '../../emitter.js'
 import FontIcon from 'material-ui/FontIcon';
 import Badge from 'material-ui/Badge';
+import _ from 'lodash'
 
 
  class NotificationMenu extends Component {

@@ -12,6 +12,7 @@ import FontIcon from 'material-ui/FontIcon';
 import i18n from 'meteor/universe:i18n';
 import emitter from '../../emitter.js'
 import { browserHistory } from 'react-router'
+import {mailAddress} from '../../../constants.js';
  class UserSettings extends Component {
  	constructor(props) {
  	  super(props);
@@ -136,6 +137,7 @@ CUNSubmit(e){
 		const {uNameInput,uploadButtonLabel} = this.state
 		var time = new Date();
 		var year = time.getFullYear();
+		toMail= `mailto:${mailAddress}`
 		switch (uNameInput) {
 			case false :
 				uNameField = 
@@ -224,7 +226,7 @@ CUNSubmit(e){
 					<a href="#" onClick={this.logout.bind(this)} style={{color:'#F44336'}} >{i18n.__('common.userSett.logout')}</a>
 					<br/>
 					<div className="row" style={{paddingBottom:'0em'}} >
-						  <a  href="#">{i18n.__('common.userSett.clickToEmail')} : support@yellfi.com</a>
+						  <a  href={toMail}>{i18n.__('common.userSett.clickToEmail')}</a>
 					</div>
 						<h5> yellfi | {year} </h5>
 					

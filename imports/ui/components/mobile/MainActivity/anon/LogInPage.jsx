@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import  {frameStyle} from '../yells/YellsComponents/constant.js'
 import emitter from '../../emitter.js'
+import {mailAddress} from '../../../constants.js';
 
  class LogInPage extends Component {
  	constructor(props) {
@@ -34,7 +35,7 @@ import emitter from '../../emitter.js'
 
 	render() {
 
-	
+	toMail= `mailto:${mailAddress}`
 
 		var lang = i18n.getLocale()
 	if (lang=="tr" || lang== "tr-TR") {
@@ -68,7 +69,7 @@ import emitter from '../../emitter.js'
 				<div className="ui equal width center aligned grid">
 						<div className="row">
 						    <div className="column">
-						     <a href="#"> {i18n.__('common.anonMain.contact')} </a>
+						     <a href={toMail}> {i18n.__('common.anonMain.contact')} </a>
 						    </div>
 						    <div className="column">
 						     {langButton}
