@@ -7,7 +7,6 @@ const composer = ( props, onData ) => {
 yell = props.yell
 requests = yell.requests
 fields = {fields:{'firstName':1 ,'picture':1}}
-console.log(requests)
 
   const subscription = JoiningSub.subscribe( 'multipleUsers',requests );
 

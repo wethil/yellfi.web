@@ -31,7 +31,6 @@ export default class YellForm extends Component {
 			date: new Date,
 			time: new Date,
 			publicGeoLoc:{},
-			ipLoc:{},
 			customPlan:"",
 			keyword:"",
 			chosenKeyword:{},
@@ -41,7 +40,6 @@ export default class YellForm extends Component {
 
 	componentDidMount() {
 		//from EtraFormElements
-		emitter.addListener('changeipLoc',(ipLoc)=> this.setState({ipLoc}));
 		emitter.addListener('changeDate', (date) => this.setState({date}));
 		emitter.addListener('changeTime', (time) => this.setState({time}));
 		emitter.addListener('changepublicGeoLoc', (publicGeoLoc)=> this.changepublicGeoLoc(publicGeoLoc));
@@ -144,14 +142,16 @@ handleTouchMenu(event,menuItem){
 	render() {
 		
 		
-	const {ipLoc,activePlan,publicity} = this.state
+	const {activePlan,publicity} = this.state
 	formAppBarIcon = <IconButton onMouseDown={this.closeFormDrawer.bind(this)}> <NavigationArrowBack style={{color:'white'}} /></IconButton>
 	customPlan = (activePlan == 10 )? <TextField id="customPlan"   maxLength="41" hintText={i18n.__('common.yellForm.customPlan')}/> : null
 	hintForKeywords = (_.includes([0,1,5,6],activePlan) )? i18n.__('common.yellForm.chooseOrWrite'): i18n.__('common.yellForm.writeSomething')
 	privacySection = (activePlan == 7) ? true : false
 	
 	lang=i18n.getLocale()
-  switch(activePlan) {
+
+
+ switch(activePlan) {
     case 0:
         dataSource = musicGenres;
         dataSourceConfig = {text :'title', value : 'id'}
@@ -231,9 +231,6 @@ handleTouchMenu(event,menuItem){
       						searchText = ""
       						id="keywordInput"
 							/><br /></span>:<span></span>}	
-							
-
-
 						{publicity == 0 ?null:<ExtraFormElements />}
 
 						<RaisedButton

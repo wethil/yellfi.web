@@ -413,8 +413,7 @@ export  const shoppingTr= [
     };
 
 
-
-     export const  listsDesktopStyles = {
+  export const  listsDesktopStyles = {
       list:{
         height: '84.6vh',
         backgroundColor:'white'
@@ -436,4 +435,18 @@ export  const shoppingTr= [
         color:'#9E9E9E'
       }
 
+    };
+
+    //desktop Empty State Style
+    export const  dees =  {
+      icon: {
+        fontSize: 129,
+        color:'#2196f3'
+        },
+        subhead:{
+          color:'#616161'
+        },
+       content:{
+        color:'#424242'
+       }
     }

@@ -33,7 +33,6 @@ import { browserHistory } from 'react-router';
 
 
   makePropState(comments,yellId,yellOwner,suggestions){
-  	console.log(suggestions)
   this.setState({
   	comments:comments,
   	yellId:yellId,
@@ -48,7 +47,7 @@ import { browserHistory } from 'react-router';
         if (error) {
           console.log(error)
         }else {
-          console.log('unliked')
+         // console.log('unliked')
         }
       });
    }
@@ -60,7 +59,7 @@ import { browserHistory } from 'react-router';
         if (error) {
           console.log(error)
         }else {
-          console.log('liked')
+          //console.log('liked')
         }
       });
       

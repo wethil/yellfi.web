@@ -26,9 +26,6 @@ import LoadingList from './yells/YellsComponents/LoadingList.jsx'
 		    	if(this.props.activeTab==4){
 		    		this.setState({limit:10,location:loc});
 		    		}
-		    		console.log('change Loc')
-		    		console.log(loc)
-		    		console.log(this.state.limit)
 		    	});  
 		     emitter.addListener('resetPublicLimit',()=> {
 		    		this.setState({limit:10});
@@ -38,7 +35,6 @@ componentWillMount(){
 	this.setUserCoord(this.props.coordinates)
 	 if (navigator.geolocation) {
 	        navigator.geolocation.getCurrentPosition((position)=>{
-        		//console.log(position)
 			    lat = position.coords.latitude
 			    lng = position.coords.longitude
 			    this.setState({location:[lng,lat],userCoordinates:[lng,lat]})

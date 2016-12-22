@@ -44,10 +44,8 @@ changeTab(value){
 
 		const {activeTab,swipe} = this.state
 		if (activeTab==0) {
-			//$('#bottomMenu').toggleClass('inverted',false)
 			bottomMenu = <a className="item"> yellfi | {year} </a>
 		} else {
-			//$('#bottomMenu').toggleClass('inverted',true)
 			bottomMenu =  <button style={{paddingBottom:14,borderRadius:'0em'}} onClick={this.handleLogin.bind(this)} className="ui fluid facebook button">
 							<i className="facebook icon"></i>
 							{i18n.__('common.anonMain.signInToCreate')}
@@ -88,11 +86,6 @@ changeTab(value){
 }
 export default AnonUserFragment;
 
-/*
-	<div><MainPlansFeed activeTab={activeTab} /> </div>
-					<div><UserPlansFeed activeTab={activeTab} /> </div>
-					<div><UserNotificationsFeed activeTab={activeTab} /></div>
-*/
 
 const styles= {
 	hidden:{

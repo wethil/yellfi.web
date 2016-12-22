@@ -164,14 +164,6 @@ const iconButtonElement = (
     }
 
 
-
-
-
-
-
-
-
-
          comments.push(
               <div key={comment._id}>
                 <ListItem key={comment._id}
@@ -206,16 +198,7 @@ comments = <NoYellComment />
 
     }
 
-
-
-
-
-
-
-
-
-
-		return (
+return (
   <div style={styles.listSegment} className="commentFragment">
       <List style={styles.list} > 
         {comments}
@@ -264,9 +247,6 @@ export default RawCommentsList;
         subhead:{
           fontSize:11,
           color:'#9E9E9E'
-        },
-        searchIcon:{
-          color:'#B71C1C'
         },
         searchRow :{
           marginLeft:'53%'

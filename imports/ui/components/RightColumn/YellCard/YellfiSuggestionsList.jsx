@@ -13,9 +13,7 @@ const YellfiSuggestionsList = (props)=> {
 	        	
 	        	props.suggestions.forEach((suggestion) => {
 	        		link =`https://www.youtube.com/watch?v=${suggestion.id}`
-	        		
 	        		title = <div style={styles.title}> {_.truncate(suggestion.title, {'length': 50,'separator': ' '})} </div>
-
 	        		suggestionList.push(<a href={link} key={suggestion.id}  target="_blank"> <ListItem 
 	        																		style={styles.rootEl} 
 			        																innerDivStyle={styles.innerDiv}  
@@ -35,11 +33,11 @@ const YellfiSuggestionsList = (props)=> {
 	        break;
 	    case "1":
 	    	
-	        	props.suggestions.forEach((suggestion) => {
+	        	props.suggestions.forEach((suggestion,index) => {
 	        		query = suggestion.title.replace(/ /g, "+")
 	        		link =`http://www.google.com/search?q=${query}+film`
 	        		title = <div style={styles.title}> {suggestion.title} </div>
-	        		suggestionList.push(<a href={link} key={Math.floor((Math.random() * 100) + 1)}  target="_blank"> <ListItem  
+	        		suggestionList.push(<a href={link} key={index}   target="_blank"> <ListItem  
 	        																		style={styles.rootEl} 
 			        																innerDivStyle={styles.innerDiv}  
 			        																primaryText={title} /></a>)
@@ -47,11 +45,11 @@ const YellfiSuggestionsList = (props)=> {
 	        break	    
 	    default:
 	     
-	        	props.suggestions.forEach((suggestion) => {
+	        	props.suggestions.forEach((suggestion,index) => {
 	        		query = suggestion.title.replace(/ /g, "+")
 	        		link =`http://www.google.com/search?q=${query}`
 	        		title = <div style={styles.title}> {suggestion.title} </div>
-	        		suggestionList.push(<a href={link}  key={Math.floor((Math.random() * 100) + 1)} target="_blank"> <ListItem  
+	        		suggestionList.push(<a href={link}  key={index}  target="_blank"> <ListItem  
 	        																		style={styles.rootEl} 
 			        																innerDivStyle={styles.innerDiv}  
 			        																primaryText={title} /></a>)
@@ -91,5 +89,3 @@ export default YellfiSuggestionsList;
       	
 
     }
-
-// <ListItem primaryText="Starred" leftIcon={<FontIcon className="material-icons">audiotrack</FontIcon>} />

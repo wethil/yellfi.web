@@ -13,7 +13,6 @@ import LoadingList from './yells/YellsComponents/LoadingList.jsx'
 
  	componentDidMount(){
 		    emitter.addListener('increaseLimit',()=> {
-		    	console.log('inc limit')
 		    		this.setState({limit:this.state.limit+5});
 		    	}); 
 

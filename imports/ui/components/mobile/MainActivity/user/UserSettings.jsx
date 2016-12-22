@@ -77,7 +77,7 @@ sendToCDN(imageUrl){
 	  if ( error ) {
 	    console.log( error );
 	  } else {
-	    console.log( response );
+	    //console.log( response );
 	    this.changeUserPic(response.data)
 	   
 	  }
@@ -91,7 +91,7 @@ changeUserPic(data){
  		if (error) {
  			console.log(error)
  		} else {
- 			console.log('ok')
+ 			//console.log('ok')
  		}
  	});
  	this.setState({uploadButtonLabel:"add_a_photo"})

@@ -19,7 +19,6 @@ import AnonUserFragment from './AnonUserFragment.jsx'
  	}
 
  	componentDidMount(){
- 		//moment.locale('tr')
     emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}) ); //from login jsx
  	   emitter.addListener('logout',()=> this.logout() );
   }
@@ -60,20 +59,3 @@ import AnonUserFragment from './AnonUserFragment.jsx'
 	}
 }
 export default Index;
-
-
-
-/*
-add geolocation
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-     console.log( "Geolocation is not supported by this browser.")
-    }
-
-function showPosition(position) {
-    console.log(position)
-}
-
-
-*/

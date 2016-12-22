@@ -1,6 +1,6 @@
- import React, { Component } from 'react';
+import React, { Component } from 'react';
 import FontIcon from 'material-ui/FontIcon';
-
+import {dees} from '../../../constants.js'
 
  const NoYellComment = () => (
 	<div 
@@ -8,27 +8,13 @@ import FontIcon from 'material-ui/FontIcon';
 		style={{height:'51.6vh',marginRight:0,backgroundColor:'#ffffff'}}> 
  <div style={{marginTop:'12%'}}>
 			<h2 className="ui center aligned icon header">
-			  <FontIcon  style={styles.icon} className="material-icons">insert_comment</FontIcon> <br />
-			  <span style={styles.subhead}> {i18n.__('common.comments.noComment')}</span>
+			  <FontIcon  style={dees.icon} className="material-icons">insert_comment</FontIcon> <br />
+			  <span style={dees.subhead}> {i18n.__('common.comments.noComment')}</span>
 			</h2>
-			<div style={styles.content}>{i18n.__('common.comments.makeFirstComm')}</div>
+			<div style={dees.content}>{i18n.__('common.comments.makeFirstComm')}</div>
 		</div>
 	</div>
 
 						 	 );
 
  export default NoYellComment
-
-
- const styles = {
-      icon: {
-        fontSize: 129,
-        color:'#2196f3'
-        },
-        subhead:{
-        	color:'#616161'
-        },
-       content:{
-       	color:'#424242'
-       }
-    }

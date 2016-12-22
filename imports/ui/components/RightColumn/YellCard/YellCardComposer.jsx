@@ -14,8 +14,6 @@ const composer = ( props, onData ) => {
 
    const subscription = ThisYellSub.subscribe( 'thisYell',yellId ) 
 
-
-
   if ( subscription.ready() ) {
     const yell = Yells.findOne({_id:yellId})
 

@@ -19,9 +19,6 @@ import FontIcon from 'material-ui/FontIcon';
  	  	activeTab:0
  	  };
  	}
-
-
-
 	changeLng(a){
 		this.setState({lng:a})
 	}
@@ -36,7 +33,6 @@ import FontIcon from 'material-ui/FontIcon';
 	changeTab(value){
 		this.setState({activeTab:value})
 	}	
-
 
 	render() {
 		const {coordinates} = this.props

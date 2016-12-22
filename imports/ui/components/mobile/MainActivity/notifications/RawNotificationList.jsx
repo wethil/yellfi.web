@@ -24,7 +24,6 @@ import _ from 'lodash'
  handleVisibleSensor(isVisible){
 if (isVisible){
 	this.setState({sensor:false,loader:true})
-	console.log('inmc')
 	emitter.emit('increaseNtFLimit')
 
 	}

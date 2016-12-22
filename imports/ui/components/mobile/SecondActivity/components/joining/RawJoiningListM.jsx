@@ -31,7 +31,7 @@ import CircleShareButtons from '../others/CircleShareButtons.jsx'
               if (error) { 
                   console.log('error', error); 
               } else {
-              	console.log('okey')
+              	//console.log('okey')
               }        
           });
 	}
@@ -42,7 +42,7 @@ import CircleShareButtons from '../others/CircleShareButtons.jsx'
       if (error) {
         console.log(error)
       }else {
-        console.log('cancelJoin')
+        //console.log('cancelJoin')
       }
    });
  }
@@ -52,7 +52,7 @@ import CircleShareButtons from '../others/CircleShareButtons.jsx'
               if (error) { 
                   console.log('error', error); 
               } else {
-                console.log('approveJoin')
+                //console.log('approveJoin')
               }                 
           });
  }
@@ -63,7 +63,7 @@ import CircleShareButtons from '../others/CircleShareButtons.jsx'
               if (error) { 
                   console.log('error', error); 
               } else {
-                console.log('cancelApprove')
+                //console.log('cancelApprove')
               }                 
           });
  }
@@ -120,7 +120,7 @@ import CircleShareButtons from '../others/CircleShareButtons.jsx'
               if (error) { 
                   console.log('error', error); 
               } else {
-              	console.log('approveAll')
+              	//console.log('approveAll')
               }        
           });
 

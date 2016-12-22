@@ -57,8 +57,6 @@ componentWillUnmount(){
 }
 
 checkProps(newP,limit){
-	console.log('yell ' + newP.length)
-	console.log(limit)
 	if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
 		this.setState({haveMore:false,sensor:false,loader:false})
 	} else {
@@ -107,8 +105,6 @@ if (yells && yells.length > 0) {
 	
 
 	yellCord=yell.publicPlanLoc.coordinates
-	console.log(userCoordinates)
-	console.log(yellCord)
 	distance =	_.round(GreatCircle.distance(userCoordinates[1], userCoordinates[0], yellCord[1], yellCord[0]), 2);
 
 						 	 

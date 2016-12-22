@@ -13,21 +13,14 @@ const MapBase = withGoogleMap(props => (
     center={props.center}
     onCenterChanged={props.onCenterChanged}
   >
-
-
-      
-        <Marker
-       
-          position={{ lat: props.center.lat, lng: props.center.lng }}
-          title="see"
-          key="1"
-        />
-    
-
+     <Marker
+      position={{ lat: props.center.lat, lng: props.center.lng }}
+      title="see"
+      key="1"
+      />
   </GoogleMap>
 
-
-
+  
 ));
 
 

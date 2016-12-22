@@ -5,16 +5,8 @@ import Loading from '../others/Loading.jsx'
 
 const CommentSub = new SubsManager()
 const composer = ( props, onData ) => {
-	const {yellId,yellOwner,plan,suggestions,publicity,keyword} = props
-
-
-
-//console.log(yellId)
-
-  const subscription = CommentSub.subscribe( 'thisYellComments',yellId );
-
-
-
+const {yellId,yellOwner,plan,suggestions,publicity,keyword} = props
+const subscription = CommentSub.subscribe( 'thisYellComments',yellId );
   if ( subscription.ready() ) {
     const comments = Comments.find({yellId:yellId},{sort: {'created_at': -1}}).fetch()
 

@@ -9,7 +9,6 @@ const composer = ( props, onData ) => {
  limit=Number(props.limit)
  coordinates=props.location //queried coord on map
 userCoordinates= props.userCoordinates
-console.log(coordinates)
  const subscription = PubYellSub.subscribe( 'nearestYells',coordinates,limit )
   if ( subscription.ready() ) {
     const yells =  Yells.find({
@@ -28,7 +27,7 @@ console.log(coordinates)
                 limit:limit,
               }
       ).fetch() 
-    console.log(yells)
+
  
     onData( null, { yells,limit,userCoordinates } );
   }

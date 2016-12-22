@@ -28,7 +28,6 @@ import _ from 'lodash';
 	var autocomplete = new google.maps.places.Autocomplete(input);
 	google.maps.event.addListener(autocomplete, 'place_changed', ()=> {
 			var place = autocomplete.getPlace();
-			console.log(place)
 			myLatLng = place.geometry.location
 			var lat = myLatLng.lat();
 			var lng = myLatLng.lng();
@@ -71,9 +70,7 @@ import _ from 'lodash';
 	}
 
 	changeDate(date){
-
 		this.setState({choosenDate:date})
-		console.log(moment().format('hh:mm'))
 	}
 
 		autocompleteRequest(chosenRequest,index){
@@ -113,25 +110,16 @@ import _ from 'lodash';
 				if (error) {
 					console.log(error)
 				} else {
-					console.log(plan)
 					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord);
 					browserHistory.push('/yell/'+result + '?dialog=comment')
 					
 				}
 			});	
-			
-
-		
-			
-
 	}
 
 	handleBack(){
 		 emitter.emit('backToPlanList')
 	}
-
-
-
 	render() {
 
 		const {publicity,locInputStyle,minTime,maxTime} = this.state
