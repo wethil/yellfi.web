@@ -108,12 +108,18 @@ handleTouchMenu(event,menuItem){
 
 	handleSubmit() {
 		const {activePlan,publicity,time,date,publicGeoLoc,chosenKeyword,chosenIndex} = this.state
-		let loc = {type:"Point",coordinates:this.props.userCoordinates}
+		const {userCoordinates} = this.props
+		let loc = {type:"Point",coordinates:userCoordinates}
 		let plc=publicGeoLoc
-		let publicPlanLoc = plc.coordinates ? {type:"Point",coordinates:plc.coordinates, adress:plc.geoLocAdress}:false
-	 	let plan = activePlan==10 ? document.getElementById("customPlan").value : activePlan
-		let keyword = $('#keywordInput').val()
-		let suggestionCoord= publicGeoLoc.coordinates ? publicGeoLoc.coordinates : this.props.userCoordinates 
+		let publicPlanLoc = (plc.coordinates && plc.coordinates.length>0) ? {type:"Point",coordinates:plc.coordinates, adress:plc.geoLocAdress}:loc
+	 	if (activePlan==10){
+			 customPlan = document.getElementById("customPlan").value.replace(/^\s+|\s+$|\s+(?=\s)/g, "");
+			var plan = (customPlan!="") ? customPlan :  _.random(0, 10);  
+		} else {
+			var plan = activePlan
+		}
+		let keyword = $('#keywordInput').val().replace(/^\s+|\s+$|\s+(?=\s)/g, "")
+		let suggestionCoord= (plc.coordinates && plc.coordinates.length>0)? plc.coordinates : userCoordinates
 		console.log(chosenIndex)
 		
 

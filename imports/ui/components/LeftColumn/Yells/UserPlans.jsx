@@ -12,7 +12,7 @@ const UserYellsSub = new SubsManager()
 
 const composer = ( props, onData ) => {
   userId = Meteor.userId();
-  limit=props.userYellInfinite
+  limit=props.limit
   const fieldsOpt = {
   	fields: {rating:0,comment_quantity:0,requested:0,approved:0,blocked_users:0},
   	limit:limit,
@@ -31,5 +31,5 @@ const composer = ( props, onData ) => {
   }
 };
 
- const UserYells = composeWithTracker( composer,LoadingCircle )( RawYellList );
- export default UserYells
+ const UserPlans = composeWithTracker( composer,LoadingCircle )( RawYellList );
+ export default UserPlans

@@ -3,18 +3,18 @@ import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
-import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/styles/colors';
 import CustomScroll from 'react-custom-scroll';
 import { browserHistory } from 'react-router'
 import emitter from '../../emitter.js'
-import {plans,ntfTitles} from '../../constants.js';
+import {plans,ntfTitles,listsDesktopStyles} from '../../constants.js';
 import Snackbar from 'material-ui/Snackbar';
 import NoNotification from './NoNotification'
 import _ from 'lodash';
-import  verge from 'verge';
+import VisibilitySensor from 'react-visibility-sensor'
+import { Loader } from 'semantic-ui-react'
 import i18n from 'meteor/universe:i18n';
 
- class RawYellList extends Component {
+ class RawNotificationList extends Component {
   constructor(props) {
     super(props);
   
@@ -24,7 +24,8 @@ import i18n from 'meteor/universe:i18n';
         snackbarMessage:"",
         snackbarType:"",
         snackbarData:"",
-        propDuplicate:1
+        sensor:true,
+        loader:true
     };
   }
 
@@ -60,7 +61,7 @@ if(!ntf.alerted&&ntf.receiverId==Meteor.userId()){
 
 sendNotificationsToTabTitle(notifications){
 
-  unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received; }),'_id');
+  unreceivedNtf= _.map(_.filter(notifications, function(o) { return !o.received && o.senderId!=Meteor.userId();}),'_id');
   
   emitter.emit('changeBadgeContent',unreceivedNtf)
   
@@ -118,11 +119,11 @@ undoAction(type,data) {
   }
 }
 
-handleScroll(lastId){
-  var lastElement = document.getElementById(lastId);
-   if (verge.inViewport(lastElement)==true && this.state.propDuplicate<2) {
-    emitter.emit('ntfInfinite')
-  } 
+  handleVisibleSensor(isVisible){
+  if (isVisible){
+    this.setState({sensor:false})
+    emitter.emit('increaseNtFLimit')
+  }
 }
 
 makePropState(data){
@@ -130,13 +131,11 @@ makePropState(data){
 }
 
 checkProps(newP,limit){
-
-
-  if(newP.length<limit) {
-         this.setState({propDuplicate:this.state.propDuplicate + 1})
-      } else {
-        this.setState({propDuplicate:0})
-      }
+  if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
+    this.setState({haveMore:false,sensor:false,loader:false})
+  } else {
+    this.setState({haveMore:true,sensor:true,loader:true})
+  } 
 
 }
 
@@ -154,28 +153,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
 
 
 
-     const styles = {
-        list:{
-          height: '80.6vh'
-,
-          backgroundColor:'white'
-        },
-      username: {
-        color: lightBlue900
-        },
-      plan: {
-        color: grey800,
-        fontSize:12
-        }, 
-       keywords:{
-        fontSize:12
-        },
-        subhead:{
-          fontSize:11,
-          color:'#9E9E9E'
-        }
 
-    }
 
 
 
@@ -201,8 +179,10 @@ if(this.state.notifications && this.state.notifications.length != 0) {
                   onTouchTap={()=>this.toogleYellCard(notification.yellId,notification.about)}
                   leftAvatar={<Avatar src={notification.sender.picture} />}
                   primaryText={
-                   <div style={styles.username}>{notification.sender.firstname}
-                     <span style={styles.subhead}>{' ' + i18n.__(ntfTitles[notification.content].content)+' '+ plan}</span>
+                   <div style={listsDesktopStyles.username}>{notification.sender.firstName}
+                     <span style={listsDesktopStyles.subhead}>
+                      {' ' + i18n.__(ntfTitles[notification.content].content)+' '}<span style={listsDesktopStyles.planTxt} > {plan}</span>
+                     </span>
                    </div>
                 }
               />
@@ -220,19 +200,22 @@ if(this.state.notifications && this.state.notifications.length != 0) {
 
 
 		return (
-  <div className="className">
-    <CustomScroll
-    onScroll={this.handleScroll.bind(this,lastId)}
-      > 
-      <List style={styles.list} > 
+  <div>
+    <CustomScroll> 
+      <List style={listsDesktopStyles.list} > 
         {notifications}
+        <VisibilitySensor 
+          partialVisibility={true}
+          delayedCall={true}
+          onChange={this.handleVisibleSensor.bind(this)}
+          active={this.state.sensor} >  
+             <div> <Loader style={{marginTop:2}} active={this.state.loader} inline='centered' /></div>
+         </VisibilitySensor>
       </List> 
     </CustomScroll>
-
-    {/* if add drawer here, it will rendered on left column itself */}
   </div>  
 		);
 	}
 }
-export default RawYellList;
+export default RawNotificationList;
 

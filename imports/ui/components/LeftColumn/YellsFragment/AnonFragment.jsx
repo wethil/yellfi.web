@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import Login from '../Accounts/Login.jsx'
 import Register from '../Accounts/Register.jsx'
-import LatestYells from '../Yells/OthersYells/LatestYells.jsx'
 import SwipeableViews from 'react-swipeable-views';
-import OthersYells from '../Yells/OthersYells.jsx'
+
 
 
 
@@ -49,7 +48,7 @@ import OthersYells from '../Yells/OthersYells.jsx'
 		</Tabs>
 		  <SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
 		  		<div>  <Login /> <Register />  </div>
-			<OthersYells othersActive={this.state.othersActive}  ipLoc={this.props.ipLoc} />
+		<div> latest yells </div>
 		</SwipeableViews>
 		
 		      </div>

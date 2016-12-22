@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AnonFragment from './AnonFragment.jsx'
 import UserFragment from './UserFragment.jsx'
 import emitter from '../../emitter.js'
-import {geolocated} from 'react-geolocated';
+
 
 
  class MainFragment extends Component {
@@ -11,7 +11,7 @@ import {geolocated} from 'react-geolocated';
  
  	  this.state = {
  	  	userId:Meteor.userId(),
-      ipLoc:{},
+      userCoord:{},
       lang:"en-US"
  	  }
 
@@ -40,32 +40,26 @@ if (lang=='tr' || lang == 'tr-TR'){
               preLoc=data.loc.split(",")
               lat=  parseFloat(preLoc[0])
               lng = parseFloat(preLoc[1])
-           
-              ipLoc={
-                coordinates:[lng,lat],//always stay lng lat
-                ipLocAdress:`${data.city} ${data.region} ${data.country}  `
-              }
-              emitter.emit('changeLocForMap',ipLoc)
-               this.setState({ipLoc:ipLoc})
+              userCoord = [lng,lat];
+              emitter.emit('changeLocForMap',userCoord)
+               this.setState({userCoord:userCoord})
             })
 
 
-      if (this.state.userId!=null) {
-
-    if(this.props.coords) {
-         var lat =this.props.coords.latitude
-         var lng =this.props.coords.longitude
-
-         ipLoc={
-            coordinates:[lng,lat],
-            ipLocAdress:""
-         }
-        this.setState({ipLoc:ipLoc})
-         emitter.emit('changeLocForMap',ipLoc)
-          } else {
-            var lat="no lat"
-          }
-}
+  if (this.state.userId!=null) {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition((position)=>{
+            //console.log(position)
+          lat = position.coords.latitude
+          lng = position.coords.longitude
+          userCoord = [lng,lat];
+          emitter.emit('changeLocForMap',userCoord)
+          this.setState({userCoord:userCoord})
+        });
+      } else {
+          console.log( "Geolocation is not supported by this browser.")
+      } 
+  }
   
 }
 
@@ -73,22 +67,15 @@ if (lang=='tr' || lang == 'tr-TR'){
 
 	render() {
 
-
+const {userCoord} = this.state
 
 		return (
 			 <div>
 
-			 	{this.state.userId==null ? <AnonFragment ipLoc={this.state.ipLoc} /> : <UserFragment ipLoc={this.state.ipLoc} />} 
+			 	{this.state.userId==null ? "should be anon frg" : <UserFragment userCoord={userCoord} />} 
 			 	
 			 </div>
 		);
 	}
 }
 export default MainFragment;
-
-geolocated({
-  positionOptions: {
-    enableHighAccuracy: false,
-  },
-  userDecisionTimeout: 5000
-})(MainFragment);

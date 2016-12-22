@@ -84,7 +84,7 @@ import _ from 'lodash';
 	}
 
 
-	submitDate(){
+	submitPlan(){
 		const {coordinates,chosenPlan} = this.props 
 		const {publicGeoLoc,publicity,chosenKeyword,chosenIndex} = this.state
 		let loc = {type:"Point",coordinates:coordinates}
@@ -108,13 +108,6 @@ import _ from 'lodash';
 			//console.log('is not')
 			time = new Date()
 		}
-
-		console.log(plan)
-		//LeftNavHead
-		//emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,"id",suggestionCoord)
-		//emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
-
-
 		
 		Meteor.call('addYell',loc,publicPlanLoc,plan,keyword,time,publicity,function (error, result){
 				if (error) {
@@ -243,7 +236,7 @@ import _ from 'lodash';
 						</div>
 					</div>:null}	
 			<div style={styles.actions} >
-					 <button  className="ui fluid circular blue big button" onClick={this.submitDate.bind(this)}>
+					 <button  className="ui fluid circular blue big button" onClick={this.submitPlan.bind(this)}>
 					 	Create 
 					 </button>	
 					 <div style={styles.divider} id="divider" className="ui  divider"></div>	

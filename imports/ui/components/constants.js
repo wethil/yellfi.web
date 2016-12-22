@@ -1,5 +1,3 @@
-import React, { Component } from 'react';
-import {grey800 } from 'material-ui/styles/colors';
 export const YouTubeKey="AIzaSyCRpfCBvdHWOvOKlCQwi2UiUaFTgKov2g4"
 export const placesApiKey="AIzaSyBnIm4Hg7Uj_jF-eduNHoiSGas-WkNgjg0"
 export const themovieDbApi="b362c3224b3d5cfa4479bc451c1f2f26"
@@ -378,7 +376,7 @@ export  const shoppingTr= [
   {"id":80,"title":"shopping_mall","value":"AVM"},
   {"id":79,"title":"shoe_store","value":"Ayakkabı Mağazası"},
   {"id":68,"title":"pet_store","value":"Petshop"}
-]
+];
 
   export const planCardStyles = {
         list:{
@@ -396,7 +394,7 @@ export  const shoppingTr= [
         //fontSize:'0.8em'
         },
       timeDate: {
-        color: grey800
+        color:'#424242'
         },  
        keywords:{
         fontSize:12
@@ -411,5 +409,31 @@ export  const shoppingTr= [
         buttons:{
           padding : '0.78571429em 1em 0.78571429em 1em'
         }
+
+    };
+
+
+
+     export const  listsDesktopStyles = {
+      list:{
+        height: '84.6vh',
+        backgroundColor:'white'
+      },
+       username: {
+        color: '#01579B'
+      },
+      plan: {
+       color: '#424242'
+      },
+      timeDate: {
+       color: '#424242'
+      },  
+      keywords:{
+        fontSize:12
+      },
+      subhead:{
+        fontSize:11,
+        color:'#9E9E9E'
+      }
 
     }

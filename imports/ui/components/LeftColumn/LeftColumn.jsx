@@ -12,10 +12,6 @@ export  default class LeftColumn extends Component {
 			<div>
 				<LeftNavHeadComposer />
 				<MainFragment userID={Meteor.userId()} />
-				
-				
-				
-
 			</div>
 		);
 	}

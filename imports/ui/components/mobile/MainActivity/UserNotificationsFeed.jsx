@@ -5,13 +5,13 @@ import emitter from '../emitter.js'
  	constructor(props) {
 	 	  super(props);
 	 	  this.state = {
-	 	  	limit:3
+	 	  	limit:5
 	 	  };
  	}
  		componentDidMount(){
 		    emitter.addListener('increaseNtFLimit',()=> {
 		    	if(this.props.activeTab==2){
-		    		this.setState({limit:this.state.limit+1});
+		    		this.setState({limit:this.state.limit+5});
 		    		}
 		    	}); 
  	}

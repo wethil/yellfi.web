@@ -22,19 +22,19 @@ import i18n from 'meteor/universe:i18n';
 	      })
   	  });
 
- 		 this.receiveNotifications(this.props.notificationsReceived)
+ 		 this.receiveNotifications(this.props.activeTab)
  	}
 
  	componentWillReceiveProps(nextProps) {
- 		this.receiveNotifications(nextProps.notificationsReceived)
+ 		this.receiveNotifications(nextProps.activeTab)
 
  	}
 
 
 
-receiveNotifications(tabState){
+receiveNotifications(activeTab){
 
-	if (tabState==true) {
+	if (activeTab==2) {
 			Meteor.call('receiveAll', this.state.unreceivedNtf, error => {
 				if (error) {
 					console.log(error)

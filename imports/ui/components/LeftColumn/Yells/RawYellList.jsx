@@ -3,7 +3,6 @@ import { List, ListItem } from 'material-ui/List';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
-import {grey800, lightBlue900 } from 'material-ui/styles/colors';
 import CustomScroll from 'react-custom-scroll';
 import NoUserYell from './YellsComponents/NoUserYell.jsx'
 import NoYell from './YellsComponents/NoYell.jsx'
@@ -11,7 +10,7 @@ import { browserHistory } from 'react-router'
 import _ from 'lodash';
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
-import {plans} from '../../constants.js';
+import {plans,listsDesktopStyles} from '../../constants.js';
 import i18n from 'meteor/universe:i18n';
 import VisibilitySensor from 'react-visibility-sensor'
 import { Loader } from 'semantic-ui-react'
@@ -31,7 +30,6 @@ i18n.setOptions({
         snackbarMessage:"",
         snackbarType:"",
         snackbarData:"",
-        propDuplicate:1,
         yells:[],
         haveMore:false,
         sensor:true,
@@ -80,7 +78,7 @@ checkProps(newP,limit){
   if (isVisible){
     this.setState({sensor:false})
    if(this.props.component==0){
-        emitter.emit('userYellInfinite') // will go UserFragment
+        emitter.emit('userPlanLimit') // will go UserYellsCont
       } else {
       
          emitter.emit('incLimit') //will go OthersYells
@@ -121,6 +119,9 @@ undoAction(type,data) {
   }
 }
 
+
+
+
 	render() {
 
 if(this.state.yells && this.state.yells.length != 0) {
@@ -138,29 +139,6 @@ if(this.state.yells && this.state.yells.length != 0) {
 
 
 
-     const styles = {
-        list:{
-          height: '84.6vh',
-          backgroundColor:'white'
-        },
-      username: {
-        color: lightBlue900
-        },
-      plan: {
-        color: grey800
-        },
-      timeDate: {
-        color: grey800
-        },  
-       keywords:{
-        fontSize:12
-        },
-        subhead:{
-          fontSize:11,
-          color:'#9E9E9E'
-        }
-
-    }
 
 
 
@@ -170,9 +148,6 @@ if(this.state.yells && this.state.yells.length != 0) {
       this.state.yells.forEach((yell) => {
 
         let time = ` ${moment(yell.time).calendar()} `
-
-
-
 
     switch(yell.publicity) {
         case 0 : 
@@ -191,13 +166,13 @@ if (yell.publicity == 0) {
   timeLabel =""
 } else {
   publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>  </span>  
-  timeLabel = <span style={styles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
+  timeLabel = <span style={listsDesktopStyles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
                                                   
 }
 
 
 if (yell.keyword) {
-  keyword = <span> -- <span style={styles.keywords}>  {yell.keyword} </span> </span>
+  keyword = <span> -- <span style={listsDesktopStyles.keywords}>  {yell.keyword} </span> </span>
 } else {
   keyword ="" 
 }
@@ -213,10 +188,10 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(yell._id)}
                   leftAvatar={<Avatar src={yell.owner.picture} />}
-                  primaryText={ <div style={styles.username}>{yell.owner.firstName} <span style={styles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
+                  primaryText={ <div style={listsDesktopStyles.username}>{yell.owner.firstName} <span style={listsDesktopStyles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
                   secondaryText={
                       	<p>   
-                        <span style={styles.plan}>{plan} </span> 
+                        <span style={listsDesktopStyles.plan}>{plan} </span> 
                         {keyword}
                   		</p>
                   }
@@ -228,8 +203,6 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 
       });
     } else {
-          
-
         switch(this.props.component) {
     case 0:
         emitter.emit('noUserYellAnim')
@@ -250,27 +223,32 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 
 		return (
   <div className="sixteen wide column">
-    <CustomScroll
-     // onScroll={this.handleScroll.bind(this,lastId)}
-    > 
-      <List style={styles.list} > 
+    <CustomScroll> 
+      <List style={listsDesktopStyles.list} > 
       {yells}
-      <VisibilitySensor 
-        partialVisibility={true}
-         delayedCall={true}
-         onChange={this.handleVisibleSensor.bind(this)}
-         active={this.state.sensor} >  
-    <div> <Loader style={{marginTop:2}} active={this.state.loader} inline='centered' /></div>
-  </VisibilitySensor> 
+        <VisibilitySensor 
+          partialVisibility={true}
+          delayedCall={true}
+          onChange={this.handleVisibleSensor.bind(this)}
+          active={this.state.sensor} >  
+           <div> <Loader style={{marginTop:2}} active={this.state.loader} inline='centered' /></div>
+       </VisibilitySensor> 
       </List>
-  
     </CustomScroll>
-  
-
-
-    {/* if add drawer here, it will rendered on left column itself */}
   </div>  
 		);
 	}
+
+
+
+  componentWillUnmount(){
+       if(this.props.component==0){
+          emitter.emit('resetUPLimit') // will go UserYellsCont
+        } else {
+        
+         emitter.emit('resetMPLimit') //will go MainPlansFeed
+      }
+  }
+
 }
 export default RawYellList;

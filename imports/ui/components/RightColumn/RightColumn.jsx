@@ -113,7 +113,6 @@ this.toogleDrawer(yellId,dialog,lng,lat)
 			 <Drawer  
 			 		containerStyle={styles.drawer} 
 			 		width={280} 
-			 		
 			 		openSecondary={true} 
 			 		open={this.state.open} >
 			        
@@ -128,8 +127,6 @@ this.toogleDrawer(yellId,dialog,lng,lat)
 			       }     
 			      
 			  </Drawer>
-
-			  
 			</div>	
 		);
 	}

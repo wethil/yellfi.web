@@ -24,7 +24,7 @@ switch(props.publicity){
 
 
 export  const ParticipationsButton = (props) => {
-buttonContent =<button onClick={()=>  browserHistory.push('/yell/'+yell._id + '?dialog=joining')} 
+buttonContent =<button onClick={()=>  browserHistory.push('/yell/'+props.yellId + '?dialog=joining')} 
        				 className=" mini ui button basic blue">{i18n.__('common.YellCard.participation')}</button>	
 switch(props.publicity){
 	case 0:
