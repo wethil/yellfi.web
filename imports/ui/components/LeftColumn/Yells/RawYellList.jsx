@@ -1,20 +1,20 @@
 import React, { Component } from 'react';
 import { List, ListItem } from 'material-ui/List';
-import SvgIconFace from 'material-ui/svg-icons/action/face';
 import Avatar from 'material-ui/Avatar';
 import Divider from 'material-ui/Divider';
 import Chip from 'material-ui/Chip';
-import { grey400, grey700, darkBlack, grey800, lightBlue900 } from 'material-ui/styles/colors';
+import {grey800, lightBlue900 } from 'material-ui/styles/colors';
 import CustomScroll from 'react-custom-scroll';
 import NoUserYell from './YellsComponents/NoUserYell.jsx'
 import NoYell from './YellsComponents/NoYell.jsx'
 import { browserHistory } from 'react-router'
-import  verge from 'verge'; 
 import _ from 'lodash';
 import emitter from '../../emitter.js'
 import Snackbar from 'material-ui/Snackbar';
 import {plans} from '../../constants.js';
 import i18n from 'meteor/universe:i18n';
+import VisibilitySensor from 'react-visibility-sensor'
+import { Loader } from 'semantic-ui-react'
 
 i18n.setOptions({
   hostUrl: 'http://'+window.location.hostname+':3000/'
@@ -32,9 +32,15 @@ i18n.setOptions({
         snackbarType:"",
         snackbarData:"",
         propDuplicate:1,
-        yells:[]
+        yells:[],
+        haveMore:false,
+        sensor:true,
+        loader:true
     };
   }
+
+
+
 
   componentDidMount() {
      
@@ -59,26 +65,27 @@ makePropState(data){
 }
 
 checkProps(newP,limit){
-  if(newP.length<limit) {
-  
-         this.setState({propDuplicate:this.state.propDuplicate + 1})
-      } else {
-        this.setState({propDuplicate:0})
-      }
+  if(newP.length<limit) {//if plan quantity is lower than limit, this means there is no new plan
+    this.setState({haveMore:false,sensor:false,loader:false})
+  } else {
+    this.setState({haveMore:true,sensor:true,loader:true})
+  } 
 
 }
 
 
-handleScroll(lastId){
-  var lastElement = document.getElementById(lastId);
-   if (verge.inViewport(lastElement)==true  ) {    
-        if(this.props.component==0){
+
+
+  handleVisibleSensor(isVisible){
+  if (isVisible){
+    this.setState({sensor:false})
+   if(this.props.component==0){
         emitter.emit('userYellInfinite') // will go UserFragment
       } else {
       
          emitter.emit('incLimit') //will go OthersYells
       }
-  } 
+  }
 }
 
 
@@ -133,7 +140,7 @@ if(this.state.yells && this.state.yells.length != 0) {
 
      const styles = {
         list:{
-          height: '80.6vh',
+          height: '84.6vh',
           backgroundColor:'white'
         },
       username: {
@@ -205,8 +212,8 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
           <div  id={yell._id} key={yell._id}>
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(yell._id)}
-                  leftAvatar={<Avatar src={yell.owner.profile.avatar} />}
-                  primaryText={ <div style={styles.username}>{yell.owner.username} <span style={styles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
+                  leftAvatar={<Avatar src={yell.owner.picture} />}
+                  primaryText={ <div style={styles.username}>{yell.owner.firstName} <span style={styles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
                   secondaryText={
                       	<p>   
                         <span style={styles.plan}>{plan} </span> 
@@ -244,11 +251,19 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 		return (
   <div className="sixteen wide column">
     <CustomScroll
-      onScroll={this.handleScroll.bind(this,lastId)}
+     // onScroll={this.handleScroll.bind(this,lastId)}
     > 
       <List style={styles.list} > 
       {yells}
-      </List> 
+      <VisibilitySensor 
+        partialVisibility={true}
+         delayedCall={true}
+         onChange={this.handleVisibleSensor.bind(this)}
+         active={this.state.sensor} >  
+    <div> <Loader style={{marginTop:2}} active={this.state.loader} inline='centered' /></div>
+  </VisibilitySensor> 
+      </List>
+  
     </CustomScroll>
   
 
