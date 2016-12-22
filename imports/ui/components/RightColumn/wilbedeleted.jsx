@@ -1,1 +1,0 @@
-RightColumnComposer.jsx
