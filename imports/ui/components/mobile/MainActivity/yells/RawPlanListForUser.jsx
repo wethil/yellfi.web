@@ -118,6 +118,7 @@ closeSb(){
 if (yells && yells.length > 0) {
 		planList = []
 		yells.forEach( (yell) => {
+			const {cQ,jQ} = yell
 
 	        let time = ` ${moment(yell.time).calendar()} `
 		switch(yell.publicity) {
@@ -148,8 +149,6 @@ if (yells && yells.length > 0) {
 	} else {
 	  plan =i18n.__(plans[prePlan].content)
 	}		
-	cQ = yell.comment_quantity
-	jQ = yell.joining_quantity
 	commentQuantity = (cQ && cQ>0 )? `(${cQ})` :null
 	joiningQuantity = (jQ&&jQ>0) ? `(${jQ})` :null
 

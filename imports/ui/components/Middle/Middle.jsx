@@ -27,18 +27,18 @@ import  GeoPoint from 'geopoint';
  	changeLocForMap(userCoord){
  		//this.setState({userCoord:userCoord})
 		 preLoc = new GeoPoint(userCoord[1], userCoord[1]);
-		 loc = preLoc.boundingCoordinates(10,true)
+		 loc = preLoc.boundingCoordinates(300)
 		 SW = [loc[0]._degLon , loc[0]._degLat]
 		 NE = [loc[1]._degLon , loc[1]._degLat]
 		 bounds = [SW,NE]
-		//console.log(bounds)
+		console.log(bounds)
 		 this.setState({bounds:bounds})
  		
  	}
 
  	changeBounds(bounds){
  		 this.setState({bounds:bounds})
- 		// console.log(bounds)
+ 		console.log(bounds)
  	} 
 
 	render() {

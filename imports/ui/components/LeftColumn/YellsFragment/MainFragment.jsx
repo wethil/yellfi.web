@@ -72,7 +72,7 @@ const {userCoord} = this.state
 		return (
 			 <div>
 
-			 	{this.state.userId==null ? "should be anon frg" : <UserFragment userCoord={userCoord} />} 
+			 	{this.state.userId==null ? <AnonFragment /> : <UserFragment userCoord={userCoord} />} 
 			 	
 			 </div>
 		);

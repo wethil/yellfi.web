@@ -9,7 +9,7 @@ const yellsFieldsOpt= {'plan':1,'loc':1,'time':1,'created_at':1,'publicity':1,'o
 Meteor.methods({
    addYell: function(loc,publicPlanLoc,plan,keyword,time,publicity) {
    
-    if(publicPlanLoc && publicPlanLoc.coordinates){
+    if(publicity!=0){
        mainYell= Yells.insert({
             loc:loc,
             publicPlanLoc:publicPlanLoc,
@@ -22,7 +22,7 @@ Meteor.methods({
 
         })
 
-        PublicYells.insert({refYellId:mainYell});
+        PublicYells.insert({refYellId:mainYell,publicPlanLoc:publicPlanLoc,});
         return mainYell
     } else {
         return Yells.insert({
@@ -52,7 +52,7 @@ Meteor.methods({
     reqJoin:function(userId,yell,publicity,yellOwnerId) {
         if (publicity==1) {
             Yells.update({_id:yell}, {$push : {requests : this.userId , approved:this.userId }})
-            Yells.update({ _id: yell }, {$inc: {joining_quantity :1}});
+            Yells.update({ _id: yell }, {$inc: {jQ :1}});
              Notifications.insert({
                 senderId:yellOwnerId,
                 receiverId:this.userId,
@@ -77,7 +77,7 @@ Meteor.methods({
     },
     approveJoin:function(userId,yell,yellOwnerId) {
         Yells.update({_id:yell}, {$push : {approved : userId }})
-        Yells.update({ _id: yell }, {$inc: {joining_quantity :1}});
+        Yells.update({ _id: yell }, {$inc: {jQ :1}});
          Notifications.insert({
                 senderId:yellOwnerId,
                 receiverId:userId,
@@ -90,7 +90,7 @@ Meteor.methods({
     },
     cancelApprove:function(userId,yell) {
         Yells.update({_id:yell}, {$pull : {approved : userId }})
-        Yells.update({ _id: yell }, {$inc: {joining_quantity :-1}});
+        Yells.update({ _id: yell }, {$inc: {jQ :-1}});
     },
      cancelJoin: function(userId,yell) {//requerers will use this
          Yells.update({_id:yell}, {$pull : {requests : userId }})
@@ -109,7 +109,7 @@ Meteor.methods({
     makeSuggestion:function(yellId,suggestions){
         Yells.update({_id:yellId}, {$set : {suggestionsByYellfi : suggestions }})
         sugsNumber = suggestions.length
-        Yells.update({ _id: yellId }, {$inc: {comment_quantity :sugsNumber}});
+        Yells.update({ _id: yellId }, {$inc: {cQ :sugsNumber}});
     },
     changeUserName:function(newName) {
         Meteor.users.update({_id:this.userId},{$set:{firstName:newName}})

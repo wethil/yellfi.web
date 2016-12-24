@@ -61,15 +61,15 @@ toogleYellCard(yellId,about) {
 
 
 		 ReactMaterialUiNotifications.showNotification({
-	      title: ntf.sender.username,
+	      title: ntf.sender.firstName,
 	      additionalText: i18n.__(ntfTitles[ntf.content].content),
-	      autoHide:2600,
+	      autoHide:3000,
 	      icon:<FontIcon   className="material-icons ntf">{plans[ntf.yell.plan].icon}</FontIcon> ,
 	      iconBadgeColor: deepOrange500,
 	      overflowText: plan,
 	      timestamp: moment().format('h:mm A'),
 	      personalised: true,
-	      avatar: ntf.sender.profile.avatar
+	      avatar: ntf.sender.picture
 	    })
 	    this.setState({
 			yellId:ntf.yellId,

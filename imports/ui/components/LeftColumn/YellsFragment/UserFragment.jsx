@@ -90,7 +90,7 @@ closeSb(){
 				animateTransitions={false}
 				index={activeTab} 
 				onChange={this.changeTab.bind(this)}>
-			<div>k</div>
+			<div> <MainPlansFeed activeTab={activeTab} /> </div>
 			<div> <UserPlansFeed activeTab={activeTab}  /> </div>
 			<div><NotificationFeed activeTab={activeTab} /></div>
 			<div> <UserSettingsCont activeTab={activeTab} /> </div> 

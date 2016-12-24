@@ -1,4 +1,4 @@
-const yellFields ={'plan':1,'keyword':1,'time':1,'ownerId':1,'publicity':1,'joining_quantity':1,'comment_quantity':1,'blocked_users':1 }
+const yellFields ={'plan':1,'ownerId':1}
 import LocationSchema from '../Schemas/LocationSchema.js'
 import Yells from '../yells/yells.js'
 

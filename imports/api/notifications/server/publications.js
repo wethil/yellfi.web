@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import Notifications from '../notifications.js';
 import Yells from '../../yells/yells.js'
+const fieldsOpt = {fields:{'firstName':1,'picture':1,}}
 
 Meteor.publishComposite('thisUserNotifications', function(receiverId,limit) { //always [longitude, latitude] order 
     return {
@@ -15,7 +16,7 @@ Meteor.publishComposite('thisUserNotifications', function(receiverId,limit) { //
         children: [
             {
               find: function (notification) {
-                    return Meteor.users.find({_id:notification.senderId})
+                    return Meteor.users.find({_id:notification.senderId},fieldsOpt)
                  }
             },
 

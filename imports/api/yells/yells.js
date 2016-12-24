@@ -59,11 +59,11 @@ Yells.attachSchema(
       type:Number,
       defaultValue:0 // 0 is just for owner, 1 is public 2 is private
     },
-    joining_quantity : {
+    jQ : {//joining quantity
         type : Number,
         defaultValue:0
     },
-    comment_quantity : {
+    cQ : {//comment quantity
        type : Number,
       defaultValue:0
     },

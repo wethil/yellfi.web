@@ -13,7 +13,7 @@ Meteor.methods({
 			ownerId :this.userId
 		})
 if(this.userId!=yellOwnerId){
-	Yells.update({ _id: yellId }, {$inc: {comment_quantity : 1} });
+	Yells.update({ _id: yellId }, {$inc: {cQ : 1} });
 }	
 
 	 if(this.userId!=yellOwnerId) {
@@ -55,7 +55,7 @@ if(this.userId!=yellOwnerId){
     },
     unlikeComment:function(commentId) {
         Comments.update({_id:commentId}, {$pull : {likes : this.userId }})
-        Yells.update({ _id: yellId }, {$inc: {comment_quantity : -1} });
+        Yells.update({ _id: yellId }, {$inc: {cQ : -1} });
     },
      deleteComment:function(commentId) {
         Comments.update({_id:commentId}, {$set : {visible : false }})

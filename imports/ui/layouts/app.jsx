@@ -20,6 +20,7 @@ export const App = ({children}) => (
         <Middle />
      </div> 
       {children} 
+      <ObserveNotificationAlert />
     </div>
 
 </MuiThemeProvider> 

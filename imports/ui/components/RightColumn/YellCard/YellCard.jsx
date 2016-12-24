@@ -148,7 +148,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 	render() {
 		
 	const {yell,dialogOpen,dialogContentNumber} = this.state
-	const {_id,ownerId,requests,approved,publicity,owner,created_at,suggestionsByYellfi,keyword,time} = yell
+	const {_id,cQ,jQ,ownerId,requests,approved,publicity,owner,created_at,suggestionsByYellfi,keyword,time} = yell
 	const {user,userBlocked} = this.props
 	lang=i18n.getLocale();
 	
@@ -241,9 +241,8 @@ suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 																 plan={yell.plan}
 																 suggestions={suggestions}  />:NoSuggestionFragment
 															 
-  cQ = yell.comment_quantity - suggestions.length
-  jQ = yell.joining_quantity
-  commentQuantity = (cQ && cQ>0 )? `(${cQ})` :null
+  comQ = cQ - suggestions.length
+  commentQuantity = (comQ && comQ>0 )? `(${comQ})` :null
   joiningQuantity = (jQ&&jQ>0) ? `(${jQ})` :null
 
 

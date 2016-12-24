@@ -36,14 +36,15 @@ i18n.setOptions({
   }
 
 componentWillMount(){
-  this.makePropState(this.props.yells)
+const {yells,limit} = this.props
+  this.makePropState(yells)
+  this.checkProps(yells, limit)
 }
 
 componentWillReceiveProps(nextProps){
   this.makePropState(nextProps.yells)
-  if(nextProps.yells.length>=9) {
-    this.checkProps(nextProps.yells, nextProps.limit)
-  }
+  this.checkProps(nextProps.yells, nextProps.limit)
+  
 }
 
 

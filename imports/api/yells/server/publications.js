@@ -123,30 +123,7 @@ Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [
 
 
 
-Meteor.publishComposite('PlansOnMapBox', function(bounds) { //always [longitude, latitude] order 
-    return {
-        find: function() {
-            // Find posts made by user. Note arguments for callback function
-            // being used in query.
-          return Yells.find(
-              {  
-                "publicPlanLoc":{ $geoWithin :{ $box : bounds} },
-                'visible':true,
-                'publicity':{ $ne: 0 }
-              },
-              {  
-                'fields':plansForMapBoxField,
-              })
-        },
-        children: [
-            {
-              find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
-        }
-            }
-        ]
-    }
-});
+
 
 
 
