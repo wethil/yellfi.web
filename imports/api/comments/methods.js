@@ -43,14 +43,30 @@ if(this.userId!=yellOwnerId){
         Comments.update({_id:commentId}, {$push : {likes : this.userId }})
       
       if(this.userId!=yellOwnerId) {
-      	  Notifications.insert({
-			senderId:this.userId,
-			receiverId:yellOwnerId,
-			content:1,
-			created_at:Date(),
-			about:3,
-			yellId:yellId
-		})
+      	   Notifications.upsert({
+				senderId:this.userId,
+				receiverId:yellOwnerId,
+				content:1,
+				about:3,
+				yellId:yellId
+			},
+			{
+				$set: {
+					senderId:this.userId,
+					receiverId:yellOwnerId,
+					created_at:new Date(),
+					received:false,
+					alerted:false,
+					content:1,
+					about:3,
+					yellId:yellId
+				}
+			})
+
+
+
+
+
       }
     },
     unlikeComment:function(commentId) {

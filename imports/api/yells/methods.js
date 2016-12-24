@@ -65,27 +65,70 @@ Meteor.methods({
         } else {
             Yells.update({_id:yell}, {$push : {requests : this.userId }})
              
-             Notifications.insert({
-                senderId:userId,
+           /*  Notifications.insert({
+                senderId:this.userId,
                 receiverId:yellOwnerId,
                 content:2,
                 created_at:Date(),
                 about:2,
                 yellId:yell
-             })
+             })*/
+
+            Notifications.upsert({
+                senderId:this.userId,
+                receiverId:yellOwnerId,
+                content:2,
+                about:2,
+                yellId:yell
+            },
+            {
+                $set: {
+                    senderId:this.userId,
+                    receiverId:yellOwnerId,
+                    created_at:new Date(),
+                    received:false,
+                    alerted:false,
+                    content:2,
+                    about:2,
+                    yellId:yell
+                }
+            })
         }
     },
     approveJoin:function(userId,yell,yellOwnerId) {
         Yells.update({_id:yell}, {$push : {approved : userId }})
         Yells.update({ _id: yell }, {$inc: {jQ :1}});
-         Notifications.insert({
+        /* Notifications.insert({
                 senderId:yellOwnerId,
                 receiverId:userId,
                 content:3,
                 created_at:Date(),
                 about:2,
                 yellId:yell
-             })
+             })*/
+              Notifications.upsert({
+                senderId:this.userId,
+                receiverId:userId,
+                content:3,
+                about:2,
+                yellId:yell
+            },
+            {
+                $set: {
+                    senderId:this.userId,
+                    receiverId:userId,
+                    created_at:new Date(),
+                    received:false,
+                    alerted:false,
+                    content:3,
+                    about:2,
+                    yellId:yell
+                }
+            })
+
+
+
+
 
     },
     cancelApprove:function(userId,yell) {
@@ -100,11 +143,14 @@ Meteor.methods({
     },
     deleteYell:function(yellId) {
         Yells.update({_id:yellId}, {$set : {visible : false }})
-         Notifications.remove({yellId:yellId},{multi :true})
+        Notifications.remove({yellId:yellId})
+        Comments.update({yellId:yellId},{$set : {visible : false }},{multi :true})
+        PublicYells.update({refYellId:yellId},{$set : {visible : false }})
 
     },
     undoDeleteYell:function(yellId) {
         Yells.update({_id:yellId}, {$set : {visible : true }})
+        PublicYells.update({refYellId:yellId},{$set : {visible : true }})
     },
     makeSuggestion:function(yellId,suggestions){
         Yells.update({_id:yellId}, {$set : {suggestionsByYellfi : suggestions }})

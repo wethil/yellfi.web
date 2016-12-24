@@ -91,17 +91,18 @@ toogleYellCard(yellId,about) {
  }
  	
 	render() {
-
+const {yellId,about} = this.state
 
 
 		return (
-		<span  onClick={()=>this.toogleYellCard(this.state.yellId,this.state.about)} >
+		<span style={{cursor:'pointer'}}  onClick={()=>this.toogleYellCard(yellId,about)} >
 		<ReactMaterialUiNotifications
             desktop={true}
             rootStyle={{
             	zIndex:99999,
             	bottom: 20,
-            	 right: 25
+            	 right: 25,
+               cursor:'pointer'
             }}
             transitionName={{
               leave: 'dummy',

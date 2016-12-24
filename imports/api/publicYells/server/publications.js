@@ -16,6 +16,7 @@ Meteor.publishComposite('PlansOnMapBox',function(bounds) {
            return PublicYells.find(
                  {  
                    "publicPlanLoc":{ $geoWithin :{ $box : bounds} },
+                   'visible':true
 
                  },{fields:{'publicPlanLoc.type':0}});
        },

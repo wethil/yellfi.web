@@ -12,7 +12,7 @@ bounds = props.bounds
 
 
   if ( subscription.ready() ) {
-  const markers = PublicYells.find({}).fetch() 
+  const markers = PublicYells.find({'visible':true}).fetch() 
   console.log(markers)
 
 

@@ -11,7 +11,7 @@ import Subheader from 'material-ui/Subheader';
 import NoParticipants from './JoiningComponents/NoParticipants.jsx'
 
 
- const handleToogle =(user,yell) => {
+ const handleToogle =(approved,user,yell) => {
   yellOwnerId = Meteor.userId()
          if (_.includes(approved, user)==false) {
           Meteor.call('approveJoin',user,yell,yellOwnerId, error => { 
@@ -49,19 +49,19 @@ import NoParticipants from './JoiningComponents/NoParticipants.jsx'
  
 if (ownership) {
     return <ListItem
-                leftAvatar={<Avatar src={requerer.profile.avatar} />} 
-                primaryText={requerer.username} 
+                leftAvatar={<Avatar src={requerer.picture} />} 
+                primaryText={requerer.firstName} 
                 rightToggle={<Toggle
                                toggled={_.includes(approved, requerer._id)}
-                              onToggle={()=>handleToogle(requerer._id,yellId)}  
+                              onToggle={()=>handleToogle(approved,requerer._id,yellId)}  
                                /> } 
                   />
     } else {
           if (Meteor.userId()&&requerer._id==Meteor.userId()) {
           return <ListItem
               disabled={true}
-                primaryText={ requerer.username }
-                leftAvatar={<Avatar src={requerer.profile.avatar} />}
+                primaryText={ requerer.firstName }
+                leftAvatar={<Avatar src={requerer.picture} />}
                 rightIconButton={
                    <IconButton
                         iconClassName="material-icons"
@@ -74,8 +74,8 @@ if (ownership) {
             />
           } else {
                   return <ListItem
-                primaryText={ requerer.username }
-                leftAvatar={<Avatar src={requerer.profile.avatar} />}
+                primaryText={ requerer.firstName }
+                leftAvatar={<Avatar src={requerer.picture} />}
           
             />
           }

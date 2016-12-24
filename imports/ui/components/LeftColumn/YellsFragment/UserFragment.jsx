@@ -65,9 +65,20 @@ closeSb(){
         })
 }
 
+undoAction(type,data) {
+        Meteor.call('undoDeleteYell',data,error=> {
+            if (error) {
+              console.log(error)
+            } else {
+              this.closeSb()
+              browserHistory.push('/yell/'+data)
+            }
+          });
+}
+
 	render() {
 		userCoord=this.props.userCoord
-		const {activeTab} = this.state
+		const {activeTab,snackbarType,snackbarData} = this.state
 		
 		return (
 			
@@ -110,7 +121,7 @@ closeSb(){
 		      autoHideDuration={4000}
 		      action={i18n.__('common.comments.undo')}
 		      onActionTouchTap={ ()=>
-		        this.undoAction(this.state.snackbarType,this.state.snackbarData)
+		        this.undoAction(snackbarType,snackbarData)
 		      }
 		      onRequestClose={this.closeSb.bind(this)}
 		    />

@@ -19,6 +19,10 @@ PublicYells.attachSchema(
      publicPlanLoc: {
       type: LocationSchema
     },
+    visible :{
+      type:Boolean,
+      defaultValue:true
+    },
   })
 );
 
