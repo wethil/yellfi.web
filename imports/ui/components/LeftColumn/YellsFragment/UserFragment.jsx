@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
+import FontIcon from 'material-ui/FontIcon';
 import emitter from '../../emitter.js'
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
@@ -11,6 +12,7 @@ import Snackbar from 'material-ui/Snackbar';
 import MainPlansFeed from './FragmentContainers/MainPlansFeed.jsx'
 import UserPlansFeed from './FragmentContainers/UserPlansFeed.jsx'
 import NotificationFeed from '../Notifications/NotificationFeed.jsx'
+import UserSettingsCont from '../User/UserSettingsCont.jsx'
  class UserFragment extends Component {
  	constructor(props) {
 	  super(props);
@@ -23,11 +25,7 @@ import NotificationFeed from '../Notifications/NotificationFeed.jsx'
 	  	activeTab:0
 	  };
 	}
-
-
-
-
-	componentDidMount() {
+componentDidMount() {
  emitter.addListener('triggerSb', (sbState,sbMessage,sbType,snData)=> { 
       this.setState({
         snackbarState:sbState,
@@ -36,30 +34,29 @@ import NotificationFeed from '../Notifications/NotificationFeed.jsx'
         snackbarData:snData
       })
     });
+}
 
-	
+changeTab(value){		
+	this.setState({activeTab:value})
+	$('.fab').addClass('animated zoomIn');
+	$('.fab').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ()=>$('.fab').removeClass('animated zoomIn'));
+	if (value==3) {
+		$('.fab').toggleClass('hidden',true)
+	} else {
+		$('.fab').toggleClass('hidden',false)
 	}
+}
 
-
-	changeTab(value){
-		
-		this.setState({activeTab:value})
-		$('.fab').addClass('animated zoomIn');
-		$('.fab').one('webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend', ()=>$('.fab').removeClass('animated zoomIn'));
-
-	}
-
-	toogleDrawer () {
-		 // coordinates:[lng,lat], always stay lng lat
-		 lng = this.props.userCoord[0]
-		 lat = this.props.userCoord[1]
-		browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
-	
-	}
+toogleDrawer () {
+ // coordinates:[lng,lat], always stay lng lat
+	lng = this.props.userCoord[0]
+	lat = this.props.userCoord[1]
+	browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
+}
 
 
 
-	closeSb(){
+closeSb(){
    this.setState({
         snackbarState:false,
         snackbarMessage:"",
@@ -81,22 +78,29 @@ import NotificationFeed from '../Notifications/NotificationFeed.jsx'
 		contentContainerStyle={{zIndex:444}} 
 		inkBarStyle={{zIndex:222}}
 		style={styles.tabs} 
-		value={this.state.activeTab} 
+		value={activeTab} 
 		onChange={this.changeTab.bind(this)}>
-			<Tab style={styles.tab_style} value={0}  label={i18n.__('common.userFrg.feed')} />
-			<Tab style={styles.tab_style} value={1} label={i18n.__('common.userFrg.myPlans')} /> 
-			<Tab style={styles.tab_style} value={2}	 label={<NtfLabel activeTab={activeTab} />} />      	 
+			<Tab style={styles.tab_style} value={0}  icon={<FontIcon className="material-icons">web</FontIcon>} />
+			<Tab style={styles.tab_style} value={1} icon={<FontIcon className="material-icons">account_circle</FontIcon>} /> 
+			<Tab style={styles.tab_style} value={2}	 icon={<NtfLabel activeTab={activeTab} />} /> 
+			<Tab style={styles.tab_style} value={3}	 icon={<FontIcon className="material-icons">settings</FontIcon>} />       	 
 		</Tabs>
 
-		<SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
-			<div><MainPlansFeed activeTab={activeTab} /></div>
+		<SwipeableViews 
+				animateTransitions={false}
+				index={activeTab} 
+				onChange={this.changeTab.bind(this)}>
+			<div>k</div>
 			<div> <UserPlansFeed activeTab={activeTab}  /> </div>
 			<div><NotificationFeed activeTab={activeTab} /></div>
+			<div> <UserSettingsCont activeTab={activeTab} /> </div> 
 		</SwipeableViews>
 
 		<FloatingActionButton onClick={this.toogleDrawer.bind(this)} className="fab" style={styles.fab} >
 			<ContentAdd />
 		</FloatingActionButton>
+
+
 		  <Snackbar
 		    bodyStyle={{zIndex:9999}}
 		    contentStyle={{zIndex:9999}}
@@ -131,6 +135,4 @@ export default UserFragment;
         tabs:{
         	backgroundColor:'rgb(63, 81, 181)'
         }
-
-
     }

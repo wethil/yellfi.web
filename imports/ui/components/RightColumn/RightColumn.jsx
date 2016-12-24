@@ -20,7 +20,6 @@ export default class RightColumn extends Component {
 	  	drawerTitle:"Create a Plan",
 	  	sBar:false,
 	  	sBarMessage:"",
-	  	user:{},
 	  	userCoordinates:{}
 	  };
 	}
@@ -41,8 +40,6 @@ export default class RightColumn extends Component {
 			let lat = parseFloat(this.props.location.query.lat)
 	
 			this.toogleDrawer(yellId,dialog,lng,lat)
-			emitter.addListener('userInf',(user)=> this.getUserInf(user) )
-
 	}
 
 
@@ -123,7 +120,7 @@ this.toogleDrawer(yellId,dialog,lng,lat)
 			        	?
 			        	 <YellForm userCoordinates={this.state.userCoordinates} />
 			       	  :
-			        <YellCardComposer user={this.state.user}  dialog={this.state.dialog} yellId={this.state.yellId} />
+			        <YellCardComposer  dialog={this.state.dialog} yellId={this.state.yellId} />
 			       }     
 			      
 			  </Drawer>

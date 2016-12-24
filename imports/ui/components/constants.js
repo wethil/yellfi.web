@@ -433,6 +433,10 @@ export  const shoppingTr= [
       subhead:{
         fontSize:11,
         color:'#9E9E9E'
+      },
+      planTxt:{
+        fontSize:'1.2em',
+        color:'#212121'
       }
 
     };
@@ -449,4 +453,45 @@ export  const shoppingTr= [
        content:{
         color:'#424242'
        }
-    }
+    };
+
+ export const userSettingsStyles = {
+  header:{
+    fontSize: '4em'
+  },
+  userName:{
+     //   margin: '0em'
+  },
+  ImageInput: {
+      cursor: 'pointer',
+      position: 'absolute',
+      top: 0,
+      bottom: 0,
+      right: 0,
+      left: 0,
+      width: '100%',
+      opacity: 0,
+  },
+    badgeInLine:{
+      bottom:18,
+      cursor:'pointer',
+      right:21,
+      top:'initial',
+      backgroundColor:'#3F51B5'
+  },
+   avatarBadge:{
+    color :'#ffffff',
+    fontSize:13
+  },
+  editIcon:{
+    zIndex:888,
+    marginLeft:-9,
+    fontSize:20
+  },
+  editButton:{
+    zIndex:999,
+    marginTop:-12,
+    padding:'0px !important',
+    height:'20px !important'
+  }
+}

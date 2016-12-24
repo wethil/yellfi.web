@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import {frameStyle} from '../yells/YellsComponents/constant.js'
 import sha1 from 'js-sha1';
 import RaisedButton from 'material-ui/RaisedButton';
 import IconButton from 'material-ui/IconButton';
@@ -12,7 +11,7 @@ import FontIcon from 'material-ui/FontIcon';
 import i18n from 'meteor/universe:i18n';
 import emitter from '../../emitter.js'
 import { browserHistory } from 'react-router'
-import {mailAddress,userSettingsStyles} from '../../../constants.js';
+import {mailAddress,userSettingsStyles} from '../../constants.js';
  class UserSettings extends Component {
  	constructor(props) {
  	  super(props);
@@ -41,12 +40,17 @@ componentWillMount(){
  		var fileInput = document.getElementById('fileInput');
 		var file = fileInput.files[0];
 			var imageType = /image.*/;
+
 			if (file.type.match(imageType)) {
 				var reader = new FileReader();
+
 				reader.onload = (e)=> {
+				
+
 					var img = new Image();
 					img.src = reader.result;
 				  	this.sendToCDN(reader.result)
+				
 				}
 
 				reader.readAsDataURL(file);	
@@ -135,33 +139,32 @@ CUNSubmit(e){
 		toMail= `mailto:${mailAddress}`
 		switch (uNameInput) {
 			case false :
-				uNameField =<div style={userSettingsStyles.userName} className="ui header"> {user.firstName} 
-								 <IconButton
-								  	 onTouchTap={()=> this.setState({uNameInput:true}) }
-								      iconClassName="material-icons"
-								      iconStyle={userSettingsStyles.editIcon}
-								      style={userSettingsStyles.editButton}>
-								      edit
-								    </IconButton>
-								</div>	
+				uNameField = <div style={userSettingsStyles.userName} className="ui header"> {user.firstName} 
+							  <IconButton
+							  	 onTouchTap={()=> this.setState({uNameInput:true}) }
+							      iconClassName="material-icons"
+							      iconStyle={userSettingsStyles.editIcon}
+							      style={userSettingsStyles.editButton}
+							    >
+							      edit
+							    </IconButton>
+							</div>	
 				uNameButton = null
 				break;
 			case true : 
 				uNameField = <TextField id="uNameInput" onKeyUp={this.CUNSubmit.bind(this)} defaultValue={user.firstName}/>
 				uNameButton = <RaisedButton
 							      label={i18n.__('common.userSett.save')}
-							      fullWidth={true}
+							      fullWidth={false}
 							      labelPosition="before"
 							      onTouchTap={this.changeUserName.bind(this) }
 							      containerElement="label"
 						    />	    
 		}
-
-
 		return (
-			<div className="ui container" style={frameStyle} >	
+			<div className="ui container" >	
 				<div className="ui center aligned padded grid">		  
-					<div className="row"  style={{padding:'0em'}} >
+					<div className="row" style={{padding:'0em'}}>
 							<Badge
 								onTouchTap={this.clickBadge.bind(this)}
 								badgeContent={
@@ -184,22 +187,15 @@ CUNSubmit(e){
 					
 						  {uNameButton} 
 					
-		     <input style={userSettingsStyles.ImageInput} 
-		     		accept="image/*" 
-		     		id="fileInput" 
-		     		type="file"
-		     		onChange={this.uploadPhoto.bind(this)} />
-					<div className="row"  >
+			     <input style={userSettingsStyles.ImageInput} 
+			     		accept="image/*" 
+			     		id="fileInput" 
+			     		type="file"
+			     		onChange={this.uploadPhoto.bind(this)} />
+
+					<div className="ui padded row"  >
 						  <SelectField
-							  //style={{zIndex:999}}
-							  //labelStyle={{zIndex:888}}
-							  //hintStyle={{zIndex:777}}
-						  	fullWidth={true}
-						  	//floatingLabelStyle={{zIndex:666}}
-						  	//hintStyle={{zIndex:555}}
-						  	//listStyle={{zIndex:444}}
-						  	//menuStyle={{zIndex:333}}
-						  	//underlineStyle={{zIndex:222}}
+						  	  fullWidth={false}
 					          floatingLabelText="Dil / Language"
 					          value={this.state.language}
 					          onChange={this.changeLang.bind(this)}
@@ -227,3 +223,4 @@ CUNSubmit(e){
 	}
 }
 export default UserSettings;
+

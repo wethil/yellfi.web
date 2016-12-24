@@ -11,11 +11,14 @@ import Index from '../components/mobile/Index.jsx'
 
 export const App = ({children}) => (
 <MuiThemeProvider muiTheme={getMuiTheme()}>
-  <div className="ui stackable grid" style={{height: '100vh',overflowY:'hidden'}} >
+  <div className="ui stackable grid" style={{height: '100vh',overflowY:'hidden',margin:'0em !important'}} >
     
       <div className="five wide column ">
         <LeftColumn  />
       </div>
+      <div className="eleven wide column animated fadeIn fixed"> 
+        <Middle />
+     </div> 
       {children} 
     </div>
 

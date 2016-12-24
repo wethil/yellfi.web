@@ -31,20 +31,21 @@ import i18n from 'meteor/universe:i18n';
 
 
   componentWillMount() {
-     this.makePropState(this.props.notifications)
-    this.sendNotificationsToTabTitle(this.props.notifications)
+     ntfs = this.props.notifications
+     this.makePropState(ntfs)
+    this.sendNotificationsToTabTitle(ntfs)
   }
 
   componentWillReceiveProps(nextProps){
-   
-   if (nextProps.notifications && nextProps.notifications.length!=0) {
-     head = _.head(nextProps.notifications)
+    ntfs = nextProps.notifications 
+   if (ntfs && ntfs.length!=0) {
+     head = _.head(ntfs)
     this.checkNtfForTime(head)
    }
    
-    this.sendNotificationsToTabTitle(nextProps.notifications)
-    this.makePropState(nextProps.notifications)
-    this.checkProps(nextProps.notifications, nextProps.limit)
+    this.sendNotificationsToTabTitle(ntfs)
+    this.makePropState(ntfs)
+    this.checkProps(ntfs, nextProps.limit)
   }
 
   checkNtfForTime(ntf){
@@ -140,27 +141,10 @@ checkProps(newP,limit){
 }
 
 	render() {
-
-if(this.state.notifications && this.state.notifications.length != 0) {
-  last = _.last(this.state.notifications);
- lastId= last._id
-} else {
-  lastId=""
-}
-    
-//listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
-
-
-
-
-
-
-
-
-
-	if (this.state.notifications && this.state.notifications.length > 0) {
-      var notifications = []
-      this.state.notifications.forEach((notification) => {
+const {notifications,sensor} = this.state
+	if (notifications &&notifications.length > 0) {
+      var notoficationList = []
+     notifications.forEach((notification) => {
 
         let time = ` ${moment(notification.time).calendar()} `
 
@@ -173,7 +157,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
         }
   
 
-		 notifications.push(
+		 notoficationList.push(
           <div id={notification._id} key={notification._id}>
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(notification.yellId,notification.about)}
@@ -194,7 +178,7 @@ if(this.state.notifications && this.state.notifications.length != 0) {
     } else {
           
 
-    	notifications = <NoNotification />
+    	notoficationList = <NoNotification />
 
     }
 
@@ -203,12 +187,12 @@ if(this.state.notifications && this.state.notifications.length != 0) {
   <div>
     <CustomScroll> 
       <List style={listsDesktopStyles.list} > 
-        {notifications}
+        {notoficationList}
         <VisibilitySensor 
           partialVisibility={true}
           delayedCall={true}
           onChange={this.handleVisibleSensor.bind(this)}
-          active={this.state.sensor} >  
+          active={sensor} >  
              <div> <Loader style={{marginTop:2}} active={this.state.loader} inline='centered' /></div>
          </VisibilitySensor>
       </List> 

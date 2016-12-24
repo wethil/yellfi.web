@@ -35,7 +35,6 @@ body {
 }
 
 .eleven.wide.column.animated.fadeIn{
-    position: absolute;
     padding: 0px;
 
 }
@@ -193,5 +192,10 @@ input:focus::-webkit-datetime-edit{ color: #000; }
 }
 
 .ui.fullscreen.modal {
-  position: fixed !important ; 
+  position: // coordinates:[lng,lat], always stay lng lat
+ fixed !important ; 
+}
+
+.inner-container{
+  background-color: white;
 }

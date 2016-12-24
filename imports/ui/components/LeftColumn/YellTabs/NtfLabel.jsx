@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Badge from 'material-ui/Badge';
 import emitter from '../../emitter.js'
 import i18n from 'meteor/universe:i18n';
+import FontIcon from 'material-ui/FontIcon';
  class NtfLabel extends Component {
  	constructor(props) {
  	  super(props);
@@ -51,10 +52,10 @@ receiveNotifications(activeTab){
 
 	render() {
 		badgeContent = this.state.badgeContent
-		badgeStyle = badgeContent==0 ? {display:'none'} : {bottom:15,right:'-19px',top:'initial'}
+		badgeStyle = badgeContent==0 ? {display:'none'} : {bottom:15,right:'-19px',top:'initial',width:19,height:19}
 		return (
 			  <Badge style={{padding:0}} badgeStyle={badgeStyle} badgeContent={badgeContent}  secondary={true}>
-			     {i18n.__('common.userFrg.ntf')}
+			     <FontIcon color="rgba(255, 255, 255, 0.701961)" className="material-icons">notifications</FontIcon>
 			    </Badge>
 		);
 	}

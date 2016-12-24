@@ -150,8 +150,8 @@ if (yells && yells.length > 0) {
 	}		
 	cQ = yell.comment_quantity
 	jQ = yell.joining_quantity
-	commentQuantity = (cQ && cQ>0 )? `(${yell.comment_quantity})` :null
-	joiningQuantity = (jQ&&jQ>0) ? `(${yell.joining_quantity})` :null
+	commentQuantity = (cQ && cQ>0 )? `(${cQ})` :null
+	joiningQuantity = (jQ&&jQ>0) ? `(${jQ})` :null
 
 	if (yell.publicity == 0) {
 	  publicityLabel =  <span>  <a className="ui mini circular label"><i className="user icon"></i> {publicity}</a>  </span>  

@@ -8,8 +8,7 @@ import LoadingCircle from './user/LoadingCircle.jsx'
 
 
 	render() {
-			const {activeTab} =this.props
-			
+		const {activeTab} =this.props	
 		content = (activeTab==3) ?<UserComposer /> : <LoadingCircle />		
 		
 		return (

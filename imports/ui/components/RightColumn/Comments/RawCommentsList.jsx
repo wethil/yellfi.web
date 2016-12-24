@@ -115,12 +115,12 @@ const iconButtonElement = (
 
 
 
+commentArray = this.state.comments
 
-
-	if (this.state.comments && this.state.comments.length > 0) {
+	if (commentArray && commentArray.length > 0) {
       var comments = []
    //loop started   
- this.state.comments.forEach((comment) => {
+ commentArray.forEach((comment) => {
  let likeButton= _.includes(comment.likes, Meteor.userId()) 
                 ? //like button. look state and change
                 <MenuItem onTouchTap={ ()=> this.unlike(comment._id)}> {i18n.__('common.comments.unlike')} </MenuItem>
@@ -170,12 +170,18 @@ const iconButtonElement = (
                       disabled={true}
                         rightIconButton={rightIconMenu}
                       disabled={true}
-                      leftAvatar={<Avatar src={comment.owner.profile.avatar} />}
+                      leftAvatar={<Avatar src={comment.owner.picture} />}
                       primaryText={
-                       <div style={styles.username}>{comment.owner.username}
-                           <span style={styles.subhead} className="hiddenOnMobile" > {i18n.__('common.comments.suggested')} </span> 
-                           <span style={styles.searchRow}>  <span className="hiddenOnMobile" style={styles.subhead}>{i18n.__('common.comments.searchThis')}</span>  {searchOnGoogle} | {searchOnYoutube} </span>
-                           </div>
+                      <div className="ui grid">
+                         <div className="left floated ten wide column" style={styles.username}>{comment.owner.firstName}
+                          <span style={styles.subhead} className="hiddenOnMobile" > {i18n.__('common.comments.suggested')} </span> 
+                          </div>
+                            <div className="ui right floated six wide column">
+                             
+                              <span style={styles.searchRow}>  <span className="hiddenOnMobile" style={styles.subhead}>{i18n.__('common.comments.searchThis')}</span>  {searchOnGoogle} | {searchOnYoutube} </span>
+                            </div>
+                          
+                      </div>
                          }
                       secondaryText={
                           	<p>   
@@ -249,7 +255,8 @@ export default RawCommentsList;
           color:'#9E9E9E'
         },
         searchRow :{
-          marginLeft:'53%'
+         // position: 'fixed',
+          //right: '8em',
         },
         listSegment:{
           height:'54vh',

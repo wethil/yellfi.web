@@ -9,8 +9,6 @@ import emitter from '../../emitter.js';
 import {plans} from '../../constants.js';
 import BlockedUser from '../CommonComponents/BlockedUser.jsx'
 import FontIcon from 'material-ui/FontIcon';
-import List from 'material-ui/List/List';
-import ListItem from 'material-ui/List/ListItem';
 import Avatar from 'material-ui/Avatar';
 import _ from 'lodash'
 import { browserHistory } from 'react-router'
@@ -152,7 +150,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 	const {yell,dialogOpen,dialogContentNumber} = this.state
 	const {_id,ownerId,requests,approved,publicity,owner,created_at,suggestionsByYellfi,keyword,time} = yell
 	const {user,userBlocked} = this.props
-
+	lang=i18n.getLocale();
 	
 	if (yell && yell.plan) {
 		prePlan=Number(yell.plan)
@@ -163,7 +161,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 	}
 
 
-	userAvatar = (user && user.picture) ? <Avatar src={user.picture}/> : <Avatar>U</Avatar>  
+
 	if (!userBlocked) {
 		dialogTitleLabel =`${yell.owner.firstName} : ${plan}` 
 		console.log(dialogContentNumber)
@@ -172,16 +170,9 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 		    dialogContent = <CommentComposer 
 		    					yellId={_id} 
 		    					yellOwnerId={ownerId} /> 
-		    dialogAction =  <List  key={1} >
-							    <ListItem key={2}
-							      style={{padding:"5px 16px 20px 72px "}}
-							      disabled={true}
-							      leftAvatar={userAvatar}>
-							     <SuggestionTextField 
+		    dialogAction =  <SuggestionTextField 
 							     	yellId={_id} 
 							     	yellOwnerId={ownerId} />
-							    </ListItem>
-							   </List> 
 						   
 		        break;
 		    case 2:
@@ -212,12 +203,20 @@ const action =userBlocked
 						    />
 						</span>
 
-
 		
-		userHeader =  <div className="anim">
-						{owner.firstName} 
-						<span   style={styles.subhead}> planned {moment(created_at).startOf('hour').fromNow()} </span>			
-					  </div>
+		userHeader = (lang=="tr-TR")
+		 ?
+		<div className="anim">
+		{owner.firstName}<br/>
+		<span   style={styles.subhead}> {moment(created_at).startOf('hour').fromNow()} {i18n.__('common.YellCard.planned')}   </span>			
+		
+	  </div> 
+	  :
+	 <div className="anim">
+		{owner.firstName} <br/>
+		<span   style={styles.subhead}> {i18n.__('common.YellCard.planned')}  {moment(created_at).startOf('hour').fromNow()} </span>			
+	  </div>  
+			  
 
 
 
@@ -233,12 +232,20 @@ const action =userBlocked
   	settingsBtn = null
   }
   
+
   suggestions = yell.suggestionsByYellfi
+
   currentUser = Meteor.userId()
   NoSuggestionFragment = (currentUser&&currentUser==yell.ownerId )?  <NoSuggestion plan={yell.plan} /> : <span></span>
 suggestionFragment = (suggestions&&suggestions.length>0)?<YellfiSuggestionsList
 																 plan={yell.plan}
 																 suggestions={suggestions}  />:NoSuggestionFragment
+															 
+  cQ = yell.comment_quantity - suggestions.length
+  jQ = yell.joining_quantity
+  commentQuantity = (cQ && cQ>0 )? `(${cQ})` :null
+  joiningQuantity = (jQ&&jQ>0) ? `(${jQ})` :null
+
 
 content = <div>
 				  <Card>
@@ -257,9 +264,9 @@ content = <div>
 			        <CardActions>
 			        {settingsBtn}
 			         <button onClick={()=>  browserHistory.push('/yell/'+_id + '?dialog=comment')}  className=" basic teal mini ui  button">
-							  {i18n.__('common.YellCard.suggestions')}
+							  {i18n.__('common.YellCard.suggestions')} {commentQuantity}
 					</button>
-			       <ParticipationsButton yellId={_id} publicity={publicity} /> 
+			       <ParticipationsButton jq={joiningQuantity} yellId={_id} publicity={publicity} /> 
 			        </CardActions>
 			      </Card>
 			    <span className="anim">  {suggestionFragment} </span>

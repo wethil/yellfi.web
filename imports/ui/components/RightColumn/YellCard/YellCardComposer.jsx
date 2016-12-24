@@ -8,17 +8,16 @@ const ThisYellSub = new SubsManager()
 
 const composer = ( props, onData ) => {
  	yellId = props.yellId
- 	user = props.user
  	dialog=props.dialog
- 
+
 
    const subscription = ThisYellSub.subscribe( 'thisYell',yellId ) 
 
   if ( subscription.ready() ) {
     const yell = Yells.findOne({_id:yellId})
-
-    if (yell && yell.blocked_users && yell.blocked_users.length>0 ) {
-    	userBlocked = _.includes(yell.blocked_users, Meteor.userId()) ? 1 : 0
+    blocked_users = yell.blocked_users 
+    if (yell && blocked_users && blocked_users.length>0 ) {
+    	userBlocked = _.includes(blocked_users, Meteor.userId()) ? 1 : 0
     }else {
     	userBlocked=0
     }
@@ -26,9 +25,9 @@ const composer = ( props, onData ) => {
   
     
    
-    onData( null, { yell,userBlocked,user,dialog } );
+    onData( null, { yell,userBlocked,dialog } );
   }
 };
 
  const YellCardComposer = composeWithTracker( composer,LoadingCircle )( YellCard );
- export default YellCardComposer
+ export default YellCardComposer;

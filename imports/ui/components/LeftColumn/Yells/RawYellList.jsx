@@ -19,8 +19,6 @@ i18n.setOptions({
   hostUrl: 'http://'+window.location.hostname+':3000/'
 });
 
-
-
  class RawYellList extends Component {
   constructor(props) {
     super(props);
@@ -35,14 +33,6 @@ i18n.setOptions({
         sensor:true,
         loader:true
     };
-  }
-
-
-
-
-  componentDidMount() {
-     
-
   }
 
 componentWillMount(){
@@ -70,10 +60,6 @@ checkProps(newP,limit){
   } 
 
 }
-
-
-
-
   handleVisibleSensor(isVisible){
   if (isVisible){
     this.setState({sensor:false})
@@ -88,9 +74,7 @@ checkProps(newP,limit){
 
 
 toogleYellCard(yellId) {
-
   browserHistory.push('/yell/'+yellId)
-// emitter.emit('toogleDrawerForCard',yellId) //make left drawer yell card state
 }
 
 
@@ -119,83 +103,64 @@ undoAction(type,data) {
   }
 }
 
-
-
-
 	render() {
+    const {yells,sensor,loader} = this.state
+	if (yells && yells.length > 0) {
+      var yellList = []
+      yells.forEach((yell) => {
+      
+        const {_id,publicity,time,keyword,plan,owner} = yell
+        let timeField = ` ${moment(time).calendar()} `
 
-if(this.state.yells && this.state.yells.length != 0) {
-  last = _.last(this.state.yells);
- lastId= last._id
-} else {
-  lastId=""
-}
-
-
-
-    
-//listHeight = this.props.heightforBottomNav ? this.props.heightforBottomNav : '80.6vh'
-
-
-
-
-
-
-
-
-	if (this.state.yells && this.state.yells.length > 0) {
-      var yells = []
-      this.state.yells.forEach((yell) => {
-
-        let time = ` ${moment(yell.time).calendar()} `
-
-    switch(yell.publicity) {
+    switch(publicity) {
         case 0 : 
-           publicity = i18n.__('common.publicity.alone')
+           pubField = i18n.__('common.publicity.alone')
            break;
 		    case 1:
-		        publicity = i18n.__('common.publicity.everyone')
+		        pubField = i18n.__('common.publicity.everyone')
 		        break;
 		    case 2:
-		        publicity = i18n.__('common.publicity.elected')
+		        pubField = i18n.__('common.publicity.elected')
 		        break;		   
 		}
     
-if (yell.publicity == 0) {
-  publicityLabel =  <span>  <a className="ui mini circular label"><i className="user icon"></i> {publicity}</a>  </span>  
+if (publicity == 0) {
+  publicityLabel =  <span>  <a className="ui mini circular label"><i className="user icon"></i> {pubField}</a>  </span>  
   timeLabel =""
 } else {
-  publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>  </span>  
-  timeLabel = <span style={listsDesktopStyles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
+  publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {pubField}</a>  </span>  
+  timeLabel = <span style={listsDesktopStyles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {timeField}</a> </span>
                                                   
 }
 
 
-if (yell.keyword) {
-  keyword = <span> -- <span style={listsDesktopStyles.keywords}>  {yell.keyword} </span> </span>
+if (keyword) {
+  keywordField = <span> -- <span style={listsDesktopStyles.keywords}> {keyword} </span> </span>
+  line=2;
 } else {
-  keyword ="" 
+  keywordField =null
+  line=1; 
 }
-prePlan=Number(yell.plan)
+prePlan=Number(plan)
 if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
-  plan = yell.plan
+  planField = plan
 } else {
-  plan =i18n.__(plans[prePlan].content)
+  planField =i18n.__(plans[prePlan].content)
 }
 
-		 yells.push(
-          <div  id={yell._id} key={yell._id}>
+		 yellList.push(
+          <div  id={_id} key={_id}>
             <ListItem
-                  onTouchTap={()=>this.toogleYellCard(yell._id)}
-                  leftAvatar={<Avatar src={yell.owner.picture} />}
-                  primaryText={ <div style={listsDesktopStyles.username}>{yell.owner.firstName} <span style={listsDesktopStyles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
+                  onTouchTap={()=>this.toogleYellCard(_id)}
+                  leftAvatar={<Avatar src={owner.picture} />}
+                  primaryText={ <div style={listsDesktopStyles.username}>{owner.firstName} <span style={listsDesktopStyles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
                   secondaryText={
                       	<p>   
-                        <span style={listsDesktopStyles.plan}>{plan} </span> 
+                        <span style={listsDesktopStyles.plan}>{planField} </span> <br/>
                         {keyword}
                   		</p>
                   }
-                  secondaryTextLines={1}
+                  secondaryTextLines={line}
               />
             <Divider  inset={true} />
           </div>
@@ -206,41 +171,37 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
         switch(this.props.component) {
     case 0:
         emitter.emit('noUserYellAnim')
-        yells = <NoUserYell />
+        yellList = <NoUserYell />
         break;
     case 1:
-        yells = "no yell"
+        yellList = "no yell"
         break;
       case 2:
-        yells = <NoYell />
+        yellList = <NoYell />
         break;
     default:
-         yells="error"
+         yellList="error"
 }
 
     }
-
 
 		return (
   <div className="sixteen wide column">
     <CustomScroll> 
       <List style={listsDesktopStyles.list} > 
-      {yells}
+      {yellList}
         <VisibilitySensor 
           partialVisibility={true}
           delayedCall={true}
           onChange={this.handleVisibleSensor.bind(this)}
-          active={this.state.sensor} >  
-           <div> <Loader style={{marginTop:2}} active={this.state.loader} inline='centered' /></div>
+          active={sensor} >  
+           <div> <Loader style={{marginTop:2}} active={loader} inline='centered' /></div>
        </VisibilitySensor> 
       </List>
     </CustomScroll>
   </div>  
 		);
 	}
-
-
-
   componentWillUnmount(){
        if(this.props.component==0){
           emitter.emit('resetUPLimit') // will go UserYellsCont

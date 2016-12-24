@@ -17,8 +17,9 @@ import TextField from 'material-ui/TextField';
  	}
 
  handlePress(keycode){
- 		if (keycode=='Enter') {
- 		   comment = this.state.comment
+ 	 comment = this.state.comment
+ 		if (keycode=='Enter' && comment.replace(/\s+/, "") !="" ) {
+ 		  
   			this.makeSuggestion(comment)
 
  		}
@@ -27,12 +28,12 @@ import TextField from 'material-ui/TextField';
 
  	makeSuggestion(comment)
  	{
- 		this.setState({comment:""})
+ 		sugg=comment.replace(/^\s+|\s+$|\s+(?=\s)/g, "")
  		let yellId = this.props.yellId
  		let yellOwnerId = this.props.yellOwnerId
  		let ownerId = Meteor.userId();
  
-		Meteor.call('addComment',comment,yellId,yellOwnerId,ownerId,error=>{
+		Meteor.call('addComment',sugg,yellId,yellOwnerId,ownerId,error=>{
 			if (error) {
 				console.log(error)
 			} else {
@@ -47,7 +48,7 @@ import TextField from 'material-ui/TextField';
 		return (
 			 <TextField
 				      className="suggestInput"
-				      multiLine={true}
+				      hintText={i18n.__('common.comments.writeSuggEnter')}
 				      rows={1}
 				      rowsMax={2}
 				      onKeyDown={(keycode)=>this.handlePress(keycode.key)}
@@ -66,10 +67,10 @@ export default SuggestionTextField;
  const styles = {
     
         commentInput: {
-        	width:'74%'
+        	//width:'74%'
           },
          textareaStyle:{
-         	marginTop:0
+         	//marginTop:0
          }	
 
     }

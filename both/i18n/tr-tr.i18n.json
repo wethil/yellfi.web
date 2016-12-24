@@ -75,6 +75,7 @@
         "writeSomething":"Planınız için açıklama yazın" 
     },
     "YellCard":{
+        "planned":"planladı",
         "deletePlan":"Bir plan sildiniz",
         "approved":"Onaylandı",
         "waitApprove":"Onay bekleniyor",
@@ -109,6 +110,7 @@
         "block":"Engelle",
         "noComment":"Henüz bir öneri yok",
         "writeSugg":"Önerinizi yazın.",
+         "writeSuggEnter":"Önerinizi yazın , göndermek için enter'a basın.",
         "makeFirstComm":"İlk öneriyi siz yapın!",
         "more":"Daha",
         "suggested":"önerdi",

@@ -76,6 +76,7 @@
         "writeSomething":"Write something for your plan. (optional)" 
     },
     "YellCard":{
+        "planned":"planned",
         "deletePlan":"You deleted a plan",
         "approved":"Approved",
         "waitApprove":"Waiting for Approve",
@@ -110,6 +111,7 @@
         "block":"Block",
         "noComment":"No Suggestion Yet",
         "writeSugg":"Write your suggestion",
+        "writeSuggEnter":"Write your suggestion , click enter to submit",
         "makeFirstComm":"Make first suggestion for this plan!",
         "more":"More",
         "suggested":"suggested",

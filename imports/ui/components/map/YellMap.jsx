@@ -4,6 +4,7 @@ import MarkerClusterer from "react-google-maps/lib/addons/MarkerClusterer.js";
 import ClusterAvatars from './ClusterAvatars'
 import _ from 'lodash'
 import { browserHistory } from 'react-router'
+import emitter from '../emitter.js'
 
 
 const MapBase = withGoogleMap(props => (
@@ -13,8 +14,10 @@ const MapBase = withGoogleMap(props => (
     onZoomChanged={props.onZoomChanged}
     ref={props.onMapMounted}
     center={props.center}
-    onCenterChanged={props.onCenterChanged}
+    //onCenterChanged={props.onCenterChanged}
+    onDragEnd={props.onDragEnd}
   >
+  
     <MarkerClusterer
       averageCenter
       enableRetinaIcons
@@ -29,7 +32,7 @@ const MapBase = withGoogleMap(props => (
       
         <Marker
          onClick={()=>browserHistory.push('/yell/'+marker.refYellId)}
-          position={{ lat: marker.yell.publicPlanLoc.coordinates[1], lng: marker.yell.publicPlanLoc.coordinates[0] }}
+          position={{ lat: marker.publicPlanLoc.coordinates[1], lng: marker.publicPlanLoc.coordinates[0] }}
           title={marker.refYellId}
           key={marker._id}
         />
@@ -51,7 +54,7 @@ const MapBase = withGoogleMap(props => (
     this.state = {
       markers:[],
       active:false,
-      zoom:3,
+      zoom:7,
       center:{
         lat:39.257148,
         lng:34.564587
@@ -66,12 +69,29 @@ const MapBase = withGoogleMap(props => (
         zoom: nextZoom,
       });
     }
+    this.handleEndDraging()
   }
 
- 	
+ componentDidMount(){
+    emitter.addListener('changeLocForMap', (userCoord)=> this.changeLocForMap(userCoord));//from main fragment
+   
+  }	
+
+  changeLocForMap(userCoord){
+    this.setState({
+      center:{
+        lat:userCoord[1],
+        lng:userCoord[0]
+      }
+    })
+  }
+
+
  componentWillMount(){
 	this.changeMapMarkers(this.props.markers)
  	}
+
+
 
 componentWillReceiveProps(nextProps){
 	this.changeMapMarkers(nextProps.markers)
@@ -89,6 +109,7 @@ changeMapMarkers(data){
 
   handleMapMounted(map) {
     this._map = map;
+
   }
 
    handleClusterMounted(cluster) {
@@ -97,12 +118,31 @@ changeMapMarkers(data){
 
   handleCenterChanged(){
   	nextLoc = this._map.getCenter()
+    bounds = this._map.getBounds()
+    this.changeQueryWithBounds(bounds)
   	
   }
+
+  handleEndDraging(){
+    bounds = this._map.getBounds()
+    this.changeQueryWithBounds(bounds)
+  }
+
+
   closeDrawerViaUrl(){
      if (window.location.pathname!='/yell/main'){
       browserHistory.push('/yell/main')
     }
+  }
+
+  changeQueryWithBounds(bounds){
+    console.log('north')
+    preNE=bounds.getNorthEast().toJSON()
+    NE=[preNE.lng,preNE.lat]
+    preSW = bounds.getSouthWest().toJSON()
+    SW=[preSW.lng,preSW.lat]
+    finalBounds = [SW,NE]
+    emitter.emit('changebounds',finalBounds)
   }
 
   onClusterClick(cluster){
@@ -134,7 +174,8 @@ changeMapMarkers(data){
         }
         markers={this.state.markers}
          onMapMounted={this.handleMapMounted.bind(this)}
-         onCenterChanged={this.handleCenterChanged.bind(this)}
+       //  onCenterChanged={this.handleCenterChanged.bind(this)}
+         onDragEnd={this.handleEndDraging.bind(this)}
          onClusterClick={this.onClusterClick.bind(this)}
          onClusterMounted={this.handleClusterMounted.bind(this)}
          onMapClick={this.onMapClick.bind(this)}

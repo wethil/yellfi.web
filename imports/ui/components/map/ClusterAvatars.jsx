@@ -9,11 +9,10 @@ import Badge from 'material-ui/Badge';
 
  class ClusterAvatars extends Component {
 	render() {
-		//console.log(this.props.publicYells)
 		avatars=[]
 		const {active,publicYells}=this.props
 		if (publicYells && publicYells.length>0 && active){
-					this.props.publicYells.forEach(function (publicYell) {
+					publicYells.forEach(function (publicYell) {
 			avatars.push(<span id="avatars"  className="animated bounceInRight"
 							 style={{cursor:'pointer'}} 
 							key={publicYell._id}
@@ -29,9 +28,7 @@ import Badge from 'material-ui/Badge';
 							      badgeContent={<FontIcon  style={styles.avatarBadge} className="material-icons">{plans[publicYell.yell.plan].icon}</FontIcon>}
 							      primary={true}
 							      //style={styles.badge}
-							      badgeStyle={styles.badgeInLine}
-
-							    >
+							      badgeStyle={styles.badgeInLine}>
 							    	<Avatar 
 									  	src ={publicYell.yell.owner.picture}
 									  	/>

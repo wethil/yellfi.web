@@ -8,6 +8,7 @@
     "bcrypt": "^0.8.7",
     "enquire.js": "^2.1.1",
     "fbemitter": "^2.0.2",
+    "geopoint": "^1.0.1",
     "great-circle": "0.0.0",
     "howler": "^2.0.1",
     "js-sha1": "^0.4.0",

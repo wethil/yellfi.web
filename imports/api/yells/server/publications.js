@@ -1,8 +1,8 @@
 import { Meteor } from 'meteor/meteor';
 import Yells from '../yells.js';
-fieldsOpt = {fields:{'username':1 ,'services':0}}
-yellsFieldsOpt= {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'keyword':1,'joining_quantity':1,'comment_quantity':1,'publicPlanLoc':1}
-
+const fieldsOpt = {fields:{'firstName':1,'picture':1,}}
+const yellsFieldsOpt= {'plan':1,'time':1,'created_at':1,'publicity':1,'ownerId':1,'keyword':1,'joining_quantity':1,'comment_quantity':1,'publicPlanLoc':1}
+const plansForMapBoxField={'plan':1,'publicity':1,'ownerId':1,'publicPlanLoc':1}
 
 
 
@@ -53,7 +53,7 @@ Meteor.publishComposite('thisUserYell', function(userId,limit) { //always [longi
         children: [
             {
               find: function (yell) {
-          return Meteor.users.find({_id:yell.ownerId})
+           return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
         }
             }
         ]
@@ -120,5 +120,33 @@ Meteor.publishComposite('nearestYells', function(coordinates,limit) { //always [
         ]
     }
 });
+
+
+
+Meteor.publishComposite('PlansOnMapBox', function(bounds) { //always [longitude, latitude] order 
+    return {
+        find: function() {
+            // Find posts made by user. Note arguments for callback function
+            // being used in query.
+          return Yells.find(
+              {  
+                "publicPlanLoc":{ $geoWithin :{ $box : bounds} },
+                'visible':true,
+                'publicity':{ $ne: 0 }
+              },
+              {  
+                'fields':plansForMapBoxField,
+              })
+        },
+        children: [
+            {
+              find: function (yell) {
+          return Meteor.users.find({_id:yell.ownerId},fieldsOpt)
+        }
+            }
+        ]
+    }
+});
+
 
 

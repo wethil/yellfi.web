@@ -18,7 +18,6 @@ import TimePicker from 'material-ui/TimePicker';
 import { Meteor } from 'meteor/meteor';
 import _ from 'lodash'
 import { browserHistory } from 'react-router'
- const T = i18n.createComponent();
 
 export default class YellForm extends Component {
 	constructor(props) {
