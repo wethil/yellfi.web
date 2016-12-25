@@ -39,13 +39,14 @@ if(this.userId!=yellOwnerId){
       }
 		
 	},
-	 likeComment:function(commentId,yellOwnerId,yellId) {
+	 likeComment:function(commentId,yellOwnerId,yellId,ownerId) {
         Comments.update({_id:commentId}, {$push : {likes : this.userId }})
       
-      if(this.userId!=yellOwnerId) {
+      if(this.userId!=ownerId) {
+
       	   Notifications.upsert({
 				senderId:this.userId,
-				receiverId:yellOwnerId,
+				receiverId:ownerId,
 				content:1,
 				about:3,
 				yellId:yellId
@@ -53,7 +54,7 @@ if(this.userId!=yellOwnerId){
 			{
 				$set: {
 					senderId:this.userId,
-					receiverId:yellOwnerId,
+					receiverId:ownerId,
 					created_at:new Date(),
 					received:false,
 					alerted:false,
@@ -71,13 +72,15 @@ if(this.userId!=yellOwnerId){
     },
     unlikeComment:function(commentId) {
         Comments.update({_id:commentId}, {$pull : {likes : this.userId }})
+        
+    },
+     deleteComment:function(commentId,yellId) {
+        Comments.update({_id:commentId}, {$set : {visible : false }})
         Yells.update({ _id: yellId }, {$inc: {cQ : -1} });
     },
-     deleteComment:function(commentId) {
-        Comments.update({_id:commentId}, {$set : {visible : false }})
-    },
-      undoDeleteComment:function(commentId) {
+      undoDeleteComment:function(commentId,yellId) {
         Comments.update({_id:commentId}, {$set : {visible : true }})
+        Yells.update({ _id: yellId }, {$inc: {cQ : 1} });
     },
 
 })

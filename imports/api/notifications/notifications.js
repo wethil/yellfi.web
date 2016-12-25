@@ -17,7 +17,7 @@ content = [
   { id: 1, content: 'liked your suggestion'},
   { id: 2, content: 'wants to join you for'},
   { id: 3, content: 'approve you to join'}
-  { id: 4, content: 'commented to this plan'}
+  { id: 4, content: 'will join you'}
 ]
 about = [
   { id: 0, content: 'yell' },

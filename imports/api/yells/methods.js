@@ -53,26 +53,29 @@ Meteor.methods({
         if (publicity==1) {
             Yells.update({_id:yell}, {$push : {requests : this.userId , approved:this.userId }})
             Yells.update({ _id: yell }, {$inc: {jQ :1}});
-             Notifications.insert({
-                senderId:yellOwnerId,
-                receiverId:this.userId,
-                content:3,
-                created_at:Date(),
+
+            Notifications.upsert({
+                senderId:this.userId,
+                receiverId:yellOwnerId,
+                content:4,
                 about:2,
                 yellId:yell
-             })
+            },
+            {
+                $set: {
+                    senderId:this.userId,
+                    receiverId:yellOwnerId,
+                    created_at:new Date(),
+                    received:false,
+                    alerted:false,
+                    content:4,
+                    about:2,
+                    yellId:yell
+                }
+            })
 
         } else {
             Yells.update({_id:yell}, {$push : {requests : this.userId }})
-             
-           /*  Notifications.insert({
-                senderId:this.userId,
-                receiverId:yellOwnerId,
-                content:2,
-                created_at:Date(),
-                about:2,
-                yellId:yell
-             })*/
 
             Notifications.upsert({
                 senderId:this.userId,
@@ -137,9 +140,11 @@ Meteor.methods({
     },
      cancelJoin: function(userId,yell) {//requerers will use this
          Yells.update({_id:yell}, {$pull : {requests : userId }})
+         Yells.update({ _id: yell }, {$inc: {jQ :-1}});
     },
       approveAll:function(userArray,yell) {
         Yells.update({_id:yell}, {$push:{approved:{$each:userArray }}})
+        Yells.update({ _id: yell }, {$inc: {jQ :userArray.length}});
     },
     deleteYell:function(yellId) {
         Yells.update({_id:yellId}, {$set : {visible : false }})

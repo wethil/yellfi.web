@@ -44,10 +44,9 @@ import Snackbar from 'material-ui/Snackbar';
 
 
 
-   like(comment) {
-    yellOwnerId = this.props.yellOwnerId
-    yellId = this.props.yellId
-      Meteor.call('likeComment', comment,yellOwnerId,yellId,  (error) => {
+   like(comment,ownerId) {
+    const {yellOwnerId,yellId} = this.props
+      Meteor.call('likeComment', comment,yellOwnerId,yellId,ownerId,  (error) => {
         if (error) {
           console.log(error)
         }else {
@@ -68,8 +67,9 @@ import Snackbar from 'material-ui/Snackbar';
    }
 
    deleteComment(comment) {
+     const {yellId} = this.props
     this.setState({snackbarData:comment})
-      Meteor.call('deleteComment', comment,  (error) => {
+      Meteor.call('deleteComment', comment,yellId,  (error) => {
         if (error) {
           console.log(error)
         }else {
@@ -79,7 +79,9 @@ import Snackbar from 'material-ui/Snackbar';
    }
 
   undoAction (comment){
-       Meteor.call('undoDeleteComment',  comment,  (error) => {
+
+     const {yellId} = this.props
+       Meteor.call('undoDeleteComment',  comment,yellId,  (error) => {
         if (error) {
           console.log(error)
         }else {
@@ -121,18 +123,19 @@ commentArray = this.state.comments
       var comments = []
    //loop started   
  commentArray.forEach((comment) => {
- let likeButton= _.includes(comment.likes, Meteor.userId()) 
+  const {_id,likes,ownerId,yellId,owner,content} = comment
+ let likeButton= _.includes(likes, Meteor.userId()) 
                 ? //like button. look state and change
-                <MenuItem onTouchTap={ ()=> this.unlike(comment._id)}> {i18n.__('common.comments.unlike')} </MenuItem>
+                <MenuItem onTouchTap={ ()=> this.unlike(_id,ownerId)}> {i18n.__('common.comments.unlike')} </MenuItem>
                 :
-                <MenuItem onTouchTap={()=> this.like(comment._id)}> {i18n.__('common.comments.like')} </MenuItem>
+                <MenuItem onTouchTap={()=> this.like(_id,ownerId)}> {i18n.__('common.comments.like')} </MenuItem>
 
 
-            let STL = comment.content.length >113 ? 2 : 1 //secondary text lines
-            let content = comment.content.replace(/ /g, "+")
+            let STL = content.length >113 ? 2 : 1 //secondary text lines
+            let cont = content.replace(/ /g, "+")
 
-    let searchOnGoogle =  <SearchButton searchUrl="http://www.google.com/search?q=" searchContent={content} iconClass="google icon" />
-    let searchOnYoutube =  <SearchButton searchUrl="https://www.youtube.com/results?search_query=" searchContent={content} iconClass="youtube icon" />
+    let searchOnGoogle =  <SearchButton searchUrl="http://www.google.com/search?q=" searchContent={cont} iconClass="google icon" />
+    let searchOnYoutube =  <SearchButton searchUrl="https://www.youtube.com/results?search_query=" searchContent={cont} iconClass="youtube icon" />
     		
 
     switch(Meteor.userId()) {
@@ -141,7 +144,7 @@ commentArray = this.state.comments
                rightIconMenu = (
           <IconMenu iconButtonElement={iconButtonElement}>
            {likeButton}
-             <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>{i18n.__('common.comments.delete')}</MenuItem>
+             <MenuItem onTouchTap={()=> this.deleteComment(_id)}>{i18n.__('common.comments.delete')}</MenuItem>
           </IconMenu>
         );
             break;
@@ -149,8 +152,8 @@ commentArray = this.state.comments
                rightIconMenu = (
                 <IconMenu iconButtonElement={iconButtonElement}>
                  {likeButton}
-                  <MenuItem onTouchTap={()=> this.deleteComment(comment._id)}>{i18n.__('common.comments.delete')}</MenuItem>
-                 <MenuItem onTouchTap={()=> this.blockUserFromComment(comment._id,comment.ownerId,comment.yellId)} >{i18n.__('common.comments.block')}</MenuItem>
+                  <MenuItem onTouchTap={()=> this.deleteComment(_id)}>{i18n.__('common.comments.delete')}</MenuItem>
+                 <MenuItem onTouchTap={()=> this.blockUserFromComment(_id,ownerId,yellId)} >{i18n.__('common.comments.block')}</MenuItem>
                 </IconMenu>
            );
 
@@ -165,15 +168,15 @@ commentArray = this.state.comments
 
 
          comments.push(
-              <div key={comment._id}>
-                <ListItem key={comment._id}
+              <div key={_id}>
+                <ListItem key={_id}
                       disabled={true}
                         rightIconButton={rightIconMenu}
                       disabled={true}
-                      leftAvatar={<Avatar src={comment.owner.picture} />}
+                      leftAvatar={<Avatar src={owner.picture} />}
                       primaryText={
                       <div className="ui grid">
-                         <div className="left floated ten wide column" style={styles.username}>{comment.owner.firstName}
+                         <div className="left floated ten wide column" style={styles.username}>{owner.firstName}
                           <span style={styles.subhead} className="hiddenOnMobile" > {i18n.__('common.comments.suggested')} </span> 
                           </div>
                             <div className="ui right floated six wide column">
@@ -186,7 +189,7 @@ commentArray = this.state.comments
                       secondaryText={
                           	<p>   
                               <span style={styles.keywords}>
-                             <Linkify>  {comment.content} </Linkify> 
+                             <Linkify>  {content} </Linkify> 
                                 </span>
                       		</p>
                       }

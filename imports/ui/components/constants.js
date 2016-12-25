@@ -58,7 +58,8 @@ export const ntfTitles = [
   { 'id': 0, "content": 'common.ntfContent.madeSug' },
   { 'id': 1, "content": 'common.ntfContent.liked'},
   { 'id': 2, "content": 'common.ntfContent.reqJoin'},
-  { 'id': 3, "content": 'common.ntfContent.appJoin'}
+  { 'id': 3, "content": 'common.ntfContent.appJoin'},
+  { 'id': 4, "content": 'common.ntfContent.willJoin'},
 ]
 
 

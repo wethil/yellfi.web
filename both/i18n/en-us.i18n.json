@@ -29,7 +29,8 @@
         "madeSug":"made a suggestion for",
         "liked" :"liked your suggestion for",
         "reqJoin":"wants to join you for",
-        "appJoin":"approve you to join for"
+        "appJoin":"approve you to join for",
+        "willJoin":"will join you for"
     },
     "noUserYell":{
         "noPlan":"No Plan Yet",

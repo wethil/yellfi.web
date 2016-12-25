@@ -28,7 +28,8 @@
         "madeSug":"şu plana öneri yaptı:",
         "liked" :"şu plandaki önerinizi beğendi",
         "reqJoin":"size şu plan için katılmak istiyor :",
-        "appJoin":"katılımınızı şu plan için onayladı :"
+        "appJoin":"katılımınızı şu plan için onayladı :",
+        "willJoin":"size şu plan için katılacak"
     },
      "noUserYell":{
         "noPlan":"Henüz Bir Planınız Yok",

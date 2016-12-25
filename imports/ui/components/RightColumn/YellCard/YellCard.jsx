@@ -262,7 +262,7 @@ content = <div>
 			        </CardText>
 			        <CardActions>
 			        {settingsBtn}
-			         <button onClick={()=>  browserHistory.push('/yell/'+_id + '?dialog=comment')}  className=" basic teal mini ui  button">
+			         <button onClick={()=>  browserHistory.push('/yell/'+_id + '?dialog=comment')}  className=" basic red mini ui  button">
 							  {i18n.__('common.YellCard.suggestions')} {commentQuantity}
 					</button>
 			       <ParticipationsButton jq={joiningQuantity} yellId={_id} publicity={publicity} /> 
