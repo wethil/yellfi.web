@@ -31,12 +31,7 @@ service = new google.maps.places.PlacesService($attrib[0]);
 	}
 
 	suggestionToUser(plan,keywords,data,chosenIndex,yellId,suggestionCoord){
-		console.log(plan)
-		console.log(data)
-		console.log(yellId)
 		formattedKeywords = keywords.replace(/ /g, "|")
-		console.log(formattedKeywords)
-		console.log(chosenIndex + ' chosenIndex ')
 		this.getSuggestionsFromCloud(plan,keywords,formattedKeywords,data,chosenIndex,yellId,suggestionCoord)
 	}
 
@@ -57,10 +52,6 @@ service = new google.maps.places.PlacesService($attrib[0]);
 
 */
 
-
-
-
-
 getSuggestionsFromCloud(plan,keywords,formattedKeywords,data,chosenIndex,yellId,suggestionCoord){
 		switch(plan) {
 	    case 0://listening music
@@ -73,15 +64,11 @@ getSuggestionsFromCloud(plan,keywords,formattedKeywords,data,chosenIndex,yellId,
 	      this.handleGet(yellId,plan,baseYouTubeUrl,query)
 	        break;
 	    case 1:// watching something
-	    console.log(chosenIndex)
-	   indexx = isNaN(chosenIndex) ?  _.random(18) : chosenIndex
-	   console.log(indexx) 
+	  		indexx = isNaN(chosenIndex) ?  _.random(18) : chosenIndex
 	    	totalPages = chosenIndex!=null ? filmGenres[indexx].totalPages  : 1000 //total page count on theMovieDb
-	    	console.log(totalPages)
 	    	page = _.random(totalPages)
 	    	genre =data.id ? data.id : filmGenres[indexx].id
 	    	query = `&page=${page}&with_genres=${genre}`
-	    	console.log(query)
 		    this.handleGet(yellId,plan,baseThemovieDbApiUrl,query)
 	        break;
 	    case 2://reading something
@@ -143,32 +130,23 @@ handleGet(yellId,plan,baseUrl,query){
         });  
 }
 
-
-
-
-
-
-
 hangleGooglePlacesApi(yellId,plan,coord,placeType) {
 	var request ={
 				location : coord,
 				type : placeType,
-				radius : '500'
+				radius : '600'
 			}
 	service.nearbySearch(request,(results, status) => {
 		if (status == google.maps.places.PlacesServiceStatus.OK) {
  			 this.editSuggestion(yellId,plan,results)  
 
  		}else {
- 			console.log(status)
+ 			//console.log(status)
  		}
 	});
 
 
 }
-
-
-
 
 
 editSuggestion(yellId,plan,response){
@@ -182,20 +160,15 @@ editSuggestion(yellId,plan,response){
 		        	obj.title = item.snippet.title
 		        	suggestions.push(obj)
 		        });
-		      console.log(suggestions)
 		      this.addSuggestionToYell(yellId,suggestions)
 		        break;
 		    case 1://watch
-		    console.log('response')
-		    console.log(response)
 		    	res = _.sampleSize(response.results,5)
-		    	console.log(res)
 		    	res.forEach(function (item) {
 		    		obj={}
 		    		obj.title=item.title
 		    		suggestions.push(obj)
 		    	});
-		          console.log(suggestions)
 		      	this.addSuggestionToYell(yellId,suggestions)
 		        break;
 		     case 2://read
@@ -206,7 +179,7 @@ editSuggestion(yellId,plan,response){
 		        	obj.title = item.volumeInfo.title
 		        	suggestions.push(obj)
 		        });
-		     	console.log(suggestions)
+
 		     	 this.addSuggestionToYell(yellId,suggestions)
 		        break;
 		      case 4 : 
@@ -216,7 +189,6 @@ editSuggestion(yellId,plan,response){
 		        	obj.title = item
 		        	suggestions.push(obj)
 		      	});
-		      	console.log(suggestions)
 		       this.addSuggestionToYell(yellId,suggestions)
 		       break  
 		    default:
@@ -226,27 +198,20 @@ editSuggestion(yellId,plan,response){
 		        	obj.title = item.name
 		        	suggestions.push(obj)
 		      	});
-		      	console.log(suggestions)
 		       this.addSuggestionToYell(yellId,suggestions)
 		}
 
 }
 //0 and 2 has own link, others will redirect to google or otherss
 
-addSuggestionToYell (yellId,suggestions) {
-	console.log(yellId)
-	console.log(suggestions)
-
-	
+addSuggestionToYell (yellId,suggestions) {	
 		Meteor.call('makeSuggestion', yellId,suggestions,  (error)=> {
 		if (error) {
-			console.log(error)
+			//console.log(error)
 		} else {
-			console.log('done')
+			//console.log('done')
 		}
 	});
-
-	
 }
 
 

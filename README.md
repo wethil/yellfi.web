@@ -15,6 +15,6 @@ Go [yellfi](http://www.yellfi.com/), create a user and try! (It will open slow, 
 - [x] Add notification system
 - [x] Include youtube , google places, the movie data  data api for suggestions
 - [ ] Make it's android app with react native
-- [ ] Reduce 532,4kb import file size
+- [ ] Reduce 546,9kb import file size
 
 
