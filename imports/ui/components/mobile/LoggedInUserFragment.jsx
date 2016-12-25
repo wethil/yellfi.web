@@ -5,7 +5,7 @@ import PublicPlansMap from './MainActivity/PublicPlansMap.jsx'
 import UserNotificationsFeed from './MainActivity/UserNotificationsFeed.jsx'
 import NotificationMenu from './MainActivity/notifications/NotificationMenu.jsx'
 import { browserHistory } from 'react-router'
-import SuggestionPawer from '../common/SuggestionPawer.jsx'
+import Yellfy from '../common/Yellfy.jsx'
 import SwipeableViews from 'react-swipeable-views';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import UserSettingsFrg from './MainActivity/UserSettingsFrg.jsx'
@@ -54,7 +54,7 @@ import FontIcon from 'material-ui/FontIcon';
 
 		return (
 			<div id="mainDiv" style={{height:'100vh',padding:'0px !important'}} >
-		<SuggestionPawer />
+		<Yellfy />
 			 <Tabs
 		          onChange={this.changeTab.bind(this)}
 		          value={activeTab}
