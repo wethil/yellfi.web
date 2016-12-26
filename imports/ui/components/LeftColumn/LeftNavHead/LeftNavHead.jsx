@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
- import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
- import IconButton from 'material-ui/IconButton';
- import FontIcon from 'material-ui/FontIcon';
- import IconMenu from 'material-ui/IconMenu';
- import MenuItem from 'material-ui/MenuItem';
-import MediaQuery from 'react-responsive'
-import emitter from '../../emitter.js'
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import IconButton from 'material-ui/IconButton';
+import FontIcon from 'material-ui/FontIcon';
 
 
  class LeftNavHead extends Component {
@@ -23,20 +19,6 @@ import emitter from '../../emitter.js'
 						<FontIcon  className="material-icons">dehaze</FontIcon>
 					</IconButton>
 				<ToolbarTitle style={styles.toolbarTitle} text="yellfi" />
-			</ToolbarGroup>
-			<ToolbarGroup>
-				<ToolbarSeparator />
-
-				<IconMenu
-					iconButtonElement={<MediaQuery query='(max-width: 767px)'>
-										<IconButton touch={true}>
-										<FontIcon className="material-icons">arrow_back</FontIcon>
-										</IconButton>
-									</MediaQuery>	
-										 }>
-					<MenuItem primaryText="Download" />
-					<MenuItem primaryText="More Info" />
-				</IconMenu>
 			</ToolbarGroup>
 			</Toolbar>
 

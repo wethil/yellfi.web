@@ -19,11 +19,11 @@ export default class ExtraFormElements extends Component {
 					coordinates:[lng,lat],
 					geoLocAdress:place.formatted_address
 				}
-		
+			userCoord=[lng,lat];		
 
 			
 			emitter.emit('changepublicGeoLoc',publicGeoLoc) // to YellForm.jsx
-			
+			emitter.emit('changeLocForMap',userCoord)
 
 			});
 	placeholderMap=i18n.__('common.yellForm.mapPlaceHolder')
