@@ -16,10 +16,10 @@ import Badge from 'material-ui/Badge';
 			avatars.push(<span id="avatars"  className="animated bounceInRight"
 							 style={{cursor:'pointer'}} 
 							key={publicYell._id}
-							 onClick={()=>browserHistory.push('/yell/'+publicYell.refYellId)}>
+							 onClick={()=>browserHistory.push('/y/'+publicYell.refYellId)}>
 				<ListItem
 						
-				 			//onTouchTap={()=>browserHistory.push('/yell/'+publicYell.refYellId)}
+				 			//onTouchTap={()=>browserHistory.push('/y/'+publicYell.refYellId)}
 							style={{marginBottom:'5px'}}
 							//innerDivStyle={{padding:0}}
 							disabled={true}

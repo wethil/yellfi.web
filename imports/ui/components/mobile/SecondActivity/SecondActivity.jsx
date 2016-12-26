@@ -65,7 +65,7 @@ import FacebookProvider, { Share } from 'react-facebook';
 		    	this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:i18n.__('common.yellForm.newPlan')})
 		    	this.setState({modal:true})
 		    } else {
-		    	browserHistory.push('/yell/main')
+		    	browserHistory.push('/y/main')
 		    }
 	        break;
 	    case 'main':
@@ -80,7 +80,7 @@ import FacebookProvider, { Share } from 'react-facebook';
 	}
 
 	closeModal(){
-		 browserHistory.push('/yell/main')
+		 browserHistory.push('/y/main')
 	}
 
 	commentDialogActions(){

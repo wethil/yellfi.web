@@ -159,7 +159,7 @@ import { browserHistory } from 'react-router';
 }
 
 openJoinings(yellId){
-	browserHistory.push('/yell/'+yellId + '?dialog=joining')
+	browserHistory.push('/y/'+yellId + '?dialog=joining')
 }
 
 
@@ -172,8 +172,10 @@ openJoinings(yellId){
 prePlan=Number(this.props.plan)
 	if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 	  plan = this.props.plan
+	  custom = true
 	} else {
 	  plan =i18n.__(plans[prePlan].content)
+	  custom = false
 	}
 
 	joiningButton = publicity ? <button onClick={()=>this.openJoinings(yellId)} className="ui right floated circular basic mini violet button">
@@ -181,7 +183,7 @@ prePlan=Number(this.props.plan)
 									</button>:null
 	 actionButtons = 	<div>
 				     	{joiningButton}
-						<CircleShareButtons />     
+						<CircleShareButtons yellId={yellId} plan={plan} custom={custom} publicity={publicity} />     
 					</div>
 
 	planCard = 	<div className="ui centered fluid card card--z-2" >

@@ -111,7 +111,7 @@ import _ from 'lodash';
 					console.log(error)
 				} else {
 					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord);
-					browserHistory.push('/yell/'+result + '?dialog=comment')
+					browserHistory.push('/y/'+result + '?dialog=comment')
 					
 				}
 			});	

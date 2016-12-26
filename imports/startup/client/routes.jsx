@@ -15,7 +15,7 @@ Meteor.startup(()=> {
             <Route path="/" component={App} >
               {/**    <IndexRoute component={ Index } /> **/}
 
-                <Route path="/yell/:id" component = {RightColumn} /> 
+                <Route path="/y/:id" component = {RightColumn} /> 
           
             </Route>
             {/**<Route path="*" component={NotFound} /> **/}

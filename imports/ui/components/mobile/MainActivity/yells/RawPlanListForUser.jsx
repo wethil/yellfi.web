@@ -68,11 +68,11 @@ checkProps(newP,limit){
 }
 
 openComments(yellId,ownerId){
-  browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+  browserHistory.push('/y/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
 }
 
 openJoinings(yellId,ownerId){
- browserHistory.push('/yell/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
+ browserHistory.push('/y/'+yellId + '?dialog=joining'+ '&owner='+ ownerId)
 }
 
 deleteYell(yellId,ownerId){
@@ -98,7 +98,7 @@ undoAction() {
 	if (error) {
 		console.log(error)
 	} else {
-		browserHistory.push('/yell/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+		browserHistory.push('/y/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
 	}
 	});
 }

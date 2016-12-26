@@ -18,6 +18,7 @@ import YellfiSuggestionsList from './YellfiSuggestionsList.jsx'
 import NoSuggestion from './YellCardComponents/NoSuggestion.jsx'
 import {PublicityLabel,ParticipationsButton} from './YellCardComponents/MiniComponents.jsx'
 import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
+import CircleShareButtons from '../../mobile/SecondActivity/components/others/CircleShareButtons.jsx';
 
  class YellCard extends Component {
  	constructor(props) {
@@ -91,7 +92,7 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 
  	handleCloseDialogViaUrl (yellId){
  		this.setState({dialogOpen:false})
- 		browserHistory.push('/yell/'+yellId + '?dialog=close')
+ 		browserHistory.push('/y/'+yellId + '?dialog=close')
  	}
 
  	componentWillUnmount(){
@@ -156,8 +157,11 @@ import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 		prePlan=Number(yell.plan)
 	if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
 		plan = yell.plan
+		custom = true;
 	} else {
-		plan = i18n.__(plans[Number(prePlan)].content) 
+		plan = i18n.__(plans[Number(prePlan)].content);
+		custom = false ;
+
 	}
 
 
@@ -204,7 +208,7 @@ const action =userBlocked
 						</span>
 
 		
-		userHeader = (lang=="tr-TR")
+		userHeader = (lang=="tr-TR" || lang =="tr")
 		 ?
 		<div className="anim">
 		{owner.firstName}<br/>
@@ -255,14 +259,23 @@ content = <div>
 			          avatar={owner.picture}
 			        />
 			      <CardTitle title={<span className="anim">{plan}</span> } 
-								      		subtitle={moment(time).calendar()}
+								      		subtitle={<span>
+								      					 {moment(time).calendar()} <br/>
+								      					 <CircleShareButtons
+								      					 		plan={plan} 
+								      					 		custom = {custom}
+								      					 		publicity={publicity==0?false:true}
+								      					 		yellId={_id}
+								      					 		/>
+
+								      				</span>}
 								      		subtitleStyle={{fontSize:13}} />
 			        <CardText>
 			        <span className="anim" style={{minHeight:51}} >{keyword}</span>
 			        </CardText>
 			        <CardActions>
 			        {settingsBtn}
-			         <button onClick={()=>  browserHistory.push('/yell/'+_id + '?dialog=comment')}  className=" basic red mini ui  button">
+			         <button onClick={()=>  browserHistory.push('/y/'+_id + '?dialog=comment')}  className=" basic red mini ui  button">
 							  {i18n.__('common.YellCard.suggestions')} {commentQuantity}
 					</button>
 			       <ParticipationsButton jq={joiningQuantity} yellId={_id} publicity={publicity} /> 

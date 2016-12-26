@@ -11,8 +11,7 @@ export const baseBookApiUrl = 'https://www.googleapis.com/books/v1/volumes?field
 //&q=polisiye romanı&langRestrict=tr
 
 export const mailAddress = "fdogru@yellfi.com"
-export const fbShareLink = "https://atmospherejs.com/packages/trending"
-export const twtrShareLink = "https://twitter.com/intent/tweet?text=Hello%20world"
+export const twitUname ="yellfi"
 
 export const plans = [
   { id: 0, content: 'common.plans.ListeningMusic', icon: "audiotrack" },

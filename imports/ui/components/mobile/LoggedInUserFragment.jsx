@@ -27,7 +27,7 @@ import FontIcon from 'material-ui/FontIcon';
 		console.log(coord)
 		lng = coord[0]
 		lat = coord[1]
-		browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
+		browserHistory.push('/y/new'+ '?lng=' + lng + '&lat=' + lat  )
 	}
 
 	changeTab(value){

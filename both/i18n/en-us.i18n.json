@@ -25,6 +25,12 @@
         "signInToJoin":"Sign in with Facebook to Join"
 
     },
+    "twitCont":{
+        "wannaDo":"I want to",
+        "createdPlan":"I created a plan on yellfi",
+        "suggestMe":"Suggest me something about it!",
+        "joinMe" : "Join Me!"  
+    },
     "ntfContent":{
         "madeSug":"made a suggestion for",
         "liked" :"liked your suggestion for",

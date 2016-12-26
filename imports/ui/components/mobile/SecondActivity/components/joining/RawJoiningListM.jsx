@@ -127,7 +127,7 @@ import CircleShareButtons from '../others/CircleShareButtons.jsx'
 	}
 
 	openComments(yellId){
-	browserHistory.push('/yell/'+yellId + '?dialog=comment' )
+	browserHistory.push('/y/'+yellId + '?dialog=comment' )
 }
 
 

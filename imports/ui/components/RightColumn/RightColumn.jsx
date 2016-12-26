@@ -73,7 +73,7 @@ toogleDrawerAfterStart(yellId,dialog,lng,lat){
 		let drawerOpen = this.state.open
 		let old_yellId = this.state.yellId
 		if (yellId==old_yellId && drawerOpen==true && !dialog){
-			browserHistory.push('/yell/main')
+			browserHistory.push('/y/main')
 		} 
 this.toogleDrawer(yellId,dialog,lng,lat)
 	

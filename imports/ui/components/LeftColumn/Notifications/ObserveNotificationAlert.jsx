@@ -36,16 +36,16 @@ var sound =  new howler.Howl({
 toogleYellCard(yellId,about) {
     switch(about) {
       case 0:
-           browserHistory.push('/yell/'+yellId) 
+           browserHistory.push('/y/'+yellId) 
           break;
       case 1:
-           browserHistory.push('/yell/'+yellId + '?dialog=comment')
+           browserHistory.push('/y/'+yellId + '?dialog=comment')
           break;
       case 3:
-           browserHistory.push('/yell/'+yellId + '?dialog=comment')
+           browserHistory.push('/y/'+yellId + '?dialog=comment')
           break;
       case 2:
-           browserHistory.push('/yell/'+yellId + '?dialog=joining')
+           browserHistory.push('/y/'+yellId + '?dialog=joining')
           break;
   }
 }

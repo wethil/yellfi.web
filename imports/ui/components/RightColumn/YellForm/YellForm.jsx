@@ -128,7 +128,7 @@ handleTouchMenu(event,menuItem){
 				} else {
 					//LeftNavHead
 					emitter.emit('suggestionToUser',plan,keyword,chosenKeyword,chosenIndex,result,suggestionCoord)
-					browserHistory.push('/yell/'+result)
+					browserHistory.push('/y/'+result)
 				}
 			});	
 

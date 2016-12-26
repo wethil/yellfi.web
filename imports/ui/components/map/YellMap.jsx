@@ -31,7 +31,7 @@ const MapBase = withGoogleMap(props => (
       {props.markers.map((marker) => (
       
         <Marker
-         onClick={()=>browserHistory.push('/yell/'+marker.refYellId)}
+         onClick={()=>browserHistory.push('/y/'+marker.refYellId)}
           position={{ lat: marker.publicPlanLoc.coordinates[1], lng: marker.publicPlanLoc.coordinates[0] }}
           title={marker.refYellId}
           key={marker._id}
@@ -130,8 +130,8 @@ changeMapMarkers(data){
 
 
   closeDrawerViaUrl(){
-     if (window.location.pathname!='/yell/main'){
-      browserHistory.push('/yell/main')
+     if (window.location.pathname!='/y/main'){
+      browserHistory.push('/y/main')
     }
   }
 

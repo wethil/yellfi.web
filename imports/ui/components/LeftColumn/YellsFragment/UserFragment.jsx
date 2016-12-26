@@ -51,7 +51,7 @@ toogleDrawer () {
  // coordinates:[lng,lat], always stay lng lat
 	lng = this.props.userCoord[0]
 	lat = this.props.userCoord[1]
-	browserHistory.push('/yell/new'+ '?lng=' + lng + '&lat=' + lat  )
+	browserHistory.push('/y/new'+ '?lng=' + lng + '&lat=' + lat  )
 }
 
 
@@ -71,7 +71,7 @@ undoAction(type,data) {
               console.log(error)
             } else {
               this.closeSb()
-              browserHistory.push('/yell/'+data)
+              browserHistory.push('/y/'+data)
             }
           });
 }

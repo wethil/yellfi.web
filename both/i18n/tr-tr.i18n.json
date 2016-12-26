@@ -5,7 +5,7 @@
         "ListeningMusic": "Müzik Dinlemek",
         "WatchSomething": "Birşeyler İzlemek",
         "ReadSomething": "Birşeyler Okumak",
-        "EatAndDrink": "Yeme İçme",
+        "EatAndDrink": "Yemek - İçmek",
         "Cooking": "Yemek Yapmak",
         "GoinOutside": "Dışarı Çıkmak",
         "GoinShopping": "Alışverişe Gitmek",
@@ -23,6 +23,12 @@
         "signInToCreate":"Giriş yapın ve sizde oluşturun",
         "signInToSuggest":"Öneri vermek için giriş yapın",
         "signInToJoin":"Katılmak için giriş yapın"
+    },
+     "twitCont":{
+        "wannaDo":"istiyorum.",
+        "createdPlan":"Yellfi'de bir plan oluşturdum.",
+        "suggestMe":"Önerilerinizi bekliyorum!",
+        "joinMe" : "Bana katılın!"  
     },
      "ntfContent":{
         "madeSug":"şu plana öneri yaptı:",

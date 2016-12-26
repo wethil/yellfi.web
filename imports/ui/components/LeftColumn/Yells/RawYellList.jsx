@@ -75,7 +75,7 @@ checkProps(newP,limit){
 
 
 toogleYellCard(yellId) {
-  browserHistory.push('/yell/'+yellId)
+  browserHistory.push('/y/'+yellId)
 }
 
 
@@ -87,7 +87,7 @@ undoAction(type,data) {
               console.log(error)
             } else {
               this.closeSb()
-              browserHistory.push('/yell/'+data)
+              browserHistory.push('/y/'+data)
             }
           });
           break;
