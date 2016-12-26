@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import Login from '../Accounts/Login.jsx'
-import Register from '../Accounts/Register.jsx'
+import LogInPageD from '../Accounts/LogInPageD.jsx'
+import MainPlansFeed from './FragmentContainers/MainPlansFeed.jsx'
 import SwipeableViews from 'react-swipeable-views';
-
+import emitter from '../../emitter.js'
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
 
 
 
@@ -12,26 +14,34 @@ import SwipeableViews from 'react-swipeable-views';
  	  super(props);
  	
  	  this.state = {
- 	  	activeTab:0,
- 	  	othersActive:false
+ 	  	activeTab:1,
+ 	  	activeTabIndex:0
  	  };
+ 	}
+
+ 	componentDidMount(){
+ 			emitter.addListener('changeTabIndex',(value)=> this.changeTab(value));
  	}
 
  		changeTab(value){
 	 switch(value) {
 	    case 0:
-	        this.setState({othersActive:false});     
+	        this.setState({activeTab:1});
+	        $('.fab').toggleClass('hidden',true)     
 	        break;
 	    case 1:
-			this.setState({othersActive:true});
+			this.setState({activeTab:0});
+			$('.fab').toggleClass('hidden',false)
 	        break;
 		}
-		this.setState({activeTab:value})
+		this.setState({activeTabIndex:value})
+
+
 	}
 
 
 	render() {
-		console.log(this.state.activeTab)
+		const {activeTab,activeTabIndex} = this.state
 		return (
 			 <div>	
 			 	<Tabs  
@@ -40,16 +50,25 @@ import SwipeableViews from 'react-swipeable-views';
 					contentContainerStyle={{zIndex:444}} 
 					inkBarStyle={{zIndex:222}}
 					style={styles.tabs} 
-					value={this.state.activeTab} 
+					value={activeTabIndex} 
 					onChange={this.changeTab.bind(this)}>
 			<Tab style={styles.tab_style} value={0} label={i18n.__('common.anonFrg.login')} /> 
 			<Tab style={styles.tab_style} value={1}  label={i18n.__('common.anonFrg.feed')} />
 		
 		</Tabs>
-		  <SwipeableViews index={this.state.activeTab} onChange={this.changeTab.bind(this)}>
-		  		<div>  <Login /> <Register />  </div>
-		<div> latest yells </div>
+		  <SwipeableViews 
+		  	index={activeTabIndex} 
+		  	onChange={this.changeTab.bind(this)}
+		  	animateTransitions={false}>
+			 <div> <LogInPageD activeTab={activeTab}  /> </div>
+			<div><MainPlansFeed activeTab={activeTab} /> </div>
 		</SwipeableViews>
+
+
+		<FloatingActionButton onClick={()=>this.changeTab(0)} className="hidden fab" style={styles.fab} >
+			<ContentAdd />
+		</FloatingActionButton>
+
 		
 		      </div>
 		);
@@ -64,7 +83,12 @@ export default AnonFragment;
         },
         tabs:{
         	backgroundColor:'rgb(63, 81, 181)'
-        }
+        },
+        fab:{
+          bottom: '5%',
+          right:'4%',
+          position:'absolute'
+        },
 
 
     }

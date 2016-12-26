@@ -16,7 +16,8 @@
    	},
        "anonMain":{
         "slogan":"Öneri alın, insanlarla buluşun.",
-        "facebookLogin":"Facebook ile giriş yapın",
+        "facebookLogin":"Facebook ile giriş",
+        "twitterLogin":"Twitter ile giriş",
         "or":"ya da",
         "takeLook":"Bir göz atın",
         "contact":"İletişim",

@@ -27,8 +27,14 @@ var getFbPicture = function(accessToken) { // make async call to grab the pictur
 
 
   Accounts.onCreateUser(function(options, user) {
-	  user.picture = getFbPicture(user.services.facebook.accessToken);
-	  user.firstName = user.services.facebook.first_name
+    if(user.services.facebook){
+    user.picture = getFbPicture(user.services.facebook.accessToken);
+    user.firstName = user.services.facebook.first_name
+    } else {
+        let photoLink = user.services.twitter.profile_image_url_https;
+        user.picture =photoLink.replace('_normal','') ;
+        user.firstName = user.services.twitter.screenName;
+    }
 	  return user;
 });
 

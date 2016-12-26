@@ -199,3 +199,7 @@ input:focus::-webkit-datetime-edit{ color: #000; }
 .inner-container{
   background-color: white;
 }
+
+.ui.grid{
+margin:0em !important;
+}

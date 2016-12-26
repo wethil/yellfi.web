@@ -122,7 +122,7 @@ CUNSubmit(e){
  }
 
  logout(){
- 	 	emitter.emit('logout')
+ 	 	emitter.emit('logout') //index.jsx
  }
 
 

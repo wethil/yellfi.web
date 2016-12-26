@@ -31,6 +31,17 @@ import emitter from '../../emitter.js'
 				}
 			});
 		}
+
+			handleTWLogin(){
+			Meteor.loginWithTwitter(function(err){
+				if (err) {
+					console.log(err)
+				} else {
+					emitter.emit('userLogin')
+				}
+			})
+		}
+
 	render() {
 
 		return (
@@ -42,6 +53,7 @@ import emitter from '../../emitter.js'
 				<button onClick={this.handleManualLogin.bind(this)} className="ui button">Login</button>
 						
 					<button onClick={this.handleLogin.bind(this)} className="ui button"> Facebook Login</button>
+					<button onClick={this.handleTWLogin.bind(this)} className="ui button"> TwtLogin</button>
 				</div>	
 			 
 		);

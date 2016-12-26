@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AnonFragment from './AnonFragment.jsx'
 import UserFragment from './UserFragment.jsx'
 import emitter from '../../emitter.js'
-
+import LogInPage from '../../mobile/MainActivity/anon/LogInPage.jsx' 
 
 
  class MainFragment extends Component {
@@ -19,8 +19,8 @@ import emitter from '../../emitter.js'
 
  	componentDidMount(){
 
- 		emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}) );
- 		emitter.addListener('userLogout',()=> this.setState({userId:null}) );
+ 		emitter.addListener('userLogin',()=> this.setState({userId:Meteor.userId()}));
+ 		emitter.addListener('userLogout',()=> this.logout());
 
  	}
 
@@ -63,6 +63,11 @@ if (lang=='tr' || lang == 'tr-TR'){
   
 }
 
+logout(){
+    Meteor.logout()
+    this.setState({userId:null})
+  }
+
   
 
 	render() {
@@ -72,7 +77,7 @@ const {userCoord} = this.state
 		return (
 			 <div>
 
-			 	{this.state.userId==null ? <AnonFragment /> : <UserFragment userCoord={userCoord} />} 
+			 	{this.state.userId==null ? <AnonFragment />  : <UserFragment userCoord={userCoord} />} 
 			 	
 			 </div>
 		);

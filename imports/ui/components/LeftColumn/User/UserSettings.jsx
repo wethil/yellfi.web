@@ -126,7 +126,7 @@ CUNSubmit(e){
  }
 
  logout(){
- 	 	emitter.emit('logout')
+ 	 	emitter.emit('userLogout'); //mainFragment.jsx
  }
 
 
