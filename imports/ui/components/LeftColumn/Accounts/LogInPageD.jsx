@@ -82,7 +82,7 @@ import {mailAddress} from '../../constants.js';
 					  <div className="ui horizontal divider">
 						    {i18n.__('common.anonMain.or')}
 						</div>
-				   <button onClick={()=>emitter.emit('changeTabIndex',1)} className="ui fluid primary button">
+				   <button onClick={()=>emitter.emit('changeTabIndex',1)} className="ui fluid purple button">
 						<i className="unhide icon"></i>
 						{i18n.__('common.anonMain.takeLook')}
 					</button>

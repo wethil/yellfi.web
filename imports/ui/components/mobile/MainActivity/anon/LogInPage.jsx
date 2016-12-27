@@ -24,6 +24,16 @@ import {mailAddress} from '../../../constants.js';
 			});
 		}
 
+		handleTWLogin(){
+			Meteor.loginWithTwitter(function(err){
+				if (err) {
+					console.log(err)
+				} else {
+					emitter.emit('userLogin')
+				}
+			})
+		}
+
 
 		changeLang(value){
 			moment.locale(value);
@@ -58,10 +68,14 @@ import {mailAddress} from '../../../constants.js';
 						<i className="facebook icon"></i>
 						{i18n.__('common.anonMain.facebookLogin')}
 					</button>
+					<button style={{marginTop:5}} onClick={this.handleTWLogin.bind(this)} className="ui fluid twitter button">
+					  <i className="twitter icon"></i>
+					 {i18n.__('common.anonMain.twitterLogin')}
+					</button>
 					  <div className="ui horizontal divider">
 						    {i18n.__('common.anonMain.or')}
 						</div>
-				   <button onClick={()=>emitter.emit('changeTab')} className="ui fluid primary button">
+				   <button onClick={()=>emitter.emit('changeTab')} className="ui fluid purple button">
 						<i className="unhide icon"></i>
 						{i18n.__('common.anonMain.takeLook')}
 					</button>

@@ -52,7 +52,7 @@ import AnonUserFragment from './AnonUserFragment.jsx'
 		return (
 		
 				<span>	
-        {userId==null ? <Login /> : <LoggedInUserFragment  coordinates={userCoord} />} 
+        {userId==null ? <AnonUserFragment coordinates={userCoord}  />: <LoggedInUserFragment  coordinates={userCoord} />} 
 				</span>		
 			 
 		);

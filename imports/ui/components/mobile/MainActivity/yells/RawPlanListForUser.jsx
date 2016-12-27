@@ -92,13 +92,12 @@ deleteYell(yellId,ownerId){
 
 
 undoAction() {
-	var yellId = this.state.activeYellId
-	var ownerId= this.state.activeOwnerId
-	Meteor.call('undoDeleteYell',yellId,error=> {
+const {activeYellId} = this.state
+	Meteor.call('undoDeleteYell',activeYellId,error=> {
 	if (error) {
 		console.log(error)
 	} else {
-		browserHistory.push('/y/'+yellId + '?dialog=comment' + '&owner='+ ownerId )
+		browserHistory.push('/y/'+activeYellId + '?dialog=comment')
 	}
 	});
 }
@@ -114,92 +113,87 @@ closeSb(){
 
 
 	const {yells} = this.props
-	const {snackbarState,snackbarText} = this.state
+	const {snackbarState,snackbarText,sensor,loader} = this.state
+
 if (yells && yells.length > 0) {
 		planList = []
 		yells.forEach( (yell) => {
-			const {cQ,jQ} = yell
+			const {_id,publicity,cQ,jQ,ownerId,plan,owner,keyword,time,created_at} = yell
+	
+	commentQuantity = (cQ && cQ>0 )? `(${cQ})` :null
+	joiningQuantity = (jQ&&jQ>0) ? `(${jQ})` :null
 
-	        let time = ` ${moment(yell.time).calendar()} `
-		switch(yell.publicity) {
+		switch(publicity) {
 			case 0 : 
-				publicity = i18n.__('common.publicity.alone')
+				pubText = i18n.__('common.publicity.alone');
+				publicityClass = "user icon";
+				timeLabel = moment(created_at).startOf('hour').fromNow();
+				actionButtons =  <div style={styles.buttons} onClick={()=> this.openComments(_id, ownerId )}
+						  className="ui basic fluid green button">
+							{i18n.__('common.YellCard.suggestions')} {commentQuantity}
+					</div>;
 			break;
 			case 1:
-				publicity = i18n.__('common.publicity.everyone')
+				pubText = i18n.__('common.publicity.everyone');
+				publicityClass = "users icon";
+				timeLabel =moment(time).calendar();
+				actionButtons = <div className="ui two buttons">
+				        <div style={styles.buttons} onClick={()=> this.openComments(_id, ownerId )} className="ui basic green button">{i18n.__('common.YellCard.suggestions')}  {commentQuantity}</div>
+				        <div style={styles.buttons} onClick={()=> this.openJoinings(_id, ownerId )}	className="ui basic red button">{i18n.__('common.YellCard.participation')}  {joiningQuantity}</div>
+				      </div>
 			break;
 			case 2:
-				publicity = i18n.__('common.publicity.elected')
+				pubText = i18n.__('common.publicity.elected');
+				publicityClass = "users icon";
+				timeLabel =moment(time).calendar();
+				actionButtons = <div className="ui two buttons">
+				        <div style={styles.buttons} onClick={()=> this.openComments(_id, ownerId )} className="ui basic green button">{i18n.__('common.YellCard.suggestions')}  {commentQuantity}</div>
+				        <div style={styles.buttons} onClick={()=> this.openJoinings(_id, ownerId )}	className="ui basic red button">{i18n.__('common.YellCard.participation')}  {joiningQuantity}</div>
+				      </div>
 			break;		   
 		}
 
 	var User = Meteor.userId()
-	yellOwnerSettings = (User && User == yell.ownerId)?
+	yellOwnerSettings = (User && User == ownerId)?
 				<Dropdown  pointing='right'  className='ui right floated top '>
 				<Dropdown.Menu> 
-					 <Dropdown.Item icon="trash" text={i18n.__('common.comments.delete')} onClick={()=> this.deleteYell(yell._id,yell.ownerId)} />
+					 <Dropdown.Item icon="trash" text={i18n.__('common.comments.delete')} onClick={()=> this.deleteYell(_id,ownerId)} />
 				</Dropdown.Menu>
 			</Dropdown> : null;
-						 	 
+					
 
 
-	prePlan=Number(yell.plan)
+
+	prePlan=Number(plan)
 	if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
-	  plan = yell.plan
+	  planLabel = plan
 	} else {
-	  plan =i18n.__(plans[prePlan].content)
+	  planLabel =i18n.__(plans[prePlan].content)
 	}		
-	commentQuantity = (cQ && cQ>0 )? `(${cQ})` :null
-	joiningQuantity = (jQ&&jQ>0) ? `(${jQ})` :null
+	keywordField = (keyword) ? `${timeLabel}  -- ${keyword}` : timeLabel
 
-	if (yell.publicity == 0) {
-	  publicityLabel =  <span>  <a className="ui mini circular label"><i className="user icon"></i> {publicity}</a>  </span>  
-	  timeLabel =""
-	} else {
-	  publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {publicity}</a>  </span>  
-	  timeLabel = <span style={styles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {time}</a> </span>
-	                                                  
-	}
-
-	if(yell.publicity==0) {
-		actionButtons =  <div style={styles.buttons} onClick={()=> this.openComments(yell._id, yell.ownerId )}
-							  className="ui basic fluid green button">
-								Suggestions {commentQuantity}
-						</div>
-		
-					       
-					     
-	} else {
-		actionButtons =    <div className="ui two buttons">
-					        <div style={styles.buttons} onClick={()=> this.openComments(yell._id, yell.ownerId )} className="ui basic green button">Suggestions {commentQuantity}</div>
-					        <div style={styles.buttons} onClick={()=> this.openJoinings(yell._id, yell.ownerId )}	className="ui basic red button">Joinings {joiningQuantity}</div>
-					      </div>
-	}
-
-
-
-				planList.push(  
-					<div className=" ui centered fluid card card--z-2" id={yell._id} key={yell._id}>
-					    <div className="content">	
-					        <img  style={styles.avatar} className="left floated mini ui circular  image" src={yell.owner.picture} />
-							{yellOwnerSettings}					  
-						     <div style={styles.header} className="header">
-						    {yell.owner.firstName}
-						      </div>
-						      <div className="meta">
-						          {publicityLabel}  {timeLabel} 
-						      </div>
-						      <div  className="description">
-						       <span style={styles.desc}> {plan} </span>
-						         <div style={styles.meta} className="meta">
-						        	 {yell.keyword}
-						    	  </div>	
-						      </div>
-					    </div>
-					    <div className="extra content">
-					      {actionButtons}
-					    </div>
-					  </div>)
+planList.push(  
+		<div className=" ui centered fluid card card--z-2" id={_id} key={_id}>
+		    <div className="content">	
+		        <img  style={styles.avatar} className="left floated mini ui circular  image" src={owner.picture} />
+				{yellOwnerSettings}					  
+			     <div style={styles.header} className="header">
+			    {owner.firstName}
+			      </div>
+			      <div className="meta">
+			         <span>  <a className="ui mini circular label"><i className={publicityClass} ></i> {pubText}</a>  </span>   
+			      </div>
+			      <div  className="description">
+			       <span style={styles.desc}> {planLabel} </span>
+			         <div style={styles.meta} className="meta">
+			        	 {keywordField}
+			    	  </div>	
+			      </div>
+		    </div>
+		    <div className="extra content">
+		      {actionButtons}
+		    </div>
+		  </div>)
 
 	}) 
 
@@ -213,9 +207,9 @@ if (yells && yells.length > 0) {
 		partialVisibility={true}
 		delayedCall={true}
 		onChange={this.handleVisibleSensor.bind(this)}
-		active={this.state.sensor}
+		active={sensor}
 		>  
-			 <Loader active={this.state.loader} inline='centered' />
+			 <Loader active={loader} inline='centered' />
 	</VisibilitySensor>	
 
 

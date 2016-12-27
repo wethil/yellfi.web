@@ -7,7 +7,7 @@ import emitter from '../../../emitter.js';
  	  super(props);
  	
  	  this.state = {
- 	  	limit:10
+ 	  	limit:8
  	  };
  	}
 
@@ -18,7 +18,7 @@ import emitter from '../../../emitter.js';
 
 
      emitter.addListener('resetMPLimit',()=> {
-		 this.setState({limit:10});
+		 this.setState({limit:8});
 	 }); 
 
   }
