@@ -4,6 +4,7 @@ import LogInPageD from '../Accounts/LogInPageD.jsx'
 import MainPlansFeed from './FragmentContainers/MainPlansFeed.jsx'
 import SwipeableViews from 'react-swipeable-views';
 import emitter from '../../emitter.js'
+import FontIcon from 'material-ui/FontIcon';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
 
@@ -52,8 +53,8 @@ import ContentAdd from 'material-ui/svg-icons/content/add';
 					style={styles.tabs} 
 					value={activeTabIndex} 
 					onChange={this.changeTab.bind(this)}>
-			<Tab style={styles.tab_style} value={0} label={i18n.__('common.anonFrg.login')} /> 
-			<Tab style={styles.tab_style} value={1}  label={i18n.__('common.anonFrg.feed')} />
+			<Tab style={styles.tab_style} value={0} icon={<FontIcon className="material-icons">person_add</FontIcon>}/> 
+			<Tab style={styles.tab_style} value={1} icon={<FontIcon className="material-icons">web</FontIcon>} />
 		
 		</Tabs>
 		  <SwipeableViews 

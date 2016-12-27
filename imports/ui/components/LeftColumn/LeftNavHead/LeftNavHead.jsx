@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 import IconButton from 'material-ui/IconButton';
 import FontIcon from 'material-ui/FontIcon';
-
+import { browserHistory } from 'react-router'
 
  class LeftNavHead extends Component {
 
@@ -15,7 +15,7 @@ import FontIcon from 'material-ui/FontIcon';
 		return (
 			<Toolbar style={styles.toolbar} >
 				<ToolbarGroup firstChild={false}>
-					<IconButton iconStyle={styles.toolbarIcon}>
+					<IconButton onTouchTap={()=> browserHistory.push('/y/main')} iconStyle={styles.toolbarIcon}>
 						<FontIcon  className="material-icons">dehaze</FontIcon>
 					</IconButton>
 				<ToolbarTitle style={styles.toolbarTitle} text="yellfi" />

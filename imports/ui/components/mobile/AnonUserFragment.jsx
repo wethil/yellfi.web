@@ -61,7 +61,7 @@ changeTab(value){
 		          value={activeTab}
 		          tabItemContainerStyle={styles.tabs} 
 		          style={{backgroundColor:'rgb(63, 81, 181)'}}>	
-						<Tab icon={<FontIcon className="material-icons">exit_to_app</FontIcon>} value={0} />
+						<Tab icon={<FontIcon className="material-icons">person_add</FontIcon>} value={0} />
 						<Tab icon={<FontIcon className="material-icons">web</FontIcon>} value={1} />
 						<Tab icon={<FontIcon className="material-icons">place</FontIcon>} value={2} />
  			 </Tabs>

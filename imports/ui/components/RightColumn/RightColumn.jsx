@@ -56,7 +56,11 @@ export default class RightColumn extends Component {
 toogleDrawer(yellId,dialog,lng,lat) {
 switch(yellId) {
     case 'new':
-	    this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:i18n.__('common.yellForm.newPlan'),open:true })
+	    	if (Meteor.user()){
+	    		this.setState({userCoordinates:[lng,lat],drwContent:0,drawerTitle:i18n.__('common.yellForm.newPlan'),open:true })
+	    	} else {
+	    		browserHistory.push('/y/main')
+	    	}
         break;
     case 'main':
         this.setState({open:false}) 
