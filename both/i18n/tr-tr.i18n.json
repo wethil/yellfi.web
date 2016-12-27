@@ -23,7 +23,10 @@
         "contact":"İletişim",
         "signInToCreate":"Giriş yapın ve sizde oluşturun",
         "signInToSuggest":"Öneri vermek için giriş yapın",
-        "signInToJoin":"Katılmak için giriş yapın"
+        "signInToJoin":"Katılmak için giriş yapın",
+        "signInTwitToCreate":"Giriş yapın ve sizde oluşturun",
+        "signInTwitToSuggest":"Öneri vermek için giriş yapın",
+        "signInTwitToJoin":"Katılmak için giriş yapın"
     },
      "twitCont":{
         "wannaDo":"istiyorum.",

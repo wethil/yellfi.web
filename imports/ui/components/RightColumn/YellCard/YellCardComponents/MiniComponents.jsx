@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { browserHistory } from 'react-router'
+import emitter from '../../../emitter.js'
 
 
 export const PublicityLabel = (props) => {
@@ -42,6 +43,84 @@ switch(props.publicity){
  return	(
   		<span>{button} </span>
 		);
- }
+ };
 
 
+
+
+
+export class Login extends Component {
+
+ 		handleLogin(){
+			Meteor.loginWithFacebook({
+				requestPermissions: ['public_profile', 'email']
+			}, function(err){
+				if (err) {
+					throw new Meteor.Error("Facebook login failed");
+				} else {
+					 emitter.emit('userLogin')
+					 emitter.emit('loginOnDialog')
+				}
+			});
+		}
+
+		handleTWLogin(){
+			Meteor.loginWithTwitter(function(err){
+				if (err) {
+					console.log(err)
+				} else {
+					emitter.emit('userLogin')
+					emitter.emit('loginOnDialog')
+				}
+			})
+		}
+
+	render() {
+//1 is comment, 2 is joinings
+		switch(this.props.dcn) {
+			case 1:
+				fBtnCont= i18n.__('common.anonMain.signInToSuggest')
+				twtBtnCont = i18n.__('common.anonMain.signInTwitToSuggest')
+				break;
+			case 2 : 
+				fBtnCont= i18n.__('common.anonMain.signInToJoin')
+				twtBtnCont = i18n.__('common.anonMain.signInTwitToJoin')
+
+		}
+
+		return (
+					<div className="ui equal width center aligned grid">
+						<div className="row">
+						    <div style={styles.columnLeft}  className="column">
+						     <button onClick={this.handleLogin.bind(this)} className="ui facebook fluid button">
+								<i className="facebook icon"></i>
+								{fBtnCont}
+							</button>
+						    </div>
+						    <div style={styles.columnRight} className="column">
+							<button onClick={this.handleTWLogin.bind(this)} className="ui fluid twitter button">
+							  <i className="twitter icon"></i>
+							  {twtBtnCont}
+							</button>
+						    </div>
+						  </div>
+					</div>	
+		);
+	}
+}
+
+const styles={
+	grid:{
+    	padding: '1em 0.5em'
+	},
+	columnLeft:{
+		paddingLeft:'0em',
+		paddingRight:'0.1em',
+
+	},
+	columnRight:{
+		paddingLeft:'0.1em',
+		paddingRight:'0em',
+
+	}
+}

@@ -110,38 +110,31 @@ undoAction(type,data) {
       var yellList = []
       yells.forEach((yell) => {
       
-        const {_id,publicity,time,keyword,plan,owner} = yell
-        let timeField = ` ${moment(time).calendar()} `
+        const {_id,publicity,time,keyword,plan,owner,created_at} = yell
 
     switch(publicity) {
         case 0 : 
            pubField = i18n.__('common.publicity.alone')
+           pubClass = "user icon"
+          timeLabel = moment(created_at).startOf('hour').fromNow()
            break;
 		    case 1:
 		        pubField = i18n.__('common.publicity.everyone')
+            pubClass= "users icon"
+            timeLabel =moment(time).calendar() 
 		        break;
 		    case 2:
 		        pubField = i18n.__('common.publicity.elected')
+            pubClass= "users icon"
+            timeLabel =moment(time).calendar() 
 		        break;		   
 		}
     
-if (publicity == 0) {
-  publicityLabel =  <span>  <a className="ui mini circular label"><i className="user icon"></i> {pubField}</a>  </span>  
-  timeLabel =""
-} else {
-  publicityLabel= <span>  <a className="ui mini circular label"><i className="users icon"></i> {pubField}</a>  </span>  
-  timeLabel = <span style={listsDesktopStyles.timeDate}> <a className="ui mini circular label"><i className="wait icon"></i> {timeField}</a> </span>
-                                                  
-}
+    
+
+keywordField = (keyword) ? `${timeLabel}  -- ${keyword}` : timeLabel
 
 
-if (keyword) {
-  keywordField = <span> -- <span style={listsDesktopStyles.keywords}> {keyword} </span> </span>
-  line=2;
-} else {
-  keywordField =null
-  line=1; 
-}
 prePlan=Number(plan)
 if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
   planField = plan
@@ -154,14 +147,19 @@ if ( prePlan<0 || prePlan>9  ||  isNaN(prePlan)  ) {
             <ListItem
                   onTouchTap={()=>this.toogleYellCard(_id)}
                   leftAvatar={<Avatar src={owner.picture} />}
-                  primaryText={ <div style={listsDesktopStyles.username}>{owner.firstName} <span style={listsDesktopStyles.subhead}> </span> {publicityLabel}  {timeLabel}  </div>}
+                  primaryText={ 
+                    <div style={listsDesktopStyles.username}>
+                       {owner.firstName} 
+                      <span>  <a className="ui mini circular label"><i className={pubClass} ></i> {pubField}</a>  </span>  
+                       </div>
+                    }
                   secondaryText={
                       	<p>   
                         <span style={listsDesktopStyles.plan}>{planField} </span> <br/>
-                        {keyword}
+                       <span style={listsDesktopStyles.keywords}> {keywordField} </span> 
                   		</p>
                   }
-                  secondaryTextLines={line}
+                  secondaryTextLines={2}
               />
             <Divider  inset={true} />
           </div>

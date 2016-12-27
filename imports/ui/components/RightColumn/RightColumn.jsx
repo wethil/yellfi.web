@@ -34,22 +34,21 @@ export default class RightColumn extends Component {
 	
 
 	componentWillMount(){
-			let yellId = this.props.params.id
-			let dialog = this.props.location.query.dialog
-			let lng = parseFloat(this.props.location.query.lng)
-			let lat = parseFloat(this.props.location.query.lat)
-	
-			this.toogleDrawer(yellId,dialog,lng,lat)
+		const {params,location} = this.props
+		let yellId = params.id
+		let dialog = location.query.dialog
+		let lng = parseFloat(location.query.lng)
+		let lat = parseFloat(location.query.lat)
+		this.toogleDrawer(yellId,dialog,lng,lat)
 	}
 
 
 	componentWillReceiveProps (nextProps) {
-
-		let yellId= nextProps.params.id
-		let dialog = nextProps.location.query.dialog
-		let lng = parseFloat(nextProps.location.query.lng)
-		let lat = parseFloat(nextProps.location.query.lat)
-
+		const {params,location} = nextProps
+		let yellId= params.id
+		let dialog = location.query.dialog
+		let lng = parseFloat(location.query.lng)
+		let lat = parseFloat(location.query.lat)
 		this.toogleDrawerAfterStart(yellId,dialog,lng,lat)
 
 }

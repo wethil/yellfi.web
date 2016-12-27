@@ -23,7 +23,10 @@
         "contact":"Contact",
         "signInToCreate":"Sign in with Facebok to Create yours",
         "signInToSuggest":"Sign in with Facebook to Suggest",
-        "signInToJoin":"Sign in with Facebook to Join"
+        "signInToJoin":"Sign in with Facebook to Join",
+        "signInTwitToCreate":"Sign in with Twitter to Create yours",
+        "signInTwitToSuggest":"Sign in with Twitter to Suggest",
+        "signInTwitToJoin":"Sign in with Twitter to Join"
 
     },
     "twitCont":{

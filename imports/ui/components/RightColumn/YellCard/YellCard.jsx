@@ -16,7 +16,7 @@ import { Dropdown } from 'semantic-ui-react';
 import SuggestionTextField from './SuggestionTextField.jsx'
 import YellfiSuggestionsList from './YellfiSuggestionsList.jsx'
 import NoSuggestion from './YellCardComponents/NoSuggestion.jsx'
-import {PublicityLabel,ParticipationsButton} from './YellCardComponents/MiniComponents.jsx'
+import {PublicityLabel,ParticipationsButton,Login} from './YellCardComponents/MiniComponents.jsx'
 import NoYellOnCard from './YellCardComponents/NoYellOnCard.jsx'
 import CircleShareButtons from '../../mobile/SecondActivity/components/others/CircleShareButtons.jsx';
 
@@ -24,10 +24,15 @@ import CircleShareButtons from '../../mobile/SecondActivity/components/others/Ci
  	constructor(props) {
  	  super(props);
  	  this.state = {
+ 	  	userLogin:Meteor.userId(),
  	  	dialogOpen:false,
  	  	comment:"",
  	  	dialogContentNumber:0
  	  };
+ 	}
+
+ 	componentDidMount(){
+ 			emitter.addListener('loginOnDialog',()=> this.setState({userLogin:Meteor.userId()}) );
  	}
 
  	componentWillMount(){
@@ -148,7 +153,7 @@ import CircleShareButtons from '../../mobile/SecondActivity/components/others/Ci
 
 	render() {
 		
-	const {yell,dialogOpen,dialogContentNumber} = this.state
+	const {yell,dialogOpen,dialogContentNumber,userLogin} = this.state
 	const {_id,cQ,jQ,ownerId,requests,approved,publicity,owner,created_at,suggestionsByYellfi,keyword,time} = yell
 	const {user,userBlocked} = this.props
 	lang=i18n.getLocale();
@@ -192,13 +197,20 @@ import CircleShareButtons from '../../mobile/SecondActivity/components/others/Ci
 		dialogContent = <BlockedUser />
 	}
 
-const action =userBlocked
+if (userLogin!=null && Meteor.userId()){
+
+	var action =userBlocked
 	? 
 	 [<span key={1} ><FlatButton label={i18n.__('common.YellCard.close')} primary={true} onTouchTap={()=> this.handleCloseDialogViaUrl(_id)}/></span>]
 	: 
-	[<span key={1}>{dialogAction}</span>]		
+	[<span key={1}>{dialogAction}</span>];
+
+	} else {
+	var action = <Login dcn={dialogContentNumber} /> 
+
+	}		
 	
-	dialogTitleButton=<span key={1} >
+	var dialogTitleButton=<span key={1} >
 						   <FlatButton
 						      label={dialogTitleLabel}
 						      primary={true}
@@ -208,7 +220,7 @@ const action =userBlocked
 						</span>
 
 		
-		userHeader = (lang=="tr-TR" || lang =="tr")
+		var userHeader = (lang=="tr-TR" || lang =="tr")
 		 ?
 		<div className="anim">
 		{owner.firstName}<br/>
